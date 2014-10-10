@@ -2,7 +2,7 @@ package Words.model;
 
 import java.util.ArrayList;
 
-public class Poem {
+public class Poem extends Element{
 	ArrayList<Word> words = new ArrayList<Word>();
 	int x;
     int y;

@@ -1,6 +1,6 @@
 package Words.model;
 
-public class Word {
+public class Word extends Element{
 	 int x;
 	 int y;
 	 
