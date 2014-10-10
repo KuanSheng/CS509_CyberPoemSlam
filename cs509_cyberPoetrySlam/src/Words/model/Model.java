@@ -5,7 +5,7 @@ import java.util.Stack;
 public class Model {
 	Board board;
 	//Stack<Move> moves = new Stack<Move>();
-	
+
 	/** Currently selected shape (or null if none). */
 	Word selected;
 
@@ -29,10 +29,7 @@ public class Model {
 		moves.add(move);
 	}
 
-	public Move removeLastMove() {
-		if (moves.isEmpty()) { return null; }
-		return moves.pop();
-	}*/
+	*/
 
 	public void setSelected(Word s) {
 		selected = s;
