@@ -1,11 +1,11 @@
 package Words.controller;
 
 import java.awt.Point;
-import java.awt.Event;
+import java.awt.event.*;
 
 import Words.model.*;
 import Words.view.*;
 
-public class WordController {
-
+public class WordController extends MouseAdapter{
+	final 
 }
