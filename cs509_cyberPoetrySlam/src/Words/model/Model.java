@@ -29,10 +29,7 @@ public class Model {
 		moves.add(move);
 	}
 
-	public Move removeLastMove() {
-		if (moves.isEmpty()) { return null; }
-		return moves.pop();
-	}*/
+	*/
 
 	public void setSelected(Word s) {
 		selected = s;
