@@ -7,5 +7,5 @@ import Words.model.*;
 import Words.view.*;
 
 public class WordController extends MouseAdapter{
-	final 
+	final int test = 1;
 }
