@@ -7,5 +7,6 @@ import Words.model.*;
 import Words.view.*;
 
 public class WordController extends MouseAdapter{
-	final 
+	final
+    private String test = "到此一游";
 }
