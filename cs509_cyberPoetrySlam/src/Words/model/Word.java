@@ -16,6 +16,14 @@ public class Word {
     	 this.value = value;
      }
      
+     public boolean intersection(int x,int y){
+    	 if(x < this.x){return false;}
+    	 if(x > (this.x + width)){return false;}
+    	 if(y < this.y){return false;}
+    	 if(y > (this.y+height)){return false;}
+    	 return true;
+     }
+     
      public int getX(){return this.x;}
      public int getY(){return this.y;}
      public int getWidth(){return this.width;}
