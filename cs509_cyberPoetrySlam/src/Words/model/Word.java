@@ -24,6 +24,22 @@ public class Word extends Element{
     	 return true;
      }
      
+     public boolean overlap(Word w){
+    	 if((this.x+this.width)>w.getX()&&(w.getY()+w.getHeight())>this.y){
+    		 return true;
+    	 }
+    	 if((this.x+this.width)>w.getX()&&(this.y+this.height)>w.getY()){
+    		 return true; 
+    	 }
+    	 if((w.getX()+w.getWidth())>this.x&&(this.y+this.height)>w.getY()){
+    		 return true;
+    	 }
+    	 if((w.getX()+w.getWidth()>this.x)&&(w.getY()+w.getHeight()>this.y)){
+    		 return true; 
+    	 }
+    	 return false;
+     }
+     
      public int getX(){return this.x;}
      public int getY(){return this.y;}
      public int getWidth(){return this.width;}
