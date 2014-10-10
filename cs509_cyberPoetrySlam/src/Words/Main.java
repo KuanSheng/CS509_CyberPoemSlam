@@ -1,11 +1,15 @@
-package shapes;
+package Words;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
-
 import java.io.*;
-import shapes.model.*;
-import shapes.view.*;
+
+import Words.model.Board;
+import Words.model.BoardMemento;
+import Words.model.Model;
+import Words.view.Application;
+import Words.model.*;
+import Words.view.*;
 
 /** Class to simply launch the GUI. */
 public class Main {
