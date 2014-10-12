@@ -1,0 +1,62 @@
+package Words.controller;
+
+import java.awt.Point;
+import java.awt.event.*;
+
+import Words.model.*;
+import Words.view.*;
+
+public class WordMoveController extends MouseAdapter{
+	final Model model;
+	final ApplicationCanvas panel;
+	
+	Point anchor;
+	int deltaX;
+	int deltaY;
+	
+	int originalx;
+	int originaly;
+	
+	public WordMoveController(Model model,ApplicationCanvas panel){
+		this.model = model;
+		this.panel = panel;
+	}
+	
+	public void mousePressed(MouseEvent e) {
+		// no board? no behavior!
+		if (model == null) { return; }
+		Board board = model.getBoard();
+		
+		if (e.getButton() == MouseEvent.BUTTON3) {
+			//board.add(new Word(e.getX(), e.getY(), 200, 14, "Sample"));
+			//panel.redraw();
+			panel.repaint();
+			return;
+		}
+            
+		anchor = e.getPoint();
+		
+		// pieces are returned in order of Z coordinate
+		Word s = board.findWord(anchor.x, anchor.y);
+		if (s != null) {
+			Point relative = new Point (anchor);
+			
+			// no longer in the board since we are moving it around...
+			//board.remove(s);
+			model.setSelected(s);
+			originalx = s.getX();
+			originaly = s.getY();
+				
+			// set anchor for smooth moving
+			deltaX = relative.x - originalx;
+			deltaY = relative.y - originaly;
+			
+			// paint will happen once moves. This redraws state to prepare for paint
+			//panel.redraw();
+			return;
+		}
+		
+		model.setSelected(null);
+	}
+	
+}
