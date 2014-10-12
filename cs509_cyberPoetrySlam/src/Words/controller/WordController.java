@@ -7,5 +7,20 @@ import Words.model.*;
 import Words.view.*;
 
 public class WordController extends MouseAdapter{
-	final int test = 1;
+	final Model model;
+	final ApplicationCanvas panel;
+	
+	Point anchor;
+	int deltaX;
+	int deltaY;
+	
+	int originalx;
+	int originaly;
+	
+	public WordController(Model model,ApplicationCanvas panel){
+		this.model = model;
+		this.panel = panel;
+	}
+	
+	
 }
