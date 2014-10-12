@@ -7,13 +7,15 @@ public class Word extends Element{
      final String value;
      final int width;
      final int height;
+     final int wordType;
      
-     public Word(int x,int y,int width,int height,String value){
+     public Word(int x,int y,int width,int height,String value,int wordType){
     	 this.x = x;
     	 this.y = y;
     	 this.width = width;
     	 this.height = height;
     	 this.value = value;
+    	 this.wordType = wordType;
      }
      
      public boolean intersection(int x,int y){
