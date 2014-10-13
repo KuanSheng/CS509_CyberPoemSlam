@@ -36,5 +36,4 @@ public class ApplicationCanvas extends Canvas{
 	//need poem model design first
 	public void paintPoem(){}
 	public void paintBackgroud(){}
-	
 }

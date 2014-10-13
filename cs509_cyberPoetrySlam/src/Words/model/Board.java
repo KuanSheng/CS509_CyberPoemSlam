@@ -2,7 +2,7 @@ package Words.model;
 import java.util.*;
 public class Board implements Iterable<Word>{
     ArrayList<Word> words = new ArrayList<Word>();
-    
+    //HashSet<String,Word> protectedWords = new HashSet<Word.value,Word>();
     public void restore(BoardMemento m) {
 		words = new ArrayList<Word>();
 		for (Word s : m.stored) {
