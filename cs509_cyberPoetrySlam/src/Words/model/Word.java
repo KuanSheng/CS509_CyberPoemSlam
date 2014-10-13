@@ -18,6 +18,13 @@ public class Word extends Element{
     	 this.wordType = wordType;
      }
      
+     public boolean isProtected(){
+    	 if(this.y < 540){
+    		 return true;
+    	 }
+    	 return false;
+     }
+     
      public boolean intersection(int x,int y){
     	 if(x < this.x){return false;}
     	 if(x > (this.x + width)){return false;}

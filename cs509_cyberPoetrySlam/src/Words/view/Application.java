@@ -24,9 +24,9 @@ public class Application extends Frame {
 		Panel p = new Panel();
 		p.setSize(633, 40);
 		
-		Button button = new Button("Undo");
+		/**Button button = new Button("Undo");
 		p.add(button);
-		add(p);
+		add(p);*/
 		
 		// mark as final so the anonymous class below can find it
 		final ApplicationCanvas panel = new ApplicationCanvas(model);

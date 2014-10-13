@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import Words.controller.WordMoveController;
 import Words.model.Board;
 import Words.model.Model;
+import Words.model.Word;
 
 public class ApplicationCanvas extends Canvas{
 	Board board;
@@ -31,7 +32,7 @@ public class ApplicationCanvas extends Canvas{
 	}
 	
 	public void paint(Graphics g){}
-	public void paintWord(){}
+	public void paintWord(Word word){}
 	//need poem model design first
 	public void paintPoem(){}
 	public void paintBackgroud(){}

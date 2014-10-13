@@ -59,4 +59,33 @@ public class WordMoveController extends MouseAdapter{
 		model.setSelected(null);
 	}
 	
+	public void mouseReleased(MouseEvent e){
+		if (model == null) { return; }
+		Word selected = model.getSelected();
+		if (selected == null) { return; }
+		
+		if(this.originaly < 540&&selected.getX() > 540){
+			//change status;
+		}
+		
+		if(this.originaly > 540&&selected.getY() < 540){
+			//change status;
+		}
+		
+		//release the mouse and repaint
+		selected = null;
+		panel.repaint();
+	}
+	
+	public void mouseDragged(MouseEvent e){
+		if(model == null){return;}
+		Word selected = model.getSelected();
+		
+		if(selected == null){return;}
+		selected.setLocation(e.getX()-deltaX,e.getY()-deltaY);
+		panel.paintWord(selected);
+		
+		panel.repaint();
+	}
+	
 }
