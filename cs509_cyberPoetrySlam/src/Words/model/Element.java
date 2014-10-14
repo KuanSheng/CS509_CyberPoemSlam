@@ -5,6 +5,4 @@ public class Element {
 	int x;
 	int y;
 	
-	int Ruizhu ;
-	
 }
