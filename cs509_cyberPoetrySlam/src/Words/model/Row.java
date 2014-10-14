@@ -87,7 +87,7 @@ public class Row extends Element{
 					intersection.e.y = word.y;
 				}
 				// y overlap less than x overlap then top intersection
-				if(word.y-(this.y - this.height)) < (this.x + this.width - word.x)){
+				if(word.y-(this.y - this.height) < (this.x + this.width - word.x)){
 					intersection.type = 3;
 					intersection.e.type = 3;
 					intersection.e.x = word.x;
@@ -149,5 +149,14 @@ public class Row extends Element{
 		return intersection;	
 	}
 	
+	
+	public Intersection getIntersection(Row row){
+		
+	       Intersection intersection = new Intersection();
+	       
+	       
+	       
+	       return intersection;
+	}
 	
 }
