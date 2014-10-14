@@ -15,15 +15,8 @@ public class Application extends Frame {
 	public Application(Model m) {
 		super();
 		
-		model = m;
-		
-		setTitle("Sample Application");
-		setLayout(new FlowLayout());
-		setSize(633, 700);
-		
-		Panel p = new Panel();
-		p.setSize(633, 40);
-		
+		setTitle("CyberPoetrySlam");
+		setSize(640,490);
 		/**Button button = new Button("Undo");
 		p.add(button);
 		add(p);*/
@@ -31,9 +24,6 @@ public class Application extends Frame {
 		// mark as final so the anonymous class below can find it
 		final ApplicationCanvas panel = new ApplicationCanvas(model);
 		add(panel);
-		
-	
-		
 	}
 	
 }

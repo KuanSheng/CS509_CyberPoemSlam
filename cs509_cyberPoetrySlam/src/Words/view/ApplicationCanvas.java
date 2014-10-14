@@ -23,6 +23,7 @@ public class ApplicationCanvas extends Canvas{
 		this.model = m;
 		initialize();
 	}
+	
 	//initialize frame attributes
 	public void initialize(){
 		setSize(650,490);
@@ -31,7 +32,18 @@ public class ApplicationCanvas extends Canvas{
 		addMouseMotionListener(controller);
 	}
 	
-	public void paint(Graphics g){}
+	public void paint(Graphics g){
+		g.clearRect(0,0,getWidth(),getHeight());
+		
+		for(Word w : board){
+			g.clearRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
+			g.setColor(Color.gray);
+			g.fillRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
+			g.setColor(Color.black);
+			g.drawString(w.getValue(),w.getX(),w.getY()+w.getHeight());
+		}
+	}
+	
 	public void paintWord(Word word){}
 	//need poem model design first
 	public void paintPoem(){}

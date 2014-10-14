@@ -28,7 +28,7 @@ public class WordMoveController extends MouseAdapter{
 		Board board = model.getBoard();
 		
 		if (e.getButton() == MouseEvent.BUTTON3) {
-			//board.add(new Word(e.getX(), e.getY(), 200, 14, "Sample"));
+			board.addWords(new Word(e.getX(), e.getY(), 200, 14, "Sample",2));
 			//panel.redraw();
 			panel.repaint();
 			return;
