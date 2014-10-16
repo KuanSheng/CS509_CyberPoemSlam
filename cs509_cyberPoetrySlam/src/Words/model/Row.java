@@ -159,4 +159,17 @@ public class Row extends Element{
 	       return intersection;
 	}
 	
+	public Element select(int top, int bottom, int left, int right){       //select multiple words 
+		Element element = new Element();
+		
+		
+		return element;
+	}
+	
+	
+	public Element select(int x, int y){                                  //select single word
+		Element element = new Element();
+		
+		return element;
+	}
 }
