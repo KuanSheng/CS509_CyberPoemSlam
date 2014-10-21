@@ -25,7 +25,6 @@ public class Row extends Element{
 	
 	public void addWord(Word word){
     	words.add(word);
-    	this.width = this.width + word.width;
     }
 	
 	public void move(int x, int y){
@@ -38,127 +37,235 @@ public class Row extends Element{
 	public Intersection getIntersectionWord(Word word){
 		
 		Intersection intersection = new Intersection();
-		
-		// no intersection
-		if((this.x + this.width < word.x) ||(this.x > word.x + word.width)|| 
-		   (this.y < (word.y - word.height))||(this.y - this.height) > word.y){
+
+		for(int i = 0;i < (this.words).size(); i ++){
+			Word wordInRow = (this.words).get(i);
+			intersection = wordInRow.getIntersectionInRow(word);
+
+			//the leftmost word in the row
+			if(i == 0){
+				if(intersection.type ==1 || intersection.type == 3 || intersection.type ==4) break;
+				if (intersection.type == 2) {
+					if(this.y == word.y) {
+						if(word.x + word.width > this.x + this.width){
+							break;
+						}
+						else {
+							intersection.type = 5;
+							break;
+						}
+					}
+					
+					if(word.y > this.y){
+						intersection.type = 3;
+						intersection.e.type = 3;
+						intersection.e.x = this.x;
+						intersection.e.y = this.y + word.height;
+						break;
+					}
+					
+					if(word.y < this.y){
+						intersection.type = 4;	
+						intersection.e.type = 3;
+						intersection.e.x = this.x;
+						intersection.e.y = this.y;
+						break;
+					}
+			}
+				
+				
+				if(intersection.type == 6){
+					if(word.x + word.width > this.x + this.width){
+						intersection.type = 5;
+						break;
+					}
+					else {
+						intersection.type = 1;
+						intersection.e.type = 2;
+						intersection.e.x = this.x - word.width;
+						intersection.e.y = this.y;
+						break;
+					}
+				}
+		}
+			
+			if( i>0 && i< (this.words).size()){
+				if(intersection.type ==3 || intersection.type == 4) break;
+				if(intersection.type == 2) {
+					if(this.y == word.y) {
+						if(word.x + word.width > this.x + this.width){
+							break;
+						}
+						else {
+							intersection.type = 5;
+							break;
+						}
+					}
+					
+					if(word.y > this.y){
+						intersection.type = 3;
+						intersection.e.type = 3;
+						intersection.e.x = this.x;
+						intersection.e.y = this.y + word.height;
+						break;
+					}
+					
+					if(word.y < this.y){
+						intersection.type = 4;	
+						intersection.e.type = 3;
+						intersection.e.x = this.x;
+						intersection.e.y = this.y;
+						break;
+					}
+				}
+					
+			}
+				
+
+	     if(intersection.type == -1) continue;
+         if(intersection.type == 5) break;
+		}
+		return intersection;	
+	}
+	
+
+	public Intersection getIntersection(Row row){
+   	 
+   	 Intersection intersection = new Intersection();
+   	 
+   	// no intersection
+		if((this.x + this.width < row.x) ||(this.x > row.x + row.width)|| 
+		   (this.y < (row.y - row.height))||(this.y - this.height) > row.y){
 			
 			intersection.type = -1;
 		}
 		
 		// x left intersection and y no determined
-		if((this.x + this.width > word.x ) && (this.x + this.width < word.x + word.width) && 
-				(this.x < word.x)){
+		if((row.x + row.width > this.x ) && (row.x + row.width < this.x + this.width) && 
+				(row.x < this.x)){
 			
 		
 			// y are equal then left intersection
-			if(this.y == word.y){     
+			if(this.y == row.y){     
 				intersection.type = 1;
 				intersection.e.type = 2;
-				intersection.e.x = word.x - this.width;
-				intersection.e.y = word.y;
+				intersection.e.x = this.x - row.width;
+				intersection.e.y = this.y;
 			}
 			
-			//row y overlaps with bottom part of word y
-			if((this.y < word.y) && (this.y > word.y - word.height)){
+			// y overlaps with bottom part
+			if((row.y < this.y) && (row.y > this.y - this.height)){
 				// y overlap more than x overlap then left intersection
-				if(this.y - (word.y - word.height) > (this.x + this.width - word.x)){
+				if(row.y - (this.y - this.height) >= (row.x + row.width - this.x)){
 				intersection.type = 1;	
 				intersection.e.type = 2;
-				intersection.e.x = word.x - this.width;
-				intersection.e.y = word.y;		
+				intersection.e.x = this.x - row.width;
+				intersection.e.y = this.y;		
 			}
 				// y overlap less than x overlap then bottom intersection
-				if(this.y - (word.y - word.height) < (this.x + this.width - word.x)){
+				else {
 					intersection.type = 4;	
 					intersection.e.type = 3;
-					intersection.e.x = word.x;
-					intersection.e.y = word.y;	
+					intersection.e.x = this.x;
+					intersection.e.y = this.y;	
 				}
 			}		
 					
-			// row y overlaps with top part of word y
-			if((this.y > word.y) && (this.y - this.width < word.y)){
+			// row y overlaps with top part of row y
+			if((row.y > this.y) && (row.y - row.height < this.y)){
 				//y overlap more than x overlap then left intersection
-				if( (word.y-(this.y - this.height)) > (this.x + this.width - word.x)){
+				if( (this.y-(row.y - row.height)) >= (row.x + row.width - this.x)){
 					intersection.type = 1;	
 					intersection.e.type = 2;
-					intersection.e.x = word.x - this.width;
-					intersection.e.y = word.y;
+					intersection.e.x = this.x - row.width;
+					intersection.e.y = this.y;
 				}
 				// y overlap less than x overlap then top intersection
-				if(word.y-(this.y - this.height) < (this.x + this.width - word.x)){
+				else {
 					intersection.type = 3;
 					intersection.e.type = 3;
-					intersection.e.x = word.x;
-					intersection.e.y = word.y + this.height;	
+					intersection.e.x = this.x;
+					intersection.e.y = this.y + row.height;	
 				}	
 			}
 		}
 		
 		//x right intersection and y no determined
-		if((this.x < word.x + word.width ) && (this.x + this.width > word.x + word.width) && 
-				(this.x > word.x)){
+		if((row.x < this.x + this.width ) && (row.x + row.width > this.x + this.width) && 
+				(row.x > this.x)){
 			
 		
 			// y are equal then right intersection
-			if(this.y == word.y){     
+			if(this.y == row.y){     
 				intersection.type = 2;
 				intersection.e.type = 2;
-				intersection.e.x = word.x;
-				intersection.e.y = word.y;
+				intersection.e.x = this.x;
+				intersection.e.y = this.y;
 			}
 			
-			//row y overlaps with bottom part of word y
-			if((this.y < word.y) && (this.y > word.y - word.height)){
+			//row y overlaps with bottom part of row y
+			if((row.y < this.y) && (row.y > this.y - this.height)){
 				// y overlap more than x overlap then right intersection
-				if(this.y - (word.y - word.height) > (word.x + word.width - this.x)){
+				if(row.y - (this.y - this.height) >= (this.x + this.width - row.x)){
 				intersection.type = 2;	
 				intersection.e.type = 2;
-				intersection.e.x = word.x;
-				intersection.e.y = word.y;		
+				intersection.e.x = this.x;
+				intersection.e.y = this.y;		
 			}
 				// y overlap less than x overlap then bottom intersection
-				if(this.y - (word.y - word.height) < (word.x + word.width - this.x)){
+				else {
 					intersection.type = 4;	
 					intersection.e.type = 3;
-					intersection.e.x = word.x;
-					intersection.e.y = word.y;	
+					intersection.e.x = this.x;
+					intersection.e.y = this.y;	
 				}
 			}		
 					
-			// row y overlaps with top part of word y
-			if((this.y > word.y) && (this.y - this.width < word.y)){
+			// row y overlaps with top part of row y
+			if((row.y > this.y) && (row.y - row.width < this.y)){
 				//y overlap more than x overlap then right intersection
-				if( (word.y-(this.y - this.height)) > (word.x + word.width - this.x)){
+				if( (this.y-(row.y - row.height)) >= (this.x + this.width - row.x)){
 					intersection.type = 2;	
 					intersection.e.type = 2;
-					intersection.e.x = word.x;
-					intersection.e.y = word.y;
+					intersection.e.x = this.x;
+					intersection.e.y = this.y;
 				}
 				// y overlap less than x overlap then top intersection
-				if((word.y-(this.y - this.height)) < (word.x + word.width - this.x)){
+				else {
 					intersection.type = 3;
 					intersection.e.type = 3;
-					intersection.e.x = word.x;
-					intersection.e.y = word.y + this.height;	
+					intersection.e.x = this.x;
+					intersection.e.y = this.y + row.height;	
 				}	
 			}
 		}
 		
-		return intersection;	
-	}
-	
-	
-	public Intersection getIntersection(Row row){
+		//x overlap totally and y not determined
+				if((this.x >= row.x && this.x + this.width <= row.x + row.width) ||
+						(this.x <= row.x && this.x + this.width >= row.x + row.width)){
+					// y overlap with top part of row then top intersection
+					if((this.y > row.y) && (this.y - this.width < row.y)){
+						intersection.type = 3;
+						intersection.e.type = 3;
+						intersection.e.x = row.x;
+						intersection.e.y = row.y + this.height;
+					}
+					//y overlap with bottom part of row then bottom intersection
+					if((this.y < row.y) && (this.y > row.y - row.height)){
+						intersection.type = 4;	
+						intersection.e.type = 3;
+						intersection.e.x = row.x;
+						intersection.e.y = row.y;	
+					}
+					if(this.y == row.y){
+						intersection.type = 5;
+					}
+				}
 		
-	       Intersection intersection = new Intersection();
-	       
-	       
-	       
-	       return intersection;
-	}
+		 return intersection;
+    }
 	
+
 	public Element select(int top, int bottom, int left, int right){       //select multiple words 
 		Element element = new Element();
 		
