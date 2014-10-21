@@ -29,7 +29,7 @@ public class WordMoveController extends MouseAdapter{
 		return; }
 		Board board = model.getBoard();
 		
-		if (e.getButton() == MouseEvent.BUTTON1||e.getButton()==MouseEvent.BUTTON3) {
+		if (e.getButton()==MouseEvent.BUTTON3) {
 			board.addWords(new Word(e.getX(), e.getY(), 200, 14, "Sample",2));
 			//panel.redraw();
 			panel.repaint();

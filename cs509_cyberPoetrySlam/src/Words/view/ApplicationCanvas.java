@@ -36,14 +36,18 @@ public class ApplicationCanvas extends Canvas{
 	}
 	
 	public void paint(Graphics g){
-		g.clearRect(0,0,getWidth(),getHeight());
+		g.clearRect(0,0,getWidth(),300);
+		g.setColor(Color.ORANGE);
+		g.fillRect(0,0,getWidth(), 300);
+		g.drawLine(0,300, 650, 300);
 		System.out.println("fuck!");
+		
 		for(Word w : board){
 			g.clearRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
 			g.setColor(Color.gray);
 			g.fillRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
 			g.setColor(Color.black);
-			g.drawString(w.getValue(),w.getX(),w.getY()+w.getHeight());
+			g.drawString(w.getValue(),w.getX()+w.getWidth()/2,w.getY()+w.getHeight());
 		}
 	}
 	

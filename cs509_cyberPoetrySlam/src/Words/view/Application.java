@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JPanel;
+
 import Words.model.Board;
 import Words.model.Model;
 
@@ -17,6 +19,11 @@ public class Application extends Frame {
 		this.model = m;
 		setTitle("CyberPoetrySlam");
 		setSize(650,490);
+		
+		JPanel p = new JPanel();
+		p.setSize(650,490);
+		p.setBackground(Color.yellow);
+		p.setBounds(0 ,245, 650, 345);
 		/**Button button = new Button("Undo");
 		p.add(button);
 		add(p);*/
@@ -24,7 +31,8 @@ public class Application extends Frame {
 			System.out.println("fuck!(app)");
 		// mark as final so the anonymous class below can find it
 		final ApplicationCanvas panel = new ApplicationCanvas(model);
-		add(panel);
+		add(p);
+		p.add(panel);
 	}
 	
 }
