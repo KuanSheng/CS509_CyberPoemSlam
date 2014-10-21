@@ -26,15 +26,18 @@ public class ApplicationCanvas extends Canvas{
 	
 	//initialize frame attributes
 	public void initialize(){
+		if(model == null)
+	        System.out.println("fuck too!!(canvas)");
 		setSize(650,490);
 		WordMoveController controller = new WordMoveController(model,this);
-		addMouseListener(controller);
-		addMouseMotionListener(controller);
+		this.board = model.getBoard();
+		this.addMouseListener(controller);
+		this.addMouseMotionListener(controller);
 	}
 	
 	public void paint(Graphics g){
 		g.clearRect(0,0,getWidth(),getHeight());
-		
+		System.out.println("fuck!");
 		for(Word w : board){
 			g.clearRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
 			g.setColor(Color.gray);
@@ -47,5 +50,7 @@ public class ApplicationCanvas extends Canvas{
 	public void paintWord(Word word){}
 	//need poem model design first
 	public void paintPoem(){}
-	public void paintBackgroud(){}
+	public void paintBackgroud(){
+		
+	}
 }

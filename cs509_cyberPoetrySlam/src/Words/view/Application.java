@@ -14,13 +14,14 @@ public class Application extends Frame {
 	 */
 	public Application(Model m) {
 		super();
-		
+		this.model = m;
 		setTitle("CyberPoetrySlam");
-		setSize(640,490);
+		setSize(650,490);
 		/**Button button = new Button("Undo");
 		p.add(button);
 		add(p);*/
-		
+		if(model == null)
+			System.out.println("fuck!(app)");
 		// mark as final so the anonymous class below can find it
 		final ApplicationCanvas panel = new ApplicationCanvas(model);
 		add(panel);
