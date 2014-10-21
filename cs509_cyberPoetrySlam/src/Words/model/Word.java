@@ -1,8 +1,10 @@
 package Words.model;
 
 public class Word extends Element{
-	 int x;
-	 int y;
+	 private int x;
+	 private int y;
+	 private int x_last;
+	 private int y_last;
 	 
      final String value;
      final int width;
@@ -11,9 +13,18 @@ public class Word extends Element{
      public Word(int x,int y,int width,int height,String value){
     	 this.x = x;
     	 this.y = y;
+    	 this.x_last = x;
+    	 this.y_last = y;
     	 this.width = width;
     	 this.height = height;
     	 this.value = value;
+     }
+     
+     public void move(int x_new, int y_new){
+    	 this.x_last = this.x;
+    	 this.y_last = this.y;
+    	 this.x = x_new;
+    	 this.y = y_new;
      }
      
      public boolean intersection(int x,int y){
@@ -30,9 +41,5 @@ public class Word extends Element{
      public int getHeight(){return this.height;}
      public String getValue(){return this.value;}
      
-     public void setLocation(int x, int y ){
-    	 this.x = x;
-    	 this.y = y;
-     }
 }
 
