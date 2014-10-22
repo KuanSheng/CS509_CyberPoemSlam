@@ -128,7 +128,7 @@ public class Row extends Element{
 		return intersection;	
 	}
 	
-
+    //same as the getIntersection of Word. how to simplify?
 	public Intersection getIntersection(Row row){
    	 
    	 Intersection intersection = new Intersection();
