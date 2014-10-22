@@ -1,8 +1,8 @@
 package Words.model;
 
-import java.util.ArrayList;
+import java.util.*;
 
-public class Row extends Element{
+public class Row extends Element implements Iterable<Word> {
 	
 	ArrayList<Word> words = new ArrayList<Word>();
 	
@@ -266,17 +266,48 @@ public class Row extends Element{
     }
 	
 
-	public Element select(int top, int bottom, int left, int right){       //select multiple words 
-		Element element = new Element();
+	
+	public Word selectWord(int x, int y){                                  //select single word
+	    	
+		for(Word w: words){
+			if(w.intersection(x, y)){
+				return w;
+			}
+		}
 		
-		
-		return element;
+		return null;
 	}
 	
 	
-	public Element select(int x, int y){                                  //select single word
-		Element element = new Element();
+	public boolean intersection(int top, int bottom, int left, int right){     
 		
-		return element;
+		if(this.x >= left && this.y <= top && 
+				this.x + this.width <= right && this.y - this.height >= bottom){
+			return true;}
+	
+		 return false;
+	} 
+	
+	public Row selectRow(int top, int bottom, int left, int right){        //select row
+	
+	       if(this.intersection(top, bottom, left, right)){
+	    	   return this;
+	       }
+	       
+	       return null;	
 	}
+	
+	
+	 public int getX(){return this.x;}
+     public int getY(){return this.y;}
+     public int getWidth(){return this.width;}
+     public int getHeight(){return this.height;}
+     
+     //return all words in the row
+     public Iterator<Word> iterator(){
+    	 return words.iterator();
+     }
+	
+	
 }
+
