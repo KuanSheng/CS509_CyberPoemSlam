@@ -3,6 +3,8 @@ package Words.controller;
 import java.awt.Point;
 import java.awt.event.*;
 
+import java.util.*;
+
 import Words.model.*;
 import Words.view.*;
 
@@ -62,16 +64,41 @@ public class WordMoveController extends MouseAdapter{
 	}
 	
 	public void mouseReleased(MouseEvent e){
+		//no model
 		if (model == null) { return; }
 		Word selected = model.getSelected();
+		//nothing selected
 		if (selected == null) { return; }
 		
-		if(this.originaly < 540&&selected.getX() > 540){
+		if(this.originaly < 300&&selected.getY() > 300){
 			//change status;
+			model.getBoard().releaseWords(selected);
 		}
 		
-		if(this.originaly > 540&&selected.getY() < 540){
+		else if(this.originaly > 300&&selected.getY() < 300){
 			//change status;
+			model.getBoard().protectWords(selected);
+			//if overlap, set back to original location;
+			for(Iterator<Word> iter = model.getBoard().iterator();iter.hasNext();){
+				if(selected.overlap(iter.next())){
+					selected.setLocation(originalx, originaly);
+					break;
+					}
+			}
+		}
+		
+		else if(this.originaly > 300&&selected.getY() > 300){
+			
+		}
+		
+		else if(this.originaly < 300&&selected.getY() < 300){
+			//if overlap,set back to original location;
+			for(Iterator<Word> iter = model.getBoard().iterator();iter.hasNext();){
+				if(selected.overlap(iter.next())){
+					selected.setLocation(originalx, originaly);
+					break;
+					}
+			}
 		}
 		
 		//release the mouse and repaint
