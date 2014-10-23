@@ -14,7 +14,7 @@ ArrayList<Word> stored = new ArrayList<Word>();
 	 */
 	public BoardMemento(ArrayList<Word> shapes) {
 		for (Word s : shapes) {
-			stored.add(new Word(s.x, s.y, s.width, s.height, s.value));
+			stored.add(new Word(s.x, s.y, s.width, s.height, s.value,s.wordType));
 		}
 	}
 

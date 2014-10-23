@@ -7,13 +7,22 @@ public class Word extends Element{
      final String value;
      final int width;
      final int height;
+     final int wordType;
      
-     public Word(int x,int y,int width,int height,String value){
+     public Word(int x,int y,int width,int height,String value,int wordType){
     	 this.x = x;
     	 this.y = y;
     	 this.width = width;
     	 this.height = height;
     	 this.value = value;
+    	 this.wordType = wordType;
+     }
+     
+     public boolean isProtected(){
+    	 if(this.y < 540){
+    		 return true;
+    	 }
+    	 return false;
      }
      
      public boolean intersection(int x,int y){
@@ -22,6 +31,22 @@ public class Word extends Element{
     	 if(y < this.y){return false;}
     	 if(y > (this.y+height)){return false;}
     	 return true;
+     }
+     
+     public boolean overlap(Word w){
+    	 if((this.x+this.width)>w.getX()&&(w.getY()+w.getHeight())>this.y){
+    		 return true;
+    	 }
+    	 if((this.x+this.width)>w.getX()&&(this.y+this.height)>w.getY()){
+    		 return true; 
+    	 }
+    	 if((w.getX()+w.getWidth())>this.x&&(this.y+this.height)>w.getY()){
+    		 return true;
+    	 }
+    	 if((w.getX()+w.getWidth()>this.x)&&(w.getY()+w.getHeight()>this.y)){
+    		 return true; 
+    	 }
+    	 return false;
      }
      
      public int getX(){return this.x;}
