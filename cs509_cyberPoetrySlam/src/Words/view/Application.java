@@ -34,5 +34,4 @@ public class Application extends Frame {
 		add(p);
 		p.add(panel);
 	}
-	
 }
