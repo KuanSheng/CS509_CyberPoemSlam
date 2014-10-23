@@ -5,6 +5,7 @@ public class Board implements Iterable<Word>{
     ArrayList<Word> protectedWords = new ArrayList<Word>();
     ArrayList<Word> unprotectedWords = new ArrayList<Word>();
     ArrayList<Poem> poemList = new ArrayList<Poem>();
+    ArrayList<Word> words = new ArrayList<Word>(); // TODO to be deleted ? added by JUN
 
     //HashSet<String,Word> protectedWords = new HashSet<Word.value,Word>();
     public void restore(BoardMemento m) {
