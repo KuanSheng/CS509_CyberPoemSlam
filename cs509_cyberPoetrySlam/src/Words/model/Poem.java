@@ -1,7 +1,5 @@
 package Words.model;
 
-import com.sun.rowset.internal.Row;
-
 import java.util.ArrayList;
 
 public class Poem extends Element {
