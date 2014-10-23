@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.Graphics;
 
+import Words.controller.WordConnectionController;
 import Words.controller.WordMoveController;
 import Words.model.Board;
 import Words.model.Model;
@@ -30,9 +31,12 @@ public class ApplicationCanvas extends Canvas{
 	        System.out.println("fuck too!!(canvas)");
 		setSize(650,490);
 		WordMoveController controller = new WordMoveController(model,this);
+		WordConnectionController connectionController = new WordConnectionController(model,this);
 		this.board = model.getBoard();
 		this.addMouseListener(controller);
+		this.addMouseListener(connectionController);
 		this.addMouseMotionListener(controller);
+		this.addMouseMotionListener(connectionController);
 	}
 	
 	public void paint(Graphics g){

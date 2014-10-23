@@ -77,13 +77,16 @@ public class WordMoveController extends MouseAdapter{
 		}
 		
 		else if(this.originaly > 300&&selected.getY() < 300){
-			//change status;
-			model.getBoard().protectWords(selected);
 			//if overlap, set back to original location;
+			boolean isOverlap = false;
 			if(model.getBoard().checkOverlap(selected)){
+				isOverlap = true;
 				selected.setLocation(originalx, originaly);
 			}
-			}
+			//change status;
+			if(isOverlap == false)
+			model.getBoard().protectWords(selected);
+		}
 		
 		else if(this.originaly > 300&&selected.getY() > 300){
 			
