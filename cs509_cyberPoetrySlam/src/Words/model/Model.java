@@ -5,7 +5,7 @@ import java.util.Stack;
 public class Model {
 	Board board;
 	//Stack<Move> moves = new Stack<Move>();
-	
+
 	/** Currently selected shape (or null if none). */
 	Word selected;
 
