@@ -2,8 +2,8 @@ package Words.model;
 import java.lang.reflect.Array;
 import java.util.*;
 public class Board implements Iterable<Word>{
-    ArrayList<Word> protectedWord = new ArrayList<Word>();
-    ArrayList<Word> unprotectedWord = new ArrayList<Word>();
+    ArrayList<Word> protectedWords = new ArrayList<Word>();
+    ArrayList<Word> unprotectedWords = new ArrayList<Word>();
     ArrayList<Poem> poemList = new ArrayList<Poem>();
 
     //HashSet<String,Word> protectedWords = new HashSet<Word.value,Word>();
@@ -16,20 +16,20 @@ public class Board implements Iterable<Word>{
 
     public boolean protect(Word w) {
         // check if word is in unprotected word
-        if (!unprotectedWord.contains(w)){
+        if (!unprotectedWords.contains(w)){
             return false;
         }
-        this.unprotectedWord.remove(w);
-        this.protectedWord.add(w);
+        this.unprotectedWords.remove(w);
+        this.protectedWords.add(w);
         return true;
     }
 
     public boolean unprotect(Word w) {
-        if(!protectedWord.contains(w)){
+        if(!protectedWords.contains(w)){
            return false;
         }
-        this.protectedWord.remove(w);
-        this.unprotectedWord.add(w);
+        this.protectedWords.remove(w);
+        this.unprotectedWords.add(w);
         return true;
     }
 
@@ -50,20 +50,20 @@ public class Board implements Iterable<Word>{
         return this.poemList;
     }
 
-    public void setProtectedWord(ArrayList<Word> pw) {
-        this.protectedWord = pw;
+    public void setprotectedWords(ArrayList<Word> pw) {
+        this.protectedWords = pw;
     }
 
-    public ArrayList<Word> getProtectedWord() {
-        return this.protectedWord;
+    public ArrayList<Word> getprotectedWords() {
+        return this.protectedWords;
     }
 
-    public void setUnprotectedWord(ArrayList<Word> upw) {
-        this.unprotectedWord = upw;
+    public void setUnprotectedWords(ArrayList<Word> upw) {
+        this.unprotectedWords = upw;
     }
 
-    public ArrayList<Word> getUnprotectedWord() {
-        return this.unprotectedWord;
+    public ArrayList<Word> getUnprotectedWords() {
+        return this.unprotectedWords;
     }
 
     public BoardMemento getState() {
@@ -75,6 +75,16 @@ public class Board implements Iterable<Word>{
 		words.add(w);
 	}
 	
+	public void protectWords(Word w){
+		this.unprotectedWords.remove(w);
+		this.protectedWords.add(w);
+	}
+	
+	public void releaseWords(Word w){
+		this.protectedWords.remove(w);
+		this.unprotectedWords.add(w);
+	}
+	
 	public Word findWord(int x,int y){
 		for(Word w:words){
 			if(w.intersection(x,y)){
@@ -83,9 +93,19 @@ public class Board implements Iterable<Word>{
 		}
 		return null;
 	}
+	
+	
+	
 	public Iterator<Word> iterator() {
 		// TODO Auto-generated method stub
 		return words.iterator();
 	}
-
+	
+	public Iterator<Word> protectedWordsIterator(){
+		return this.protectedWords.iterator();
+	}
+	
+	public Iterator<Word> unprotectedWordssIterator(){
+		return this.unprotectedWords.iterator();
+	}
 }
