@@ -1,10 +1,10 @@
 package Words.model;
+import java.lang.reflect.Array;
 import java.util.*;
 public class Board implements Iterable<Word>{
     ArrayList<Word> protectedWord = new ArrayList<Word>();
     ArrayList<Word> unprotectedWord = new ArrayList<Word>();
     ArrayList<Poem> poemList = new ArrayList<Poem>();
-    ArrayList<Row> rowList = new ArrayList<Row>();
 
     //HashSet<String,Word> protectedWords = new HashSet<Word.value,Word>();
     public void restore(BoardMemento m) {
@@ -14,27 +14,56 @@ public class Board implements Iterable<Word>{
 		}
 	}
 
-    public void protect(Word w) {
+    public boolean protect(Word w) {
         // check if word is in unprotected word
-        if (unprotectedWord.contains(w)){
-            this.unprotectedWord.remove(w);
-            this.protectedWord.add(w);
+        if (!unprotectedWord.contains(w)){
+            return false;
         }
+        this.unprotectedWord.remove(w);
+        this.protectedWord.add(w);
+        return true;
     }
 
-    public void unprotect(Word w) {
-        if(protectedWord.contains(w)){
-            this.protectedWord.remove(w);
-            this.unprotectedWord.add(w);
+    public boolean unprotect(Word w) {
+        if(!protectedWord.contains(w)){
+           return false;
         }
+        this.protectedWord.remove(w);
+        this.unprotectedWord.add(w);
+        return true;
     }
 
-	public void connect(Poem p, Row r, Word w){
-         
+    public boolean addPoem(Poem p) {
+       return this.poemList.add(p);
     }
 
-    public void disconnect() {
+    public boolean removePoem(Poem p) {
+       return this.poemList.remove(p);
+    }
 
+    // getter and setter
+    public void setPoemList(ArrayList<Poem> pl) {
+        this.poemList = pl;
+    }
+
+    public ArrayList<Poem> getPoemList() {
+        return this.poemList;
+    }
+
+    public void setProtectedWord(ArrayList<Word> pw) {
+        this.protectedWord = pw;
+    }
+
+    public ArrayList<Word> getProtectedWord() {
+        return this.protectedWord;
+    }
+
+    public void setUnprotectedWord(ArrayList<Word> upw) {
+        this.unprotectedWord = upw;
+    }
+
+    public ArrayList<Word> getUnprotectedWord() {
+        return this.unprotectedWord;
     }
 
     public BoardMemento getState() {
