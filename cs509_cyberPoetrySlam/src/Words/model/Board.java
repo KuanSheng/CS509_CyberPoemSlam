@@ -4,6 +4,7 @@ public class Board implements Iterable<Word>{
     ArrayList<Word> words = new ArrayList<Word>();
     ArrayList<Word> protectedWords = new ArrayList<Word>();
     ArrayList<Word> unProtectedWords = new ArrayList<Word>();
+    ArrayList<Poem> poems = new ArrayList<Poem>();
     
     public void restore(BoardMemento m) {
 		words = new ArrayList<Word>();
@@ -19,6 +20,10 @@ public class Board implements Iterable<Word>{
 	//add words to the board
 	public void addWords(Word w){
 		words.add(w);
+	}
+	
+	public void addPoems(Poem p){
+		poems.add(p);
 	}
 	
 	public void protectWords(Word w){

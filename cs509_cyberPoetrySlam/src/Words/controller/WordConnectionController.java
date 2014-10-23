@@ -13,4 +13,6 @@ public class WordConnectionController extends MouseAdapter {
 		this.model = m;
 		this.panel = p;
 	}
+	
+	
 }
