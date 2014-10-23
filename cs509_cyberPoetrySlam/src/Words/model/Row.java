@@ -28,8 +28,6 @@ public class Row extends Element implements Iterable<Word> {
     }
 	
 	public void move(int x, int y){
-		this.x_last = this.x;
-		this.y_last = this.y;
 		this.x = x;
 		this.y = y;
 	}

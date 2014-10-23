@@ -216,8 +216,6 @@ public class Word extends Element{
      }
      
      public void move(int x_new, int y_new ){
-    	 this.x_last = this.x;
-    	 this.y_last = this.y;
     	 this.x = x_new;
     	 this.y = y_new;
      }
