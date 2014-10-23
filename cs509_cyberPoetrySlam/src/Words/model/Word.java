@@ -10,6 +10,7 @@ public class Word extends Element{
      final int wordType;
      
      public Word(int x,int y,int width,int height,String value,int wordType){
+         super(1,x,y);
     	 this.x = x;
     	 this.y = y;
     	 this.width = width;
