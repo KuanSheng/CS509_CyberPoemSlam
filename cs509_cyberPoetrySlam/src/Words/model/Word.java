@@ -29,7 +29,17 @@ public class Word extends Element{
     	 }
     	 return false;
      }
-     
+    //added by JUN start --------------
+    public void setLocation(int x, int y){
+         this.x = x;
+         this.y = y;
+     }
+
+    public void setLastLocation(int x, int y){
+        x_last = x;
+        y_last = y;
+    }
+    //added by JUN end ------------------------
      public boolean intersection(int x,int y){
     	 if(x < this.x){return false;}
     	 if(x > (this.x + width)){return false;}
