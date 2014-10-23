@@ -40,7 +40,6 @@ public class ApplicationCanvas extends Canvas{
 		g.setColor(Color.ORANGE);
 		g.fillRect(0,0,getWidth(), 300);
 		g.drawLine(0,300, 650, 300);
-		System.out.println("fuck!");
 		
 		for(Word w : board){
 			g.clearRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());

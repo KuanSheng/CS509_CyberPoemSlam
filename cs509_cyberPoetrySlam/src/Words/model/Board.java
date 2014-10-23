@@ -4,7 +4,7 @@ public class Board implements Iterable<Word>{
     ArrayList<Word> words = new ArrayList<Word>();
     ArrayList<Word> protectedWords = new ArrayList<Word>();
     ArrayList<Word> unProtectedWords = new ArrayList<Word>();
-    //HashSet<String,Word> protectedWords = new HashSet<Word.value,Word>();
+    
     public void restore(BoardMemento m) {
 		words = new ArrayList<Word>();
 		for (Word s : m.stored) {
@@ -40,7 +40,21 @@ public class Board implements Iterable<Word>{
 		return null;
 	}
 	
-	
+	public boolean checkOverlap(Word w){
+		for(Word s:words){
+			if(s.equals(w)){
+				continue;
+			}
+			if(s.overlap(w)){
+				System.out.println(s.getX());
+				System.out.println(s.getY());
+				System.out.println(w.getX());
+				System.out.println(w.getY());
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	public Iterator<Word> iterator() {
 		// TODO Auto-generated method stub

@@ -26,15 +26,15 @@ public class WordMoveController extends MouseAdapter{
 	
 	public void mousePressed(MouseEvent e) {
 		// no board? no behavior!
-		
 		if (model == null) { 
 		return; }
 		Board board = model.getBoard();
 		
 		if (e.getButton()==MouseEvent.BUTTON3) {
 			board.addWords(new Word(e.getX(), e.getY(), 200, 14, "Sample",2));
-			//panel.redraw();
 			panel.repaint();
+			System.out.println(e.getX());
+			System.out.println(e.getY());
 			return;
 		}
             
@@ -66,6 +66,7 @@ public class WordMoveController extends MouseAdapter{
 	public void mouseReleased(MouseEvent e){
 		//no model
 		if (model == null) { return; }
+		
 		Word selected = model.getSelected();
 		//nothing selected
 		if (selected == null) { return; }
@@ -79,13 +80,10 @@ public class WordMoveController extends MouseAdapter{
 			//change status;
 			model.getBoard().protectWords(selected);
 			//if overlap, set back to original location;
-			for(Iterator<Word> iter = model.getBoard().iterator();iter.hasNext();){
-				if(selected.overlap(iter.next())){
-					selected.setLocation(originalx, originaly);
-					break;
-					}
+			if(model.getBoard().checkOverlap(selected)){
+				selected.setLocation(originalx, originaly);
 			}
-		}
+			}
 		
 		else if(this.originaly > 300&&selected.getY() > 300){
 			
@@ -93,11 +91,8 @@ public class WordMoveController extends MouseAdapter{
 		
 		else if(this.originaly < 300&&selected.getY() < 300){
 			//if overlap,set back to original location;
-			for(Iterator<Word> iter = model.getBoard().iterator();iter.hasNext();){
-				if(selected.overlap(iter.next())){
-					selected.setLocation(originalx, originaly);
-					break;
-					}
+			if(model.getBoard().checkOverlap(selected)){
+				selected.setLocation(originalx, originaly);
 			}
 		}
 		
