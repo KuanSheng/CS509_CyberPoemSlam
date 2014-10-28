@@ -26,6 +26,10 @@ public class Board implements Iterable<Word>{
 		poems.add(p);
 	}
 	
+	public ArrayList getWords(){
+		return this.words;
+	}
+	
 	public void protectWords(Word w){
 		unProtectedWords.remove(w);
 		protectedWords.add(w);
@@ -45,7 +49,7 @@ public class Board implements Iterable<Word>{
 		return null;
 	}
 	
-	public boolean checkOverlap(Word w){
+	public Word checkOverlap(Word w){
 		for(Word s:words){
 			if(s.equals(w)){
 				continue;
@@ -55,12 +59,14 @@ public class Board implements Iterable<Word>{
 				System.out.println(s.getY());
 				System.out.println(w.getX());
 				System.out.println(w.getY());
-				return true;
+				return s;
 			}
 		}
-		return false;
+		return null;
 	}
-	
+	public Iterator<Poem> poemIterator(){
+		return poems.iterator();
+	}
 	public Iterator<Word> iterator() {
 		// TODO Auto-generated method stub
 		return words.iterator();

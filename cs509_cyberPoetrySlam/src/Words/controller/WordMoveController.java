@@ -79,7 +79,7 @@ public class WordMoveController extends MouseAdapter{
 		else if(this.originaly > 300&&selected.getY() < 300){
 			//if overlap, set back to original location;
 			boolean isOverlap = false;
-			if(model.getBoard().checkOverlap(selected)){
+			if(model.getBoard().checkOverlap(selected)!=null){
 				isOverlap = true;
 				selected.setLocation(originalx, originaly);
 			}
@@ -94,8 +94,11 @@ public class WordMoveController extends MouseAdapter{
 		
 		else if(this.originaly < 300&&selected.getY() < 300){
 			//if overlap,set back to original location;
-			if(model.getBoard().checkOverlap(selected)){
-				selected.setLocation(originalx, originaly);
+			if(model.getBoard().checkOverlap(selected)!=null){
+				//selected.setLocation(originalx, originaly);
+				WordConnectionController connection = new WordConnectionController(model,panel,model.getBoard().checkOverlap(selected));
+				panel.addMouseListener(connection);
+				panel.addMouseMotionListener(connection);
 			}
 		}
 		
