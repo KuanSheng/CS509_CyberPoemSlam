@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.Graphics;
 
+import java.util.*;
+
 import Words.controller.WordConnectionController;
 import Words.controller.WordMoveController;
 import Words.model.Board;
@@ -57,7 +59,7 @@ public class ApplicationCanvas extends Canvas{
 	//need poem model design first
 	public void paintRow(){}
 	public void paintPoem(){
-		for(iterator itr = board. );
+		//for(Iterator itr = board.poemIterator();itr.hasNext());
 	}
 	public void paintBackgroud(){
 		
