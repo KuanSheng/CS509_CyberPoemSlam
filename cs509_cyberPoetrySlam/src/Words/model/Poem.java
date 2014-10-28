@@ -13,8 +13,8 @@ public class Poem extends Element{
     	rows = null;
     }
     
-    public Poem(Word w1, Word w2){
-    	Row row = new Row(w1,w2);
+    public Poem(Word w1, Word w2,int direction){
+    	Row row = new Row(w1,w2,direction);
     	this.addRow(row);
     	this.x = row.getX();
     	this.y = row.getY();

@@ -15,14 +15,19 @@ ArrayList<Word> words = new ArrayList<Word>();
       this.y = y;
 	}
 	
-	public Row(Word w1,Word w2){
-		this.x = w1.getX();
-		this.y = w1.getY();
+	public Row(Word w1,Word w2,int direction){
+		if(direction==1){
+			this.x = w1.getX()-w2.getWidth();
+			this.y = w1.getY();
+		}
+		else{
+			this.x = w2.getX()-w1.getWidth();
+			this.y = w2.getY();
+		}
 		this.height = w1.getHeight();
 		this.width = w1.getWidth()+w2.getWidth();
-		System.out.println(this.width);
-		this.addWord(w1);
-		this.addWord(w2);
+		this.words.add(w1);
+		this.words.add(w2);
 	}
 	
 	public void addWord(Word word){

@@ -20,7 +20,35 @@ public class WordConnectionController{
 	
 	public void connect(){
 		Word selectedWord = this.model.getSelected();
-		Poem newPoem = new Poem(this.connectWord,selectedWord);	
+		int type = b.getOverlapType(selectedWord, this.connectWord);
+		System.out.println(type);
+		Poem newPoem;
+		
+		switch(type){
+		case 3:
+			newPoem = new Poem(this.connectWord,selectedWord,1);
+		    break;
+		
+		case 4:
+			newPoem = new Poem(this.connectWord,selectedWord,1);
+			break;
+		case 2:
+			newPoem = new Poem(selectedWord,this.connectWord,2);
+			break;
+		case 1:
+			newPoem = new Poem(selectedWord,this.connectWord,2);
+			break;
+		case 5:
+			newPoem = new Poem(this.connectWord,selectedWord,1);
+			break;
+		case 6:
+			newPoem = new Poem(selectedWord,this.connectWord,2);
+			break;
+		default:
+			newPoem = new Poem(this.connectWord,selectedWord,1);
+			break;
+		}
+		
 		b.addPoems(newPoem);
 		b.getWords().remove(selectedWord);
 		b.getWords().remove(connectWord);
