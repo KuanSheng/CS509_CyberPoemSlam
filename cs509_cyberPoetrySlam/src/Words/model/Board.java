@@ -55,10 +55,6 @@ public class Board implements Iterable<Word>{
 				continue;
 			}
 			if(s.overlap(w)){
-				System.out.println(s.getX());
-				System.out.println(s.getY());
-				System.out.println(w.getX());
-				System.out.println(w.getY());
 				return s;
 			}
 		}

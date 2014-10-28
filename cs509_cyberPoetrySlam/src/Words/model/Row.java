@@ -20,14 +20,15 @@ ArrayList<Word> words = new ArrayList<Word>();
 		this.y = w1.getY();
 		this.height = w1.getHeight();
 		this.width = w1.getWidth()+w2.getWidth();
+		System.out.println(this.width);
 		this.addWord(w1);
 		this.addWord(w2);
 	}
 	
 	public void addWord(Word word){
     	words.add(word);
+    	this.width = this.width+word.getWidth();
     }
-	
 	
 	 public int getX(){return this.x;}
      public int getY(){return this.y;}

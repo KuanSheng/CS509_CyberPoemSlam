@@ -20,6 +20,9 @@ public class Poem extends Element{
     	this.y = row.getY();
     }
     
+    public ArrayList<Row> getRows(){
+    	return this.rows;
+    }
     public void addRow(Row row){
     	rows.add(row);
     }

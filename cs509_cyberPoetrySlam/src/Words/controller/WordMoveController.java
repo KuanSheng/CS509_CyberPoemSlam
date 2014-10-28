@@ -31,7 +31,7 @@ public class WordMoveController extends MouseAdapter{
 		Board board = model.getBoard();
 		
 		if (e.getButton()==MouseEvent.BUTTON3) {
-			board.addWords(new Word(e.getX(), e.getY(), 200, 14, "Sample",2));
+			board.addWords(new Word(e.getX(), e.getY(), 120, 14, "Sample",2));
 			panel.repaint();
 			System.out.println(e.getX());
 			System.out.println(e.getY());
@@ -97,8 +97,7 @@ public class WordMoveController extends MouseAdapter{
 			if(model.getBoard().checkOverlap(selected)!=null){
 				//selected.setLocation(originalx, originaly);
 				WordConnectionController connection = new WordConnectionController(model,panel,model.getBoard().checkOverlap(selected));
-				panel.addMouseListener(connection);
-				panel.addMouseMotionListener(connection);
+				connection.connect();
 			}
 		}
 		

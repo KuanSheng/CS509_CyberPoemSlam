@@ -1,12 +1,11 @@
 package Words.controller;
 
-import java.awt.event.MouseAdapter;
 import Words.model.*;
 
 import Words.model.Model;
 import Words.view.ApplicationCanvas;
 
-public class WordConnectionController extends MouseAdapter {
+public class WordConnectionController{
 	final Model model;
 	final ApplicationCanvas panel;
 	final Board b;
@@ -19,13 +18,13 @@ public class WordConnectionController extends MouseAdapter {
 		b = model.getBoard();
 	}
 	
-	public void MouseReleased(){
+	public void connect(){
 		Word selectedWord = this.model.getSelected();
-		Poem newPoem = new Poem(selectedWord,this.connectWord);	
+		Poem newPoem = new Poem(this.connectWord,selectedWord);	
 		b.addPoems(newPoem);
 		b.getWords().remove(selectedWord);
 		b.getWords().remove(connectWord);
-		
+		panel.repaint();
 		}
 	
 }
