@@ -17,7 +17,6 @@ public class main {
 		if(model == null)
 			System.out.println("main a main");
 		final Application app = new Application(model);
-		
 		app.addWindowListener(new WindowAdapter(){
 			
 			public void windowClosing(WindowEvent e){

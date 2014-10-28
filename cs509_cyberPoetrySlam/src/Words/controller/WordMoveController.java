@@ -33,8 +33,8 @@ public class WordMoveController extends MouseAdapter{
 		if (e.getButton()==MouseEvent.BUTTON3) {
 			board.addWords(new Word(e.getX(), e.getY(), 120, 14, "Sample",2));
 			panel.repaint();
-			System.out.println(e.getX());
-			System.out.println(e.getY());
+			//System.out.println(e.getX());
+			//System.out.println(e.getY());
 			return;
 		}
             
@@ -42,6 +42,7 @@ public class WordMoveController extends MouseAdapter{
 		
 		// pieces are returned in order of Z coordinate
 		Word s = board.findWord(anchor.x, anchor.y);
+		
 		if (s != null) {
 			Point relative = new Point (anchor);
 			

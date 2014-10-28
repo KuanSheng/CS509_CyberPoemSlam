@@ -63,6 +63,15 @@ public class ApplicationCanvas extends Canvas{
 		g.clearRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
 		g.setColor(Color.blue);
 		g.fillRect(r.getX(),r.getY(),r.getWidth(),r.getHeight());
+		for(Iterator<Word> wordItr = r.iterator();wordItr.hasNext();){
+			//ystem.out.println(wordItr.next().getValue());
+			//int x = wordItr.next().getX();
+			//System.out.println(x);
+			//g.drawString("sample",wordItr.next().getX()+wordItr.next().getWidth()/2,r.getY()+r.getHeight());
+			Word word = wordItr.next();
+			g.setColor(Color.white);
+			g.drawString(word.getValue(), word.getX()+word.getWidth()/2, word.getY()+r.getHeight());
+			}
 	}
 	public void paintPoem(Graphics g){
 		for(Iterator<Poem> itr = board.poemIterator();itr.hasNext();){

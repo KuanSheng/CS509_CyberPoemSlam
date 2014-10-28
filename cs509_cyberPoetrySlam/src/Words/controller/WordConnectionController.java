@@ -51,7 +51,7 @@ public class WordConnectionController{
 		
 		b.addPoems(newPoem);
 		b.getWords().remove(selectedWord);
-		b.getWords().remove(connectWord);
+		b.getWords().remove(this.connectWord);
 		panel.repaint();
 		}
 	
