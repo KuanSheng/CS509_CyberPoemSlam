@@ -1,6 +1,6 @@
 package Words.model;
 import java.util.*;
-public class Board implements Iterable<Word>{
+public class Board implements Iterable<Word>, java.io.Serializable {
     ArrayList<Word> words = new ArrayList<Word>();
     ArrayList<Word> protectedWords = new ArrayList<Word>();
     ArrayList<Word> unProtectedWords = new ArrayList<Word>();
@@ -79,4 +79,13 @@ public class Board implements Iterable<Word>{
 	public Iterator<Word> unprotectedWordsIterator(){
 		return unProtectedWords.iterator();
 	}
+
+    public String toString(){
+        String board = new String();
+        for(Word w : words){
+//            board.concat(w.toString() + " , ");
+            board = board + w.toString() + " , ";
+        }
+        return board;
+    }
 }

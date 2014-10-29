@@ -1,6 +1,8 @@
 package Words.model;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
-public class Row implements Iterable<Word>{
+public class Row implements Iterable<Word>, Serializable{
 ArrayList<Word> words = new ArrayList<Word>();
 	
 	int x;
@@ -38,4 +40,6 @@ ArrayList<Word> words = new ArrayList<Word>();
      public Iterator<Word> iterator(){
     	 return words.iterator();
      }
+
+
 }

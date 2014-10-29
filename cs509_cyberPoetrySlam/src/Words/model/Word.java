@@ -1,13 +1,20 @@
 package Words.model;
 
-public class Word extends Element{
+import java.io.IOException;
+import java.io.Serializable;
+
+public class Word extends Element implements Serializable{
 	 int x;
 	 int y;
-	 
-     final String value;
-     final int width;
-     final int height;
-     final int wordType;
+    //changed from final to accommondate deserialization
+//    final String value;
+//    final int width;
+//    final int height;
+//    final int wordType;
+    String value;
+    int width;
+    int height;
+    int wordType;
      
      public Word(int x,int y,int width,int height,String value,int wordType){
     	 this.x = x;
@@ -59,5 +66,10 @@ public class Word extends Element{
     	 this.x = x;
     	 this.y = y;
      }
+
+    public String toString(){
+        return value;
+    }
+
 }
 

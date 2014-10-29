@@ -47,7 +47,8 @@ public class ApplicationCanvas extends Canvas{
 		g.drawLine(0,300, 650, 300);
 		
 		for(Word w : board){
-			g.clearRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
+            System.out.println("word : \"" + w + " \": paint.ApplicationCanvas");
+            g.clearRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
 			g.setColor(Color.gray);
 			g.fillRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
 			g.setColor(Color.black);

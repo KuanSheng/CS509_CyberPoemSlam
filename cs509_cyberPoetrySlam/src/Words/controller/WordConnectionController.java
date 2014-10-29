@@ -25,7 +25,6 @@ public class WordConnectionController extends MouseAdapter {
 		b.addPoems(newPoem);
 		b.getWords().remove(selectedWord);
 		b.getWords().remove(connectWord);
-		
-		}
+	}
 	
 }
