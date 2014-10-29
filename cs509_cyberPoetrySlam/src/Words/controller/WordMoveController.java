@@ -91,7 +91,7 @@ public class WordMoveController extends MouseAdapter{
 			if(selectedPoem == null){return;}
 			else{
 				if(selectedPoem.getY()>300){
-					
+					selectedPoem.setLocation(originalx,originaly);
 				}
 			}
 		}
