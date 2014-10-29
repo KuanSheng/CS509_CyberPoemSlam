@@ -42,7 +42,7 @@ public class WordMoveController extends MouseAdapter{
 		
 		// pieces are returned in order of Z coordinate
 		Word s = board.findWord(anchor.x, anchor.y);
-		
+
 		if (s != null) {
 			Point relative = new Point (anchor);
 			
@@ -60,19 +60,44 @@ public class WordMoveController extends MouseAdapter{
 			//panel.redraw();
 			return;
 		}
+		else{
+			Poem p = board.findPoem(anchor.x,anchor.y);
+			if(p != null){
+				Point relative = new Point(anchor);
+				
+				model.setSelectedPoem(p);
+				originalx = s.getX();
+				originaly = s.getY();
+					
+				// set anchor for smooth moving
+				deltaX = relative.x - originalx;
+				deltaY = relative.y - originaly;
+			}
+		}
 		
 		model.setSelected(null);
+		model.setSelectedPoem(null);
 	}
+
 	
 	public void mouseReleased(MouseEvent e){
 		//no model
 		if (model == null) { return; }
 		
 		Word selected = model.getSelected();
+		Poem selectedPoem = model.getSelectedPoem();
 		//nothing selected
-		if (selected == null) { return; }
+		if (selected == null) { 
+			if(selectedPoem == null){return;}
+			else{
+				if(selectedPoem.getY()>300){
+					
+				}
+			}
+		}
 		
-		if(this.originaly < 300&&selected.getY() > 300){
+		else {
+			if(this.originaly < 300&&selected.getY() > 300){
 			//change status;
 			model.getBoard().releaseWords(selected);
 		}
@@ -101,7 +126,7 @@ public class WordMoveController extends MouseAdapter{
 				connection.connect();
 			}
 		}
-		
+		}
 		//release the mouse and repaint
 		selected = null;
 		panel.repaint();
@@ -110,10 +135,16 @@ public class WordMoveController extends MouseAdapter{
 	public void mouseDragged(MouseEvent e){
 		if(model == null){return;}
 		Word selected = model.getSelected();
+		Poem selectedPoem = model.getSelectedPoem();
 		
-		if(selected == null){return;}
+		if(selected == null){
+			if(selectedPoem == null){return;}
+			else{
+				selectedPoem.setLocation(e.getX()-deltaX,e.getY()-deltaY);
+			}
+		}
 		selected.setLocation(e.getX()-deltaX,e.getY()-deltaY);
-		panel.paintWord(selected);
+		//panel.paintWord(selected);
 		
 		panel.repaint();
 	}

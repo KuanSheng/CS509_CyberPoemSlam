@@ -49,6 +49,15 @@ public class Board implements Iterable<Word>{
 		return null;
 	}
 	
+	public Poem findPoem(int x,int y){
+		for(Poem p:poems){
+			if(p.intersection(x,y)){
+				return p;
+			}
+		}
+		return null;
+	}
+	
 	public Word checkOverlap(Word w){
 		for(Word s:words){
 			if(s.equals(w)){

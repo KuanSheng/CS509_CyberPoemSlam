@@ -8,11 +8,20 @@ public class Poem extends Element{
     int y;
     
     public Poem(int x, int y){
+    	super.type=3;
     	this.x = x;
     	this.y = y;
     	rows = null;
     }
     
+    public boolean intersection(int x, int y){
+    	for(Row r:rows){
+    		if(r.intersection(x, y)){
+    			return true;
+    		}
+    	}
+    	return false;
+    }
     public Poem(Word w1, Word w2,int direction){
     	Row row = new Row(w1,w2,direction);
     	this.addRow(row);
@@ -25,5 +34,13 @@ public class Poem extends Element{
     }
     public void addRow(Row row){
     	rows.add(row);
+    }
+    
+    public int getX(){return this.x;}
+    public int getY(){return this.y;}
+    
+    public void setLocation(int x, int y ){
+   	 this.x = x;
+   	 this.y = y;
     }
 }

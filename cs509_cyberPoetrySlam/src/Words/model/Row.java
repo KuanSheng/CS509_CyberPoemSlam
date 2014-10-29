@@ -1,6 +1,6 @@
 package Words.model;
 import java.util.*;
-public class Row implements Iterable<Word>{
+public class Row extends Element implements Iterable<Word>{
 ArrayList<Word> words = new ArrayList<Word>();
 	
 	int x;
@@ -11,6 +11,7 @@ ArrayList<Word> words = new ArrayList<Word>();
 	int width;
 
 	public Row(int x, int y, int hight, int width){
+	  super.type = 2;
       this.x = x;
       this.y = y;
 	}
@@ -42,6 +43,14 @@ ArrayList<Word> words = new ArrayList<Word>();
     	words.add(word);
     	this.width = this.width+word.getWidth();
     }
+	
+	public boolean intersection(int x, int y){
+		if(x < this.x){return false;}
+   	 if(x > (this.x + width)){return false;}
+   	 if(y < this.y){return false;}
+   	 if(y > (this.y+height)){return false;}
+	return true;
+	}
 	
 	 public int getX(){return this.x;}
      public int getY(){return this.y;}
