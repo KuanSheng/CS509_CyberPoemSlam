@@ -6,7 +6,7 @@ public class Board implements Iterable<Word>{
     public void restore(BoardMemento m) {
 		words = new ArrayList<Word>();
 		for (Word s : m.stored) {
-			words.add(new Word(s.x, s.y, s.width, s.height, s.value));
+			words.add(s);
 		}
 	}
 	
