@@ -98,7 +98,9 @@ public class WordMoveController extends MouseAdapter{
 					selectedPoem.setLocation(originalx,originaly);
 				}
 				else{
-					
+					if(model.getBoard().checkOverlapPoem(selectedPoem)){
+						selectedPoem.setLocation(originalx, originaly);
+					}
 				}
 			}
 		}
@@ -116,6 +118,12 @@ public class WordMoveController extends MouseAdapter{
 				isOverlap = true;
 				selected.setLocation(originalx, originaly);
 			}
+			else{
+				if(model.getBoard().checkOverlapWord(selected)!=null){
+					isOverlap = true;
+					selected.setLocation(originalx, originaly);
+				}
+			}
 			//change status;
 			if(isOverlap == false)
 			model.getBoard().protectWords(selected);
@@ -131,6 +139,13 @@ public class WordMoveController extends MouseAdapter{
 				//selected.setLocation(originalx, originaly);
 				WordConnectionController connection = new WordConnectionController(model,panel,model.getBoard().checkOverlap(selected));
 				connection.connect();
+			}
+			else{
+				if(model.getBoard().checkOverlapWord(selected)!=null){
+					Poem connectPoem = model.getBoard().checkOverlapWord(selected);
+					WordConnectionController connection = new WordConnectionController(model,panel,connectPoem);
+					connection.connectPoem();
+				}
 			}
 		}
 		}

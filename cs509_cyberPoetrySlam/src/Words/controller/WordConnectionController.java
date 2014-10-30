@@ -10,6 +10,7 @@ public class WordConnectionController{
 	final ApplicationCanvas panel;
 	final Board b;
 	Word connectWord;
+	Poem connectPoem;
 	
 	public WordConnectionController(Model m,ApplicationCanvas p,Word w){
 		this.model = m;
@@ -18,10 +19,16 @@ public class WordConnectionController{
 		b = model.getBoard();
 	}
 	
+	public WordConnectionController(Model m, ApplicationCanvas a, Poem p){
+		this.model = m;
+		this.panel = a;
+		this.connectPoem = p;
+		b = model.getBoard();
+	}
+	
 	public void connect(){
 		Word selectedWord = this.model.getSelected();
 		int type = b.getOverlapType(selectedWord, this.connectWord);
-		System.out.println(type);
 		Poem newPoem;
 		
 		switch(type){
@@ -55,4 +62,8 @@ public class WordConnectionController{
 		panel.repaint();
 		}
 	
+	public void connectPoem(){
+		Word selectedWord = model.getSelected();
+		
+		}
 }

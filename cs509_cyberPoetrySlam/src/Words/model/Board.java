@@ -70,6 +70,28 @@ public class Board implements Iterable<Word>{
 		return null;
 	}
 	
+	public boolean checkOverlapPoem(Poem p){
+		for(Word s:words){
+			for(Row r:p.getRows()){
+				if(s.overlapRow(r)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public Poem checkOverlapWord(Word w){
+		for(Poem p:poems){
+			for(Row r:p.getRows()){
+				if(w.overlapRow(r)){
+					return p;
+				}
+			}
+		}
+		return null;
+	}
+
 	public int getOverlapType(Word w1,Word w2){
 	if((w1.x+w1.width)>w2.getX()&&(w1.x+w1.width)<(w2.getX()+w2.width)&&(w2.getY()+w2.getHeight())>w1.y&&(w2.getY()+w2.getHeight())<(w1.y+w1.height)){
    		 return 1;
@@ -89,6 +111,18 @@ public class Board implements Iterable<Word>{
    	 if((w1.x+w1.width>w2.getX())&&(w1.x+w1.width<w2.getX()+w2.getWidth())&&w1.y==w2.getY()){
    		 return 6;
    	 }
+		return 0;
+	}
+	
+	public int getOverlapTypePoemWord(Word w, Row r){
+		if(w.getX()+w.getWidth()>r.getX()&&w.getX()+w.getWidth()<r.getX()+r.getWidth()&&
+				w.getX()<r.getX()&&w.getY()+w.getHeight()>r.getY()&&w.getY()+w.getHeight()<r.getY()+r.getHeight()){
+			return 1;
+		}
+		if(w.getX()<r.getX()+r.getWidth()&&w.getX()+w.getWidth()>r.getX()+r.getWidth()&&r.getX()>w.getX()
+				&&w.getY()+w.getHeight()>r.getY()&&w.getY()+w.getHeight()<r.getY()+r.getHeight()){
+			return 2;
+		}
 		return 0;
 	}
 	
