@@ -42,5 +42,8 @@ public class Poem extends Element{
     public void setLocation(int x, int y ){
    	 this.x = x;
    	 this.y = y;
+   	 for(Row r:rows){
+   		 r.setLocation(x,y);
+   	 }
     }
 }

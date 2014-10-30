@@ -31,8 +31,10 @@ public class WordMoveController extends MouseAdapter{
 		Board board = model.getBoard();
 		
 		if (e.getButton()==MouseEvent.BUTTON3) {
+			if(e.getY()>300){
 			board.addWords(new Word(e.getX(), e.getY(), 120, 14, "Sample",2));
 			panel.repaint();
+			}
 			//System.out.println(e.getX());
 			//System.out.println(e.getY());
 			return;
@@ -66,12 +68,14 @@ public class WordMoveController extends MouseAdapter{
 				Point relative = new Point(anchor);
 				
 				model.setSelectedPoem(p);
-				originalx = s.getX();
-				originaly = s.getY();
-					
+				originalx = p.getX();
+				originaly = p.getY();
+
 				// set anchor for smooth moving
 				deltaX = relative.x - originalx;
 				deltaY = relative.y - originaly;
+				
+				return;
 			}
 		}
 		
@@ -92,6 +96,9 @@ public class WordMoveController extends MouseAdapter{
 			else{
 				if(selectedPoem.getY()>300){
 					selectedPoem.setLocation(originalx,originaly);
+				}
+				else{
+					
 				}
 			}
 		}
@@ -136,6 +143,8 @@ public class WordMoveController extends MouseAdapter{
 		if(model == null){return;}
 		Word selected = model.getSelected();
 		Poem selectedPoem = model.getSelectedPoem();
+		if(selectedPoem != null)
+		System.out.println("yes");
 		
 		if(selected == null){
 			if(selectedPoem == null){return;}
@@ -143,7 +152,9 @@ public class WordMoveController extends MouseAdapter{
 				selectedPoem.setLocation(e.getX()-deltaX,e.getY()-deltaY);
 			}
 		}
-		selected.setLocation(e.getX()-deltaX,e.getY()-deltaY);
+		else{
+			selected.setLocation(e.getX()-deltaX,e.getY()-deltaY);
+		}
 		//panel.paintWord(selected);
 		
 		panel.repaint();

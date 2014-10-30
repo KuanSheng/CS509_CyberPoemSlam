@@ -52,6 +52,16 @@ ArrayList<Word> words = new ArrayList<Word>();
 	return true;
 	}
 	
+	public void setLocation(int x, int y){
+		this.x = x;
+		this.y = y;
+		int i = 0 ;
+		for(Word w: words){
+			w.setLocation(x+i*w.width,y);
+			i++;
+		}
+		
+	}
 	 public int getX(){return this.x;}
      public int getY(){return this.y;}
      public int getWidth(){return this.width;}
