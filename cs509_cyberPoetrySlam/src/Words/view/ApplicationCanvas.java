@@ -46,7 +46,7 @@ public class ApplicationCanvas extends Canvas{
 		g.fillRect(0,0,getWidth(), 300);
 		g.drawLine(0,300, 650, 300);
 		
-		for(Word w : board){
+		for(Word w : board.getWords()){
 			g.clearRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
 			g.setColor(Color.gray);
 			g.fillRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
@@ -69,6 +69,7 @@ public class ApplicationCanvas extends Canvas{
 			g.drawString(word.getValue(), word.getX()+word.getWidth()/2, word.getY()+r.getHeight());
 			}
 	}
+	
 	public void paintPoem(Graphics g){
 		for(Iterator<Poem> itr = board.poemIterator();itr.hasNext();){
 			Poem paintPoem = itr.next();

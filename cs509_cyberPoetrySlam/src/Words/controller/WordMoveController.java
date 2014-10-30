@@ -26,8 +26,7 @@ public class WordMoveController extends MouseAdapter{
 	
 	public void mousePressed(MouseEvent e) {
 		// no board? no behavior!
-		if (model == null) { 
-		return; }
+		if (model == null) { return; }
 		Board board = model.getBoard();
 		
 		if (e.getButton()==MouseEvent.BUTTON3) {
@@ -47,7 +46,7 @@ public class WordMoveController extends MouseAdapter{
 
 		if (s != null) {
 			Point relative = new Point (anchor);
-			
+			System.out.println("wo cao!");
 			// no longer in the board since we are moving it around...
 			//board.remove(s);
 			model.setSelected(s);
@@ -65,6 +64,7 @@ public class WordMoveController extends MouseAdapter{
 		else{
 			Poem p = board.findPoem(anchor.x,anchor.y);
 			if(p != null){
+				System.out.println("woca");
 				Point relative = new Point(anchor);
 				
 				model.setSelectedPoem(p);
@@ -135,7 +135,10 @@ public class WordMoveController extends MouseAdapter{
 		}
 		}
 		//release the mouse and repaint
+		model.setSelected(null);
+		model.setSelectedPoem(null);
 		selected = null;
+		selectedPoem = null;
 		panel.repaint();
 	}
 	
@@ -143,19 +146,20 @@ public class WordMoveController extends MouseAdapter{
 		if(model == null){return;}
 		Word selected = model.getSelected();
 		Poem selectedPoem = model.getSelectedPoem();
-		if(selectedPoem != null)
-		System.out.println("yes");
 		
 		if(selected == null){
-			if(selectedPoem == null){return;}
+			if(selectedPoem == null){
+				
+				return;}
 			else{
+				
 				selectedPoem.setLocation(e.getX()-deltaX,e.getY()-deltaY);
 			}
 		}
-		else{
+		else if(selected != null){
+			System.out.println("yes");
 			selected.setLocation(e.getX()-deltaX,e.getY()-deltaY);
 		}
-		//panel.paintWord(selected);
 		
 		panel.repaint();
 	}

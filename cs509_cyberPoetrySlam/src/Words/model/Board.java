@@ -26,7 +26,7 @@ public class Board implements Iterable<Word>{
 		poems.add(p);
 	}
 	
-	public ArrayList getWords(){
+	public ArrayList<Word> getWords(){
 		return this.words;
 	}
 	
