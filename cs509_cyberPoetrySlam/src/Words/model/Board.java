@@ -114,14 +114,45 @@ public class Board implements Iterable<Word>{
 		return 0;
 	}
 	
-	public int getOverlapTypePoemWord(Word w, Row r){
+	public int getOverlapTypeRowWord(Word w, Row r){
 		if(w.getX()+w.getWidth()>r.getX()&&w.getX()+w.getWidth()<r.getX()+r.getWidth()&&
 				w.getX()<r.getX()&&w.getY()+w.getHeight()>r.getY()&&w.getY()+w.getHeight()<r.getY()+r.getHeight()){
 			return 1;
 		}
-		if(w.getX()<r.getX()+r.getWidth()&&w.getX()+w.getWidth()>r.getX()+r.getWidth()&&r.getX()>w.getX()
+		if(w.getX()<r.getX()+r.getWidth()&&w.getX()+w.getWidth()>r.getX()+r.getWidth()&&r.getX()<w.getX()
 				&&w.getY()+w.getHeight()>r.getY()&&w.getY()+w.getHeight()<r.getY()+r.getHeight()){
 			return 2;
+		}
+		if(w.getX()+w.getWidth()>r.getX()+r.getHeight()&&w.getX()<r.getX()+r.getWidth()&&r.getX()<w.getX()
+				&&w.getY()+w.getHeight()>r.getY()+r.getHeight()&&w.getY()<r.getY()+r.getHeight()){
+			return 3;
+		}
+		if(w.getX()+w.getWidth()>r.getX()&&w.getX()+w.getWidth()<r.getX()+r.getWidth()&&w.getX()<r.getX()
+				&&w.getY()+w.getHeight()>r.getY()+r.getHeight()&&w.getY()<r.getY()+r.getHeight()){
+			return 4;
+		}
+		if(w.getX()+w.getWidth()>r.getX()&&w.getX()+w.getWidth()<r.getX()+r.getWidth()&&
+				w.getX()<r.getX()&&w.getY()==r.getY()){
+			return 5;
+		}
+		if(w.getX()<r.getX()+r.getWidth()&&w.getX()+w.getWidth()>r.getX()+r.getWidth()&&r.getX()<w.getX()
+				&&w.getY()==r.getY()){
+			return 6;
+		}
+		if(w.getX()>r.getX()&&w.getX()+w.getWidth()<r.getX()+r.getWidth()&&w.getY()+w.getHeight()>r.getY()&&w.getY()+w.getHeight()<r.getY()+r.getHeight()){
+			return 7;
+		}
+		if(w.getX()>r.getX()&&w.getX()+w.getWidth()<r.getX()&&w.getY()+w.getHeight()>r.getY()+r.getHeight()&&w.getY()<r.getY()+r.getHeight()){
+			return 8;
+		}
+		return 0;
+	}
+	
+	public int getOverlapPoemWord(Poem p, Word w){
+		for(Row r:p.getRows()){
+			if(w.overlapRow(r)){
+				return getOverlapTypeRowWord(w,r);
+			}
 		}
 		return 0;
 	}
@@ -129,6 +160,7 @@ public class Board implements Iterable<Word>{
 	public Iterator<Poem> poemIterator(){
 		return poems.iterator();
 	}
+	
 	public Iterator<Word> iterator() {
 		// TODO Auto-generated method stub
 		return words.iterator();

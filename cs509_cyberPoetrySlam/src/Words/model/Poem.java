@@ -6,7 +6,7 @@ public class Poem extends Element{
 	ArrayList<Row> rows = new ArrayList<Row>();
 	int x;
     int y;
-    
+   
     public Poem(int x, int y){
     	super.type=3;
     	this.x = x;
@@ -22,6 +22,7 @@ public class Poem extends Element{
     	}
     	return false;
     }
+    
     public Poem(Word w1, Word w2,int direction){
     	Row row = new Row(w1,w2,direction);
     	this.addRow(row);
@@ -36,6 +37,22 @@ public class Poem extends Element{
     	rows.add(row);
     }
     
+    public void addWord(Word w){
+    	for(Row r:rows){
+    		if(w.overlapRow(r)){
+    			r.addWord(w);
+    		}
+    	}
+    }
+    
+    public Row getOverlapRow(Word w){
+    	for(Row r:rows){
+    		if(w.overlapRow(r)){
+    			return r;
+    		}
+    	}
+    	return null;
+    }
     public int getX(){return this.x;}
     public int getY(){return this.y;}
     
