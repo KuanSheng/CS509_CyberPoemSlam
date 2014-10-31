@@ -2,7 +2,6 @@ package Words.controller;
 
 import java.awt.Point;
 import java.awt.event.*;
-
 import java.util.*;
 
 import Words.model.*;
@@ -96,7 +95,6 @@ public class WordMoveController extends MouseAdapter{
 		else{
 			Poem p = board.findPoem(anchor.x,anchor.y);
 			if(p != null){
-				System.out.println("woca");
 				Point relative = new Point(anchor);
 				
 				model.setSelectedPoem(p);
@@ -179,12 +177,13 @@ public class WordMoveController extends MouseAdapter{
 				//check potential overlap
 				if(type == 1||type == 2||type == 6){
 					if(model.getBoard().checkPotentialOverlap(selected,connectWord,1)){
+						
 						potentialWord = true;
-						System.out.println("error");
 					}
 				}
 				else if(type == 3||type == 4||type ==5){
 					if(model.getBoard().checkPotentialOverlap(selected,connectWord,2)){
+						System.out.println("error!");
 						potentialWord = true;
 					}
 				}

@@ -180,13 +180,14 @@ public class Board implements Iterable<Word>{
     		}
     	}
     	else if(type == 2){
-    		int testx = connectWord.getX()+selectedWord.getWidth();
+    		int testx = connectWord.getX()+connectWord.getWidth();
     		int testy = connectWord.getY();
     		Word test = new Word(testx,testy,selectedWord.getWidth(),selectedWord.getHeight(),"test",2);
     		for(Word w:words){
     			if(test.overlap(w)){
-    				if(!w.equals(selectedWord))
-    				return true;
+    				if(!w.equals(selectedWord)){
+    				System.out.println("wo kao");
+    				return true;}
     			}
     		}
     		for(Poem p:poems){
