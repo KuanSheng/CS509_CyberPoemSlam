@@ -125,13 +125,15 @@ public class Board implements Iterable<Word>{
     		int testy = r.getY();
     		Word test = new Word(testx,testy,selectedWord.getWidth(),selectedWord.getHeight(),"test",2);
     		for(Word w:words){
-    			if(test.overlap(w)){
-    				return true;
-    			}
+    			  if(test.overlap(w)){
+    				  if(!w.equals(selectedWord))
+    				     return true;
+    			   }
     		}
     		for(Poem p:poems){
     			for(Row row:p.getRows()){
     				if(test.overlapRow(row)){
+    					System.out.println("error!");
     					return true;
     				}
     			}
@@ -163,8 +165,10 @@ public class Board implements Iterable<Word>{
     		int testy = connectWord.getY();
     		Word test = new Word(testx,testy,selectedWord.getWidth(),selectedWord.getHeight(),"test",2);
     		for(Word w:words){
+    			if(!w.equals(selectedWord)){
     			if(test.overlap(w)){
     				return true;
+    			}
     			}
     		}
     		for(Poem p:poems){

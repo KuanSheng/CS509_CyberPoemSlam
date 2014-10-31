@@ -180,6 +180,7 @@ public class WordMoveController extends MouseAdapter{
 				if(type == 1||type == 2||type == 6){
 					if(model.getBoard().checkPotentialOverlap(selected,connectWord,1)){
 						potentialWord = true;
+						System.out.println("error");
 					}
 				}
 				else if(type == 3||type == 4||type ==5){
@@ -190,11 +191,11 @@ public class WordMoveController extends MouseAdapter{
 				//connect two words
 				if(potentialWord == false){
 				WordConnectionController connection = new WordConnectionController(model,panel,model.getBoard().checkOverlap(selected));
-				connection.connect();
-				}
+				connection.connect();}
 				else{
 					selected.setLocation(originalx, originaly);
 				}
+				
 			}
 			else{
 				if(model.getBoard().checkOverlapWord(selected)!=null){

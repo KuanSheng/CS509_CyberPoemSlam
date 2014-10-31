@@ -55,6 +55,7 @@ public class ApplicationCanvas extends Canvas{
 		g.fillRect(0,0,getWidth(), 300);
 		g.drawLine(0,300, 650, 300);
 	}
+	
 	public void paintWord(Graphics g){
 		for(Word w : board.getWords()){
 			g.clearRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
@@ -62,6 +63,7 @@ public class ApplicationCanvas extends Canvas{
 			g.fillRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
 			g.setColor(Color.black);
 			g.drawString(w.getValue(),w.getX()+w.getWidth()/2,w.getY()+w.getHeight());
+			
 		}
 	}
 	//need poem model design first
@@ -69,6 +71,8 @@ public class ApplicationCanvas extends Canvas{
 		g.clearRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
 		g.setColor(Color.blue);
 		g.fillRect(r.getX(),r.getY(),r.getWidth(),r.getHeight());
+		g.setColor(Color.white);
+		g.drawLine(r.getX(), r.getY(), r.getX(), r.getY()+r.getHeight());
 		for(Iterator<Word> wordItr = r.iterator();wordItr.hasNext();){
 			Word word = wordItr.next();
 			g.setColor(Color.white);
