@@ -1,6 +1,7 @@
 package Words.model;
 import java.lang.reflect.Array;
 import java.util.*;
+
 public class Board implements Iterable<Word>{
     ArrayList<Word> protectedWords = new ArrayList<Word>();
     ArrayList<Word> unprotectedWords = new ArrayList<Word>();
@@ -51,11 +52,15 @@ public class Board implements Iterable<Word>{
         return this.poemList;
     }
 
-    public void setprotectedWords(ArrayList<Word> pw) {
+    public ArrayList<Word> getWords() {
+        return this.words;
+    }
+
+    public void setProtectedWords(ArrayList<Word> pw) {
         this.protectedWords = pw;
     }
 
-    public ArrayList<Word> getprotectedWords() {
+    public ArrayList<Word> getProtectedWords() {
         return this.protectedWords;
     }
 
@@ -94,8 +99,6 @@ public class Board implements Iterable<Word>{
 		}
 		return null;
 	}
-	
-	
 	
 	public Iterator<Word> iterator() {
 		// TODO Auto-generated method stub
