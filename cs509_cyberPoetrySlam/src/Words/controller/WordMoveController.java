@@ -167,7 +167,10 @@ public class WordMoveController extends MouseAdapter{
 		
 		else if(this.originaly < 300&&selected.getY() < 300){
 			//if overlap,set back to original location;
-			if(model.getBoard().checkOverlap(selected)!=null){
+			if(model.getBoard().getOverLapNumber(selected)>1){
+				selected.setLocation(originalx,originaly);
+			}
+			else if(model.getBoard().checkOverlap(selected)!=null){
 				//connect two words
 				WordConnectionController connection = new WordConnectionController(model,panel,model.getBoard().checkOverlap(selected));
 				connection.connect();

@@ -78,6 +78,15 @@ public class Board implements Iterable<Word>{
 				}
 			}
 		}
+		for(Poem poem:poems){
+			for(Row r:poem.getRows())
+				for(Word s:r.getWords())
+				   for(Row row:p.getRows()){
+					if(s.overlapRow(row)){
+						return true;
+					}
+				}
+		}
 		return false;
 	}
 	
@@ -91,7 +100,22 @@ public class Board implements Iterable<Word>{
 		}
 		return null;
 	}
-
+    public int getOverLapNumber(Word w){
+    	int number = 0;
+    	for(Word s:words){
+    		if(w.overlap(s)){
+    			number++;
+    		}
+    	}
+    	for(Poem p:poems){
+    		for(Row r:p.getRows()){
+    			if(w.overlapRow(r)){
+    				number++;
+    			}
+    		}
+    	}
+    	return number;
+    }
 	public int getOverlapType(Word w1,Word w2){
 	if((w1.x+w1.width)>w2.getX()&&(w1.x+w1.width)<(w2.getX()+w2.width)&&(w2.getY()+w2.getHeight())>w1.y&&(w2.getY()+w2.getHeight())<(w1.y+w1.height)){
    		 return 1;
