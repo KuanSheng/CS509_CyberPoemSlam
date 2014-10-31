@@ -185,6 +185,7 @@ public class Board implements Iterable<Word>{
     		Word test = new Word(testx,testy,selectedWord.getWidth(),selectedWord.getHeight(),"test",2);
     		for(Word w:words){
     			if(test.overlap(w)){
+    				if(!w.equals(selectedWord))
     				return true;
     			}
     		}
