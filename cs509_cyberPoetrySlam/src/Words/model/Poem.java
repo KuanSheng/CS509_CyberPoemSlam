@@ -2,60 +2,81 @@ package Words.model;
 
 import java.util.ArrayList;
 
-public class Poem extends Element {
-    ArrayList<Row> rowList = new ArrayList<Row>();
-    //inherited x and y from Element
-//    int x;
-//    int y;
-    int x_last;
-    int y_last;
-
-    public Poem(int x, int y) {
-        super(2, x, y);
-//        this.x = x;
-//        this.y = y;
-//        words = null;
+public class Poem extends Element{
+	ArrayList<Row> rows = new ArrayList<Row>();
+	int x;
+    int y;
+    int RowNumber;
+   
+    public Poem(int x, int y){
+    	super.type=3;
+    	this.x = x;
+    	this.y = y;
+    	rows = null;
     }
-
-    public Poem(int x, int y, ArrayList<Row> r){
-        super(2, x, y);
-        rowList = r;
+    
+    public boolean intersection(int x, int y){
+    	for(Row r:rows){
+    		if(r.intersection(x, y)){
+    			return true;
+    		}
+    	}
+    	return false;
     }
-
-    //move the pome to a new position at (x , y)
-    public boolean move(int x, int y){
+    
+    public Poem(Word w1, Word w2,int direction){
+    	Row row = new Row(w1,w2,direction);
+    	this.addRow(row);
+    	this.RowNumber++;
+    	this.x = row.getX();
+    	this.y = row.getY();
+    }
+    
+    public ArrayList<Row> getRows(){
+    	return this.rows;
+    }
+    public void addRow(Row row){
+    	rows.add(row);
+    }
+    
+    public void addWord(Word w){
+    	for(Row r:rows){
+    		if(w.overlapRow(r)){
+    			r.addWord(w);
+    		}
+    	}
+    }
+    
+    public Row getOverlapRow(Word w){
+    	for(Row r:rows){
+    		if(w.overlapRow(r)){
+    			return r;
+    		}
+    	}
+    	return null;
+    }
+    
+    public void removeRow(Row r){
+    	rows.remove(r);
+    	this.RowNumber--;
+    }
+    
+    public int getRowNumber(){
+    	return this.RowNumber;
+    }
+    public int getX(){return this.x;}
+    public int getY(){return this.y;}
+    
+    public void setLocationAfterConnection(int x,int y){
+    	this.x = x;
+    	this.y = y;
+    }
+    
+    public void setLocation(int x, int y) {
         this.x = x;
         this.y = y;
-        return true;
+        for (Row r : rows) {
+            r.setLocation(x, y);
+        }
     }
-
-    public boolean stabilize(int x, int y){
-        x_last = x;
-        y_last = y;
-        return true;
-    }
-
-    public void addFirstRow(Row r){
-        rowList.add(0, r);
-    }
-
-    public void addLastRow(Row r) {
-        rowList.add(r);
-    }
-
-    public Element select(int x, int y){
-
-        return this; //TODO to be modified
-    }
-
-    public Element select(int top, int left, int bottom, int right){
-        return this; //TODO to be modified
-    }
-
-    public ArrayList<Word> releaseMyself(){
-        return new ArrayList<Word>(); // todo to be modified
-    }
-//    public void addWord(Word word) {
-//        words.add(word);
-//    }
 }

@@ -12,7 +12,7 @@ public class Word extends Element{
      final int wordType;
      
      public Word(int x,int y,int width,int height,String value,int wordType){
-         super(1,x,y);
+    	 super.type = 1;
     	 this.x = x;
     	 this.y = y;
     	 this.x_last = x;
@@ -49,17 +49,45 @@ public class Word extends Element{
      }
      
      public boolean overlap(Word w){
-    	 if((this.x+this.width)>w.getX()&&(w.getY()+w.getHeight())>this.y){
+    	 if((this.x+this.width)>w.getX()&&(this.x+this.width)<(w.getX()+w.width)&&(w.getY()+w.getHeight())>this.y&&(w.getY()+w.getHeight())<(this.y+this.height)){
     		 return true;
     	 }
-    	 if((this.x+this.width)>w.getX()&&(this.y+this.height)>w.getY()){
+    	 if((this.x+this.width)>w.getX()&&(this.x+this.width)<(w.getX()+w.width)&&(this.y+this.height)>w.getY()&&(this.y+this.height)<(w.getY()+w.height)){
     		 return true; 
     	 }
-    	 if((w.getX()+w.getWidth())>this.x&&(this.y+this.height)>w.getY()){
+    	 if((w.getX()+w.getWidth())>this.x&&(w.getX()+w.getWidth())<(this.x+this.width)&&(this.y+this.height)>w.getY()&&(this.y+this.height)<(w.getY()+w.height)){
     		 return true;
     	 }
-    	 if((w.getX()+w.getWidth()>this.x)&&(w.getY()+w.getHeight()>this.y)){
+    	 if((w.getX()+w.getWidth()>this.x)&&(w.getX()+w.getWidth())<(this.x+this.width)&&(w.getY()+w.getHeight()>this.y)&&(w.getY()+w.getHeight())<(this.y+this.height)){
     		 return true; 
+    	 }
+    	 if((w.getX()+w.getWidth()>this.x)&&(w.getX()+w.getWidth()<this.x+this.width)&&w.getY()==this.y){
+    		 return true;
+    	 }
+    	 if((this.x+this.width>w.getX())&&(this.x+this.width<w.getX()+w.getWidth())&&this.y==w.getY()){
+    		 return true;
+    	 }
+    	 return false;
+     }
+     
+     public boolean overlapRow(Row w){
+    	 if((this.x+this.width)>w.getX()&&(this.x+this.width)<(w.getX()+w.width)&&(w.getY()+w.getHeight())>this.y&&(w.getY()+w.getHeight())<(this.y+this.height)){
+    		 return true;
+    	 }
+    	 if((this.x+this.width)>w.getX()&&(this.x+this.width)<(w.getX()+w.width)&&(this.y+this.height)>w.getY()&&(this.y+this.height)<(w.getY()+w.height)){
+    		 return true; 
+    	 }
+    	 if((w.getX()+w.getWidth())>this.x&&(w.getX()+w.getWidth())<(this.x+this.width)&&(this.y+this.height)>w.getY()&&(this.y+this.height)<(w.getY()+w.height)){
+    		 return true;
+    	 }
+    	 if((w.getX()+w.getWidth()>this.x)&&(w.getX()+w.getWidth())<(this.x+this.width)&&(w.getY()+w.getHeight()>this.y)&&(w.getY()+w.getHeight())<(this.y+this.height)){
+    		 return true; 
+    	 }
+    	 if((w.getX()+w.getWidth()>this.x)&&(w.getX()+w.getWidth()<this.x+this.width)&&w.getY()==this.y){
+    		 return true;
+    	 }
+    	 if((this.x+this.width>w.getX())&&(this.x+this.width<w.getX()+w.getWidth())&&this.y==w.getY()){
+    		 return true;
     	 }
     	 return false;
      }
