@@ -123,9 +123,36 @@ public class Board implements Iterable<Word>{
     	if(type == 1){
     		int testx = r.getX()-selectedWord.getWidth();
     		int testy = r.getY();
+    		Word test = new Word(testx,testy,selectedWord.getWidth(),selectedWord.getHeight(),"test",2);
+    		for(Word w:words){
+    			if(test.overlap(w)){
+    				return true;
+    			}
+    		}
+    		for(Poem p:poems){
+    			for(Row row:p.getRows()){
+    				if(test.overlapRow(row)){
+    					return true;
+    				}
+    			}
+    		}
     	}
     	else if(type ==2){
-    		
+    		int testx = r.getX()+r.getWidth()+selectedWord.getWidth();
+    		int testy = r.getY();
+    		Word test = new Word(testx,testy,selectedWord.getWidth(),selectedWord.getHeight(),"test",2);
+    		for(Word w:words){
+    			if(test.overlap(w)){
+    				return true;
+    			}
+    		}
+    		for(Poem p:poems){
+    			for(Row row:p.getRows()){
+    				if(test.overlapRow(row)){
+    					return true;
+    				}
+    			}
+    		}
     	}
     	return false;
     }
