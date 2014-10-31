@@ -20,6 +20,7 @@ public class Board implements Iterable<Word>{
 	//add words to the board
 	public void addWords(Word w){
 		words.add(w);
+		unProtectedWords.add(w);
 	}
 	
 	public void addPoems(Poem p){
