@@ -80,10 +80,10 @@ ArrayList<Word> words = new ArrayList<Word>();
 	public void setLocation(int x, int y){
 		this.x = x;
 		this.y = y;
-		int i = 0 ;
+		int currentx=x;
 		for(Word w: words){
-			w.setLocation(x+i*w.width,y);
-			i++;
+			w.setLocation(currentx,y);
+			currentx = currentx+w.getWidth();
 		}
 		
 	}
