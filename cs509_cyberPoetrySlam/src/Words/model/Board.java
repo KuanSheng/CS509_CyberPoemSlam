@@ -79,6 +79,7 @@ public class Board implements Iterable<Word>{
 			}
 		}
 		for(Poem poem:poems){
+			if(!p.equals(poem)){
 			for(Row r:poem.getRows())
 				for(Word s:r.getWords())
 				   for(Row row:p.getRows()){
@@ -86,6 +87,7 @@ public class Board implements Iterable<Word>{
 						return true;
 					}
 				}
+			}
 		}
 		return false;
 	}
@@ -116,6 +118,56 @@ public class Board implements Iterable<Word>{
     	}
     	return number;
     }
+    public boolean checkPotentialOverlapPoem(Word selectedWord,Poem connectPoem,int type){
+    	Row r = connectPoem.getOverlapRow(selectedWord);
+    	if(type == 1){
+    		int testx = r.getX()-selectedWord.getWidth();
+    		int testy = r.getY();
+    	}
+    	else if(type ==2){
+    		
+    	}
+    	return false;
+    }
+    
+    public boolean checkPotentialOverlap(Word selectedWord,Word connectWord,int type){
+    	if(type == 1){
+    		int testx = connectWord.getX()-selectedWord.getWidth();
+    		int testy = connectWord.getY();
+    		Word test = new Word(testx,testy,selectedWord.getWidth(),selectedWord.getHeight(),"test",2);
+    		for(Word w:words){
+    			if(test.overlap(w)){
+    				return true;
+    			}
+    		}
+    		for(Poem p:poems){
+    			for(Row r:p.getRows()){
+    				if(test.overlapRow(r)){
+    					return true;
+    				}
+    			}
+    		}
+    	}
+    	else if(type == 2){
+    		int testx = connectWord.getX()+selectedWord.getWidth();
+    		int testy = connectWord.getY();
+    		Word test = new Word(testx,testy,selectedWord.getWidth(),selectedWord.getHeight(),"test",2);
+    		for(Word w:words){
+    			if(test.overlap(w)){
+    				return true;
+    			}
+    		}
+    		for(Poem p:poems){
+    			for(Row r:p.getRows()){
+    				if(test.overlapRow(r)){
+    					return true;
+    				}
+    			}
+    		}
+    	}
+    	return false;
+    }
+    
 	public int getOverlapType(Word w1,Word w2){
 	if((w1.x+w1.width)>w2.getX()&&(w1.x+w1.width)<(w2.getX()+w2.width)&&(w2.getY()+w2.getHeight())>w1.y&&(w2.getY()+w2.getHeight())<(w1.y+w1.height)){
    		 return 1;

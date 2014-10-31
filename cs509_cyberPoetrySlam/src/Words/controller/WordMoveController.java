@@ -131,6 +131,7 @@ public class WordMoveController extends MouseAdapter{
 				}
 				else{
 					if(model.getBoard().checkOverlapPoem(selectedPoem)){
+						System.out.println("madan");
 						selectedPoem.setLocation(originalx, originaly);
 					}
 				}
@@ -179,8 +180,10 @@ public class WordMoveController extends MouseAdapter{
 				if(model.getBoard().checkOverlapWord(selected)!=null){
 					Poem connectPoem = model.getBoard().checkOverlapWord(selected);
 					int type = model.getBoard().getOverlapPoemWord(connectPoem, selected);
-					System.out.println(type);
-					if(type == 7||type == 8){
+                    if(type == 1||type == 4||type == 5){
+                    	model.getBoard().checkPotentialOverlap(selected,);
+                    }
+                    else if(type == 7||type == 8){
 						selected.setLocation(originalx,originaly);
 					}
 					else{
