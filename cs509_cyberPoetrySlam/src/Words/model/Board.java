@@ -157,6 +157,10 @@ public class Board implements Iterable<Word>{
 		return 0;
 	}
 	
+	public void removePoem(Poem p){
+		poems.remove(p);
+	}
+	
 	public Iterator<Poem> poemIterator(){
 		return poems.iterator();
 	}

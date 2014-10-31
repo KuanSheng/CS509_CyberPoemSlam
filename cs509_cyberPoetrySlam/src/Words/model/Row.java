@@ -9,6 +9,7 @@ ArrayList<Word> words = new ArrayList<Word>();
 	int y_last;
 	int height;
 	int width;
+	int WordNumber;
 
 	public Row(int x, int y, int hight, int width){
 	  super.type = 2;
@@ -35,14 +36,38 @@ ArrayList<Word> words = new ArrayList<Word>();
 		this.width = w1.getWidth()+w2.getWidth();
 		this.words.add(w1);
 		this.words.add(w2);
+		this.WordNumber =2;
 		System.out.println(w2.getX());
 		System.out.println(w1.getX());
 	}
 	
 	public void addWord(Word word){
     	words.add(word);
+    	this.WordNumber++;
     	this.width = this.width+word.getWidth();
     }
+	
+	public void removeWord(Word word){
+		words.remove(word);
+		this.WordNumber--;
+		this.width = this.width-word.getWidth();
+	}
+	
+	public int getWordNumber(){
+		return this.WordNumber;
+	}
+	
+	public Word getFirstWord(){
+		for(Word w:words){
+			if(w.getX() == this.getX()){
+				return w;
+			}
+		}
+		return null;
+	}
+	public ArrayList<Word> getWords(){
+		return this.words;
+	}
 	
 	public boolean intersection(int x, int y){
 		if(x < this.x){return false;}

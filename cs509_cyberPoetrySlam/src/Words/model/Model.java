@@ -8,6 +8,7 @@ public class Model {
 
 	/** Currently selected shape (or null if none). */
 	Word selected;
+	Word selectedWordinPoem;
 	Poem selectedPoem;
 
 	public Model(Board b) {
@@ -39,6 +40,10 @@ public class Model {
 	public void setSelectedPoem(Poem p){
 		selectedPoem = p;
 	}
+	
+	public void setSelectedWordinPoem(Word w){
+		selectedWordinPoem = w;
+	}
 
 	public Word getSelected() {
 		return selected;
@@ -46,5 +51,9 @@ public class Model {
 	
 	public Poem getSelectedPoem(){
 		return selectedPoem;
+	}
+	
+	public Word getSelectedWordinPoem(){
+		return selectedWordinPoem;
 	}
 }

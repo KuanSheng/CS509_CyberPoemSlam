@@ -6,6 +6,7 @@ public class Poem extends Element{
 	ArrayList<Row> rows = new ArrayList<Row>();
 	int x;
     int y;
+    int RowNumber;
    
     public Poem(int x, int y){
     	super.type=3;
@@ -26,6 +27,7 @@ public class Poem extends Element{
     public Poem(Word w1, Word w2,int direction){
     	Row row = new Row(w1,w2,direction);
     	this.addRow(row);
+    	this.RowNumber++;
     	this.x = row.getX();
     	this.y = row.getY();
     }
@@ -52,6 +54,15 @@ public class Poem extends Element{
     		}
     	}
     	return null;
+    }
+    
+    public void removeRow(Row r){
+    	rows.remove(r);
+    	this.RowNumber--;
+    }
+    
+    public int getRowNumber(){
+    	return this.RowNumber;
     }
     public int getX(){return this.x;}
     public int getY(){return this.y;}

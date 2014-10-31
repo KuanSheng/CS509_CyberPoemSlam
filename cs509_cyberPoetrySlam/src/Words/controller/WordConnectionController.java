@@ -66,14 +66,17 @@ public class WordConnectionController{
 		Word selectedWord = model.getSelected();
 		if(connectionType == 1||connectionType == 4||connectionType == 5){
 		Row r = connectPoem.getOverlapRow(selectedWord);
+		
 		r.addWord(selectedWord);
 		selectedWord.setLocation(r.getX()-selectedWord.getWidth(), r.getY());
 		r.setLocation(selectedWord.getX(),selectedWord.getY());
+		connectPoem.setLocation(r.getX(),r.getY());
 		b.getWords().remove(selectedWord);
 		panel.repaint();
 		}
 		else if(connectionType == 2||connectionType == 3||connectionType == 6){
 			Row r = connectPoem.getOverlapRow(selectedWord);
+			
 			r.addWord(selectedWord);
 			selectedWord.setLocation(r.getX()+r.getWidth()-selectedWord.getWidth(),r.getY());
 			b.getWords().remove(selectedWord);

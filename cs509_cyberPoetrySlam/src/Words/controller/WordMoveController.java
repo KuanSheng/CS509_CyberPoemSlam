@@ -38,7 +38,40 @@ public class WordMoveController extends MouseAdapter{
 			//System.out.println(e.getY());
 			return;
 		}
-            
+		
+        if(e.getClickCount() == 2){
+        	//must in the protected area
+        	if(e.getY()<300){
+        		Poem p = board.findPoem(e.getX(),e.getY());
+        		Word disconnectWord = null;
+        		Row disconnectRow = null;
+        		int type = 0;
+        		
+        		for(Row r:p.getRows()){
+        			for(Word w:r.getWords()){
+        				if(w.intersection(e.getX(),e.getY())){
+        				//must be edge word!
+        				if(w.getX() == r.getX()){
+        					type = 1;
+        					disconnectWord = w;
+        					disconnectRow = r;
+        				}
+        				else if(w.getX() == r.getX()+r.getWidth()-w.getWidth()){
+        					type = 2;
+        					disconnectWord = w;
+        					disconnectRow = r;
+        				}
+        			}
+        			}
+        		}
+        		
+        		model.setSelectedWordinPoem(disconnectWord);
+        		WordDisconnectionController disconnect = new WordDisconnectionController(model,panel,p);
+        		disconnect.disconnectEdgeWord(type,disconnectRow);
+        		panel.repaint();
+        	}
+        	return;
+        }    
 		anchor = e.getPoint();
 		
 		// pieces are returned in order of Z coordinate
@@ -46,7 +79,6 @@ public class WordMoveController extends MouseAdapter{
 
 		if (s != null) {
 			Point relative = new Point (anchor);
-			System.out.println("wo cao!");
 			// no longer in the board since we are moving it around...
 			//board.remove(s);
 			model.setSelected(s);
@@ -165,7 +197,8 @@ public class WordMoveController extends MouseAdapter{
 		
 		if(selected == null){
 			if(selectedPoem == null){
-				return;}
+				return;
+				}
 			else{
 				selectedPoem.setLocation(e.getX()-deltaX,e.getY()-deltaY);
 			}

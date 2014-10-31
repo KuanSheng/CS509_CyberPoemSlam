@@ -55,6 +55,7 @@ public class ApplicationCanvas extends Canvas{
 		}
 		
 		paintPoem(g);
+		paintDisconnectWord(g);
 	}
 	
 	public void paintWord(Word word){}
@@ -78,6 +79,17 @@ public class ApplicationCanvas extends Canvas{
 			}
 		}
 	}
+	
+	public void paintDisconnectWord(Graphics g){
+		Word w = model.getSelectedWordinPoem();
+		if(w != null){
+			g.clearRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
+			g.setColor(Color.GREEN);
+			g.fillRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
+			g.drawString(w.getValue(), w.getX()+w.getWidth()/2, w.getY()+w.getHeight());
+		}
+	}
+	
 	public void paintBackgroud(){
 		
 	}
