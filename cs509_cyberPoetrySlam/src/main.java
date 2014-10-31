@@ -34,6 +34,5 @@ public class main {
 //			}
 //		});
      app.setVisible(true);
-//        System.out.println(model + " : main");
   }
 }

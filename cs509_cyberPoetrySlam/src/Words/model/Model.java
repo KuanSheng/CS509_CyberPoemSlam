@@ -9,6 +9,8 @@ public class Model implements Serializable {
 
 	/** Currently selected shape (or null if none). */
 	Word selected;
+	Word selectedWordinPoem;
+	Poem selectedPoem;
 
 	public Model(Board b) {
 		board = b;
@@ -35,9 +37,25 @@ public class Model implements Serializable {
 	public void setSelected(Word s) {
 		selected = s;
 	}
+	
+	public void setSelectedPoem(Poem p){
+		selectedPoem = p;
+	}
+	
+	public void setSelectedWordinPoem(Word w){
+		selectedWordinPoem = w;
+	}
 
 	public Word getSelected() {
 		return selected;
+	}
+	
+	public Poem getSelectedPoem(){
+		return selectedPoem;
+	}
+	
+	public Word getSelectedWordinPoem(){
+		return selectedWordinPoem;
 	}
 
     public String toString(){

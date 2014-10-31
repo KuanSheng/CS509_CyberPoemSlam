@@ -26,25 +26,59 @@ public class WordMoveController extends MouseAdapter{
 	
 	public void mousePressed(MouseEvent e) {
 		// no board? no behavior!
-		if (model == null) { 
-		return; }
+		if (model == null) { return; }
 		Board board = model.getBoard();
 		
 		if (e.getButton()==MouseEvent.BUTTON3) {
-			board.addWords(new Word(e.getX(), e.getY(), 200, 14, "Sample",2));
+			if(e.getY()>300){
+			board.addWords(new Word(e.getX(), e.getY(), 120, 14, "Sample",2));
 			panel.repaint();
-			System.out.println(e.getX());
-			System.out.println(e.getY());
+			}
+			//System.out.println(e.getX());
+			//System.out.println(e.getY());
 			return;
 		}
-            
+		
+        if(e.getClickCount() == 2){
+        	//must in the protected area
+        	if(e.getY()<300){
+        		Poem p = board.findPoem(e.getX(),e.getY());
+        		Word disconnectWord = null;
+        		Row disconnectRow = null;
+        		int type = 0;
+        		
+        		for(Row r:p.getRows()){
+        			for(Word w:r.getWords()){
+        				if(w.intersection(e.getX(),e.getY())){
+        				//must be edge word!
+        				if(w.getX() == r.getX()){
+        					type = 1;
+        					disconnectWord = w;
+        					disconnectRow = r;
+        				}
+        				else if(w.getX() == r.getX()+r.getWidth()-w.getWidth()){
+        					type = 2;
+        					disconnectWord = w;
+        					disconnectRow = r;
+        				}
+        			}
+        			}
+        		}
+        		
+        		model.setSelectedWordinPoem(disconnectWord);
+        		WordDisconnectionController disconnect = new WordDisconnectionController(model,panel,p);
+        		disconnect.disconnectEdgeWord(type,disconnectRow);
+        		panel.repaint();
+        	}
+        	return;
+        }    
 		anchor = e.getPoint();
 		
 		// pieces are returned in order of Z coordinate
 		Word s = board.findWord(anchor.x, anchor.y);
+
 		if (s != null) {
 			Point relative = new Point (anchor);
-			
 			// no longer in the board since we are moving it around...
 			//board.remove(s);
 			model.setSelected(s);
@@ -59,19 +93,53 @@ public class WordMoveController extends MouseAdapter{
 			//panel.redraw();
 			return;
 		}
+		else{
+			Poem p = board.findPoem(anchor.x,anchor.y);
+			if(p != null){
+				System.out.println("woca");
+				Point relative = new Point(anchor);
+				
+				model.setSelectedPoem(p);
+				originalx = p.getX();
+				originaly = p.getY();
+
+				// set anchor for smooth moving
+				deltaX = relative.x - originalx;
+				deltaY = relative.y - originaly;
+				
+				return;
+			}
+		}
 		
 		model.setSelected(null);
+		model.setSelectedPoem(null);
 	}
+
 	
 	public void mouseReleased(MouseEvent e){
 		//no model
 		if (model == null) { return; }
 		
 		Word selected = model.getSelected();
+		Poem selectedPoem = model.getSelectedPoem();
 		//nothing selected
-		if (selected == null) { return; }
+		if (selected == null) { 
+			if(selectedPoem == null){return;}
+			else{
+				if(selectedPoem.getY()>300){
+					selectedPoem.setLocation(originalx,originaly);
+				}
+				else{
+					if(model.getBoard().checkOverlapPoem(selectedPoem)){
+						System.out.println("madan");
+						selectedPoem.setLocation(originalx, originaly);
+					}
+				}
+			}
+		}
 		
-		if(this.originaly < 300&&selected.getY() > 300){
+		else {
+			if(this.originaly < 300&&selected.getY() > 300){
 			//change status;
 			model.getBoard().releaseWords(selected);
 		}
@@ -83,6 +151,12 @@ public class WordMoveController extends MouseAdapter{
 				isOverlap = true;
 				selected.setLocation(originalx, originaly);
 			}
+			else{
+				if(model.getBoard().checkOverlapWord(selected)!=null){
+					isOverlap = true;
+					selected.setLocation(originalx, originaly);
+				}
+			}
 			//change status;
 			if(isOverlap == false)
 			model.getBoard().protectWords(selected);
@@ -93,27 +167,85 @@ public class WordMoveController extends MouseAdapter{
 		}
 		
 		else if(this.originaly < 300&&selected.getY() < 300){
+			boolean potential = false;
+			boolean potentialWord = false;
 			//if overlap,set back to original location;
-			if(model.getBoard().checkOverlap(selected)!=null){
-				//selected.setLocation(originalx, originaly);
+			if(model.getBoard().getOverLapNumber(selected)>1){
+				selected.setLocation(originalx,originaly);
+			}
+			else if(model.getBoard().checkOverlap(selected)!=null){
+				Word connectWord = model.getBoard().checkOverlap(selected);
+				int type = model.getBoard().getOverlapType(selected,connectWord);
+				//check potential overlap
+				if(type == 1||type == 2||type == 6){
+					if(model.getBoard().checkPotentialOverlap(selected,connectWord,1)){
+						potentialWord = true;
+						System.out.println("error");
+					}
+				}
+				else if(type == 3||type == 4||type ==5){
+					if(model.getBoard().checkPotentialOverlap(selected,connectWord,2)){
+						potentialWord = true;
+					}
+				}
+				//connect two words
+				if(potentialWord == false){
 				WordConnectionController connection = new WordConnectionController(model,panel,model.getBoard().checkOverlap(selected));
-				panel.addMouseListener(connection);
-				panel.addMouseMotionListener(connection);
+				connection.connect();}
+				else{
+					selected.setLocation(originalx, originaly);
+				}
+				
+			}
+			else{
+				if(model.getBoard().checkOverlapWord(selected)!=null){
+					Poem connectPoem = model.getBoard().checkOverlapWord(selected);
+					int type = model.getBoard().getOverlapPoemWord(connectPoem, selected);
+                    if(type == 1||type == 4||type == 5){
+                    	if(model.getBoard().checkPotentialOverlapPoem(selected,connectPoem,1)){
+                    		potential = true;
+                    	}
+                    }
+                    else if(type == 2||type == 3||type == 6){
+                    	if(model.getBoard().checkPotentialOverlapPoem(selected,connectPoem,2)){
+                    		potential = true;
+                    	}
+                    }
+                    
+                    if(type == 7||type == 8||potential == true){
+						selected.setLocation(originalx,originaly);
+					}
+					else{
+					WordConnectionController connection = new WordConnectionController(model,panel,connectPoem);
+					connection.connectPoem(type);}
+				}
 			}
 		}
-		
+		}
 		//release the mouse and repaint
+		model.setSelected(null);
+		model.setSelectedPoem(null);
 		selected = null;
+		selectedPoem = null;
 		panel.repaint();
 	}
 	
 	public void mouseDragged(MouseEvent e){
 		if(model == null){return;}
 		Word selected = model.getSelected();
+		Poem selectedPoem = model.getSelectedPoem();
 		
-		if(selected == null){return;}
-		selected.setLocation(e.getX()-deltaX,e.getY()-deltaY);
-		panel.paintWord(selected);
+		if(selected == null){
+			if(selectedPoem == null){
+				return;
+				}
+			else{
+				selectedPoem.setLocation(e.getX()-deltaX,e.getY()-deltaY);
+			}
+		}
+		else if(selected != null){
+			selected.setLocation(e.getX()-deltaX,e.getY()-deltaY);
+		}
 		
 		panel.repaint();
 	}
