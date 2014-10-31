@@ -41,11 +41,21 @@ public class ApplicationCanvas extends Canvas{
 	}
 	
 	public void paint(Graphics g){
+		paintBackground(g);
+		paintWord(g);
+		paintPoem(g);
+		paintDisconnectWord(g);
+		paintSelected(g);
+		paintSelectedPoem(g);
+	}
+	
+	public void paintBackground(Graphics g){
 		g.clearRect(0,0,getWidth(),300);
 		g.setColor(Color.ORANGE);
 		g.fillRect(0,0,getWidth(), 300);
 		g.drawLine(0,300, 650, 300);
-		
+	}
+	public void paintWord(Graphics g){
 		for(Word w : board.getWords()){
 			g.clearRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
 			g.setColor(Color.gray);
@@ -53,12 +63,7 @@ public class ApplicationCanvas extends Canvas{
 			g.setColor(Color.black);
 			g.drawString(w.getValue(),w.getX()+w.getWidth()/2,w.getY()+w.getHeight());
 		}
-		
-		paintPoem(g);
-		paintDisconnectWord(g);
 	}
-	
-	public void paintWord(Word word){}
 	//need poem model design first
 	public void paintRow(Row r,Graphics g){
 		g.clearRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
@@ -68,6 +73,8 @@ public class ApplicationCanvas extends Canvas{
 			Word word = wordItr.next();
 			g.setColor(Color.white);
 			g.drawString(word.getValue(), word.getX()+word.getWidth()/2, word.getY()+r.getHeight());
+			g.setColor(Color.white);
+			g.drawLine(word.getX()+word.getWidth(),word.getY(),word.getX()+word.getWidth(),word.getY()+word.getHeight());
 			}
 	}
 	
@@ -90,7 +97,34 @@ public class ApplicationCanvas extends Canvas{
 		}
 	}
 	
-	public void paintBackgroud(){
+	public void paintSelected(Graphics g){
+		Word selected = model.getSelected();
+		if(selected  == null){
+			return;
+		}
 		
+		g.clearRect(selected.getX(),selected.getY(), selected.getWidth(), selected.getHeight());
+		g.setColor(Color.green);
+		g.fillRect(selected.getX(),selected.getY(), selected.getWidth(),selected.getHeight());
+		g.setColor(Color.white);
+		g.drawString(selected.getValue(), selected.getX()+selected.getWidth()/2, selected.getY()+selected.getHeight());
 	}
+	
+	public void paintSelectedPoem(Graphics g){
+		Poem selectedPoem = model.getSelectedPoem();
+		if(selectedPoem  == null){
+			return;
+		}
+		
+		for(Row r:selectedPoem.getRows()){
+			for(Word w:r.getWords()){
+				g.clearRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
+				g.setColor(Color.green);
+				g.fillRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
+				g.setColor(Color.white);
+				g.drawString(w.getValue(),w.getX()+w.getWidth()/2,w.getY()+w.getHeight());
+			}
+		}
+	}
+
 }

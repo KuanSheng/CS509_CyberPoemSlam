@@ -123,7 +123,7 @@ public class Board implements Iterable<Word>{
 				&&w.getY()+w.getHeight()>r.getY()&&w.getY()+w.getHeight()<r.getY()+r.getHeight()){
 			return 2;
 		}
-		if(w.getX()+w.getWidth()>r.getX()+r.getHeight()&&w.getX()<r.getX()+r.getWidth()&&r.getX()<w.getX()
+		if(w.getX()+w.getWidth()>r.getX()+r.getWidth()&&w.getX()<r.getX()+r.getWidth()&&r.getX()<w.getX()
 				&&w.getY()+w.getHeight()>r.getY()+r.getHeight()&&w.getY()<r.getY()+r.getHeight()){
 			return 3;
 		}
@@ -142,7 +142,7 @@ public class Board implements Iterable<Word>{
 		if(w.getX()>r.getX()&&w.getX()+w.getWidth()<r.getX()+r.getWidth()&&w.getY()+w.getHeight()>r.getY()&&w.getY()+w.getHeight()<r.getY()+r.getHeight()){
 			return 7;
 		}
-		if(w.getX()>r.getX()&&w.getX()+w.getWidth()<r.getX()&&w.getY()+w.getHeight()>r.getY()+r.getHeight()&&w.getY()<r.getY()+r.getHeight()){
+		if(w.getX()>r.getX()&&w.getX()+w.getWidth()<r.getX()+r.getWidth()&&w.getY()+w.getHeight()>r.getY()+r.getHeight()&&w.getY()<r.getY()+r.getHeight()){
 			return 8;
 		}
 		return 0;

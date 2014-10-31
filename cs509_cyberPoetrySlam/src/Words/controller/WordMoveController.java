@@ -168,7 +168,7 @@ public class WordMoveController extends MouseAdapter{
 		else if(this.originaly < 300&&selected.getY() < 300){
 			//if overlap,set back to original location;
 			if(model.getBoard().checkOverlap(selected)!=null){
-				//selected.setLocation(originalx, originaly);
+				//connect two words
 				WordConnectionController connection = new WordConnectionController(model,panel,model.getBoard().checkOverlap(selected));
 				connection.connect();
 			}
@@ -176,8 +176,13 @@ public class WordMoveController extends MouseAdapter{
 				if(model.getBoard().checkOverlapWord(selected)!=null){
 					Poem connectPoem = model.getBoard().checkOverlapWord(selected);
 					int type = model.getBoard().getOverlapPoemWord(connectPoem, selected);
+					System.out.println(type);
+					if(type == 7||type == 8){
+						selected.setLocation(originalx,originaly);
+					}
+					else{
 					WordConnectionController connection = new WordConnectionController(model,panel,connectPoem);
-					connection.connectPoem(type);
+					connection.connectPoem(type);}
 				}
 			}
 		}
@@ -204,7 +209,6 @@ public class WordMoveController extends MouseAdapter{
 			}
 		}
 		else if(selected != null){
-			System.out.println("yes");
 			selected.setLocation(e.getX()-deltaX,e.getY()-deltaY);
 		}
 		
