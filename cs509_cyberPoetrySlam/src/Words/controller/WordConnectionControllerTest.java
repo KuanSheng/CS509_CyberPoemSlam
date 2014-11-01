@@ -27,7 +27,7 @@ public class WordConnectionControllerTest {
 		
 		b0 = new Board();
 		model= new Model(b0);
-		panel = new ApplicationCanvas(model);
+		panel = new ApplicationCanvas(model); 
 		CC1=new WordConnectionController(model, panel, connectWord);
 		CC2=new WordConnectionController(model, panel, connectPoem );
 		

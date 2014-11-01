@@ -6,6 +6,10 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     ArrayList<Word> unProtectedWords = new ArrayList<Word>();
     ArrayList<Poem> poems = new ArrayList<Poem>();
  
+    public boolean equals(Board b){
+    	return words == b.words && protectedWords == b.protectedWords && unProtectedWords == b.unProtectedWords && poems == b.poems;
+    }
+    
     
 	public void addWords(Word w){
 		words.add(w);

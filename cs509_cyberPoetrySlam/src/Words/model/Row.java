@@ -10,7 +10,13 @@ ArrayList<Word> words = new ArrayList<Word>();
 	int y_last;
 	int height;
 	int width;
-	int WordNumber;
+	int wordNumber;
+	
+	public boolean equals(Row r){
+		return x == r.x && y == r.y && x_last == r.x_last && y_last == r.y_last && 
+				height == r.height && width == r.width && wordNumber == r.wordNumber &&
+				words.equals(r.words);
+	}
 
 	public Row(int x, int y, int height, int width){
 	  super.type = 2;
@@ -40,25 +46,25 @@ ArrayList<Word> words = new ArrayList<Word>();
 		this.width = w1.getWidth()+w2.getWidth();
 		this.words.add(w1);
 		this.words.add(w2);
-		this.WordNumber =2;
+		this.wordNumber =2;
 		//System.out.println(w2.getX());
 		//System.out.println(w1.getX());
 	}
 	
 	public void addWord(Word word){
     	words.add(word);
-    	this.WordNumber++;
+    	this.wordNumber++;
     	this.width = this.width+word.getWidth();
     }
 	
 	public void removeWord(Word word){
 		words.remove(word);
-		this.WordNumber--;
+		this.wordNumber--;
 		this.width = this.width-word.getWidth();
 	}
 	
 	public int getWordNumber(){
-		return this.WordNumber;
+		return this.wordNumber;
 	}
 	
 	public Word getFirstWord(){
@@ -95,10 +101,7 @@ ArrayList<Word> words = new ArrayList<Word>();
 		this.x = x;
 		this.y = y;
 	}
-	public void setLocationAfterConnection(int x,int y){
-		this.x = x;
-		this.y = y;
-	}
+
 	 public int getX(){return this.x;}
      public int getY(){return this.y;}
      public int getWidth(){return this.width;}

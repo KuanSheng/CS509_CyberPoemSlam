@@ -18,7 +18,7 @@ public class WordDisconnectionController {
 	
 	public void disconnectEdgeWord(int type,Row r){
 		Word w = model.getSelectedWordinPoem();
-		if(type == 1){
+		if(type == 1){//disconnect word on the left
 			r.removeWord(w);
 			if(r.getWordNumber() > 1){
 			r.setLocationAfterConnection(r.getX()+w.getWidth(),r.getY());
@@ -34,7 +34,7 @@ public class WordDisconnectionController {
 			}
 			model.getBoard().addWords(w);
 		}
-		else if(type == 2){
+		else if(type == 2){//disconnect word on the right
 			r.removeWord(w);
 			if(r.getWordNumber() == 1){
 				b.addWords(r.getFirstWord());

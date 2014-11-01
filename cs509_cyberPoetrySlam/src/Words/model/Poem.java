@@ -8,7 +8,30 @@ public class Poem extends Element implements Serializable{
 	ArrayList<Row> rows = new ArrayList<Row>();
 	int x;
     int y;
-    int RowNumber;
+    int rowNumber;
+    
+    public boolean equals(Poem p){
+//    	boolean result = x == p.x && y == p.y && rowNumber == p.rowNumber &&
+//    			rows.equals(p.rows);
+    	if( x != p.x){
+    		System.out.println("wrong x " + x + " vs " + p.x + rows.get(0).getFirstWord() + " " + p.getRows().get(0).getFirstWord() );
+    		return false;
+    	}
+    	if(y != p.y){
+    		System.out.println("wrong y");
+    		return false;
+    	}
+    	if(rowNumber != p.rowNumber){
+    		System.out.println("wrong row nuber");
+    		return false; 
+    	}
+    	if(!rows.equals(p.rows)){
+    		System.out.println("rows not the same");
+    		
+    	}
+    	System.out.println("pomes the same");
+    	return true;
+    }
    
     public Poem(int x, int y){
     	super.type=3;
@@ -29,7 +52,7 @@ public class Poem extends Element implements Serializable{
     public Poem(Word w1, Word w2,int direction){
     	Row row = new Row(w1,w2,direction);
     	this.addRow(row);
-    	this.RowNumber++;
+    	this.rowNumber++;
     	this.x = row.getX();
     	this.y = row.getY();
     }
@@ -60,11 +83,11 @@ public class Poem extends Element implements Serializable{
     
     public void removeRow(Row r){
     	rows.remove(r);
-    	this.RowNumber--;
+    	this.rowNumber--;
     }
     
     public int getRowNumber(){
-    	return this.RowNumber;
+    	return this.rowNumber;
     }
     public int getX(){return this.x;}
     public int getY(){return this.y;}

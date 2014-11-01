@@ -61,7 +61,7 @@ public class RowTest {
 	public void testAddWord() {
 		Word w1= new Word(60,100,20,20,"Happy",1);
 		row.addWord(w1);
-		assertEquals(1,row.WordNumber );
+		assertEquals(1,row.wordNumber );
 		assertEquals(1, row.getWordNumber());
 		assertEquals(110, row.getWidth());	
 		

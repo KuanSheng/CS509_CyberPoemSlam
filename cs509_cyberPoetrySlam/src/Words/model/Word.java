@@ -99,6 +99,10 @@ public class Word extends Element implements Serializable{
     public String toString(){
         return value;
     }
+    
+    public boolean equals(Word w){
+    	return x==w.x && y == w.y && height == w.height && width == w.width && type == w.type && value.equals(w.value);
+    }
 
 }
 
