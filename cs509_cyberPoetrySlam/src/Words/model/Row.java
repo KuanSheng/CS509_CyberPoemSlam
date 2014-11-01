@@ -95,10 +95,7 @@ ArrayList<Word> words = new ArrayList<Word>();
 		this.x = x;
 		this.y = y;
 	}
-	public void setLocationAfterConnection(int x,int y){
-		this.x = x;
-		this.y = y;
-	}
+
 	 public int getX(){return this.x;}
      public int getY(){return this.y;}
      public int getWidth(){return this.width;}

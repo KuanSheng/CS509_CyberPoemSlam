@@ -8,6 +8,7 @@ import org.junit.Test;
 import Words.model.Board;
 import Words.model.Model;
 import Words.model.Poem;
+import Words.model.Row;
 import Words.model.Word;
 import Words.view.ApplicationCanvas;
 
@@ -89,17 +90,25 @@ public class WordConnectionControllerTest {
 
 	@Test
 	public void testWordConnectionControllerModelApplicationCanvasPoem() {
+		Word w3 =new Word(55, 60, 13, 20,"test",1);
+	    model.setSelected(w3);
+		
+		b0.addPoems(connectPoem);
+		Word w1= new Word(50, 55, 13,20,"new",1);
+		Word w2=new Word(60,55,13,20,"ha",1);
+		
+		connectPoem = new Poem(w1,w2,1);
+//		assertEquals(1, connectPoem.getRowNumber());
+		
+	    CC2=new WordConnectionController(model, panel, connectPoem );    
+	    CC2.connectPoem(1);
+	    
+	    CC2.connectPoem(4);
+	    CC2.connectPoem(5);
+	    CC2.connectPoem(2);
+	    CC2.connectPoem(7);
+	  
+	}
+
 	
-	}
-
-	@Test
-	public void testConnect() {
-		
-	}
-
-	@Test
-	public void testConnectPoem() {
-		
-	}
-
 }

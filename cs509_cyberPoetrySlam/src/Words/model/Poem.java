@@ -39,6 +39,7 @@ public class Poem extends Element implements Serializable{
     }
     public void addRow(Row row){
     	rows.add(row);
+    	this.RowNumber++;
     }
     
     public void addWord(Word w){

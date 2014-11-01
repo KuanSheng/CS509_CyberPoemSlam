@@ -14,10 +14,19 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 	
 	public void addPoems(Poem p){
 		poems.add(p);
+		
 	}
 	
 	public ArrayList<Word> getWords(){
 		return this.words;
+	}
+	
+	public ArrayList<Word> getProtectedWords(){
+		return this.protectedWords;
+	}
+	
+	public ArrayList<Word> getunprotectedWords(){
+		return this.unProtectedWords;
 	}
 
     public ArrayList<Poem> getPoems() {return this.poems;}
@@ -257,7 +266,17 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		}
 		return 0;
 	}
+	public void setPoemList(ArrayList<Poem> poems){
+		this.poems = poems;
+	}
 	
+	public void setProtectedWords(ArrayList<Word> protectedW){
+		this.protectedWords = protectedW;
+	}
+	
+	public void setunProtectedWords(ArrayList<Word> words){
+		this.unProtectedWords = words;
+	}
 	public void removePoem(Poem p){
 		poems.remove(p);
 	}
