@@ -11,6 +11,7 @@ import Words.model.Poem;
 import java.lang.reflect.Array;
 import java.util.*;
 
+
 public class BoardEntityTest {
     private Board testBoard;
     private Word testWord1, testWord2, testWord3, testWord4, testWord5;
@@ -111,11 +112,6 @@ public class BoardEntityTest {
         assertEquals(testBoard.getunProtectedWords().size(),2);
         assertEquals(testBoard.getProtectedWords().size(),2);
         assertEquals(testBoard.getunProtectedWords().get(1).getValue(), "test word1");
-//        testBoard.unprotect(testWord2);
-//        testBoard.unprotect(testWord5);
-//        assertEquals(testBoard.getProtectedWords().size(),3);
-
-
     }
 
     @Test
