@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
+import java.nio.file.Files;
 import java.util.Iterator;
 
 /**
@@ -27,19 +28,26 @@ public class StoreStateController extends WindowAdapter {
         System.out.println("entering storeState : StoareStateContrller");
         try {
             File board = new File(System.getProperty("user.dir")+"/temp/board.ser");
-            if(board.exists() && !board.isDirectory()){
+            System.out.println("file not exist? : storeState.StoreStateController" );
+//            if(board.exists() || !board.isDirectory()){
+            if(!board.exists()){
+                System.out.println("try to create file : storeState.StoareStateContrller");
                 board = new File(System.getProperty("user.dir")+"/temp/board.ser");
-                board.mkdir();
+//                System.out.println("make directory " + board.mkdir());
+                board.getParentFile().mkdirs();
+                System.out.println(" created file : storeState.StoareStateContrller");
             }
-//            File f = new File(Path, FileName);
-//            f.mkdirs();
-//            FileOutputStream fileOut = new FileOutputStream(System.getProperty("user.dir")+"/temp/board.ser");
+            System.out.println("before fileout : storeState.StoareStateContrller");
             FileOutputStream fileOut = new FileOutputStream(board);
+            System.out.println("file out : storeState.StoareStateContrller");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(model);
+            System.out.println("written out : storeState.StoareStateContrller");
             out.close();
             fileOut.close();
+            System.out.println("file closed : storeState.StoareStateContrller");
         }catch (IOException i){
+            System.out.println("im here: storeState.StoreStateController");
             i.printStackTrace();
         }
         System.out.println("stored state of board" + model.toString() + " : StoreStateController");

@@ -1,6 +1,7 @@
 package Words.model;
+import java.io.Serializable;
 import java.util.*;
-public class Row implements Iterable<Word>{
+public class Row extends Element implements Iterable<Word>, Serializable{
 ArrayList<Word> words = new ArrayList<Word>();
 	
 	int x;
