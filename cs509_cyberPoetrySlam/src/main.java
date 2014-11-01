@@ -13,7 +13,7 @@ public class main {
 		int dx = 200;
 		int dy = 200;
 		
-		//b.addWords(new Word(dx,dy,200,14,"test",2));
+		b.addWords(new Word(dx,dy,50,14,"test",2));
 		Model model = new Model(b);
 
         //todo to be deleted just for test --------start
