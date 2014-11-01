@@ -30,6 +30,8 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 	public ArrayList<Word> getWords(){
 		return this.words;
 	}
+
+    public ArrayList<Poem> getPoems() {return this.poems;}
 	
 	public void protectWords(Word w){
 		unProtectedWords.remove(w);

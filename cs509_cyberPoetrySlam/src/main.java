@@ -17,7 +17,7 @@ public class main {
 		Model model = new Model(b);
 
         //todo to be deleted just for test --------start
-        model.getBoard().addWords(new Word( 10 , 10, 100, 100, "test jun", 1));
+//        model.getBoard().addWords(new Word( 10 , 10, 100, 100, "test jun", 1));
         //---end todo
 
 		if(model == null)
