@@ -7,7 +7,6 @@ public class Board implements Iterable<Word>{
     ArrayList<Word> protectedWords = new ArrayList<Word>();
     ArrayList<Word> unProtectedWords = new ArrayList<Word>();
     ArrayList<Poem> poems = new ArrayList<Poem>();
-    ArrayList<Poem> poemList = new ArrayList<Poem>();
 
     //HashSet<String,Word> protectedWords = new HashSet<Word.value,Word>();
 
@@ -37,21 +36,14 @@ public class Board implements Iterable<Word>{
         return true;
     }
 
-    public boolean addPoem(Poem p) {
-       return this.poemList.add(p);
-    }
-
-    public boolean removePoem(Poem p) {
-       return this.poemList.remove(p);
-    }
 
     // getter and setter
     public void setPoemList(ArrayList<Poem> pl) {
-        this.poemList = pl;
+        this.poems = pl;
     }
 
     public ArrayList<Poem> getPoemList() {
-        return this.poemList;
+        return this.poems;
     }
 
     public ArrayList<Word> getWords() {
@@ -88,7 +80,11 @@ public class Board implements Iterable<Word>{
 		poems.add(p);
 	}
 
-	public void protectWords(Word w){
+    public boolean removePoem(Poem p) {
+        return this.poems.remove(p);
+    }
+
+    public void protectWords(Word w){
 		this.unProtectedWords.remove(w);
 		this.protectedWords.add(w);
 	}
@@ -109,7 +105,7 @@ public class Board implements Iterable<Word>{
 
      public Poem findPoem(int x,int y){
 		for(Poem p:poems){
-			if(p.intersection(x,y)){
+ 			if(p.intersection(x,y)){
 				return p;
 			}
 		}

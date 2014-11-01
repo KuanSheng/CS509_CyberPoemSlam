@@ -11,7 +11,7 @@ public class Row extends Element implements Iterable<Word>{
     int width;
     int WordNumber;
 
-    public Row(int x, int y, int hight, int width){
+    public Row(int x, int y){
         super.type = 2;
         this.x = x;
         this.y = y;
