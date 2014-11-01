@@ -2,6 +2,8 @@ package Words.model;
 
 import static org.junit.Assert.*;
 
+import java.util.Iterator;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -79,11 +81,21 @@ public class RowTest {
 		assertEquals(true, row.intersection(60, 110));
 	}
 
+	@Test public void testSetLocationAfterConnection(){
+		row.setLocationAfterConnection(200, 40);
+		assertEquals(200, row.getX());
+		assertEquals(40, row.getY());
+	}
 
 
 	@Test
 	public void testIterator() {
 	
+		Word w1= new Word(10,20,20,20,"Happy",1);
+		Word w2=new Word(40,10,40, 20 ,"New",1);
+		Row row1=new Row(w1,w2,1);
+		Iterator<Word> it= row1.iterator();
+		//assertEquals(10, it.next());
 	}
 
 }

@@ -118,5 +118,10 @@ public class WordTest {
 		assertEquals(300, word.getX());
 		assertEquals(100, word.getY());
 	}
+	
+	@Test
+	public void testToString(){
+		assertEquals("Happy", word.toString());
+	}
 
 }

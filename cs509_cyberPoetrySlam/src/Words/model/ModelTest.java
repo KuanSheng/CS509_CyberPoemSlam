@@ -20,6 +20,9 @@ public class ModelTest {
 	public void testSetBoard() {
 		m.setBoard(b);
 		assertEquals(b, m.board);
+		Model m2= new Model();
+		m2.restore(m);
+		assertEquals(b, m2.board);
 	}
 
 	@Test
@@ -30,8 +33,10 @@ public class ModelTest {
 	@Test
 	public void testSetSelected() {
 		Word s= new Word(10,20,20,20,"Happy",1);
+		b.addWords(s);
+		m=new Model(b);
 		m.setSelected(s);
-		
+		m.toString();
 		assertEquals(s, m.getSelected());
 	}
 
