@@ -28,7 +28,7 @@ public class Application extends Frame {
 		p.add(button);
 		add(p);*/
 		if(model == null)
-			System.out.println("fuck!(app)");
+			return;
 		// mark as final so the anonymous class below can find it
 		final ApplicationCanvas panel = new ApplicationCanvas(model);
 		add(p);
