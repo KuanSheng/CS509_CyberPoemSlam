@@ -49,6 +49,9 @@ public class BoardEntityTest {
         shapes.add(testWord3);
         shapes.add(testWord4);
 
+        BoardMemento m = new BoardMemento(shapes);
+        testBoard.restore(m);
+
     }
 
     @After
@@ -64,9 +67,6 @@ public class BoardEntityTest {
         testBoard.setProtectedWords(protectedW);
         testBoard.setunProtectedWords(unprotectedW);
         testBoard.setPoemList(poems);
-
-        BoardMemento m = new BoardMemento(shapes);
-        testBoard.restore(m);
 
         assertEquals(testBoard.getProtectedWords().size(), 2);
         assertEquals(testBoard.getunProtectedWords().size(), 2);
@@ -120,6 +120,8 @@ public class BoardEntityTest {
 
     @Test
     public void testAddRemove() throws Exception {
+        testBoard.setPoemList(poems);
+
         BoardMemento m = new BoardMemento(shapes);
         testBoard.restore(m);
         testBoard.removePoem(testPoem3);
@@ -146,6 +148,7 @@ public class BoardEntityTest {
     @Test
     public void testprotectWords() throws Exception{
         testBoard.setProtectedWords(protectedW);
+        testBoard.setunProtectedWords(unprotectedW);
 
         testBoard.protect(testWord3);
         assertEquals(testBoard.getProtectedWords().size(),3);
@@ -280,6 +283,9 @@ public class BoardEntityTest {
         assertEquals(iterator.next().getValue(), "test word2");
         assertEquals(iterator.next().getValue(), "test word3");
         assertEquals(iterator.next().getValue(), "test word4");
+
+        testBoard.setProtectedWords(protectedW);
+        testBoard.setunProtectedWords(unprotectedW);
 
         Iterator<Word> protectedWordsItrator = testBoard.protectedWordsIterator();
         assertEquals(protectedWordsItrator.next().getValue(),"test word1");
