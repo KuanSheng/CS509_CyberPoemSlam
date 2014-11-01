@@ -11,6 +11,7 @@ import Words.model.Model;
 
 public class Application extends Frame {
      Model model;
+     final ApplicationCanvas panel;
 	/**
 	 * This is the default constructor
 	 */
@@ -30,9 +31,13 @@ public class Application extends Frame {
 		if(model == null)
 			System.out.println("fuck!(app)");
 		// mark as final so the anonymous class below can find it
-		final ApplicationCanvas panel = new ApplicationCanvas(model);
+		this.panel = new ApplicationCanvas(model);
 		add(p);
 		p.add(panel);
+	}
+	
+	public ApplicationCanvas getpanel(){
+		return this.panel;
 	}
 	
 }

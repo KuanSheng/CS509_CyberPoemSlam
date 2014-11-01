@@ -25,16 +25,11 @@ public class WordMoveController extends MouseAdapter{
 	
 	public void mousePressed(MouseEvent e) {
 		// no board? no behavior!
-		if (model == null) { return; }
+		if (model == null) { return;}
 		Board board = model.getBoard();
 		
 		if (e.getButton()==MouseEvent.BUTTON3) {
-			if(e.getY()>300){
-			board.addWords(new Word(e.getX(), e.getY(), 120, 14, "Sample",2));
-			panel.repaint();
-			}
-			//System.out.println(e.getX());
-			//System.out.println(e.getY());
+			this.generateNewWord(e.getX(), e.getY());
 			return;
 		}
 		
@@ -70,41 +65,21 @@ public class WordMoveController extends MouseAdapter{
         		panel.repaint();
         	}
         	return;
-        }    
+        }
+        
 		anchor = e.getPoint();
 		
 		// pieces are returned in order of Z coordinate
 		Word s = board.findWord(anchor.x, anchor.y);
 
 		if (s != null) {
-			Point relative = new Point (anchor);
-			// no longer in the board since we are moving it around...
-			//board.remove(s);
-			model.setSelected(s);
-			originalx = s.getX();
-			originaly = s.getY();
-				
-			// set anchor for smooth moving
-			deltaX = relative.x - originalx;
-			deltaY = relative.y - originaly;
-			
-			// paint will happen once moves. This redraws state to prepare for paint
-			//panel.redraw();
+			setSelectedWord(s);
 			return;
 		}
-		else{
+	    else{
 			Poem p = board.findPoem(anchor.x,anchor.y);
 			if(p != null){
-				Point relative = new Point(anchor);
-				
-				model.setSelectedPoem(p);
-				originalx = p.getX();
-				originaly = p.getY();
-
-				// set anchor for smooth moving
-				deltaX = relative.x - originalx;
-				deltaY = relative.y - originaly;
-				
+				setSelectedPoem(p);
 				return;
 			}
 		}
@@ -113,23 +88,93 @@ public class WordMoveController extends MouseAdapter{
 		model.setSelectedPoem(null);
 	}
 
-	
 	public void mouseReleased(MouseEvent e){
-		//no model
-		if (model == null) { return; }
+		if(this.release()){
+		panel.repaint();}
+		else{
+			return;
+		}
+	}
+	
+	public void mouseDragged(MouseEvent e){
+		if(drag(e.getX(), e.getY())){
+			panel.repaint();
+		}
+		else{
+			return;
+		}
+		
+	}
+	
+    public boolean generateNewWord(int x, int y){
+		if(y>300){
+			model.getBoard().addWords(new Word(x, y, 120, 14, "Sample",2));
+			panel.repaint();
+			}
+		return true;
+	}
+	
+	public boolean setSelectedWord(Word s){
+		Point relative = new Point (anchor);
+		// no longer in the board since we are moving it around...
+		//board.remove(s);
+		model.setSelected(s);
+		originalx = s.getX();
+		originaly = s.getY();
+			
+		// set anchor for smooth moving
+		deltaX = relative.x - originalx;
+		deltaY = relative.y - originaly;
+		return true;
+	}
+	
+	public boolean setSelectedPoem(Poem p){
+		Point relative = new Point(anchor);
+		
+		model.setSelectedPoem(p);
+		originalx = p.getX();
+		originaly = p.getY();
+
+		// set anchor for smooth moving
+		deltaX = relative.x - originalx;
+		deltaY = relative.y - originaly;
+		return true;
+	}
+
+	public boolean drag(int x, int y){
+		if(model == null){return false;}
+		Word selected = model.getSelected();
+		Poem selectedPoem = model.getSelectedPoem();
+		
+		if(selected == null){
+			if(selectedPoem == null){
+				return false;
+				}
+			else{
+				selectedPoem.setLocation(x-deltaX,y-deltaY);
+			}
+		}
+		else if(selected != null){
+			selected.setLocation(x-deltaX,y-deltaY);
+		}
+		
+		return true;
+	}
+	
+	public boolean release(){
+		if (model == null) { return false; }
 		
 		Word selected = model.getSelected();
 		Poem selectedPoem = model.getSelectedPoem();
 		//nothing selected
 		if (selected == null) { 
-			if(selectedPoem == null){return;}
+			if(selectedPoem == null){return false;}
 			else{
 				if(selectedPoem.getY()>300){
 					selectedPoem.setLocation(originalx,originaly);
 				}
 				else{
 					if(model.getBoard().checkOverlapPoem(selectedPoem)){
-						System.out.println("madan");
 						selectedPoem.setLocation(originalx, originaly);
 					}
 				}
@@ -226,27 +271,8 @@ public class WordMoveController extends MouseAdapter{
 		model.setSelectedPoem(null);
 		selected = null;
 		selectedPoem = null;
-		panel.repaint();
+		return true;
 	}
 	
-	public void mouseDragged(MouseEvent e){
-		if(model == null){return;}
-		Word selected = model.getSelected();
-		Poem selectedPoem = model.getSelectedPoem();
-		
-		if(selected == null){
-			if(selectedPoem == null){
-				return;
-				}
-			else{
-				selectedPoem.setLocation(e.getX()-deltaX,e.getY()-deltaY);
-			}
-		}
-		else if(selected != null){
-			selected.setLocation(e.getX()-deltaX,e.getY()-deltaY);
-		}
-		
-		panel.repaint();
-	}
 	
 }

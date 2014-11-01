@@ -37,6 +37,7 @@ public class Poem extends Element{
     }
     public void addRow(Row row){
     	rows.add(row);
+    	this.RowNumber++;
     }
     
     public void addWord(Word w){

@@ -270,7 +270,14 @@ public class Board implements Iterable<Word>{
 	public void removePoem(Poem p){
 		poems.remove(p);
 	}
-	
+    public boolean getWord(int x, int y){
+    	for(Word w:words){
+    		if(w.getX()==x&&w.getY()==y){
+    			return true;
+    		}
+    	}
+    	return false;
+    }
 	public Iterator<Poem> poemIterator(){
 		return poems.iterator();
 	}
