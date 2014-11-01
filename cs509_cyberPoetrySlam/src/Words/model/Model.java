@@ -1,8 +1,9 @@
 package Words.model;
 
+import java.io.Serializable;
 import java.util.Stack;
 
-public class Model {
+public class Model implements Serializable{
 	Board board;
 	//Stack<Move> moves = new Stack<Move>();
 
@@ -55,4 +56,13 @@ public class Model {
 	public Word getSelectedWordinPoem(){
 		return selectedWordinPoem;
 	}
+
+    public String toString(){
+        String model;
+        return board.toString();
+    }
+
+    public void restore(Model m){
+        board = m.board;
+    }
 }

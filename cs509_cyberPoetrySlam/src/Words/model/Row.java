@@ -1,6 +1,7 @@
 package Words.model;
+import java.io.Serializable;
 import java.util.*;
-public class Row extends Element implements Iterable<Word>{
+public class Row extends Element implements Iterable<Word>, Serializable{
 ArrayList<Word> words = new ArrayList<Word>();
 	
 	int x;
@@ -89,6 +90,10 @@ ArrayList<Word> words = new ArrayList<Word>();
 			currentx = currentx+w.getWidth();
 		}
 		
+	}
+	public void setLocationAfterConnection(int x,int y){
+		this.x = x;
+		this.y = y;
 	}
 	public void setLocationAfterConnection(int x,int y){
 		this.x = x;

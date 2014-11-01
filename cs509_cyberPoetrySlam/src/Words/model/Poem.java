@@ -1,8 +1,10 @@
 package Words.model;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Poem extends Element{
+public class Poem extends Element implements Serializable{
 	ArrayList<Row> rows = new ArrayList<Row>();
 	int x;
     int y;

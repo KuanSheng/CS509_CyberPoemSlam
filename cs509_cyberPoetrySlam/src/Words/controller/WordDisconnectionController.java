@@ -21,10 +21,10 @@ public class WordDisconnectionController {
 		if(type == 1){
 			r.removeWord(w);
 			if(r.getWordNumber() > 1){
-			r.setLocation(r.getX()+w.getWidth(),r.getY());
+			r.setLocationAfterConnection(r.getX()+w.getWidth(),r.getY());
 			}
 			else if(r.getWordNumber() == 1){
-				r.setLocation(r.getX()+w.getWidth(),r.getY());
+				r.setLocationAfterConnection(r.getX()+w.getWidth(),r.getY());
 				b.addWords(r.getFirstWord());
 				disConnectPoem.removeRow(r);
 				if(disConnectPoem.getRowNumber() == 0){

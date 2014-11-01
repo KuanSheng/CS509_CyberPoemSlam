@@ -11,12 +11,15 @@ import Words.model.Model;
 
 public class Application extends Frame {
      Model model;
+    private ApplicationCanvas panel; // added by JUN to share panel with StoreStateController
 	/**
 	 * This is the default constructor
 	 */
-	public Application(Model m) {
+//	public Application(Model m) { //Changed by JUN
+    public Application(Model m, ApplicationCanvas panel){
 		super();
 		this.model = m;
+        this.panel = panel;
 		setTitle("CyberPoetrySlam");
 		setSize(650,490);
 		
@@ -30,7 +33,7 @@ public class Application extends Frame {
 		if(model == null)
 			return;
 		// mark as final so the anonymous class below can find it
-		final ApplicationCanvas panel = new ApplicationCanvas(model);
+//		final ApplicationCanvas panel = new ApplicationCanvas(model); //commented by Jun
 		add(p);
 		p.add(panel);
 	}

@@ -2,6 +2,8 @@ package Words.view;
 
 import static org.junit.Assert.*;
 
+import java.awt.Panel;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,7 +24,8 @@ public class ApplicationTest {
 	public void testApplication() {
 		Board b=new Board();
 		Model m= new Model(b);
-		a=new Application(m);
+		ApplicationCanvas p = new ApplicationCanvas(m);
+		a=new Application(m, p);
 		a.setVisible (true);
 		
 		System.out.println("Sample GUI");

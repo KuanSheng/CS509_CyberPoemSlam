@@ -1,11 +1,12 @@
 package Words.controller;
 
+import java.awt.event.MouseAdapter;
 import Words.model.*;
 
 import Words.model.Model;
 import Words.view.ApplicationCanvas;
 
-public class WordConnectionController{
+public class WordConnectionController extends MouseAdapter {
 	final Model model;
 	final ApplicationCanvas panel;
 	final Board b;
