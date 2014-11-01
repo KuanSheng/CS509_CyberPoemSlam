@@ -30,7 +30,6 @@ public class Model {
 	/**public void recordMove(MoveWord move) {
 		moves.add(move);
 	}
-
 	*/
 
 	public void setSelected(Word s) {

@@ -11,10 +11,13 @@ ArrayList<Word> words = new ArrayList<Word>();
 	int width;
 	int WordNumber;
 
-	public Row(int x, int y, int hight, int width){
+	public Row(int x, int y, int height, int width){
 	  super.type = 2;
       this.x = x;
       this.y = y;
+      this.height=height;
+      this.width=width;
+      
 	}
 	
 	public Row(Word w1,Word w2,int direction){
@@ -37,8 +40,8 @@ ArrayList<Word> words = new ArrayList<Word>();
 		this.words.add(w1);
 		this.words.add(w2);
 		this.WordNumber =2;
-		System.out.println(w2.getX());
-		System.out.println(w1.getX());
+		//System.out.println(w2.getX());
+		//System.out.println(w1.getX());
 	}
 	
 	public void addWord(Word word){
@@ -70,7 +73,7 @@ ArrayList<Word> words = new ArrayList<Word>();
 	}
 	
 	public boolean intersection(int x, int y){
-		if(x < this.x){return false;}
+	 if(x < this.x){return false;}
    	 if(x > (this.x + width)){return false;}
    	 if(y < this.y){return false;}
    	 if(y > (this.y+height)){return false;}
@@ -80,12 +83,16 @@ ArrayList<Word> words = new ArrayList<Word>();
 	public void setLocation(int x, int y){
 		this.x = x;
 		this.y = y;
-		int i = 0 ;
+		int currentx=x;
 		for(Word w: words){
-			w.setLocation(x+i*w.width,y);
-			i++;
+			w.setLocation(currentx,y);
+			currentx = currentx+w.getWidth();
 		}
 		
+	}
+	public void setLocationAfterConnection(int x,int y){
+		this.x = x;
+		this.y = y;
 	}
 	 public int getX(){return this.x;}
      public int getY(){return this.y;}

@@ -5,21 +5,11 @@ public class Board implements Iterable<Word>{
     ArrayList<Word> protectedWords = new ArrayList<Word>();
     ArrayList<Word> unProtectedWords = new ArrayList<Word>();
     ArrayList<Poem> poems = new ArrayList<Poem>();
+ 
     
-    public void restore(BoardMemento m) {
-		words = new ArrayList<Word>();
-		for (Word s : m.stored) {
-			words.add(new Word(s.x, s.y, s.width, s.height, s.value,s.wordType));
-		}
-	}
-	
-    public BoardMemento getState() {
-		return new BoardMemento(words);
-	}
-    
-	//add words to the board
 	public void addWords(Word w){
 		words.add(w);
+		unProtectedWords.add(w);
 	}
 	
 	public void addPoems(Poem p){
@@ -78,6 +68,17 @@ public class Board implements Iterable<Word>{
 				}
 			}
 		}
+		for(Poem poem:poems){
+			if(!p.equals(poem)){
+			for(Row r:poem.getRows())
+				for(Word s:r.getWords())
+				   for(Row row:p.getRows()){
+					if(s.overlapRow(row)){
+						return true;
+					}
+				}
+			}
+		}
 		return false;
 	}
 	
@@ -91,7 +92,105 @@ public class Board implements Iterable<Word>{
 		}
 		return null;
 	}
-
+    public int getOverLapNumber(Word w){
+    	int number = 0;
+    	for(Word s:words){
+    		if(w.overlap(s)){
+    			number++;
+    		}
+    	}
+    	for(Poem p:poems){
+    		for(Row r:p.getRows()){
+    			if(w.overlapRow(r)){
+    				number++;
+    			}
+    		}
+    	}
+    	return number;
+    }
+    public boolean checkPotentialOverlapPoem(Word selectedWord,Poem connectPoem,int type){
+    	Row r = connectPoem.getOverlapRow(selectedWord);
+    	if(type == 1){
+    		int testx = r.getX()-selectedWord.getWidth();
+    		int testy = r.getY();
+    		Word test = new Word(testx,testy,selectedWord.getWidth(),selectedWord.getHeight(),"test",2);
+    		for(Word w:words){
+    			  if(test.overlap(w)){
+    				  if(!w.equals(selectedWord))
+    				     return true;
+    			   }
+    		}
+    		for(Poem p:poems){
+    			for(Row row:p.getRows()){
+    				if(test.overlapRow(row)){
+    					System.out.println("error!");
+    					return true;
+    				}
+    			}
+    		}
+    	}
+    	else if(type ==2){
+    		int testx = r.getX()+r.getWidth()+selectedWord.getWidth();
+    		int testy = r.getY();
+    		Word test = new Word(testx,testy,selectedWord.getWidth(),selectedWord.getHeight(),"test",2);
+    		for(Word w:words){
+    			if(test.overlap(w)){
+    				return true;
+    			}
+    		}
+    		for(Poem p:poems){
+    			for(Row row:p.getRows()){
+    				if(test.overlapRow(row)){
+    					return true;
+    				}
+    			}
+    		}
+    	}
+    	return false;
+    }
+    
+    public boolean checkPotentialOverlap(Word selectedWord,Word connectWord,int type){
+    	if(type == 1){
+    		int testx = connectWord.getX()-selectedWord.getWidth();
+    		int testy = connectWord.getY();
+    		Word test = new Word(testx,testy,selectedWord.getWidth(),selectedWord.getHeight(),"test",2);
+    		for(Word w:words){
+    			if(!w.equals(selectedWord)){
+    			if(test.overlap(w)){
+    				return true;
+    			}
+    			}
+    		}
+    		for(Poem p:poems){
+    			for(Row r:p.getRows()){
+    				if(test.overlapRow(r)){
+    					return true;
+    				}
+    			}
+    		}
+    	}
+    	else if(type == 2){
+    		int testx = connectWord.getX()+connectWord.getWidth();
+    		int testy = connectWord.getY();
+    		Word test = new Word(testx,testy,selectedWord.getWidth(),selectedWord.getHeight(),"test",2);
+    		for(Word w:words){
+    			if(test.overlap(w)){
+    				if(!w.equals(selectedWord)){
+    				System.out.println("wo kao");
+    				return true;}
+    			}
+    		}
+    		for(Poem p:poems){
+    			for(Row r:p.getRows()){
+    				if(test.overlapRow(r)){
+    					return true;
+    				}
+    			}
+    		}
+    	}
+    	return false;
+    }
+    
 	public int getOverlapType(Word w1,Word w2){
 	if((w1.x+w1.width)>w2.getX()&&(w1.x+w1.width)<(w2.getX()+w2.width)&&(w2.getY()+w2.getHeight())>w1.y&&(w2.getY()+w2.getHeight())<(w1.y+w1.height)){
    		 return 1;
@@ -123,7 +222,7 @@ public class Board implements Iterable<Word>{
 				&&w.getY()+w.getHeight()>r.getY()&&w.getY()+w.getHeight()<r.getY()+r.getHeight()){
 			return 2;
 		}
-		if(w.getX()+w.getWidth()>r.getX()+r.getHeight()&&w.getX()<r.getX()+r.getWidth()&&r.getX()<w.getX()
+		if(w.getX()+w.getWidth()>r.getX()+r.getWidth()&&w.getX()<r.getX()+r.getWidth()&&r.getX()<w.getX()
 				&&w.getY()+w.getHeight()>r.getY()+r.getHeight()&&w.getY()<r.getY()+r.getHeight()){
 			return 3;
 		}
@@ -142,7 +241,7 @@ public class Board implements Iterable<Word>{
 		if(w.getX()>r.getX()&&w.getX()+w.getWidth()<r.getX()+r.getWidth()&&w.getY()+w.getHeight()>r.getY()&&w.getY()+w.getHeight()<r.getY()+r.getHeight()){
 			return 7;
 		}
-		if(w.getX()>r.getX()&&w.getX()+w.getWidth()<r.getX()&&w.getY()+w.getHeight()>r.getY()+r.getHeight()&&w.getY()<r.getY()+r.getHeight()){
+		if(w.getX()>r.getX()&&w.getX()+w.getWidth()<r.getX()+r.getWidth()&&w.getY()+w.getHeight()>r.getY()+r.getHeight()&&w.getY()<r.getY()+r.getHeight()){
 			return 8;
 		}
 		return 0;
