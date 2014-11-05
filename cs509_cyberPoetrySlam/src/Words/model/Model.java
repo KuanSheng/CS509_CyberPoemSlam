@@ -3,7 +3,7 @@ package Words.model;
 import java.io.Serializable;
 import java.util.Stack;
 
-public class Model implements Serializable {
+public class Model implements Serializable{
 	Board board;
 	//Stack<Move> moves = new Stack<Move>();
 
@@ -31,7 +31,6 @@ public class Model implements Serializable {
 	/**public void recordMove(MoveWord move) {
 		moves.add(move);
 	}
-
 	*/
 
 	public void setSelected(Word s) {

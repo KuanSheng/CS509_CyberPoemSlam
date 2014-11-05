@@ -12,10 +12,13 @@ ArrayList<Word> words = new ArrayList<Word>();
 	int width;
 	int WordNumber;
 
-	public Row(int x, int y, int hight, int width){
+	public Row(int x, int y, int height, int width){
 	  super.type = 2;
       this.x = x;
       this.y = y;
+      this.height=height;
+      this.width=width;
+      
 	}
 	
 	public Row(Word w1,Word w2,int direction){
@@ -92,6 +95,7 @@ ArrayList<Word> words = new ArrayList<Word>();
 		this.x = x;
 		this.y = y;
 	}
+
 	 public int getX(){return this.x;}
      public int getY(){return this.y;}
      public int getWidth(){return this.width;}

@@ -5,19 +5,8 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     ArrayList<Word> protectedWords = new ArrayList<Word>();
     ArrayList<Word> unProtectedWords = new ArrayList<Word>();
     ArrayList<Poem> poems = new ArrayList<Poem>();
+ 
     
-    public void restore(BoardMemento m) {
-		words = new ArrayList<Word>();
-		for (Word s : m.stored) {
-			words.add(new Word(s.x, s.y, s.width, s.height, s.value,s.wordType));
-		}
-	}
-	
-    public BoardMemento getState() {
-		return new BoardMemento(words);
-	}
-    
-	//add words to the board
 	public void addWords(Word w){
 		words.add(w);
 		unProtectedWords.add(w);
@@ -25,10 +14,19 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 	
 	public void addPoems(Poem p){
 		poems.add(p);
+		
 	}
 	
 	public ArrayList<Word> getWords(){
 		return this.words;
+	}
+	
+	public ArrayList<Word> getProtectedWords(){
+		return this.protectedWords;
+	}
+	
+	public ArrayList<Word> getunprotectedWords(){
+		return this.unProtectedWords;
 	}
 
     public ArrayList<Poem> getPoems() {return this.poems;}
@@ -268,7 +266,24 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		}
 		return 0;
 	}
+	public boolean getWord(int x,int y){
+		for(Word w:words){
+			if(w.getX()==x&&w.getY()==y)
+				return true;
+		}
+		return false;
+	}
+	public void setPoemList(ArrayList<Poem> poems){
+		this.poems = poems;
+	}
 	
+	public void setProtectedWords(ArrayList<Word> protectedW){
+		this.protectedWords = protectedW;
+	}
+	
+	public void setunProtectedWords(ArrayList<Word> words){
+		this.unProtectedWords = words;
+	}
 	public void removePoem(Poem p){
 		poems.remove(p);
 	}
@@ -290,6 +305,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		return unProtectedWords.iterator();
 	}
 
+
     public String toString(){
         String board = new String();
         for(Word w : words){
@@ -299,3 +315,4 @@ public class Board implements Iterable<Word>, java.io.Serializable {
         return board;
     }
 }
+//>>>>>>> refs/remotes/origin/Kuan_Jun

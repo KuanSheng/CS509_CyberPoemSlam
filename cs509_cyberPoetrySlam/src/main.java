@@ -10,10 +10,10 @@ public class main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Board b = new Board();
-		int dx = 200;
-		int dy = 200;
-		
-		b.addWords(new Word(dx,dy,50,14,"test",2));
+//		int dx = 200;
+//		int dy = 350;
+//		 
+//		b.addWords(new Word(dx,dy,50,14,"test",2));
 		Model model = new Model(b);
 
         //todo to be deleted just for test --------start
