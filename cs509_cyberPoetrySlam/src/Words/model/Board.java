@@ -17,30 +17,35 @@ public class Board implements Iterable<Word>{
 		return new BoardMemento(words);
 	}
     
-	//add words to the board
+	/**add words to the board**/
 	public void addWords(Word w){
 		words.add(w);
 		unProtectedWords.add(w);
 	}
 	
+	/**add poems to the board**/
 	public void addPoems(Poem p){
 		poems.add(p);
 	}
 	
+	/**get the word list**/
 	public ArrayList<Word> getWords(){
 		return this.words;
 	}
 	
+	/**protect one word**/
 	public void protectWords(Word w){
 		unProtectedWords.remove(w);
 		protectedWords.add(w);
 	}
 	
+	/**move one word into unprotected area**/
 	public void releaseWords(Word w){
 		protectedWords.remove(w);
 		unProtectedWords.add(w);
 	}
 	
+	/**find the word by location x and y**/
 	public Word findWord(int x,int y){
 		for(Word w:words){
 			if(w.intersection(x,y)){
@@ -50,6 +55,7 @@ public class Board implements Iterable<Word>{
 		return null;
 	}
 	
+	/****/
 	public Poem findPoem(int x,int y){
 		for(Poem p:poems){
 			if(p.intersection(x,y)){
@@ -134,7 +140,6 @@ public class Board implements Iterable<Word>{
     		for(Poem p:poems){
     			for(Row row:p.getRows()){
     				if(test.overlapRow(row)){
-    					System.out.println("error!");
     					return true;
     				}
     			}

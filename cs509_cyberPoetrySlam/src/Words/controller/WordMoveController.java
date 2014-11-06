@@ -274,5 +274,9 @@ public class WordMoveController extends MouseAdapter{
 		return true;
 	}
 	
+	public boolean disconnect(){
+		return false;
+	}
+	
 	
 }
