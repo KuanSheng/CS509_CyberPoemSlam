@@ -10,7 +10,7 @@ import Words.view.*;
 public class WordMoveController extends MouseAdapter{
 	final Model model;
 	final ApplicationCanvas panel;
-	
+	final Board b;
 	Point anchor;
 	int deltaX;
 	int deltaY;
@@ -21,12 +21,17 @@ public class WordMoveController extends MouseAdapter{
 	public WordMoveController(Model model,ApplicationCanvas panel){
 		this.model = model;
 		this.panel = panel;
+		this.b = model.getBoard();
 	}
 	
 	public void mousePressed(MouseEvent e) {
+		int x = e.getX();
+		int y = e.getY();
+		anchor = e.getPoint();
 		// no board? no behavior!
 		if (model == null) { return;}
 		Board board = model.getBoard();
+		
 		
 		if (e.getButton()==MouseEvent.BUTTON3) {
 			this.generateNewWord(e.getX(), e.getY());
@@ -35,39 +40,10 @@ public class WordMoveController extends MouseAdapter{
 		
         if(e.getClickCount() == 2){
         	//must in the protected area
-        	if(e.getY()<300){
-        		Poem p = board.findPoem(e.getX(),e.getY());
-        		Word disconnectWord = null;
-        		Row disconnectRow = null;
-        		int type = 0;
-        		
-        		for(Row r:p.getRows()){
-        			for(Word w:r.getWords()){
-        				if(w.intersection(e.getX(),e.getY())){
-        				//must be edge word!
-        				if(w.getX() == r.getX()){
-        					type = 1;
-        					disconnectWord = w;
-        					disconnectRow = r;
-        				}
-        				else if(w.getX() == r.getX()+r.getWidth()-w.getWidth()){
-        					type = 2;
-        					disconnectWord = w;
-        					disconnectRow = r;
-        				}
-        			}
-        			}
-        		}
-        		
-        		model.setSelectedWordinPoem(disconnectWord);
-        		WordDisconnectionController disconnect = new WordDisconnectionController(model,panel,p);
-        		disconnect.disconnectEdgeWord(type,disconnectRow);
-        		panel.repaint();
-        	}
-        	return;
+        	this.disconnectWord(x, y);
         }
         
-		anchor = e.getPoint();
+	
 		
 		// pieces are returned in order of Z coordinate
 		Word s = board.findWord(anchor.x, anchor.y);
@@ -164,115 +140,195 @@ public class WordMoveController extends MouseAdapter{
 	public boolean release(){
 		if (model == null) { return false; }
 		
-		Word selected = model.getSelected();
+		Word selectedWord = model.getSelected();
 		Poem selectedPoem = model.getSelectedPoem();
 		//nothing selected
-		if (selected == null) { 
-			if(selectedPoem == null){return false;}
-			else{
-				if(selectedPoem.getY()>300){
-					selectedPoem.setLocation(originalx,originaly);
-				}
-				else{
-					if(model.getBoard().checkOverlapPoem(selectedPoem)){
-						selectedPoem.setLocation(originalx, originaly);
-					}
-				}
-			}
+		if(selectedWord == null&&selectedPoem == null){
+			return false;
+		}
+		//move word or poem;
+		if(selectedWord != null){
+			this.moveWord(selectedWord);
+		}
+		else{
+			this.movePoem(selectedPoem);
 		}
 		
-		else {
-			if(this.originaly < 300&&selected.getY() > 300){
-			//change status;
-			model.getBoard().releaseWords(selected);
-		}
-		
-		else if(this.originaly > 300&&selected.getY() < 300){
-			//if overlap, set back to original location;
-			boolean isOverlap = false;
-			if(model.getBoard().checkOverlap(selected)!=null){
-				isOverlap = true;
-				selected.setLocation(originalx, originaly);
-			}
-			else{
-				if(model.getBoard().checkOverlapWord(selected)!=null){
-					isOverlap = true;
-					selected.setLocation(originalx, originaly);
-				}
-			}
-			//change status;
-			if(isOverlap == false)
-			model.getBoard().protectWords(selected);
-		}
-		
-		else if(this.originaly > 300&&selected.getY() > 300){
-			
-		}
-		
-		else if(this.originaly < 300&&selected.getY() < 300){
-			boolean potential = false;
-			boolean potentialWord = false;
-			//if overlap,set back to original location;
-			if(model.getBoard().getOverLapNumber(selected)>1){
-				selected.setLocation(originalx,originaly);
-			}
-			else if(model.getBoard().checkOverlap(selected)!=null){
-				Word connectWord = model.getBoard().checkOverlap(selected);
-				int type = model.getBoard().getOverlapType(selected,connectWord);
-				//check potential overlap
-				if(type == 1||type == 2||type == 6){
-					if(model.getBoard().checkPotentialOverlap(selected,connectWord,1)){
-						
-						potentialWord = true;
-					}
-				}
-				else if(type == 3||type == 4||type ==5){
-					if(model.getBoard().checkPotentialOverlap(selected,connectWord,2)){
-						System.out.println("error!");
-						potentialWord = true;
-					}
-				}
-				//connect two words
-				if(potentialWord == false){
-				WordConnectionController connection = new WordConnectionController(model,panel,model.getBoard().checkOverlap(selected));
-				connection.connect();}
-				else{
-					selected.setLocation(originalx, originaly);
-				}
-				
-			}
-			else{
-				if(model.getBoard().checkOverlapWord(selected)!=null){
-					Poem connectPoem = model.getBoard().checkOverlapWord(selected);
-					int type = model.getBoard().getOverlapPoemWord(connectPoem, selected);
-                    if(type == 1||type == 4||type == 5){
-                    	if(model.getBoard().checkPotentialOverlapPoem(selected,connectPoem,1)){
-                    		potential = true;
-                    	}
-                    }
-                    else if(type == 2||type == 3||type == 6){
-                    	if(model.getBoard().checkPotentialOverlapPoem(selected,connectPoem,2)){
-                    		potential = true;
-                    	}
-                    }
-                    
-                    if(type == 7||type == 8||potential == true){
-						selected.setLocation(originalx,originaly);
-					}
-					else{
-					WordConnectionController connection = new WordConnectionController(model,panel,connectPoem);
-					connection.connectPoem(type);}
-				}
-			}
-		}
-		}
 		//release the mouse and repaint
 		model.setSelected(null);
 		model.setSelectedPoem(null);
-		selected = null;
+		selectedWord = null;
 		selectedPoem = null;
 		return true;
 	}
 	
+	public void moveWord(Word w){
+		if(this.originaly > 300&&w.getY() > 300){
+			this.moveWordinUnprotectedarea(w);
+			return;
+		}
+		
+		if(this.originaly > 300&&w.getY() < 300){
+			b.protectWords(w);
+			return;
+		}
+		
+		if(this.originaly < 300&&w.getY() < 300){
+			this.moveWordinProtectedarea(w);
+			return;
+		}
+		
+		if(this.originaly < 300&&w.getY() > 300){
+			b.releaseWords(w);
+			return;
+		}
+		
+	}
 	
+	public void movePoem(Poem p){
+		if(this.originaly > 300&&p.getY() > 300){
+			return;
+		}
+		
+		if(this.originaly > 300&&p.getY() < 300){
+			return;
+		}
+		
+		if(this.originaly < 300&&p.getY() < 300){
+			this.movePoeminProtectedarea(p);
+			return;
+		}
+		
+		if(this.originaly < 300&&p.getY() > 300){
+			p.setLocation(originalx,originaly);
+			return;
+		}
+	}
+	
+	public void moveWordinUnprotectedarea(Word w){
+		return;
+	}
+	
+	public void moveWordinProtectedarea(Word w){
+		//no overlap, just return;
+		if(b.checkOverlap(w) == null&&b.checkOverlapWord(w) == null){
+			return;
+		}
+		
+		//if overlap more than 1 element,set back to original location;
+		if(model.getBoard().getOverLapNumber(w)>1){
+			w.setLocation(originalx,originaly);
+			return;
+		}
+		
+		if(b.checkOverlap(w) != null){
+	        this.connectTwoWords(w);
+		}
+		
+		if(b.checkOverlapWord(w) != null){
+			this.connectPoemandWord(w);
+		}
+	}
+	
+	public void movePoeminProtectedarea(Poem p){
+		if(b.checkOverlapPoem(p)){
+			p.setLocation(originalx, originaly);
+		}
+		return;
+	}
+	
+	public boolean checkWordPotentialOverlap(Word w){
+		Word connectWord = b.checkOverlap(w);
+		int type = b.getOverlapType(w,connectWord);
+		
+		//check potential overlap
+		if(type == 1||type == 2||type == 6){
+			if(model.getBoard().checkPotentialOverlap(w,connectWord,1)){
+				return true;
+			}
+		}
+		else if(type == 3||type == 4||type ==5){
+			if(model.getBoard().checkPotentialOverlap(w,connectWord,2)){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+    public void connectTwoWords(Word w){
+		Word connectWord = model.getBoard().checkOverlap(w);
+		
+		//check potential overlap
+		boolean potentialOverlap = this.checkWordPotentialOverlap(w);
+		
+		//connect two words
+		if(potentialOverlap == false){
+		   WordConnectionController connection = new WordConnectionController(model,panel,b.checkOverlap(w));
+		   connection.connect();
+		}
+		else{
+			w.setLocation(originalx, originaly);
+		}
+    }
+    
+    public void connectPoemandWord(Word w){
+    	Poem connectPoem = model.getBoard().checkOverlapWord(w);
+		int type = model.getBoard().getOverlapPoemWord(connectPoem, w);
+		boolean potential =  this.checkPotentialOverlapPoem(type, w, connectPoem);
+		
+		if(type == 7||type == 8||potential == true){
+			w.setLocation(originalx,originaly);
+		}
+		else{
+		WordConnectionController connection = new WordConnectionController(model,panel,connectPoem);
+		connection.connectPoem(type);}
+    }
+    
+   public boolean checkPotentialOverlapPoem(int type, Word w, Poem p){
+	      if(type == 1||type == 4||type == 5){
+	        	if(model.getBoard().checkPotentialOverlapPoem(w,p,1)){
+	        		return true;
+	        	}
+	        }
+	        else if(type == 2||type == 3||type == 6){
+	        	if(model.getBoard().checkPotentialOverlapPoem(w,p,2)){
+	        		return true;
+	        	}
+	        }
+	   return false;
+   }
+   
+   public void disconnectWord(int x, int y){
+	   if(x<300){
+   		Poem p = b.findPoem(x,y);
+   		Word disconnectWord = null;
+   		Row disconnectRow = null;
+   		int type = 0;
+   		
+   		for(Row r:p.getRows()){
+   			for(Word w:r.getWords()){
+   				if(w.intersection(x,y)){
+   				//must be edge word!
+   				if(w.getX() == r.getX()){
+   					type = 1;
+   					disconnectWord = w;
+   					disconnectRow = r;
+   				}
+   				else if(w.getX() == r.getX()+r.getWidth()-w.getWidth()){
+   					type = 2;
+   					disconnectWord = w;
+   					disconnectRow = r;
+   				}
+   			}
+   			}
+   		}
+   		
+   		model.setSelectedWordinPoem(disconnectWord);
+   		WordDisconnectionController disconnect = new WordDisconnectionController(model,panel,p);
+   		disconnect.disconnectEdgeWord(type,disconnectRow);
+   		//panel.repaint();
+   	}
+   	return;
+   }
 }

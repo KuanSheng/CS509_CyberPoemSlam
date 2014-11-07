@@ -6,11 +6,7 @@ import java.io.Serializable;
 public class Word extends Element implements Serializable{
 	 int x;
 	 int y;
-    //changed from final to accommondate deserialization
-//    final String value;
-//    final int width;
-//    final int height;
-//    final int wordType;
+
     String value;
     int width;
     int height;
