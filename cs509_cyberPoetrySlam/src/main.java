@@ -19,9 +19,6 @@ public class main {
         //todo to be deleted just for test --------start
 //        model.getBoard().addWords(new Word( 10 , 10, 100, 100, "test jun", 1));
         //---end todo
-
-		if(model == null)
-			System.out.println("main a main");
         ApplicationCanvas panel = new ApplicationCanvas(model);
 		final Application app = new Application(model, panel );
         app.addWindowListener(new StoreStateController(model, panel ));

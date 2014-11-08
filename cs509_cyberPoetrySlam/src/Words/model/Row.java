@@ -81,13 +81,13 @@ ArrayList<Word> words = new ArrayList<Word>();
 	return true;
 	}
 	
-	public void setLocation(int x, int y){
+	public void setLocation(int x, int y,int rx,int ry){
 		this.x = x;
 		this.y = y;
-		int currentx=x;
+		int deltax = x - rx;
+		int deltay = y - ry;
 		for(Word w: words){
-			w.setLocation(currentx,y);
-			currentx = currentx+w.getWidth();
+			w.setLocation(w.getX()+deltax,w.getY()+deltay);
 		}
 		
 	}

@@ -45,7 +45,7 @@ public class RowTest {
 		assertEquals(20,w3.getX());
 		assertEquals(10, w3.getY());
 		
-		row2.setLocation(100, 200);
+		//row2.setLocation(100, 200);
 		assertEquals(100,row2.getX());
 		assertEquals(200, row2.getY());
 	//	assertEquals(100, w3.getX());

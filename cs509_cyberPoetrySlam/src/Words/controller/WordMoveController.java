@@ -142,7 +142,7 @@ public class WordMoveController extends MouseAdapter{
 		
 		//poem selected
 		if(selectedPoem != null){
-			selectedPoem.setLocation(x-deltaX,y-deltaY);
+			selectedPoem.setLocation(x-deltaX,y-deltaY,originalx,originaly);
 			return true;
 		}
         
@@ -216,7 +216,7 @@ public class WordMoveController extends MouseAdapter{
 		}
 		
 		if(this.originaly < 300&&p.getY() > 300){
-			p.setLocation(originalx,originaly);
+			p.setLocation(originalx,originaly,originalx,originaly);
 			return;
 		}
 	}
@@ -252,7 +252,7 @@ public class WordMoveController extends MouseAdapter{
 	public void movePoeminProtectedarea(Poem p){
 		//if overlap, just send back
 		if(b.checkOverlapPoem(p)){
-			p.setLocation(originalx, originaly);
+			p.setLocation(originalx, originaly,originalx,originaly);
 		}
 		return;
 	}

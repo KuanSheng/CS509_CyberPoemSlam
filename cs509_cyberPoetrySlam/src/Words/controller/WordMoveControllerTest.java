@@ -256,7 +256,7 @@ public class WordMoveControllerTest {
         control.anchor = new Point(200,350);
         
         control.setSelectedPoem(p);
-        m.getSelectedPoem().setLocation(200, 151);
+        //m.getSelectedPoem().setLocation(200, 151);
         control.release();
  	    
     }

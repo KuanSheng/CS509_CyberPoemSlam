@@ -75,11 +75,13 @@ public class Poem extends Element implements Serializable{
     	this.y = y;
     }
     
-    public void setLocation(int x, int y){
+    public void setLocation(int x, int y, int ox, int oy){
+     int rx = this.getX();
+     int ry = this.getY();
    	 this.x = x;
    	 this.y = y;
    	 for(Row r:rows){
-   		 r.setLocation(x,y);
+   		 r.setLocation(x,y,rx,ry);
    	 }
    	 
     }

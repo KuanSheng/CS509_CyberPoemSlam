@@ -42,7 +42,7 @@ public class PoemTest {
 		poem1.getOverlapRow(w4);
 		poem1.addWord(w4);
 		
-		poem1.setLocation(35,40);
+		//poem1.setLocation(35,40);
 		assertEquals(35, poem1.getX());
 		assertEquals(40, poem1.getY());
 	
