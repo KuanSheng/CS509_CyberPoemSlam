@@ -80,8 +80,6 @@ public class ApplicationCanvas extends Canvas{
 		g.drawLine(r.getX(), r.getY()+r.getHeight(),r.getX()+r.getWidth(),r.getY()+r.getHeight());
 		for(Iterator<Word> wordItr = r.iterator();wordItr.hasNext();){
 			Word word = wordItr.next();
-			System.out.println(word.getValue()+":"+word.getWidth());
-			System.out.println(word.getValue()+":"+word.getX());
 			g.setColor(Color.white);
 			g.drawString(word.getValue(), word.getX()+word.getWidth()/2, word.getY()+r.getHeight());
 			g.setColor(Color.white);

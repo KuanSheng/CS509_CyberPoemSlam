@@ -20,7 +20,6 @@ public class ConnectionMove extends Move{
 	@Override
 	public boolean execute(){
 		int type = b.getOverlapType(selectedWord, this.connectWord);
-		System.out.println(type);
 		switch(type){
 		case 3:
 			newPoem = new Poem(this.connectWord,selectedWord,1);

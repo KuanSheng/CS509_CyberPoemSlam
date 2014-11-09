@@ -100,7 +100,7 @@ public class WordConnectionControllerTest {
 		connectPoem = new Poem(w1,w2,1);
 //		assertEquals(1, connectPoem.getRowNumber());
 		
-	    CC2=new WordConnectionController(model, panel, connectPoem );    
+	    //CC2=new WordConnectionController(model, panel, connectPoem );    
 	    CC2.connectPoem(1);
 	    
 	    CC2.connectPoem(4);

@@ -145,6 +145,8 @@ public class WordMoveController extends MouseAdapter{
 		//poem selected
 		if(selectedPoem != null){
 			selectedPoem.setLocation(x-deltaX,y-deltaY,originalx,originaly);
+			System.out.println(selectedPoem.getX());
+			System.out.println(selectedPoem.getY());
 			return true;
 		}
         
@@ -186,7 +188,7 @@ public class WordMoveController extends MouseAdapter{
 		}
 		
 		if(this.originaly > 300&&w.getY() < 300){
-			b.protectWords(w);
+			this.changeStatusMove();
 			return;
 		}
 		
@@ -196,7 +198,7 @@ public class WordMoveController extends MouseAdapter{
 		}
 		
 		if(this.originaly < 300&&w.getY() > 300){
-			b.releaseWords(w);
+			this.changeStatusMove();
 			return;
 		}
 		
@@ -245,10 +247,12 @@ public class WordMoveController extends MouseAdapter{
 		
 		if(b.checkOverlap(w) != null){
 	        this.connectTwoWords(w);
+	        return;
 		}
 		
 		if(b.checkOverlapWord(w) != null){
 			this.connectPoemandWord(w);
+			return;
 		}
 	}
 	
@@ -257,8 +261,10 @@ public class WordMoveController extends MouseAdapter{
 		//if overlap, just send back
 		if(b.checkOverlapPoem(p)){
 			p.setLocation(originalx, originaly,originalx,originaly);
+			return;
 		}
-		return;
+		
+		//this.makePoemMove();
 	}
 	
 	/**check potential overlap with a word**/
@@ -287,6 +293,7 @@ public class WordMoveController extends MouseAdapter{
 		
 		//connect two words
 		if(potentialOverlap == false){
+		   System.out.println("signal1");
 		   WordConnectionController connection = new WordConnectionController(model,panel,b.checkOverlap(w),originalx,originaly);
 		   connection.connect();
 		}
@@ -304,8 +311,9 @@ public class WordMoveController extends MouseAdapter{
 			w.setLocation(originalx,originaly);
 		}
 		else{
-		WordConnectionController connection = new WordConnectionController(model,panel,connectPoem);
-		connection.connectPoem(type);}
+		WordConnectionController connection = new WordConnectionController(model,panel,connectPoem,originalx,originaly);
+		connection.connectPoem(type);
+		}
     }
     
    public boolean checkPotentialOverlapPoem(int type, Word w, Poem p){
@@ -361,6 +369,38 @@ public class WordMoveController extends MouseAdapter{
 	   }
 	   
 	   moveWord move = new moveWord(selectedWord,originalx,originaly,selectedWord.getX(),selectedWord.getY());
+	   if(move.execute()){
+		   model.getMoves().push(move);
+		   panel.repaint();
+	   }
+   }
+   
+   public void changeStatusMove(){
+	   Word selectedWord = model.getSelected();
+	   if(selectedWord == null){
+		   return;
+	   }
+	   
+	   if(b.checkOverlap(selectedWord) != null||b.checkOverlapWord(selectedWord) != null){
+		   selectedWord.setLocation(originalx,originaly);
+		   return;
+	   }
+	   moveProtect move = new moveProtect(selectedWord, b, originalx,originaly,selectedWord.getX(),selectedWord.getY());
+	   if(move.execute()){
+		   model.getMoves().push(move);
+		   panel.repaint();
+	   }
+   }
+   
+   public void makePoemMove(){
+	   Poem selectedPoem = model.getSelectedPoem();
+	   if(selectedPoem == null){
+		   return;
+	   }
+	   
+	   System.out.println("this"+selectedPoem.getX());
+	   System.out.println("this"+selectedPoem.getY());
+	   movePoem move = new movePoem(selectedPoem,originalx,originaly,selectedPoem.getX(),selectedPoem.getY());
 	   if(move.execute()){
 		   model.getMoves().push(move);
 		   panel.repaint();

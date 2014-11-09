@@ -12,8 +12,8 @@ public class WordConnectionController extends MouseAdapter {
 	final Board b;
 	int oldx;
 	int oldy;
-	Word connectWord;
-	Poem connectPoem;
+	Word connectWord = null;
+	Poem connectPoem = null;
 	
 	public WordConnectionController(Model m,ApplicationCanvas p,Word w,int oldx, int oldy){
 		this.model = m;
@@ -24,14 +24,19 @@ public class WordConnectionController extends MouseAdapter {
 		b = model.getBoard();
 	}
 	
-	public WordConnectionController(Model m, ApplicationCanvas a, Poem p){
+	public WordConnectionController(Model m, ApplicationCanvas a, Poem p,int oldx,int oldy){
 		this.model = m;
 		this.panel = a;
 		this.connectPoem = p;
+		this.oldx = oldx;
+		this.oldy = oldy;
 		b = model.getBoard();
 	}
 	
 	public void connect(){
+		if(connectWord == null){
+			return;
+		}
 		Word selectedWord = this.model.getSelected();
 		ConnectionMove move = new ConnectionMove(selectedWord,connectWord,b,this.oldx,this.oldy);
 		if(move.execute()){
@@ -42,24 +47,15 @@ public class WordConnectionController extends MouseAdapter {
 	}
 	
 	public void connectPoem(int connectionType){
-		Word selectedWord = model.getSelected();
-		if(connectionType == 1||connectionType == 4||connectionType == 5){
-		Row r = connectPoem.getOverlapRow(selectedWord);
-		r.addWord(selectedWord);
-		selectedWord.setLocation(r.getX()-selectedWord.getWidth(), r.getY());
-		r.setLocationAfterConnection(selectedWord.getX(),selectedWord.getY());
-		connectPoem.setLocationAfterConnection(r.getX(),r.getY());
-		b.getWords().remove(selectedWord);
-		panel.repaint();
+		if(connectPoem == null){
+			return;
 		}
-		
-		else if(connectionType == 2||connectionType == 3||connectionType == 6){
-			Row r = connectPoem.getOverlapRow(selectedWord);
-			
-			r.addWord(selectedWord);
-			selectedWord.setLocation(r.getX()+r.getWidth()-selectedWord.getWidth(),r.getY());
-			b.getWords().remove(selectedWord);
+		Word selectedWord = this.model.getSelected();
+		ConnectionPoemMove move = new ConnectionPoemMove(connectPoem,selectedWord,b,oldx,oldy,connectionType);
+		if(move.execute()){
 			panel.repaint();
 		}
+		
+		model.getMoves().push(move);
 	}
 }
