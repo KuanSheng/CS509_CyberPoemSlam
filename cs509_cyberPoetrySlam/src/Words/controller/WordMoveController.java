@@ -216,6 +216,7 @@ public class WordMoveController extends MouseAdapter{
 		
 		if(this.originaly < 300&&p.getY() < 300){
 			this.movePoeminProtectedarea(p);
+			
 			return;
 		}
 		
@@ -263,7 +264,6 @@ public class WordMoveController extends MouseAdapter{
 			p.setLocation(originalx, originaly,originalx,originaly);
 			return;
 		}
-		
 		//this.makePoemMove();
 	}
 	
@@ -293,7 +293,6 @@ public class WordMoveController extends MouseAdapter{
 		
 		//connect two words
 		if(potentialOverlap == false){
-		   System.out.println("signal1");
 		   WordConnectionController connection = new WordConnectionController(model,panel,b.checkOverlap(w),originalx,originaly);
 		   connection.connect();
 		}
@@ -394,13 +393,13 @@ public class WordMoveController extends MouseAdapter{
    
    public void makePoemMove(){
 	   Poem selectedPoem = model.getSelectedPoem();
-	   if(selectedPoem == null){
-		   return;
-	   }
+	   
+	   int newx = selectedPoem.getX();
+	   int newy = selectedPoem.getY();
 	   
 	   System.out.println("this"+selectedPoem.getX());
 	   System.out.println("this"+selectedPoem.getY());
-	   movePoem move = new movePoem(selectedPoem,originalx,originaly,selectedPoem.getX(),selectedPoem.getY());
+	   movePoem move = new movePoem(selectedPoem,originalx,originaly,newx,newy);
 	   if(move.execute()){
 		   model.getMoves().push(move);
 		   panel.repaint();

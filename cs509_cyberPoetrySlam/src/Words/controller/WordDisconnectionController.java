@@ -18,34 +18,11 @@ public class WordDisconnectionController {
 	
 	public void disconnectEdgeWord(int type,Row r){
 		Word w = model.getSelectedWordinPoem();
-		if(type == 1){
-			r.removeWord(w);
-			if(r.getWordNumber() > 1){
-			r.setLocationAfterConnection(r.getX()+w.getWidth(),r.getY());
-			}
-			else if(r.getWordNumber() == 1){
-				r.setLocationAfterConnection(r.getX()+w.getWidth(),r.getY());
-				b.addWords(r.getFirstWord());
-				disConnectPoem.removeRow(r);
-				if(disConnectPoem.getRowNumber() == 0){
-					b.removePoem(disConnectPoem);
-				}
-			}
-			model.getBoard().addWords(w);
-		}
-		else if(type == 2){
-			r.removeWord(w);
-			if(r.getWordNumber() == 1){
-				b.addWords(r.getFirstWord());
-				disConnectPoem.removeRow(r);
-				if(disConnectPoem.getRowNumber() == 0){
-					b.removePoem(disConnectPoem);
-				}
-			}
-			model.getBoard().addWords(w);
+		DisconnectionMove move = new DisconnectionMove(this.disConnectPoem,w,r,this.model,type);
+		if(move.execute()){
+		panel.repaint();
 		}
 		
-		model.setSelectedWordinPoem(null);
-		panel.repaint();
+		model.getMoves().push(move);
 	}
 }

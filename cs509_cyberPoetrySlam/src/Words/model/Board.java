@@ -284,8 +284,18 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 	public void setunProtectedWords(ArrayList<Word> words){
 		this.unProtectedWords = words;
 	}
+	
 	public void removePoem(Poem p){
 		poems.remove(p);
+	}
+	
+	public boolean findPoem(Poem p){
+		for(Poem poem:poems){
+			if(poem.equals(p)){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public Iterator<Poem> poemIterator(){
