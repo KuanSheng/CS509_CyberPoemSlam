@@ -48,11 +48,7 @@ public class WordMoveController extends MouseAdapter{
         		}
         	this.disconnectWord(x, y);
             }
-        	
-        
-	
-		
-		// pieces are returned in order of Z coordinate
+        // pieces are returned in order of Z coordinate
 		Word s = board.findWord(anchor.x, anchor.y);
 
 		if (s != null) {
@@ -229,6 +225,7 @@ public class WordMoveController extends MouseAdapter{
 	
 	/**move a word within unprotected area**/
 	public void moveWordinUnprotectedarea(Word w){
+		this.makeWordMove();
 		return;
 	}
 	
@@ -236,6 +233,7 @@ public class WordMoveController extends MouseAdapter{
 	public void moveWordinProtectedarea(Word w){
 		//no overlap, just return;
 		if(b.checkOverlap(w) == null&&b.checkOverlapWord(w) == null){
+			this.makeWordMove();
 			return;
 		}
 		
@@ -289,7 +287,6 @@ public class WordMoveController extends MouseAdapter{
 		
 		//connect two words
 		if(potentialOverlap == false){
-			System.out.println("originalx:"+originalx);
 		   WordConnectionController connection = new WordConnectionController(model,panel,b.checkOverlap(w),originalx,originaly);
 		   connection.connect();
 		}
@@ -326,7 +323,7 @@ public class WordMoveController extends MouseAdapter{
    }
    
    public void disconnectWord(int x, int y){
-	   if(x<300){
+	   if(y<300){
    		Poem p = b.findPoem(x,y);
    		Word disconnectWord = null;
    		Row disconnectRow = null;
@@ -355,5 +352,18 @@ public class WordMoveController extends MouseAdapter{
    		disconnect.disconnectEdgeWord(type,disconnectRow);
    	}
    	return;
+   }
+   
+   public void makeWordMove(){
+	   Word selectedWord = model.getSelected();
+	   if(selectedWord == null){
+		   return;
+	   }
+	   
+	   moveWord move = new moveWord(selectedWord,originalx,originaly,selectedWord.getX(),selectedWord.getY());
+	   if(move.execute()){
+		   model.getMoves().push(move);
+		   panel.repaint();
+	   }
    }
 }

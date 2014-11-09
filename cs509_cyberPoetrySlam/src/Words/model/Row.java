@@ -22,19 +22,15 @@ ArrayList<Word> words = new ArrayList<Word>();
 	}
 	
 	public Row(Word w1,Word w2,int direction){
-		if(direction==1){
+		if(direction==2){
 			this.x = w1.getX();
 			this.y = w1.getY();
 			w2.setLocation(this.x+w1.getWidth(),this.y);
-			//System.out.println(w1.getX());
-			//System.out.println(w2.getX());
 		}
 		else{
 			this.x = w2.getX()-w1.getWidth();
 			this.y = w2.getY();
 			w1.setLocation(this.x, this.y);
-			//System.out.println(w2.getX());
-			//System.out.println(w1.getX());
 		}
 		this.height = w1.getHeight();
 		this.width = w1.getWidth()+w2.getWidth();
