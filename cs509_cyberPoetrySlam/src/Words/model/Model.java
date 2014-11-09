@@ -3,9 +3,11 @@ package Words.model;
 import java.io.Serializable;
 import java.util.Stack;
 
+import Words.controller.*;
+
 public class Model implements Serializable{
 	Board board;
-	//Stack<Move> moves = new Stack<Move>();
+	Stack<Move> moves = new Stack<Move>();
 
 	/** Currently selected shape (or null if none). */
 	Word selected;
@@ -64,5 +66,24 @@ public class Model implements Serializable{
 
     public void restore(Model m){
         board = m.board;
+    }
+    
+    public void recordMove(moveWord m){
+    	moves.add(m);
+    }
+    
+    public void recordConnectionMove(ConnectionMove m){
+       moves.add(m);
+    }
+    
+    public Move removeLastMove(){
+    	if (moves.isEmpty()) {
+    		return null; 
+    		}
+		return moves.pop();
+    }
+    
+    public Stack<Move> getMoves(){
+    	return moves;
     }
 }

@@ -41,8 +41,14 @@ public class WordMoveController extends MouseAdapter{
 		
         if(e.getClickCount() == 2){
         	//must in the protected area
+        	if(b.findWord(e.getX(), e.getY()) == null&&b.findPoem(e.getX(), e.getY()) == null){
+        		UndoController undo = new UndoController(this.model,this.panel);
+        		undo.process();
+        		return;
+        		}
         	this.disconnectWord(x, y);
-        }
+            }
+        	
         
 	
 		
@@ -283,7 +289,8 @@ public class WordMoveController extends MouseAdapter{
 		
 		//connect two words
 		if(potentialOverlap == false){
-		   WordConnectionController connection = new WordConnectionController(model,panel,b.checkOverlap(w));
+			System.out.println("originalx:"+originalx);
+		   WordConnectionController connection = new WordConnectionController(model,panel,b.checkOverlap(w),originalx,originaly);
 		   connection.connect();
 		}
 		else{

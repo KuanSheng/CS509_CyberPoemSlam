@@ -1,7 +1,7 @@
 package Words.controller;
 import Words.model.*;
 
-public class moveWord {
+public class moveWord extends Move{
 	final Word word;
 	int oldx;
 	int oldy;
@@ -16,11 +16,13 @@ public class moveWord {
 		this.newy = newy;
 	}
 	
+	@Override
 	public boolean execute(){
 		word.setLocation(newx,newy);
 		return true;
 	}
 	
+	@Override
 	public boolean undo(){
 		word.setLocation(oldx, oldy);
 		return true;

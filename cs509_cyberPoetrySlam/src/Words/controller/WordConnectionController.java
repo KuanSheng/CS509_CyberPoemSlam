@@ -10,13 +10,17 @@ public class WordConnectionController extends MouseAdapter {
 	final Model model;
 	final ApplicationCanvas panel;
 	final Board b;
+	int oldx;
+	int oldy;
 	Word connectWord;
 	Poem connectPoem;
 	
-	public WordConnectionController(Model m,ApplicationCanvas p,Word w){
+	public WordConnectionController(Model m,ApplicationCanvas p,Word w,int oldx, int oldy){
 		this.model = m;
 		this.panel = p;
 		this.connectWord = w;
+		this.oldx = oldx;
+		this.oldy = oldy;
 		b = model.getBoard();
 	}
 	
@@ -29,39 +33,13 @@ public class WordConnectionController extends MouseAdapter {
 	
 	public void connect(){
 		Word selectedWord = this.model.getSelected();
-		int type = b.getOverlapType(selectedWord, this.connectWord);
-		Poem newPoem;
-		
-		switch(type){
-		case 3:
-			newPoem = new Poem(this.connectWord,selectedWord,1);
-		    break;
-		
-		case 4:
-			newPoem = new Poem(this.connectWord,selectedWord,1);
-			break;
-		case 2:
-			newPoem = new Poem(selectedWord,this.connectWord,2);
-			break;
-		case 1:
-			newPoem = new Poem(selectedWord,this.connectWord,2);
-			break;
-		case 5:
-			newPoem = new Poem(this.connectWord,selectedWord,1);
-			break;
-		case 6:
-			newPoem = new Poem(selectedWord,this.connectWord,2);
-			break;
-		default:
-			newPoem = new Poem(this.connectWord,selectedWord,1);
-			break;
+		ConnectionMove move = new ConnectionMove(selectedWord,connectWord,b,this.oldx,this.oldy);
+		if(move.execute()){
+			panel.repaint();
 		}
 		
-		b.addPoems(newPoem);
-		b.getWords().remove(selectedWord);
-		b.getWords().remove(this.connectWord);
-		panel.repaint();
-		}
+		model.getMoves().push(move);
+	}
 	
 	public void connectPoem(int connectionType){
 		Word selectedWord = model.getSelected();

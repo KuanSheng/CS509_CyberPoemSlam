@@ -28,7 +28,6 @@ public class WordDisconnectionController {
 				b.addWords(r.getFirstWord());
 				disConnectPoem.removeRow(r);
 				if(disConnectPoem.getRowNumber() == 0){
-					System.out.println("cao");
 					b.removePoem(disConnectPoem);
 				}
 			}
