@@ -287,6 +287,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		}
 		return 0;
 	}
+	
 	public boolean getWord(int x,int y){
 		for(Word w:words){
 			if(w.getX()==x&&w.getY()==y)
@@ -294,6 +295,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		}
 		return false;
 	}
+	
 	public void setPoemList(ArrayList<Poem> poems){
 		this.poems = poems;
 	}

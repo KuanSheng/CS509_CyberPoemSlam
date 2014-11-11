@@ -70,6 +70,7 @@ public class Poem extends Element implements Serializable{
     public ArrayList<Row> getRows(){
     	return this.rows;
     }
+    
     public void addRow(Row row){
     	rows.add(row);
     	this.RowNumber++;
@@ -100,6 +101,16 @@ public class Poem extends Element implements Serializable{
     public int getRowNumber(){
     	return this.RowNumber;
     }
+    
+    public Row getFirstRow(){
+    	for(Row r:rows){
+    		if(r.getX() == this.x&&r.getY() == this.y){
+    			return r;
+    		}
+    	}
+    	return null;
+    }
+    
     public int getX(){return this.x;}
     public int getY(){return this.y;}
     
@@ -109,10 +120,11 @@ public class Poem extends Element implements Serializable{
     }
     
     public void setLocation(int x, int y, int ox, int oy){
-     int rx = this.getX();
-     int ry = this.getY();
    	 this.x = x;
    	 this.y = y;
+   	 
+   	 int deltax = x-oy;
+   	 int deltay = x-oy;
    	 
    	 int currentx = x;
    	 int currenty = y;

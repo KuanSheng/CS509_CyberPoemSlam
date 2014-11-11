@@ -82,6 +82,8 @@ ArrayList<Word> words = new ArrayList<Word>();
 		this.y = y;
 		int deltax = x - rx;
 		int deltay = y - ry;
+		System.out.println("deltax"+deltax);
+	   	System.out.println("deltay"+deltay);
 		for(Word w: words){
 			w.setLocation(w.getX()+deltax,w.getY()+deltay);
 		}

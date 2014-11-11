@@ -13,6 +13,8 @@ public class Model implements Serializable{
 	Word selected;
 	Word selectedWordinPoem;
 	Poem selectedPoem;
+	Row  selectedRow;
+	Area selectedArea;
 
 	public Model(Board b) {
 		board = b;
@@ -43,20 +45,37 @@ public class Model implements Serializable{
 		selectedPoem = p;
 	}
 	
+	public void setSelectedRow(Row r){
+		selectedRow = r;
+	}
+	
 	public void setSelectedWordinPoem(Word w){
 		selectedWordinPoem = w;
 	}
+	
+	public void setSelectedArea(int x,int y, int width,int height){
+		Area area = new Area(x,y,width,height);
+		this.selectedArea = area;
+	}
 
 	public Word getSelected() {
-		return selected;
+		return this.selected;
 	}
 	
 	public Poem getSelectedPoem(){
-		return selectedPoem;
+		return this.selectedPoem;
+	}
+	
+	public Row getSelectedRow(){
+		return this.selectedRow;
 	}
 	
 	public Word getSelectedWordinPoem(){
 		return selectedWordinPoem;
+	}
+	
+	public Area getSelectedArea(){
+		return this.selectedArea;
 	}
 
     public String toString(){

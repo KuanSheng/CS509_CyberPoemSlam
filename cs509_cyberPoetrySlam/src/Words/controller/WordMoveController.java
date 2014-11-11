@@ -18,6 +18,8 @@ public class WordMoveController extends MouseAdapter{
 	int originalx;
 	int originaly;
 	
+	boolean buildFlag = false;
+	
 	public WordMoveController(Model model,ApplicationCanvas panel){
 		this.model = model;
 		this.panel = panel;
@@ -31,6 +33,7 @@ public class WordMoveController extends MouseAdapter{
 		anchor = e.getPoint();
 		// no board? no behavior!
 		if (model == null) { return;}
+		
 		Board board = model.getBoard();
 		
 		
@@ -49,19 +52,21 @@ public class WordMoveController extends MouseAdapter{
         	this.disconnectWord(x, y);
         	return;
         }
-        // pieces are returned in order of Z coordinate
+        // select a word
 		Word s = board.findWord(anchor.x, anchor.y);
-
 		if (s != null) {
 			setSelectedWord(s);
 			return;
 		}
-	    else{
-			Poem p = board.findPoem(anchor.x,anchor.y);
-			if(p != null){
-				setSelectedPoem(p);
-				return;
-			}
+	    //select a poem
+		Poem p = board.findPoem(anchor.x,anchor.y);
+		if(p != null){
+			setSelectedPoem(p);
+			return;
+		}
+		
+		if(buildSelectionArea(anchor.x,anchor.y)){
+			return;
 		}
 		
 		model.setSelected(null);
@@ -133,8 +138,12 @@ public class WordMoveController extends MouseAdapter{
 		Poem selectedPoem = model.getSelectedPoem();
 		
 		//nothing selected
-		if(selectedWord == null&&selectedPoem == null){
-			return false;
+		if(selectedWord == null&&selectedPoem == null&&buildFlag){
+
+			int width = Math.abs(x-originalx);
+			int height = Math.abs(y-originaly);
+			model.setSelectedArea(originalx,originaly,width,height);
+			return true;
 		}
 		
 		//word selected
@@ -146,11 +155,9 @@ public class WordMoveController extends MouseAdapter{
 		//poem selected
 		if(selectedPoem != null){
 			selectedPoem.setLocation(x-deltaX,y-deltaY,originalx,originaly);
-			System.out.println(selectedPoem.getX());
-			System.out.println(selectedPoem.getY());
 			return true;
 		}
-        
+		System.out.println("enter here");
 		return true;
 	}
 	
@@ -162,7 +169,8 @@ public class WordMoveController extends MouseAdapter{
 		Poem selectedPoem = model.getSelectedPoem();
 		//nothing selected
 		if(selectedWord == null&&selectedPoem == null){
-			return false;
+			model.setSelectedArea(0, 0, 0, 0);
+			return true;
 		}
 		
 		//move word or poem;
@@ -415,5 +423,16 @@ public class WordMoveController extends MouseAdapter{
 	   WordPoemConnectionController controller = new WordPoemConnectionController(model,panel,originalx,originaly,selectedPoem,connectPoem);
 	   controller.connectPoem();
 	   System.out.println("signal4");
+   }
+   
+   public boolean buildSelectionArea(int ox,int oy){
+	   this.originalx = ox;
+	   this.originaly = oy;
+	   this.buildFlag = true;
+	   return true;
+   }
+   
+   public void setSelectedRow(int x, int y){
+	   
    }
 }
