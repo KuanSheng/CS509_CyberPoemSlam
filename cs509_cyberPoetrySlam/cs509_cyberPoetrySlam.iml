@@ -9,6 +9,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="junit-4.11-sources" level="project" />
     <orderEntry type="library" name="junit-4.11" level="project" />
+    <orderEntry type="library" name="hamcrest-core-1.33" level="project" />
   </component>
 </module>
 
