@@ -45,6 +45,7 @@ public class ConnectionMove extends Move{
 		}
 		
 		b.addPoems(newPoem);
+		System.out.println(newPoem.getRowNumber());
 		b.getWords().remove(selectedWord);
 		b.getWords().remove(this.connectWord);
 		return true;

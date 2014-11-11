@@ -29,7 +29,6 @@ public class Poem extends Element implements Serializable{
     public Poem(Word w1, Word w2,int direction){
     	Row row = new Row(w1,w2,direction);
     	this.addRow(row);
-    	this.RowNumber++;
     	this.x = row.getX();
     	this.y = row.getY();
     }
