@@ -12,11 +12,12 @@ public class UndoController {
 	}
 	
 	public boolean process() {
+		
 		Move m = model.removeLastMove();
-		if (m == null) { return false; }
-		
+		if (m == null) {
+			return false; }
 		m.undo();
-		
+
 		// force board to redraw
 		canvas.repaint();
 		return true;

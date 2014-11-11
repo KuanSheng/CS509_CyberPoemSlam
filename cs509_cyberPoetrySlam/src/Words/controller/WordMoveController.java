@@ -47,7 +47,8 @@ public class WordMoveController extends MouseAdapter{
         		return;
         		}
         	this.disconnectWord(x, y);
-            }
+        	return;
+        }
         // pieces are returned in order of Z coordinate
 		Word s = board.findWord(anchor.x, anchor.y);
 
@@ -353,7 +354,6 @@ public class WordMoveController extends MouseAdapter{
    			}
    			}
    		}
-   		
    		model.setSelectedWordinPoem(disconnectWord);
    		WordDisconnectionController disconnect = new WordDisconnectionController(model,panel,p);
    		disconnect.disconnectEdgeWord(type,disconnectRow);

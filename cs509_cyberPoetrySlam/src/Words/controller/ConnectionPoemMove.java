@@ -42,7 +42,7 @@ public class ConnectionPoemMove extends Move{
 	
 	@Override
 	public boolean undo(){
-		System.out.println("signal!");
+		System.out.println("signalcop!");
 		Row r = connectPoem.getOverlapRow(selectedWord);
 		
 		if(selectedWord.getX() == r.getX()){
