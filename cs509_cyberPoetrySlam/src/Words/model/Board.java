@@ -29,8 +29,25 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		return this.unProtectedWords;
 	}
 
-    public ArrayList<Poem> getPoems() {return this.poems;}
+    public ArrayList<Poem> getPoems() {
+    	return this.poems;
+    }
 	
+    public Poem getOverlapPoem(Poem p){
+    	for(Poem poem:poems){
+    		for(Row r:poem.getRows()){
+    			for(Word w:r.getWords()){
+    				for(Row row:p.getRows()){
+    					if(w.overlapRow(row)){
+    						return poem;
+    					}
+    				}
+    			}
+    		}
+    	}
+    	return null;
+    }
+    
 	public void protectWords(Word w){
 		unProtectedWords.remove(w);
 		protectedWords.add(w);
@@ -103,6 +120,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		}
 		return null;
 	}
+	
     public int getOverLapNumber(Word w){
     	int number = 0;
     	for(Word s:words){
@@ -119,6 +137,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     	}
     	return number;
     }
+    
     public boolean checkPotentialOverlapPoem(Word selectedWord,Poem connectPoem,int type){
     	Row r = connectPoem.getOverlapRow(selectedWord);
     	if(type == 1){

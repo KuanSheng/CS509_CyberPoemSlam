@@ -265,6 +265,13 @@ public class WordMoveController extends MouseAdapter{
 			p.setLocation(originalx, originaly,originalx,originaly);
 			return;
 		}
+		
+		if(b.getOverlapPoem(p) != null){
+			System.out.println("xxxx");
+			Poem connectPoem = b.getOverlapPoem(p);
+			connectTwoPoem(p,connectPoem);
+			return;
+		}
 		//this.makePoemMove();
 	}
 	
@@ -402,5 +409,11 @@ public class WordMoveController extends MouseAdapter{
 		   model.getMoves().push(move);
 		   panel.repaint();
 	   }
+   }
+   
+   public void connectTwoPoem(Poem selectedPoem, Poem connectPoem){
+	   WordPoemConnectionController controller = new WordPoemConnectionController(model,panel,originalx,originaly,selectedPoem,connectPoem);
+	   controller.connectPoem();
+	   System.out.println("signal4");
    }
 }

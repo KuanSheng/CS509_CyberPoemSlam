@@ -33,6 +33,40 @@ public class Poem extends Element implements Serializable{
     	this.y = row.getY();
     }
     
+    public Poem(Poem p1, Poem p2, int direction){
+    	//p1 on top
+    	if(direction == 1){
+    		this.x = p2.getX();
+    		this.y = p2.getY() - 14*p1.getRowNumber();
+    		
+    		p1.setLocation(this.x, this.y, p1.getX(), p1.getY());
+    		
+    		for(Row r: p1.getRows()){
+    			this.addRow(r);
+    		}
+    		
+    		for(Row r: p2.getRows()){
+    			this.addRow(r);
+    		}
+    	}
+    	//p2 on top
+    	else{
+    		this.x = p2.getX();
+    		this.y = p2.getY();
+    		
+    		p1.setLocation(this.x, this.y+14*p1.getRowNumber(), p1.getX(), p1.getX());
+    		
+    		for(Row r: p1.getRows()){
+    			this.addRow(r);
+    		}
+    		
+    		for(Row r: p2.getRows()){
+    			this.addRow(r);
+    		}
+    		
+    	}
+    }
+  
     public ArrayList<Row> getRows(){
     	return this.rows;
     }
