@@ -397,8 +397,6 @@ public class WordMoveController extends MouseAdapter{
 	   int newx = selectedPoem.getX();
 	   int newy = selectedPoem.getY();
 	   
-	   System.out.println("this"+selectedPoem.getX());
-	   System.out.println("this"+selectedPoem.getY());
 	   movePoem move = new movePoem(selectedPoem,originalx,originaly,newx,newy);
 	   if(move.execute()){
 		   model.getMoves().push(move);

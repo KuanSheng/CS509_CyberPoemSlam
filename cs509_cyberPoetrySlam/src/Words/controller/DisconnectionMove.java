@@ -79,6 +79,7 @@ public class DisconnectionMove extends Move{
 		}
 		disconnectPoem = new Poem(disconnectWord,remainWord,type);
 	    b.getWords().remove(remainWord);
+	    b.getWords().remove(disconnectWord);
 		b.addPoems(disconnectPoem);
 		return true;
      }
