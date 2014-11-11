@@ -113,8 +113,13 @@ public class Poem extends Element implements Serializable{
      int ry = this.getY();
    	 this.x = x;
    	 this.y = y;
+   	 
+   	 int currentx = x;
+   	 int currenty = y;
+   	 int i = 0;
    	 for(Row r:rows){
-   		 r.setLocation(x,y,rx,ry);
+   		 r.setLocation(currentx,currenty+14*i,r.getX(),r.getY());
+   		 i++;
    	 }
    	 
     }

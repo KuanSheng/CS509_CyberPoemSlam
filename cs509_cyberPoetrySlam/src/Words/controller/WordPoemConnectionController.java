@@ -23,7 +23,7 @@ public class WordPoemConnectionController {
 	}
 	
 	public void connectPoem(){
-		if(selectedPoem.getY() > connectPoem.getY()){
+		if(selectedPoem.getY() < connectPoem.getY()){
 			direction = 1;
 		}
 		else{
