@@ -3,39 +3,53 @@ package Words.view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import Words.model.Board;
 import Words.model.Model;
 
-public class Application extends Frame {
+public class Application extends JFrame {
      Model model;
     private ApplicationCanvas panel; // added by JUN to share panel with StoreStateController
+
 	/**
 	 * This is the default constructor
 	 */
 //	public Application(Model m) { //Changed by JUN
     public Application(Model m, ApplicationCanvas panel){
 		super();
-		this.model = m;
+        JPanel p = new JPanel();
+
+        //setLayout(new BorderLayout());
+        JPanel imagePanel = new JPanel();
+        imagePanel.setSize(650, 30);
+        setVisible(true);
+        JButton b1 = new JButton("Swap/Revoke");
+        JButton b2 = new JButton("Release");
+        JButton b3 = new JButton("Submit");
+        imagePanel.add(b1);
+        imagePanel.add(b2);
+        imagePanel.add(b3);
+
+        this.model = m;
         this.panel = panel;
 		setTitle("CyberPoetrySlam");
 		setSize(650,490);
-		
-		JPanel p = new JPanel();
+        setResizable(true);
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		p.setSize(650,490);
 		p.setBackground(Color.yellow);
 		p.setBounds(0 ,245, 650, 345);
-		/**Button button = new Button("Undo");
-		p.add(button);
-		add(p);*/
+
 		if(model == null)
 			return;
 		// mark as final so the anonymous class below can find it
 //		final ApplicationCanvas panel = new ApplicationCanvas(model); //commented by Jun
 		add(p);
-		p.add(panel);
+        p.add(imagePanel);
+        p.add(panel);
 	}
 	
     public ApplicationCanvas getpanel(){
