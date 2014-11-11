@@ -35,6 +35,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 	
     public Poem getOverlapPoem(Poem p){
     	for(Poem poem:poems){
+    		if(!poem.equals(p)){
     		for(Row r:poem.getRows()){
     			for(Word w:r.getWords()){
     				for(Row row:p.getRows()){
@@ -42,7 +43,8 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     						return poem;
     					}
     				}
-    			}
+    			  }
+    		    }
     		}
     	}
     	return null;
@@ -96,7 +98,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 				}
 			}
 		}
-		for(Poem poem:poems){
+		/*for(Poem poem:poems){
 			if(!p.equals(poem)){
 			for(Row r:poem.getRows())
 				for(Word s:r.getWords())
@@ -106,7 +108,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 					}
 				}
 			}
-		}
+		}*/
 		return false;
 	}
 	
