@@ -17,6 +17,8 @@ public class WordMoveController extends MouseAdapter{
 	
 	int originalx;
 	int originaly;
+	int ox;
+	int oy;
 	
 	boolean buildFlag = false;
 	
@@ -124,6 +126,8 @@ public class WordMoveController extends MouseAdapter{
 		model.setSelectedPoem(p);
 		originalx = p.getX();
 		originaly = p.getY();
+		ox = originalx;
+		oy = originaly;
 
 		// set anchor for smooth moving
 		deltaX = relative.x - originalx;
@@ -154,7 +158,9 @@ public class WordMoveController extends MouseAdapter{
 		
 		//poem selected
 		if(selectedPoem != null){
-			selectedPoem.setLocation(x-deltaX,y-deltaY,originalx,originaly);
+			ox = selectedPoem.getX();
+			oy = selectedPoem.getY();
+			selectedPoem.setLocation(x-deltaX,y-deltaY,ox,oy);
 			return true;
 		}
 		System.out.println("enter here");
@@ -422,7 +428,6 @@ public class WordMoveController extends MouseAdapter{
    public void connectTwoPoem(Poem selectedPoem, Poem connectPoem){
 	   WordPoemConnectionController controller = new WordPoemConnectionController(model,panel,originalx,originaly,selectedPoem,connectPoem);
 	   controller.connectPoem();
-	   System.out.println("signal4");
    }
    
    public boolean buildSelectionArea(int ox,int oy){
@@ -432,7 +437,7 @@ public class WordMoveController extends MouseAdapter{
 	   return true;
    }
    
-   public void setSelectedRow(int x, int y){
-	   
+   public boolean setSelectedRow(int x, int y,int width,int height){
+	   return false;
    }
 }

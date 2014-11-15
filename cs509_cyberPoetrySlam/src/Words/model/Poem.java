@@ -123,15 +123,11 @@ public class Poem extends Element implements Serializable{
    	 this.x = x;
    	 this.y = y;
    	 
-   	 int deltax = x-oy;
-   	 int deltay = x-oy;
+   	 int deltax = x-ox;
+   	 int deltay = y-oy;
    	 
-   	 int currentx = x;
-   	 int currenty = y;
-   	 int i = 0;
    	 for(Row r:rows){
-   		 r.setLocation(currentx,currenty+14*i,r.getX(),r.getY());
-   		 i++;
+   		 r.setLocation(r.getX()+deltax,r.getY()+deltay,r.getX(),r.getY());
    	 }
    	 
     }
