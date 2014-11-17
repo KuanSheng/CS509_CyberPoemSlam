@@ -143,11 +143,7 @@ public class WordMoveController extends MouseAdapter{
 		
 		//nothing selected
 		if(selectedWord == null&&selectedPoem == null&&buildFlag){
-
-			int width = Math.abs(x-originalx);
-			int height = Math.abs(y-originaly);
-			model.setSelectedArea(originalx,originaly,width,height);
-			return true;
+			return drawSelectionArea(x, y);
 		}
 		
 		//word selected
@@ -175,6 +171,8 @@ public class WordMoveController extends MouseAdapter{
 		Poem selectedPoem = model.getSelectedPoem();
 		//nothing selected
 		if(selectedWord == null&&selectedPoem == null){
+			if(b.getSelectedRow(model.getSelectedArea())!=null);
+			model.setSelectedRow(b.getSelectedRow(model.getSelectedArea()));
 			model.setSelectedArea(0, 0, 0, 0);
 			return true;
 		}
@@ -281,12 +279,11 @@ public class WordMoveController extends MouseAdapter{
 		}
 		
 		if(b.getOverlapPoem(p) != null){
-			System.out.println("xxxx");
 			Poem connectPoem = b.getOverlapPoem(p);
 			connectTwoPoem(p,connectPoem);
 			return;
 		}
-		//this.makePoemMove();
+		this.makePoemMove();
 	}
 	
 	/**check potential overlap with a word**/
@@ -437,6 +434,37 @@ public class WordMoveController extends MouseAdapter{
 	   return true;
    }
    
+   public boolean drawSelectionArea(int x, int y){
+	   if(x >= originalx&&y >= originaly){
+		    int width = Math.abs(x-originalx);
+			int height = Math.abs(y-originaly);
+			System.out.println("here!");
+			model.setSelectedArea(originalx,originaly,width,height);
+			return true;
+	   }
+	   
+	   if(x < originalx&&y < originaly){
+		    int width = Math.abs(x-originalx);
+			int height = Math.abs(y-originaly);
+			model.setSelectedArea(x,y,width,height);
+			return true;
+	   }
+	   
+	   if(x > originalx&&y < originaly ){
+		    int width = Math.abs(x-originalx);
+			int height = Math.abs(y-originaly);
+			model.setSelectedArea(originalx,y,width,height);
+			return true;
+	   }
+	   
+	   if(x < originalx&&y > originaly){
+		   int width = Math.abs(x-originalx);
+			int height = Math.abs(y-originaly);
+			model.setSelectedArea(x,originaly,width,height);
+			return true;
+	   }
+	   return true;
+   }
    public boolean setSelectedRow(int x, int y,int width,int height){
 	   return false;
    }

@@ -1,5 +1,6 @@
 package Words.model;
 import java.util.*;
+
 public class Board implements Iterable<Word>, java.io.Serializable {
     ArrayList<Word> words = new ArrayList<Word>();
     ArrayList<Word> protectedWords = new ArrayList<Word>();
@@ -49,7 +50,16 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     	}
     	return null;
     }
-    
+    public Row getSelectedRow(Area a){
+    	for(Poem p:poems){
+    		for(Row r:p.rows){
+    			if(a.getX() < r.getX()&&a.getY()<r.getY()&&a.getX()+a.getWidth()>r.getX()+r.getWidth()&&a.getY()+a.getHeight()>r.getY()+r.getHeight()){
+    				return r;
+    			}
+    		}
+    	}
+    	return null;
+    }
 	public void protectWords(Word w){
 		unProtectedWords.remove(w);
 		protectedWords.add(w);
