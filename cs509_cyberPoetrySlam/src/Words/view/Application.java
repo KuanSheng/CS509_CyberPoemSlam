@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+import Words.controller.ReleasePoemController;
 import Words.model.Board;
 import Words.model.Model;
 
@@ -31,8 +32,13 @@ public class Application extends JFrame {
         imagePanel.add(b2);
         imagePanel.add(b3);
 
+
         this.model = m;
         this.panel = panel;
+
+        //add listener to "Release" button
+        b2.addActionListener(new ReleasePoemController(m, panel));
+
 		setTitle("CyberPoetrySlam");
 		setSize(650,490);
         setResizable(true);

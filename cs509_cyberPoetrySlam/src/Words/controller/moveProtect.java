@@ -1,7 +1,9 @@
 package Words.controller;
 import Words.model.*;
 
-public class moveProtect extends Move{
+import java.io.Serializable;
+
+public class moveProtect extends Move implements Serializable{
 	int oldx;
 	int oldy;
 	int newx;

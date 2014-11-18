@@ -83,7 +83,8 @@ ArrayList<Word> words = new ArrayList<Word>();
 		int deltax = x - rx;
 		int deltay = y - ry;
 		for(Word w: words){
-			w.setLocation(w.getX()+deltax,w.getY()+deltay);
+            System.out.println("set word location--deltaY = "+deltay+" :setLocation.Poem");
+            w.setLocation(w.getX()+deltax,w.getY()+deltay);
 		}
 		
 	}

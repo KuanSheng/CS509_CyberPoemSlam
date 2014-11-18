@@ -118,7 +118,8 @@ public class Poem extends Element implements Serializable{
    	 int currenty = y;
    	 int i = 0;
    	 for(Row r:rows){
-   		 r.setLocation(currentx,currenty+14*i,r.getX(),r.getY());
+         System.out.println("set row locaion"+ currentx+ (currenty+14*i) + r.getX()+r.getY()+": setLocation.Poem");
+         r.setLocation(currentx,currenty+14*i,r.getX(),r.getY());
    		 i++;
    	 }
    	 
