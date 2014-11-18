@@ -54,7 +54,7 @@ public class Poem extends Element implements Serializable{
     		this.x = p2.getX();
     		this.y = p2.getY();
     		
-    		p1.setLocation(this.x, this.y+14*p1.getRowNumber(), p1.getX(), p1.getX());
+    		p1.setLocation(this.x, this.y+14*p2.getRowNumber(), p1.getX(), p1.getY());
     		
     		for(Row r: p1.getRows()){
     			this.addRow(r);
@@ -70,6 +70,7 @@ public class Poem extends Element implements Serializable{
     public ArrayList<Row> getRows(){
     	return this.rows;
     }
+    
     public void addRow(Row row){
     	rows.add(row);
     	this.RowNumber++;
@@ -100,6 +101,16 @@ public class Poem extends Element implements Serializable{
     public int getRowNumber(){
     	return this.RowNumber;
     }
+    
+    public Row getFirstRow(){
+    	for(Row r:rows){
+    		if(r.getX() == this.x&&r.getY() == this.y){
+    			return r;
+    		}
+    	}
+    	return null;
+    }
+    
     public int getX(){return this.x;}
     public int getY(){return this.y;}
     
@@ -114,13 +125,15 @@ public class Poem extends Element implements Serializable{
    	 this.x = x;
    	 this.y = y;
    	 
-   	 int currentx = x;
-   	 int currenty = y;
-   	 int i = 0;
+   	 int deltax = x-ox;
+   	 int deltay = y-oy;
+   	 
    	 for(Row r:rows){
-         System.out.println("set row locaion"+ currentx+ (currenty+14*i) + r.getX()+r.getY()+": setLocation.Poem");
-         r.setLocation(currentx,currenty+14*i,r.getX(),r.getY());
-   		 i++;
+   		 if(r.getY() != oy){
+   			 System.out.println(oy);
+   			 System.out.println(r.getY());
+   		 }
+   		 r.setLocation(r.getX()+deltax,r.getY()+deltay,r.getX(),r.getY());
    	 }
    	 
     }

@@ -18,13 +18,13 @@ public class movePoem extends Move{
 	
 	@Override
 	public boolean execute(){
-		poem.setLocation(newx, newx, oldx, oldy);
+		poem.setLocation(newx, newy, newx, newy);
 		return true;
 	}
 	
 	@Override
 	public boolean undo(){
-		poem.setLocation(oldx,oldy,oldx,oldy);
+		poem.setLocation(oldx,oldy,newx,newy);
 		return true;
 	}
 }

@@ -17,6 +17,10 @@ public class WordMoveController extends MouseAdapter{
 	
 	int originalx;
 	int originaly;
+	int ox;
+	int oy;
+	
+	boolean buildFlag = false;
 	
 	public WordMoveController(Model model,ApplicationCanvas panel){
 		this.model = model;
@@ -31,6 +35,7 @@ public class WordMoveController extends MouseAdapter{
 		anchor = e.getPoint();
 		// no board? no behavior!
 		if (model == null) { return;}
+		
 		Board board = model.getBoard();
 		
 		
@@ -49,19 +54,21 @@ public class WordMoveController extends MouseAdapter{
         	this.disconnectWord(x, y);
         	return;
         }
-        // pieces are returned in order of Z coordinate
+        // select a word
 		Word s = board.findWord(anchor.x, anchor.y);
-
 		if (s != null) {
 			setSelectedWord(s);
 			return;
 		}
-	    else{
-			Poem p = board.findPoem(anchor.x,anchor.y);
-			if(p != null){
-				setSelectedPoem(p);
-				return;
-			}
+	    //select a poem
+		Poem p = board.findPoem(anchor.x,anchor.y);
+		if(p != null){
+			setSelectedPoem(p);
+			return;
+		}
+		
+		if(buildSelectionArea(anchor.x,anchor.y)){
+			return;
 		}
 		
 		model.setSelected(null);
@@ -119,6 +126,8 @@ public class WordMoveController extends MouseAdapter{
 		model.setSelectedPoem(p);
 		originalx = p.getX();
 		originaly = p.getY();
+		ox = originalx;
+		oy = originaly;
 
 		// set anchor for smooth moving
 		deltaX = relative.x - originalx;
@@ -133,8 +142,8 @@ public class WordMoveController extends MouseAdapter{
 		Poem selectedPoem = model.getSelectedPoem();
 		
 		//nothing selected
-		if(selectedWord == null&&selectedPoem == null){
-			return false;
+		if(selectedWord == null&&selectedPoem == null&&buildFlag){
+			return drawSelectionArea(x, y);
 		}
 		
 		//word selected
@@ -145,12 +154,12 @@ public class WordMoveController extends MouseAdapter{
 		
 		//poem selected
 		if(selectedPoem != null){
-			selectedPoem.setLocation(x-deltaX,y-deltaY,originalx,originaly);
-			System.out.println(selectedPoem.getX());
-			System.out.println(selectedPoem.getY());
+			ox = selectedPoem.getX();
+			oy = selectedPoem.getY();
+			selectedPoem.setLocation(x-deltaX,y-deltaY,ox,oy);
 			return true;
 		}
-        
+		System.out.println("enter here");
 		return true;
 	}
 	
@@ -162,7 +171,10 @@ public class WordMoveController extends MouseAdapter{
 		Poem selectedPoem = model.getSelectedPoem();
 		//nothing selected
 		if(selectedWord == null&&selectedPoem == null){
-			return false;
+			if(b.getSelectedRow(model.getSelectedArea())!=null);
+			model.setSelectedRow(b.getSelectedRow(model.getSelectedArea()));
+			model.setSelectedArea(0, 0, 0, 0);
+			return true;
 		}
 		
 		//move word or poem;
@@ -267,12 +279,11 @@ public class WordMoveController extends MouseAdapter{
 		}
 		
 		if(b.getOverlapPoem(p) != null){
-			System.out.println("xxxx");
 			Poem connectPoem = b.getOverlapPoem(p);
 			connectTwoPoem(p,connectPoem);
 			return;
 		}
-		//this.makePoemMove();
+		this.makePoemMove();
 	}
 	
 	/**check potential overlap with a word**/
@@ -414,6 +425,47 @@ public class WordMoveController extends MouseAdapter{
    public void connectTwoPoem(Poem selectedPoem, Poem connectPoem){
 	   WordPoemConnectionController controller = new WordPoemConnectionController(model,panel,originalx,originaly,selectedPoem,connectPoem);
 	   controller.connectPoem();
-	   System.out.println("signal4");
+   }
+   
+   public boolean buildSelectionArea(int ox,int oy){
+	   this.originalx = ox;
+	   this.originaly = oy;
+	   this.buildFlag = true;
+	   return true;
+   }
+   
+   public boolean drawSelectionArea(int x, int y){
+	   if(x >= originalx&&y >= originaly){
+		    int width = Math.abs(x-originalx);
+			int height = Math.abs(y-originaly);
+			System.out.println("here!");
+			model.setSelectedArea(originalx,originaly,width,height);
+			return true;
+	   }
+	   
+	   if(x < originalx&&y < originaly){
+		    int width = Math.abs(x-originalx);
+			int height = Math.abs(y-originaly);
+			model.setSelectedArea(x,y,width,height);
+			return true;
+	   }
+	   
+	   if(x > originalx&&y < originaly ){
+		    int width = Math.abs(x-originalx);
+			int height = Math.abs(y-originaly);
+			model.setSelectedArea(originalx,y,width,height);
+			return true;
+	   }
+	   
+	   if(x < originalx&&y > originaly){
+		   int width = Math.abs(x-originalx);
+			int height = Math.abs(y-originaly);
+			model.setSelectedArea(x,originaly,width,height);
+			return true;
+	   }
+	   return true;
+   }
+   public boolean setSelectedRow(int x, int y,int width,int height){
+	   return false;
    }
 }
