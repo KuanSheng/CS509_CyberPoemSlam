@@ -102,4 +102,15 @@ ArrayList<Word> words = new ArrayList<Word>();
      public Iterator<Word> iterator(){
     	 return words.iterator();
      }
+
+    /**
+     * Jun
+     */
+    public String toString(){
+        StringBuffer sb = new StringBuffer();
+        for(Word w : words){
+            sb.append(w+" ");
+        }
+        return sb.toString();
+    }
 }

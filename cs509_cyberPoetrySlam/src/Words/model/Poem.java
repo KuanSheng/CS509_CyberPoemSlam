@@ -124,4 +124,18 @@ public class Poem extends Element implements Serializable{
    	 }
    	 
     }
+
+    /**
+     * Jun
+     * @return string representation of the Poem
+     */
+    @Override
+    public String toString() {
+//        return super.toString();
+        StringBuffer sb = new StringBuffer();
+        for(Row r : rows){
+            sb.append(r+"\n");
+        }
+        return sb.toString();
+    }
 }

@@ -1,7 +1,9 @@
 package Words.controller;
 import Words.model.*;
 
-public class ConnectionMove extends Move{
+import java.io.Serializable;
+
+public class ConnectionMove extends Move implements Serializable{ // todo check why without Serializable Java complines about store/restore
 	Poem newPoem;
 	final Word connectWord;
 	final Word selectedWord;

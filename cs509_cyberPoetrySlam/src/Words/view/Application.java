@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import Words.controller.ReleasePoemController;
+import Words.controller.SubmitPoemController;
 import Words.model.Board;
 import Words.model.Model;
 
@@ -38,6 +39,7 @@ public class Application extends JFrame {
 
         //add listener to "Release" button
         b2.addActionListener(new ReleasePoemController(m, panel));
+        b3.addActionListener(new SubmitPoemController(m, panel, SubmitPoemController.Method.ALL));
 
 		setTitle("CyberPoetrySlam");
 		setSize(650,490);
