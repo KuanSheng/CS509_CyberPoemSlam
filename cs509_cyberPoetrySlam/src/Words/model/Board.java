@@ -6,9 +6,26 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     ArrayList<Word> protectedWords = new ArrayList<Word>();
     ArrayList<Word> unProtectedWords = new ArrayList<Word>();
     ArrayList<Poem> poems = new ArrayList<Poem>();
- 
-    
-	public void addWords(Word w){
+
+    /**
+     * jun
+     * @param b board to be compared with
+     * @return true if words, protectedWords, unProtectedWored and poems are the same
+     */
+    @Override
+    public boolean equals(Object b) {
+        if(Board.class.isInstance(b)){
+            if(words.equals(((Board)b).getWords()) &&
+                    protectedWords.equals(((Board) b).getProtectedWords()) &&
+                    unProtectedWords.equals(((Board) b).getunprotectedWords()) &&
+                    poems.equals(((Board) b).getPoems())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void addWords(Word w){
 		words.add(w);
 		unProtectedWords.add(w);
 	}

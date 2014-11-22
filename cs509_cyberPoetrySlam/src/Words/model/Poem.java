@@ -151,4 +151,19 @@ public class Poem extends Element implements Serializable{
         }
         return sb.toString();
     }
+
+    /**
+     * Jun
+     * @param p Row to be compared with
+     * @return true if words, x and y are the same
+     */
+    @Override
+    public boolean equals(Object p) {
+        if(p instanceof Poem){
+            if(((Poem) p).getX() == x && ((Poem) p).getY() == y && rows.equals(((Poem) p).getRows())){
+                return true;
+            }
+        }
+        return false;
+    }
 }

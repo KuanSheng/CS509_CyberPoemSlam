@@ -113,4 +113,19 @@ ArrayList<Word> words = new ArrayList<Word>();
         }
         return sb.toString();
     }
+
+    /**
+     * Jun
+     * @param r Row to be compared with
+     * @return true if words, x and y are the same
+     */
+    @Override
+    public boolean equals(Object r) {
+        if(r instanceof Row){
+            if(((Row) r).getX() == x && ((Row) r).getY() == y && words.equals(((Row) r).getWords())){
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -96,5 +96,25 @@ public class Word extends Element implements Serializable{
         return value;
     }
 
+    /**
+     * Jun
+     * @param w word to be compared with
+     * @return true if value, x and y are the same
+     */
+    @Override
+    public boolean equals(Object w) {
+        if(!Word.class.isInstance(w)){
+            return false;
+        }
+        if(((Word)w).getValue().equals(value)
+                &&
+                ((Word)w).getX() == x
+                &&
+                ((Word)w).getY() == y
+                ){
+            return true;
+        }
+        return false;
+    }
 }
 
