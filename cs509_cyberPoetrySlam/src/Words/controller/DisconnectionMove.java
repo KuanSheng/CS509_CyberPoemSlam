@@ -21,32 +21,36 @@ public class DisconnectionMove extends Move{
 	
 	@Override
 	public boolean execute(){
-		System.out.println("signal2");
 		Word w = model.getSelectedWordinPoem();
 		if(type == 1){
 			r.removeWord(w);
 			if(r.getWordNumber() > 1){
 			r.setLocationAfterConnection(r.getX()+w.getWidth(),r.getY());
 			}
-			else if(r.getWordNumber() == 1){
+			else if(r.getWordNumber() == 1&&disconnectPoem.getRowNumber() == 1){
 				r.setLocationAfterConnection(r.getX()+w.getWidth(),r.getY());
 				b.addWords(r.getFirstWord());
 				this.remainWord = r.getFirstWord();
-				System.out.println(disconnectPoem.getRowNumber());
 				disconnectPoem.removeRow(r);
 				if(disconnectPoem.getRowNumber() == 0){
 					b.removePoem(disconnectPoem);
 					disconnectPoem = null;
-				}
+					}
+			
+			}
+			else if(r.getWordNumber() == 1&&disconnectPoem.getRowNumber() != 1){
+				r.setLocationAfterConnection(r.getX()+w.getWidth(),r.getY());
+				
 			}
 			model.getBoard().addWords(w);
 		}
-		else if(type == 2){
+		else 
+		if(type == 2){
 			r.removeWord(w);
-			if(r.getWordNumber() == 1){
+			if(disconnectPoem.getRowNumber() == 1){
+			  if(r.getWordNumber() == 1){
 				b.addWords(r.getFirstWord());
 				this.remainWord = r.getFirstWord();
-				System.out.println(disconnectPoem.getRowNumber());
 				disconnectPoem.removeRow(r);
 				if(disconnectPoem.getRowNumber() == 0){
 					b.removePoem(disconnectPoem);
@@ -54,6 +58,10 @@ public class DisconnectionMove extends Move{
 				}
 			}
 			model.getBoard().addWords(w);
+		 }
+			else {
+				model.getBoard().addWords(w);
+			}
 		}
 		model.setSelectedWordinPoem(null);
 		return true;
