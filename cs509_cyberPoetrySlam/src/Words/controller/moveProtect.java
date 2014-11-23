@@ -34,7 +34,6 @@ public class moveProtect extends Move{
 	
 	@Override
 	public boolean undo(){
-		System.out.println("signalpr!");
 		if(oldy > 300&&newy < 300){
 			b.releaseWords(word);
 		}

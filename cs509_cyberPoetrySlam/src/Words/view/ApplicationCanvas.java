@@ -35,7 +35,6 @@ public class ApplicationCanvas extends Canvas{
 	        System.out.println("fuck too!!(canvas)");
 		setSize(650,490);
         WordMoveController controller = new WordMoveController(model, this);
-        //WordConnectionController connectionController = new WordConnectionController(model,this);
 		this.board = model.getBoard();
 		this.addMouseListener(controller);
 		this.addMouseMotionListener(controller);
@@ -46,10 +45,19 @@ public class ApplicationCanvas extends Canvas{
 		paintWord(g);
 		paintPoem(g);
 		paintDisconnectWord(g);
-		paintSelected(g);
-		paintSelectedPoem(g);
-		paintSelectedArea(g);
+		
+		if(model.getSelectedRow() != null){
 		paintSelectedRow(g);
+		}
+		
+		if(model.getSelected() != null){
+		paintSelected(g);
+		}
+		
+		if(model.getSelectedPoem() != null){
+		paintSelectedPoem(g);
+		}
+		paintSelectedArea(g);
 	}
 	
 	public void paintBackground(Graphics g){
@@ -144,6 +152,7 @@ public class ApplicationCanvas extends Canvas{
 		g.setColor(Color.GREEN);
 		g.fillRect(a.getX(), a.getY(), a.getWidth(), a.getHeight());
 	}
+	
 	public void paintSelectedRow(Graphics g){
 		Row r = model.getSelectedRow();
 		g.clearRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());

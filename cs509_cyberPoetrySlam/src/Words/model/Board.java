@@ -70,6 +70,17 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		unProtectedWords.add(w);
 	}
 	
+	public boolean findRow(int x,int y,Row r){
+		if(r == null){
+			System.out.println("null");
+			return false;
+		}
+		if(r.intersection(x, y)){
+			return true;
+		}
+		return false;
+	}
+	
 	public Word findWord(int x,int y){
 		for(Word w:words){
 			if(w.intersection(x,y)){
@@ -108,17 +119,6 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 				}
 			}
 		}
-		/*for(Poem poem:poems){
-			if(!p.equals(poem)){
-			for(Row r:poem.getRows())
-				for(Word s:r.getWords())
-				   for(Row row:p.getRows()){
-					if(s.overlapRow(row)){
-						return true;
-					}
-				}
-			}
-		}*/
 		return false;
 	}
 	

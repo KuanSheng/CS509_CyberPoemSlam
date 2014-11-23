@@ -3,14 +3,16 @@ import java.io.Serializable;
 import java.util.*;
 public class Row extends Element implements Iterable<Word>, Serializable{
 ArrayList<Word> words = new ArrayList<Word>();
-	
-	int x;
+    int x;
 	int y;
 	int x_last;
 	int y_last;
 	int height;
 	int width;
 	int WordNumber;
+	
+	Row formerRow;
+	Row nextRow;
 
 	public Row(int x, int y, int height, int width){
 	  super.type = 2;
@@ -32,13 +34,12 @@ ArrayList<Word> words = new ArrayList<Word>();
 			this.y = w2.getY();
 			w1.setLocation(this.x, this.y);
 		}
+		
 		this.height = w1.getHeight();
 		this.width = w1.getWidth()+w2.getWidth();
 		this.words.add(w1);
 		this.words.add(w2);
 		this.WordNumber =2;
-		//System.out.println(w2.getX());
-		//System.out.println(w1.getX());
 	}
 	
 	public void addWord(Word word){
@@ -65,9 +66,77 @@ ArrayList<Word> words = new ArrayList<Word>();
 		}
 		return null;
 	}
+	
+	public Word getLastWord(){
+		for(Word w:words){
+			if(w.getX()+w.getWidth() == this.getX()+this.getWidth()){
+				return w;
+			}
+		}
+		
+		return null;
+	}
+	
 	public ArrayList<Word> getWords(){
 		return this.words;
 	}
+	
+	public int getLeftShiftLimit(){
+		Row former = this.getFormerRow();
+		Row next = this.getNextRow();
+		
+		Word w1 = null;
+		Word w2 = null;
+		
+		if(former == null&&next == null){
+			return 0;
+		}
+		
+		if(former != null&&next == null){
+			w1 = former.getFirstWord();
+			return w1.getX()+w1.getWidth() - this.width;
+		}
+		
+		if(next != null&&former == null){
+		    w2 = next.getFirstWord();
+		    return w2.getX()+w2.getWidth() - this.width;
+		}
+		
+		 w1 = former.getFirstWord();
+		 w2 = next.getFirstWord();
+		int leftLimit = Math.max(w1.getX()+w1.getWidth(), w2.getX()+w2.getWidth());
+		
+		return leftLimit - this.width;
+	}
+	
+	public int getRightShiftLimit(){
+		Row former = this.getFormerRow();
+		Row next = this.getNextRow();
+		
+		Word w1 = null;
+		Word w2 = null;
+		
+		if(former == null&&next == null){
+			return 0;
+		}
+		
+		if(former != null&&next == null){
+			w1 = former.getFirstWord();
+			return w1.getX();
+		}
+		
+		if(next != null&&former == null){
+		    w2 = next.getFirstWord();
+		    return w2.getX();
+		}
+		
+		w1 = former.getFirstWord();
+	    w2 = next.getFirstWord();
+		int rightLimit = Math.min(w1.getX(), w2.getX());
+		
+		return rightLimit;
+	}
+	
 	
 	public boolean intersection(int x, int y){
 	 if(x < this.x){return false;}
@@ -96,6 +165,19 @@ ArrayList<Word> words = new ArrayList<Word>();
      public int getY(){return this.y;}
      public int getWidth(){return this.width;}
      public int getHeight(){return this.height;}
+     
+     public Row getNextRow(){
+    	 return this.nextRow;
+     }
+     public Row getFormerRow(){
+    	 return this.formerRow;
+     }
+     public void setNextRow(Row r){
+    	 this.nextRow = r;
+     }
+     public void setFormerRow(Row r){
+    	 this.formerRow = r;
+     }
      
      //return all words in the row
      public Iterator<Word> iterator(){
