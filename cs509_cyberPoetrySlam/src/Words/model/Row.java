@@ -121,12 +121,12 @@ ArrayList<Word> words = new ArrayList<Word>();
 		}
 		
 		if(former != null&&next == null){
-			w1 = former.getFirstWord();
+			w1 = former.getLastWord();
 			return w1.getX();
 		}
 		
 		if(next != null&&former == null){
-		    w2 = next.getFirstWord();
+		    w2 = next.getLastWord();
 		    return w2.getX();
 		}
 		

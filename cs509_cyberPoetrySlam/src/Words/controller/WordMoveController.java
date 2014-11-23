@@ -162,19 +162,6 @@ public class WordMoveController extends MouseAdapter{
 		Word selectedWord = model.getSelected();
 		Poem selectedPoem = model.getSelectedPoem();
 		
-		if(selectedWord != null){
-			System.out.println("wwww");
-		}
-		if(selectedPoem != null){
-			System.out.println("pppp");
-		}
-		if(!buildFlag){
-			System.out.println("bbbb");
-		}
-		if(RowFlag){
-			System.out.println("rrrr");
-		}
-		
 		//nothing selected
 		if(selectedWord == null&&selectedPoem == null&&buildFlag&&!RowFlag){
 			return drawSelectionArea(x, y);
