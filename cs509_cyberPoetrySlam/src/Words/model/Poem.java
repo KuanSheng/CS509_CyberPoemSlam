@@ -18,7 +18,6 @@ public class Poem extends Element implements Serializable{
     Row LastRow = null;
    
     public Poem(int x, int y){
-    	super.type=3;
     	this.x = x;
     	this.y = y;
     	rows = null;

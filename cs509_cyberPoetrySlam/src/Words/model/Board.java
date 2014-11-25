@@ -98,7 +98,16 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		}
 		return null;
 	}
-	
+	public Poem getPoemByRow(Row r){
+		for(Poem p:poems){
+			for(Row row:p.getRows()){
+				if(row.equals(r)){
+					return p;
+				}
+			}
+		}
+		return null;
+	}
 	public Word checkOverlap(Word w){
 		for(Word s:words){
 			if(s.equals(w)){

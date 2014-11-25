@@ -4,19 +4,25 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import Words.model.Board;
 import Words.model.Model;
+import Words.model.Poem;
+import Words.model.Row;
+import Words.controller.*;
 
 public class Application extends Frame {
-     Model model;
-    private ApplicationCanvas panel; // added by JUN to share panel with StoreStateController
+    Model model;
+    public ApplicationCanvas panel;
+    JButton disconnectButton;
+    // added by JUN to share panel with StoreStateController
 	/**
 	 * This is the default constructor
 	 */
 //	public Application(Model m) { //Changed by JUN
-    public Application(Model m, ApplicationCanvas panel){
+    public Application(Model m, final ApplicationCanvas panel){
 		super();
 		this.model = m;
         this.panel = panel;
@@ -30,6 +36,12 @@ public class Application extends Frame {
 		/**Button button = new Button("Undo");
 		p.add(button);
 		add(p);*/
+		
+		disconnectButton = new JButton("Disconnect Row");
+		p.add(disconnectButton);
+		
+		
+
 		if(model == null)
 			return;
 		// mark as final so the anonymous class below can find it

@@ -52,6 +52,7 @@ public class WordMoveController extends MouseAdapter{
 		
         if(e.getClickCount() == 2){
         	//must in the protected area
+        	
         	if(b.findWord(e.getX(), e.getY()) == null&&b.findPoem(e.getX(), e.getY()) == null){
         		UndoController undo = new UndoController(this.model,this.panel);
         		undo.process();
@@ -87,7 +88,6 @@ public class WordMoveController extends MouseAdapter{
 		}
 		
 		if(buildSelectionArea(anchor.x,anchor.y)){
-			System.out.println("wokao");
 			return;
 		}
 		
