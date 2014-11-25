@@ -29,9 +29,13 @@ public class Application extends JFrame {
         JButton b1 = new JButton("Swap/Revoke");
         JButton b2 = new JButton("Release");
         JButton b3 = new JButton("Submit");
+        JButton b4 = new JButton("Disconnect");
+//        GridBagConstraints c = new GridBagConstraints();
         imagePanel.add(b1);
         imagePanel.add(b2);
         imagePanel.add(b3);
+        imagePanel.add(b4);
+
 
 
         this.model = m;
@@ -57,8 +61,13 @@ public class Application extends JFrame {
 //		final ApplicationCanvas panel = new ApplicationCanvas(model); //commented by Jun
 		add(p);
         p.add(imagePanel);
+//        p.add(b1);
+//        p.add(b2);
+//        p.add(b3);
         p.add(panel);
-	}
+
+
+    }
 	
     public ApplicationCanvas getpanel(){
     	return this.panel;
