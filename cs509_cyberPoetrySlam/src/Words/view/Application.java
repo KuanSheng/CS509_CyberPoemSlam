@@ -1,8 +1,8 @@
 package Words.view;
 
+import java.io.*;
+import java.awt.event.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import Words.controller.ReleasePoemController;
@@ -11,7 +11,8 @@ import Words.model.Board;
 import Words.model.Model;
 
 public class Application extends JFrame {
-     Model model;
+    Model model;
+    WordTable table;
     private ApplicationCanvas panel; // added by JUN to share panel with StoreStateController
 
 	/**
@@ -22,9 +23,10 @@ public class Application extends JFrame {
 		super();
         JPanel p = new JPanel();
 
+
         //setLayout(new BorderLayout());
         JPanel imagePanel = new JPanel();
-        imagePanel.setSize(650, 30);
+        imagePanel.setSize(633, 700);
         setVisible(true);
         JButton b1 = new JButton("Swap/Revoke");
         JButton b2 = new JButton("Release");
@@ -36,8 +38,6 @@ public class Application extends JFrame {
         imagePanel.add(b3);
         imagePanel.add(b4);
 
-
-
         this.model = m;
         this.panel = panel;
 
@@ -46,7 +46,7 @@ public class Application extends JFrame {
         b3.addActionListener(new SubmitPoemController(m, panel, SubmitPoemController.Method.ALL));
 
 		setTitle("CyberPoetrySlam");
-		setSize(650,490);
+		setSize(900,700);
         setResizable(true);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,11 +61,10 @@ public class Application extends JFrame {
 //		final ApplicationCanvas panel = new ApplicationCanvas(model); //commented by Jun
 		add(p);
         p.add(imagePanel);
-//        p.add(b1);
-//        p.add(b2);
-//        p.add(b3);
         p.add(panel);
 
+        table = new WordTable(model.getBoard());
+        p.add(table);
 
     }
 	

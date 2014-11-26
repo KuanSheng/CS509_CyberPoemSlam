@@ -321,7 +321,22 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 	public void removePoem(Poem p){
 		poems.remove(p);
 	}
-	
+
+    /** Return the number of words on the board. */
+    public int size() {
+        return unProtectedWords.size();
+    }
+
+    /** Return the given shape by index position. */
+    public Word get(int rowIndex) {
+        return unProtectedWords.get(rowIndex);
+    }
+
+    /** Sort shapes using given comparator. */
+    public void sort(Comparator<Word> comparator) {
+        Collections.sort(unProtectedWords, comparator);
+    }
+
 	public boolean findPoem(Poem p){
 		for(Poem poem:poems){
 			if(poem.equals(p)){
