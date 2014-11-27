@@ -6,9 +6,8 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     ArrayList<Word> protectedWords = new ArrayList<Word>();
     ArrayList<Word> unProtectedWords = new ArrayList<Word>();
     ArrayList<Poem> poems = new ArrayList<Poem>();
- 
-    
-	public void addWords(Word w){
+
+    public void addWords(Word w){
 		words.add(w);
 		unProtectedWords.add(w);
 	}
@@ -337,6 +336,22 @@ public class Board implements Iterable<Word>, java.io.Serializable {
         Collections.sort(unProtectedWords, comparator);
     }
 
+    public HashMap<Integer, Integer> countType() {
+        HashMap<Integer, Integer> wordTypes = new HashMap<Integer, Integer>();
+        //wordTypes.put(0, unProtectedWords.size());
+
+        for(Word word: unProtectedWords){
+            Integer count = wordTypes.get(word.wordType);
+            if(count == null){
+                wordTypes.put(word.wordType, 1);
+            }
+            else{
+                wordTypes.put(word.wordType, count + 1);
+            }
+        }
+        return wordTypes;
+    }
+
 	public boolean findPoem(Poem p){
 		for(Poem poem:poems){
 			if(poem.equals(p)){
@@ -373,4 +388,3 @@ public class Board implements Iterable<Word>, java.io.Serializable {
         return board;
     }
 }
-//>>>>>>> refs/remotes/origin/Kuan_Jun

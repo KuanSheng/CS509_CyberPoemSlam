@@ -1,7 +1,9 @@
 package Words.view;
+
 import Words.model.Model;
 import Words.model.Board;
 import Words.model.WordModel;
+import Words.model.WordTypeModel;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -9,25 +11,17 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 /**
- * Created by evasun on 11/25/14.
+ * Created by evasun on 11/26/14.
  */
-public class WordTable extends JPanel{
-    /* keep eclipse happy */
-    private static final long serialVersionUID = 1L;
-
+public class WordTypeTable extends JPanel {
     /** The model that "backs" the JTable. Different from Board. */
-    WordModel wordModel = null;
+    WordTypeModel wtm= null;
 
     /** Actual GUI entity. */
     JTable jtable = null;
-
-    /**
-     * This constructor creates the display which manages the list of active players.
-     */
-    public WordTable(Board board) {
-
+    public WordTypeTable(Board board) {
         // create the model for the data which backs this table
-        wordModel = new WordModel(board);
+        wtm = new WordTypeModel(board);
 
         // the proposed dimension of the UI
         Dimension mySize = new Dimension(210, 600);
@@ -40,14 +34,14 @@ public class WordTable extends JPanel{
 
         // Just add the JTable to the set. First create the list of Players,
         // then the SwingModel that supports the JTable which you now create.
-        jtable = new JTable(wordModel);
+        jtable = new JTable(wtm);
         jtable.setPreferredSize(mySize);
 
         // let's tell the JTable about its columns.
         TableColumnModel columnModel = new DefaultTableColumnModel();
 
         // must build one by one...
-        String[] headers = new String[] { wordModel.wordLabel, wordModel.wordTypeLabel};
+        String[] headers = new String[] { wtm.typeLabel, wtm.numberLabel};
         int index = 0;
         for (String h : headers) {
             TableColumn col = new TableColumn(index++);
@@ -58,6 +52,7 @@ public class WordTable extends JPanel{
 
         // let's install a sorter and also make sure no one can rearrange columns
         JTableHeader header = jtable.getTableHeader();
+
         // purpose of this sorter is to sort by columns.
 //        header.addMouseListener(new MouseAdapter()	{
 //            public void mouseClicked (MouseEvent e)	{
@@ -75,6 +70,7 @@ public class WordTable extends JPanel{
         this.add(jsp);
     }
 
+
     /**
      * Causes the display of the shapes to be updated to the latest data.
      */
@@ -85,4 +81,5 @@ public class WordTable extends JPanel{
         this.revalidate();
         this.repaint();
     }
+
 }

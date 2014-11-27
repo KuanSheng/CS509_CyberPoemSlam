@@ -9,10 +9,12 @@ import Words.controller.ReleasePoemController;
 import Words.controller.SubmitPoemController;
 import Words.model.Board;
 import Words.model.Model;
+import Words.model.WordTypeModel;
 
 public class Application extends JFrame {
     Model model;
     WordTable table;
+    WordTypeTable typeTable;
     private ApplicationCanvas panel; // added by JUN to share panel with StoreStateController
 
 	/**
@@ -64,8 +66,14 @@ public class Application extends JFrame {
         p.add(panel);
 
         table = new WordTable(model.getBoard());
-        p.add(table);
-
+        typeTable = new WordTypeTable(model.getBoard());
+//        p.add(table);
+        //p.add(typeTable);
+        JPanel jp = new JPanel();
+        p.setSize(65,40);
+        p.setBackground(Color.red);
+        jp.add(typeTable);
+        p.add(jp);
     }
 	
     public ApplicationCanvas getpanel(){

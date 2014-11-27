@@ -16,8 +16,7 @@ public class WordModel extends AbstractTableModel {
 
     /** Key values. */
     public static final String wordLabel = "Word";
-    public static final String xLabel = "X";
-    public static final String yLabel = "Y";
+    public static final String wordTypeLabel = "Word Type";
 
     /** The Table model needs to know the board which contains the shapes. */
     public WordModel (Board b) {
@@ -26,7 +25,7 @@ public class WordModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 2;
     }
 
     @Override
@@ -42,36 +41,33 @@ public class WordModel extends AbstractTableModel {
         if (columnIndex == 0) {
             return s.value;
         } else if (columnIndex == 1) {
-            return s.getX();
-        } else if (columnIndex == 2) {// table number
-            return s.getY();
+            return s.getWordType();
         }
-
         // no idea who you are...
         return "";
     }
 
-    /**
-     * Sort the ArrayList of cars by given field, whose value is
-     * either {@link UserModelGUI#uidStr}, {@link UserModelGUI#rNameStr},
-     * {@link UserModelGUI#tableNumStr}, or {@link UserModelGUI#timeStr}.
-     *
-     * @param columnIndex
-     */
-    public void sort(final String fieldName) {
-        board.sort(new Comparator<Word>() {
-
-            @Override
-            public int compare(Word s1, Word s2) {
-                if (fieldName.equals(xLabel)) {
-                    return s1.getX() - s2.getX();
-                } else if (fieldName.equals(yLabel)) {
-                    return s1.getY() - s2.getY();
-                }
-
-                // default to word
-                return (s1.getValue().compareTo(s2.getValue()));
-            }
-        });
-    }
+//    /**
+//     * Sort the ArrayList of cars by given field, whose value is
+//     * either {@link UserModelGUI#uidStr}, {@link UserModelGUI#rNameStr},
+//     * {@link UserModelGUI#tableNumStr}, or {@link UserModelGUI#timeStr}.
+//     *
+//     * @param columnIndex
+//     */
+//    public void sort(final String fieldName) {
+//        board.sort(new Comparator<Word>() {
+//
+//            @Override
+//            public int compare(Word s1, Word s2) {
+//                if (fieldName.equals(xLabel)) {
+//                    return s1.getX() - s2.getX();
+//                } else if (fieldName.equals(yLabel)) {
+//                    return s1.getY() - s2.getY();
+//                }
+//
+//                // default to word
+//                return (s1.getValue().compareTo(s2.getValue()));
+//            }
+//        });
+//    }
 }

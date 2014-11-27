@@ -86,7 +86,7 @@ public class Word extends Element implements Serializable{
      public int getWidth(){return this.width;}
      public int getHeight(){return this.height;}
      public String getValue(){return this.value;}
-     
+     public int getWordType() {return this.wordType;}
      public void setLocation(int x, int y ){
     	 this.x = x;
     	 this.y = y;
