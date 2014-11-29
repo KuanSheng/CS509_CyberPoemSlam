@@ -16,7 +16,6 @@ public class Application extends JFrame {
     WordTable table;
     WordTypeTable typeTable;
     private ApplicationCanvas panel; // added by JUN to share panel with StoreStateController
-
 	/**
 	 * This is the default constructor
 	 */
@@ -26,7 +25,7 @@ public class Application extends JFrame {
         this.model = m;
         this.panel = panel;
 
-        setTitle("Sample App");
+        setTitle("CyberPoetrySlam");
         setSize(900, 900);
         setLayout(new FlowLayout());
 

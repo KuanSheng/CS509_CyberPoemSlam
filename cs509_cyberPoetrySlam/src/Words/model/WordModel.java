@@ -11,6 +11,10 @@ public class WordModel extends AbstractTableModel {
     /** Keep Eclipse Happy. */
     private static final long serialVersionUID = 1L;
 
+    // set the word type definition to query the word type by index number
+    // TODO: will be replaced by a static class or properties file
+    private static String[] wordTypeDefinition = {"verb", "adj", "noun", "adv"};
+
     /** Board maintains the state. */
     Board board;
 
@@ -41,7 +45,7 @@ public class WordModel extends AbstractTableModel {
         if (columnIndex == 0) {
             return s.value;
         } else if (columnIndex == 1) {
-            return s.getWordType();
+            return wordTypeDefinition[s.getWordType()];
         }
         // no idea who you are...
         return "";

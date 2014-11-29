@@ -11,7 +11,10 @@ public class WordTypeModel extends AbstractTableModel {
     Board board;
     public static final String typeLabel = "Words Type";
     public static final String numberLabel = "Number";
-    private int init = 1;
+
+    // set the word type definition to query the word type by index number
+    // TODO: will be replaced by a static class or properties file
+    private static String[] wordTypeDefinition = {"verb", "adj", "noun", "adv"};
 
     public WordTypeModel (Board b){
         this.board = b;
@@ -39,7 +42,7 @@ public class WordTypeModel extends AbstractTableModel {
             HashMap<Integer, Integer> wordTypes = board.countType();
 
             if (columnIndex == 0) {
-                return s.wordType;
+                return wordTypeDefinition[s.wordType];
             } else if (columnIndex == 1) {
                 return wordTypes.get(s.wordType);
             }
