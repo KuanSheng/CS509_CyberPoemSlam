@@ -31,8 +31,6 @@ public class ApplicationCanvas extends Canvas{
 	
 	//initialize frame attributes
 	public void initialize(){
-		if(model == null)
-	        System.out.println("fuck too!!(canvas)");
 		setSize(650,490);
         WordMoveController controller = new WordMoveController(model, this);
         //WordConnectionController connectionController = new WordConnectionController(model,this);
@@ -46,9 +44,16 @@ public class ApplicationCanvas extends Canvas{
 		paintWord(g);
 		paintPoem(g);
 		paintDisconnectWord(g);
+		
+		if(model.getSelected()!=null)
 		paintSelected(g);
+		
+		if(model.getSelectedPoem()!=null)
 		paintSelectedPoem(g);
+		
 		paintSelectedArea(g);
+		
+		if(model.getSelectedRow()!=null)
 		paintSelectedRow(g);
 	}
 	
