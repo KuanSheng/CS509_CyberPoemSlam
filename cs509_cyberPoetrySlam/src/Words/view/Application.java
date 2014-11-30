@@ -1,54 +1,73 @@
+
 package Words.view;
 
+import java.io.*;
+import java.awt.event.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.*;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import Words.controller.ReleasePoemController;
+import Words.controller.SubmitPoemController;
+import Words.model.*;
+;
 
-import Words.model.Board;
-import Words.model.Model;
-import Words.model.Poem;
-import Words.model.Row;
-import Words.controller.*;
-
-public class Application extends Frame {
+public class Application extends JFrame {
     Model model;
-    public ApplicationCanvas panel;
-    JButton disconnectButton;
-    // added by JUN to share panel with StoreStateController
+    WordTable table;
+    WordTypeTable typeTable;
+    private ApplicationCanvas panel; // added by JUN to share panel with StoreStateController
 	/**
 	 * This is the default constructor
 	 */
 //	public Application(Model m) { //Changed by JUN
-    public Application(Model m, final ApplicationCanvas panel){
+    public Application(Model m, ApplicationCanvas panel){
 		super();
-		this.model = m;
+        this.model = m;
         this.panel = panel;
-		setTitle("CyberPoetrySlam");
-		setSize(650,490);
-		
-		JPanel p = new JPanel();
-		p.setSize(650,490);
-		p.setBackground(Color.yellow);
-		p.setBounds(0 ,245, 650, 345);
-		/**Button button = new Button("Undo");
-		p.add(button);
-		add(p);*/
-		
-		disconnectButton = new JButton("Disconnect Row");
-		p.add(disconnectButton);
-		
-		
 
-		if(model == null)
-			return;
-		// mark as final so the anonymous class below can find it
-//		final ApplicationCanvas panel = new ApplicationCanvas(model); //commented by Jun
-		add(p);
-		p.add(panel);
-	}
+        setTitle("CyberPoetrySlam");
+        setSize(900, 900);
+        setLayout(new FlowLayout());
+
+        JPanel menuPanel = new JPanel();
+        menuPanel.setSize(900, 150);
+        setVisible(true);
+        setBackground(Color.orange);
+        JButton btnSwap = new JButton("Swap/Revoke");
+        JButton btnRelease = new JButton("Release");
+        JButton btnSubmit = new JButton("Submit");
+        JButton btnDisconnect = new JButton("Disconnect");
+
+        //add listener to "Release" button
+        btnRelease.addActionListener(new ReleasePoemController(m, panel));
+        btnSubmit.addActionListener(new SubmitPoemController(m, panel, SubmitPoemController.Method.ALL));
+
+        menuPanel.add(btnSwap);
+        menuPanel.add(btnRelease);
+        menuPanel.add(btnSubmit);
+        menuPanel.add(btnDisconnect);
+
+        Container pane = this.getContentPane();
+        //pane.setBackground(Color.yellow);
+        pane.add(menuPanel);
+
+        if(model == null) return;
+
+        // Where words appear
+        panel = new ApplicationCanvas(model);
+        panel.setSize(900, 500);
+        pane.add(panel);
+
+        // JTable on the side
+        JPanel tablePanel = new JPanel();
+        tablePanel.setSize(900, 250);
+
+        table = new WordTable(model.getBoard());
+        typeTable = new WordTypeTable(model.getBoard());
+        tablePanel.add(table);
+        tablePanel.add(typeTable);
+        pane.add(tablePanel);
+    }
 	
     public ApplicationCanvas getpanel(){
     	return this.panel;

@@ -61,15 +61,19 @@ public class ApplicationCanvas extends Canvas{
 	}
 	
 	public void paintBackground(Graphics g){
+//        System.out.println("paintBackground.ApplicationCanvas.java");
 		g.clearRect(0,0,getWidth(),300);
+//        g.clearRect(0,0,getWidth(),getHeight()*2/3);
 		g.setColor(Color.ORANGE);
 		g.fillRect(0,0,getWidth(), 300);
+//        g.fillRect(0,0,getWidth(), getHeight()*2/3);
 		g.drawLine(0,300, 650, 300);
 	}
 	
 	public void paintWord(Graphics g){
 		for(Word w : board.getWords()){
-			g.clearRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
+//            System.out.println("painting word: " + w + "at x-" + w.getX() + " y-" + w.getY() + " :paintWord.ApplicationCanvas");
+            g.clearRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
 			g.setColor(Color.gray);
 			g.fillRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
 			g.setColor(Color.black);

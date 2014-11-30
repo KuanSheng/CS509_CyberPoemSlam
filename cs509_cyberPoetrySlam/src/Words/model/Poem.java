@@ -163,6 +163,8 @@ public class Poem extends Element implements Serializable{
     }
     
     public void setLocation(int x, int y, int ox, int oy){
+     int rx = this.getX();
+     int ry = this.getY();
    	 this.x = x;
    	 this.y = y;
    	 
@@ -181,5 +183,19 @@ public class Poem extends Element implements Serializable{
     
     public Row getLastRow(){
     	return this.LastRow;
+    }
+
+    /**
+     * Jun
+     * @return string representation of the Poem
+     */
+    @Override
+    public String toString() {
+//        return super.toString();
+        StringBuffer sb = new StringBuffer();
+        for(Row r : rows){
+            sb.append(r+"\n");
+        }
+        return sb.toString();
     }
 }

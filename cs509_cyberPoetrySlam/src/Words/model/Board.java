@@ -366,5 +366,35 @@ public class Board implements Iterable<Word>, java.io.Serializable {
         }
         return board;
     }
+    
+    public int size() {
+        return unProtectedWords.size();
+    }
+
+    /** Return the given shape by index position. */
+    public Word get(int rowIndex) {
+        return unProtectedWords.get(rowIndex);
+    }
+
+    /** Sort shapes using given comparator. */
+    public void sort(Comparator<Word> comparator) {
+        Collections.sort(unProtectedWords, comparator);
+    }
+
+    public HashMap<Integer, Integer> countType() {
+        HashMap<Integer, Integer> wordTypes = new HashMap<Integer, Integer>();
+        //wordTypes.put(0, unProtectedWords.size());
+
+        for(Word word: unProtectedWords){
+            Integer count = wordTypes.get(word.wordType);
+            if(count == null){
+                wordTypes.put(word.wordType, 1);
+            }
+            else{
+                wordTypes.put(word.wordType, count + 1);
+            }
+        }
+        return wordTypes;
+    }
 }
 //>>>>>>> refs/remotes/origin/Kuan_Jun
