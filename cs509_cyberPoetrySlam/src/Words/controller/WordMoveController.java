@@ -52,7 +52,16 @@ public class WordMoveController extends MouseAdapter{
 		
         if(e.getClickCount() == 2){
         	//must in the protected area
-        	
+        	if(model.getSelectedRow() == null){
+        		System.out.println("nima");
+        	}
+        	if(b.findRow(e.getX(),e.getY(),model.getSelectedRow())){
+        		Poem disconnectionPoem = b.findPoem(e.getX(), e.getY());
+        		Row disconnectionRow = model.getSelectedRow();
+        		DisconnectionPoemController disconnection = new DisconnectionPoemController(model,panel,disconnectionPoem,disconnectionRow);
+        		disconnection.disconnectRow();
+        		return;
+        	}
         	if(b.findWord(e.getX(), e.getY()) == null&&b.findPoem(e.getX(), e.getY()) == null){
         		UndoController undo = new UndoController(this.model,this.panel);
         		undo.process();
@@ -196,6 +205,7 @@ public class WordMoveController extends MouseAdapter{
 		
 		Word selectedWord = model.getSelected();
 		Poem selectedPoem = model.getSelectedPoem();
+		
 		//nothing selected
 		if(selectedWord == null&&selectedPoem == null){
 			if(b.getSelectedRow(model.getSelectedArea())!=null);
