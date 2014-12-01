@@ -130,8 +130,8 @@ ArrayList<Word> words = new ArrayList<Word>();
 		    return w2.getX();
 		}
 		
-		w1 = former.getFirstWord();
-	    w2 = next.getFirstWord();
+		w1 = former.getLastWord();
+	    w2 = next.getLastWord();
 		int rightLimit = Math.min(w1.getX(), w2.getX());
 		
 		return rightLimit;
@@ -143,7 +143,7 @@ ArrayList<Word> words = new ArrayList<Word>();
    	 if(x > (this.x + width)){return false;}
    	 if(y < this.y){return false;}
    	 if(y > (this.y+height)){return false;}
-	return true;
+	 return true;
 	}
 	
 	public void setLocation(int x, int y,int rx,int ry){
