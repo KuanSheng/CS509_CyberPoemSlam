@@ -42,6 +42,9 @@ public class DisconnectionMove extends Move{
 				r.setLocationAfterConnection(r.getX()+w.getWidth(),r.getY());
 				
 			}
+			else if(r.getWordNumber() == 0&&disconnectPoem.getRowNumber() != 1){
+				disconnectPoem.removeRow(r);
+			}
 			model.getBoard().addWords(w);
 		}
 		else 
