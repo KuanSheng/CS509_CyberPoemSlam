@@ -10,18 +10,16 @@ public class main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Board b = new Board();
-//		int dx = 200;
-//		int dy = 350;
-//		 
-//		b.addWords(new Word(dx,dy,50,14,"test",2));
+
 		Model model = new Model(b);
 
         //todo to be deleted just for test --------start
 //        model.getBoard().addWords(new Word( 10 , 10, 100, 100, "test jun", 1));
         //---end todo
+		
         ApplicationCanvas panel = new ApplicationCanvas(model);
-		final Application app = new Application(model, panel );
-        app.addWindowListener(new StoreStateController(model, panel ));
+		final Application app = new Application(model);
+        app.addWindowListener(new StoreStateController(model, panel));
 
  
      app.setVisible(true);

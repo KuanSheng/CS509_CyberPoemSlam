@@ -4,8 +4,10 @@ package Words.view;
 import java.io.*;
 import java.awt.event.*;
 import java.awt.*;
+
 import javax.swing.*;
 
+import Words.controller.DisconnectionPoemController;
 import Words.controller.ReleasePoemController;
 import Words.controller.SubmitPoemController;
 import Words.model.*;
@@ -15,15 +17,17 @@ public class Application extends JFrame {
     Model model;
     WordTable table;
     WordTypeTable typeTable;
-    private ApplicationCanvas panel; // added by JUN to share panel with StoreStateController
+    final ApplicationCanvas panel; // added by JUN to share panel with StoreStateController
 	/**
 	 * This is the default constructor
 	 */
 //	public Application(Model m) { //Changed by JUN
-    public Application(Model m, ApplicationCanvas panel){
+    public Application(Model m){
 		super();
         this.model = m;
-        this.panel = panel;
+        this.panel = new ApplicationCanvas(model);
+        this.panel.setSize(900, 500);
+        //this.panel = panel;
 
         setTitle("CyberPoetrySlam");
         setSize(900, 900);
@@ -37,6 +41,9 @@ public class Application extends JFrame {
         JButton btnRelease = new JButton("Release");
         JButton btnSubmit = new JButton("Submit");
         JButton btnDisconnect = new JButton("Disconnect");
+        
+        
+        
 
         //add listener to "Release" button
         btnRelease.addActionListener(new ReleasePoemController(m, panel));
@@ -54,8 +61,7 @@ public class Application extends JFrame {
         if(model == null) return;
 
         // Where words appear
-        panel = new ApplicationCanvas(model);
-        panel.setSize(900, 500);
+        
         pane.add(panel);
 
         // JTable on the side
@@ -67,6 +73,17 @@ public class Application extends JFrame {
         tablePanel.add(table);
         tablePanel.add(typeTable);
         pane.add(tablePanel);
+        
+        btnDisconnect.addActionListener(new ActionListener() {
+
+			@Override
+		public void actionPerformed(ActionEvent arg0) {
+				// register controller
+				DisconnectionPoemController disconnect = new DisconnectionPoemController(model,panel);
+				disconnect.disconnectRow();
+				model.setSelectedRow(null);
+			}
+		});
     }
 	
     public ApplicationCanvas getpanel(){

@@ -20,7 +20,8 @@ public class Poem extends Element implements Serializable{
     public Poem(int x, int y){
     	this.x = x;
     	this.y = y;
-    	rows = null;
+    	this.RowNumber = 0;
+    	//rows = null;
     }
     
     public boolean intersection(int x, int y){
@@ -198,4 +199,9 @@ public class Poem extends Element implements Serializable{
         }
         return sb.toString();
     }
+
+	public void setLastRow(Row r) {
+		// TODO Auto-generated method stub
+		this.LastRow = r;
+	}
 }

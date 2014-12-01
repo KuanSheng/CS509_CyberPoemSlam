@@ -9,15 +9,18 @@ public class DisconnectionPoemController {
 	Row disconnectRow;
 	Board board;
 	
-	public DisconnectionPoemController(Model model,ApplicationCanvas panel, Poem disconnectPoem,Row disconnectRow){
+	public DisconnectionPoemController(Model model,ApplicationCanvas panel){
 		this.model = model;
 		this.panel = panel;
-		this.disconnectPoem = disconnectPoem;
-		this.disconnectRow = disconnectRow;
 		this.board = model.getBoard();
+		this.disconnectRow = model.getSelectedRow();
+		this.disconnectPoem = board.getPoemByRow(disconnectRow);
 	}
 	
 	public void disconnectRow(){
+		if(disconnectRow == null){
+			return;
+		}
 		DisconnectionPoemMove move = new DisconnectionPoemMove(disconnectPoem,disconnectRow,board);
 		if(move.execute()){
 			panel.repaint();

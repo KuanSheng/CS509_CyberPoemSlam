@@ -21,7 +21,7 @@ public class ConnectTwoPoemMove extends Move{
 	
 	@Override
 	public boolean execute(){
-		newPoem = new Poem(selectedPoem, connectPoem,direction);
+		newPoem = new Poem(selectedPoem,connectPoem,direction);
 		b.addPoems(newPoem);
 		b.removePoem(selectedPoem);
 		b.removePoem(connectPoem);

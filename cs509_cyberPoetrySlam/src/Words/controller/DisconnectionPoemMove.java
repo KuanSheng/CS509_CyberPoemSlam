@@ -23,12 +23,25 @@ public class DisconnectionPoemMove extends Move{
 			Row r = disconnectRow.getNextRow();
 			disconnectPoem.setLocationAfterConnection(r.getX(),r.getY());
 			r.setFormerRow(null);
+			
+			Poem newUpPoem = new Poem(disconnectRow.getX(),disconnectRow.getY());
+			newUpPoem.addRow(disconnectRow);
+			newUpPoem.setLastRow(disconnectRow);
+			disconnectRow.setNextRow(null);
+			board.addPoems(newUpPoem);
+			
 			return true;
 		}
 		else if(disconnectRow.equals(disconnectPoem.getLastRow())){
 			disconnectPoem.removeRow(disconnectRow);
 			Row r = disconnectRow.getFormerRow();
 			r.setNextRow(null);
+			disconnectRow.setFormerRow(null);
+			
+			Poem newPoem = new Poem(disconnectRow.getX(),disconnectRow.getY());
+			newPoem.addRow(disconnectRow);
+			newPoem.setLastRow(disconnectRow);
+			board.addPoems(newPoem);
 			return true;
 		}
 		else{
@@ -46,17 +59,19 @@ public class DisconnectionPoemMove extends Move{
 			
 			r2.setNextRow(null);
 			
-			while(r1.getNextRow()!=null){
+			while(r1!=null){
 				newUpPoem.addRow(r1);
 				r1 = r1.getNextRow();
 			}
 			
 			r3.setFormerRow(null);
 			
-			while(r3.getNextRow()!=null){
+			while(r3!=null){
 				newBotPoem.addRow(r3);
 				r3 = r3.getNextRow();
 			}
+			
+			System.out.println(newUpPoem.getRowNumber());
 			
 			board.removePoem(disconnectPoem);
 			board.addPoems(newPoem);
