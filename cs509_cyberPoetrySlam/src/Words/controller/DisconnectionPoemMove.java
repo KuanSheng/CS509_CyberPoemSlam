@@ -71,7 +71,6 @@ public class DisconnectionPoemMove extends Move{
 				r3 = r3.getNextRow();
 			}
 			
-			System.out.println(newUpPoem.getRowNumber());
 			
 			board.removePoem(disconnectPoem);
 			board.addPoems(newPoem);

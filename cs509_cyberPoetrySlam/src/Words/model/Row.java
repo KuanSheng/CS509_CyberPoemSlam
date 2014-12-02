@@ -20,7 +20,7 @@ ArrayList<Word> words = new ArrayList<Word>();
       this.y = y;
       this.height=height;
       this.width=width;
-      
+      this.WordNumber = 0;
 	}
 	
 	public Row(Word w1,Word w2,int direction){
@@ -152,7 +152,6 @@ ArrayList<Word> words = new ArrayList<Word>();
 		int deltax = x - rx;
 		int deltay = y - ry;
 		for(Word w: words){
-            System.out.println("set word location--deltaY = "+deltay+" :setLocation.Poem");
             w.setLocation(w.getX()+deltax,w.getY()+deltay);
 		}
 		

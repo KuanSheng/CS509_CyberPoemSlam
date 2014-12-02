@@ -75,6 +75,7 @@ public class Poem extends Element implements Serializable{
     			}
     			
     		}
+    		
     	}
     	//p2 on top
     	else{
@@ -101,7 +102,6 @@ public class Poem extends Element implements Serializable{
     				this.max_x = this.x + r.getWidth();
     			}
     		}
-    		
     	}
     	
     	this.min_x = this.x;
