@@ -168,6 +168,7 @@ public class ApplicationCanvas extends Canvas{
 	
 	public void paintSelectedArea(Graphics g){
 		Area a = model.getSelectedArea();
+        if(a == null) return; //added by JUN to solve null pointer exception
 		g.drawRect(a.getX(),a.getY(),a.getWidth(),a.getHeight());
 		g.setColor(Color.GREEN);
 		g.fillRect(a.getX(), a.getY(), a.getWidth(), a.getHeight());
