@@ -1,16 +1,34 @@
 package Words.model;
 import java.util.*;
 
+import Words.controller.Listener;
+
 public class Board implements Iterable<Word>, java.io.Serializable {
     ArrayList<Word> words = new ArrayList<Word>();
     ArrayList<Word> protectedWords = new ArrayList<Word>();
     ArrayList<Word> unProtectedWords = new ArrayList<Word>();
     ArrayList<Poem> poems = new ArrayList<Poem>();
+    
+    /** Listeners. */
+	ArrayList<Listener> listeners = new ArrayList<Listener>();
+	
+	/** Add a listener. */
+	public void addListener (Listener list) {
+		listeners.add(list);
+	}
+	
+	/** Remove a listener. */
+	public void removeListener (Listener list) {
+		listeners.remove(list);
+	}
  
     
 	public void addWords(Word w){
 		words.add(w);
 		unProtectedWords.add(w);
+		
+		// state changed
+				notifyListeners();
 	}
 	
 	public void addPoems(Poem p){
@@ -63,11 +81,28 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 	public void protectWords(Word w){
 		unProtectedWords.remove(w);
 		protectedWords.add(w);
+		
+		// state changed
+				notifyListeners();
 	}
 	
 	public void releaseWords(Word w){
 		protectedWords.remove(w);
 		unProtectedWords.add(w);
+		
+		// state changed
+				notifyListeners();
+	}
+	
+	public boolean findRow(int x,int y,Row r){
+		if(r == null){
+			System.out.println("null");
+			return false;
+		}
+		if(r.intersection(x, y)){
+			return true;
+		}
+		return false;
 	}
 	
 	public Word findWord(int x,int y){
@@ -87,7 +122,16 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		}
 		return null;
 	}
-	
+	public Poem getPoemByRow(Row r){
+		for(Poem p:poems){
+			for(Row row:p.getRows()){
+				if(row.equals(r)){
+					return p;
+				}
+			}
+		}
+		return null;
+	}
 	public Word checkOverlap(Word w){
 		for(Word s:words){
 			if(s.equals(w)){
@@ -108,17 +152,6 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 				}
 			}
 		}
-		/*for(Poem poem:poems){
-			if(!p.equals(poem)){
-			for(Row r:poem.getRows())
-				for(Word s:r.getWords())
-				   for(Row row:p.getRows()){
-					if(s.overlapRow(row)){
-						return true;
-					}
-				}
-			}
-		}*/
 		return false;
 	}
 	
@@ -312,10 +345,13 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 	
 	public void setProtectedWords(ArrayList<Word> protectedW){
 		this.protectedWords = protectedW;
+		
 	}
 	
 	public void setunProtectedWords(ArrayList<Word> words){
 		this.unProtectedWords = words;
+		// state changed
+				notifyListeners();
 	}
 	
 	public void removePoem(Poem p){
@@ -357,5 +393,60 @@ public class Board implements Iterable<Word>, java.io.Serializable {
         }
         return board;
     }
+    
+    public int size() {
+        return unProtectedWords.size();
+    }
+
+    /** Return the given shape by index position. */
+    public Word get(int rowIndex) {
+        return unProtectedWords.get(rowIndex);
+    }
+
+    /** Sort shapes using given comparator. */
+    public void sort(Comparator<Word> comparator) {
+        Collections.sort(unProtectedWords, comparator);
+    }
+
+    public HashMap<Integer, Integer> countType() {
+        HashMap<Integer, Integer> wordTypes = new HashMap<Integer, Integer>();
+        //wordTypes.put(0, unProtectedWords.size());
+
+        for(Word word: unProtectedWords){
+            Integer count = wordTypes.get(word.wordType);
+            if(count == null){
+                wordTypes.put(word.wordType, 1);
+            }
+            else{
+                wordTypes.put(word.wordType, count + 1);
+            }
+        }
+        return wordTypes;
+    }
+
+    
+    /**
+     * Ruizhu add for BrokerManager
+     */
+	public void removeWords(Word word) {
+		words.remove(word);
+		unProtectedWords.remove(word);	
+		
+		// state changed
+				notifyListeners();
+	}
+	
+	/** 
+	 * Notify all listeners.
+	 * 
+	 * During this event, no new changes can happen.
+	 */
+	void notifyListeners() {
+		synchronized (listeners) {
+			for (Listener list : listeners) {
+				list.update();
+			}
+		}
+	}
 }
 //>>>>>>> refs/remotes/origin/Kuan_Jun

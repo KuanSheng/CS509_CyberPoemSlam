@@ -36,7 +36,6 @@ public class moveProtect extends Move implements Serializable{
 	
 	@Override
 	public boolean undo(){
-		System.out.println("signalpr!");
 		if(oldy > 300&&newy < 300){
 			b.releaseWords(word);
 		}

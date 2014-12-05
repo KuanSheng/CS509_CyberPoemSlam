@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.Graphics;
 import java.util.*;
 
+//import Words.controller.SwapRequestController;
 //import Words.controller.WordConnectionController;
 import Words.controller.WordMoveController;
 import Words.model.Area;
@@ -35,10 +36,12 @@ public class ApplicationCanvas extends Canvas{
 	        System.out.println("fuck too!!(canvas)");
 		setSize(650,490);
         WordMoveController controller = new WordMoveController(model, this);
-        //WordConnectionController connectionController = new WordConnectionController(model,this);
 		this.board = model.getBoard();
 		this.addMouseListener(controller);
 		this.addMouseMotionListener(controller);
+		
+		board.addWords(new Word(40, 400, 120, 14, "Sample",2));
+		board.addWords(new Word(40, 400, 120, 14, "Other",2));
 	}
 	
 	public void paint(Graphics g){
@@ -46,10 +49,19 @@ public class ApplicationCanvas extends Canvas{
 		paintWord(g);
 		paintPoem(g);
 		paintDisconnectWord(g);
-		paintSelected(g);
-		paintSelectedPoem(g);
-		paintSelectedArea(g);
+		
+		if(model.getSelectedRow() != null){
 		paintSelectedRow(g);
+		}
+		
+		if(model.getSelected() != null){
+		paintSelected(g);
+		}
+		
+		if(model.getSelectedPoem() != null){
+		paintSelectedPoem(g);
+		}
+		paintSelectedArea(g);
 	}
 	
 	public void paintBackground(Graphics g){
@@ -73,6 +85,18 @@ public class ApplicationCanvas extends Canvas{
 			
 		}
 	}
+	
+	
+	/**
+	 * Ruizhu add for BrokerManager
+	 */
+//	public void paintSwapAddWord(int x, int y, Graphics g, Word w){
+//		    g.clearRect(x, y, w.getWidth(), w.getHeight());
+//			g.setColor(Color.gray);
+//			g.fillRect(x, y, w.getWidth(), w.getHeight());
+//			g.setColor(Color.black);
+//			g.drawString(w.getValue(), x+w.getWidth()/2, y+w.getHeight());
+//	}
 	
 	public void paintWord(Word word){}
 	//need poem model design first
@@ -148,6 +172,7 @@ public class ApplicationCanvas extends Canvas{
 		g.setColor(Color.GREEN);
 		g.fillRect(a.getX(), a.getY(), a.getWidth(), a.getHeight());
 	}
+	
 	public void paintSelectedRow(Graphics g){
 		Row r = model.getSelectedRow();
 		g.clearRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());

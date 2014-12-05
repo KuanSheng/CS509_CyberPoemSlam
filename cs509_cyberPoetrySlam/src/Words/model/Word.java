@@ -92,9 +92,12 @@ public class Word extends Element implements Serializable{
     	 this.y = y;
      }
 
+     public int getWordType() {
+    	 return this.wordType;
+    }
+     
     public String toString(){
         return value;
     }
 
 }
-

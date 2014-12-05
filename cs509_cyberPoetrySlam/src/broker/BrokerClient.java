@@ -74,6 +74,7 @@ public class BrokerClient {
 			broker = new Socket (host, port);
 			toBroker = new PrintWriter (broker.getOutputStream(), true);
 			fromBroker = new BufferedReader (new InputStreamReader(broker.getInputStream()));
+			System.out.println("connect step 1 end");
 		} catch (IOException ioe) {
 			return false;
 		}

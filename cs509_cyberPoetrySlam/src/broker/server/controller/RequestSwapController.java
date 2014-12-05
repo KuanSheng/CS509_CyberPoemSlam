@@ -22,7 +22,24 @@ public class RequestSwapController  extends ProcessMessageHandler {
 			return false;
 		}
 		
-		Swap s = RequestSwapMessage.getSwap(request);
+		Swap  s;
+		try {
+			s = RequestSwapMessage.getSwap(request);
+		} catch (Exception e) {
+			error.append(e.getMessage());
+			// we CAN'T handle this ill-formed request.
+			return false;
+		}
+			
+		if (s.n > IProtocol.MaxSwapWords) {
+			thread.sendMessage(IProtocol.denySwapMsg + IProtocol.separator + thread.getID() + IProtocol.separator + "Exceeded Swap word count.");
+			return true;
+		}
+		
+		// ensure that all swaps have at least one word being
+		// swapped
+		assert (s.n > 0);
+		
 		Client client = Broker.getRandomClient(thread);
 		
 		if (client == null) {

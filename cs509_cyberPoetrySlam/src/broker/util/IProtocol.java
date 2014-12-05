@@ -9,6 +9,9 @@ public interface IProtocol {
 	/** Each client "logins" to the broker with uniq ID that persists. */
 	public final String loginMsg = "LOGIN";
 	
+	/** Maximum number of words to swap. */
+	public final int MaxSwapWords = 5;
+	
 	/** 
 	 * Client makes swap request. 
 	 * 
@@ -89,6 +92,8 @@ public interface IProtocol {
 	
 	// responses
 	public final String okStatus = "OK";
+
+	
 
 	
 	

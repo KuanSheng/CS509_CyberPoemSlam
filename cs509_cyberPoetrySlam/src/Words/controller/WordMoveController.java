@@ -21,6 +21,7 @@ public class WordMoveController extends MouseAdapter{
 	int oy;
 	
 	boolean buildFlag = false;
+	boolean RowFlag = false;
 	
 	public WordMoveController(Model model,ApplicationCanvas panel){
 		this.model = model;
@@ -33,8 +34,13 @@ public class WordMoveController extends MouseAdapter{
 		int x = e.getX();
 		int y = e.getY();
 		anchor = e.getPoint();
+		RowFlag = false;
+		
 		// no board? no behavior!
 		if (model == null) { return;}
+		
+		//model.setSelectedPoem(null);
+		//model.setSelectedRow(null);
 		
 		Board board = model.getBoard();
 		
@@ -54,16 +60,29 @@ public class WordMoveController extends MouseAdapter{
         	this.disconnectWord(x, y);
         	return;
         }
+        
         // select a word
 		Word s = board.findWord(anchor.x, anchor.y);
+		
 		if (s != null) {
 			setSelectedWord(s);
+			panel.repaint();
 			return;
 		}
+		
+		//shift row
+		if(board.findRow(anchor.x, anchor.y, model.getSelectedRow())){
+			System.out.println("hahaha");
+			setRowFlag(model.getSelectedRow());
+			return;
+		}
+		
 	    //select a poem
 		Poem p = board.findPoem(anchor.x,anchor.y);
+		
 		if(p != null){
 			setSelectedPoem(p);
+			panel.repaint();
 			return;
 		}
 		
@@ -73,6 +92,7 @@ public class WordMoveController extends MouseAdapter{
 		
 		model.setSelected(null);
 		model.setSelectedPoem(null);
+		model.setSelectedRow(null);
 	}
 	
     /**mouse released**/
@@ -107,8 +127,8 @@ public class WordMoveController extends MouseAdapter{
     /**set a word as selected**/
 	public boolean setSelectedWord(Word s){
 		Point relative = new Point (anchor);
+		
 		// no longer in the board since we are moving it around...
-		//board.remove(s);
 		model.setSelected(s);
 		originalx = s.getX();
 		originaly = s.getY();
@@ -142,7 +162,7 @@ public class WordMoveController extends MouseAdapter{
 		Poem selectedPoem = model.getSelectedPoem();
 		
 		//nothing selected
-		if(selectedWord == null&&selectedPoem == null&&buildFlag){
+		if(selectedWord == null&&selectedPoem == null&&buildFlag&&!RowFlag){
 			return drawSelectionArea(x, y);
 		}
 		
@@ -159,8 +179,14 @@ public class WordMoveController extends MouseAdapter{
 			selectedPoem.setLocation(x-deltaX,y-deltaY,ox,oy);
 			return true;
 		}
-		System.out.println("enter here");
-		return true;
+		
+		//row selected
+		if(RowFlag){
+			shiftSelectedRow(x-deltaX,originaly);
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/**release mouse**/
@@ -169,6 +195,7 @@ public class WordMoveController extends MouseAdapter{
 		
 		Word selectedWord = model.getSelected();
 		Poem selectedPoem = model.getSelectedPoem();
+		
 		//nothing selected
 		if(selectedWord == null&&selectedPoem == null){
 			if(b.getSelectedRow(model.getSelectedArea())!=null);
@@ -188,8 +215,11 @@ public class WordMoveController extends MouseAdapter{
 		//release the mouse and repaint
 		model.setSelected(null);
 		model.setSelectedPoem(null);
+		model.setSelectedRow(null);
 		selectedWord = null;
 		selectedPoem = null;
+		buildFlag = false;
+		RowFlag = false;
 		return true;
 	}
 	
@@ -428,6 +458,7 @@ public class WordMoveController extends MouseAdapter{
    }
    
    public boolean buildSelectionArea(int ox,int oy){
+	   model.setSelectedRow(null);
 	   this.originalx = ox;
 	   this.originaly = oy;
 	   this.buildFlag = true;
@@ -438,7 +469,6 @@ public class WordMoveController extends MouseAdapter{
 	   if(x >= originalx&&y >= originaly){
 		    int width = Math.abs(x-originalx);
 			int height = Math.abs(y-originaly);
-			System.out.println("here!");
 			model.setSelectedArea(originalx,originaly,width,height);
 			return true;
 	   }
@@ -465,7 +495,35 @@ public class WordMoveController extends MouseAdapter{
 	   }
 	   return true;
    }
-   public boolean setSelectedRow(int x, int y,int width,int height){
+   
+   public boolean shiftSelectedRow(int x,int y){
+	   Row r = model.getSelectedRow();
+	   int rightLimit = r.getRightShiftLimit();
+	   int leftLimit = r.getLeftShiftLimit();
+	   
+	   int ox = r.getX();
+	   int oy = r.getY();
+	   
+       if(leftLimit == 0||rightLimit == 0){
+    	    return false;
+       }
+	   if(x >= leftLimit && x <= rightLimit ){
+	        r.setLocation(x, y, ox, oy);
+	        return true;
+	    }
+	   
 	   return false;
    }
+   
+   public void setRowFlag(Row r){
+	   RowFlag = true;
+	   Point relative = new Point (anchor);
+	   
+	   originalx = r.getX();
+	   originaly = r.getY();
+			
+		// set anchor for smooth moving
+	   deltaX = relative.x - originalx;
+	   deltaY = relative.y - originaly;
+  }
 }

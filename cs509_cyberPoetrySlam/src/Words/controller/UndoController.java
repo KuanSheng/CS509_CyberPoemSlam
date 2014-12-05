@@ -15,7 +15,8 @@ public class UndoController {
 		
 		Move m = model.removeLastMove();
 		if (m == null) {
-			return false; }
+			return false; 
+		}
 		m.undo();
 
 		// force board to redraw

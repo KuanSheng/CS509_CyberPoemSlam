@@ -2,11 +2,6 @@ package broker;
 
 import java.util.*;
 
-import Words.controller.StoreStateController;
-import Words.model.Board;
-import Words.model.Model;
-import Words.view.Application;
-import Words.view.ApplicationCanvas;
 import broker.handler.*;
 import broker.util.*;
 
@@ -20,7 +15,7 @@ public class BrokerClientLauncher implements IHandleBrokerMessage {
 	
 	BrokerClient broker;
 	
-	public static void main(String args[]) throws Exception {		
+	public static void main(String args[]) throws Exception {
 		new BrokerClientLauncher().execute();
 	}
 
@@ -43,8 +38,6 @@ public class BrokerClientLauncher implements IHandleBrokerMessage {
 		initialWords.add("other");
 		initialWords.add("other");
 		
-		System.out.println("Id is :" + broker.getID());
-		
 		// at this point we are connected, and we will block waiting for 
 		// any messages from the broker. These will be sent to the process
 		System.out.println("Status:" + broker.getStatus());
@@ -52,7 +45,6 @@ public class BrokerClientLauncher implements IHandleBrokerMessage {
 		// start thread to process commands from broker.
 		ReaderThread thread = new ReaderThread(broker, this);
 		thread.start();
-		System.out.println("thread started");
 		
 		// nothing else happens here. Demonstrating one plausible scenario
 		Scanner sc = new Scanner(System.in);
@@ -84,7 +76,6 @@ public class BrokerClientLauncher implements IHandleBrokerMessage {
 	 */
 	@Override
 	public void process(BrokerClient broker, String msg) {
-		
 		System.out.println("Process message:" + msg);
 		
 		if (msg.startsWith(IProtocol.denySwapMsg)) {

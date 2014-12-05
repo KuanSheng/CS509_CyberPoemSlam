@@ -90,4 +90,3 @@ public class StoreStateController extends WindowAdapter {
         restoreState();
     }
 }
-

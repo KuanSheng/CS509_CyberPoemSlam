@@ -105,4 +105,5 @@ public class Model implements Serializable{
     public Stack<Move> getMoves(){
     	return moves;
     }
+
 }

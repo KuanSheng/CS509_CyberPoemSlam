@@ -18,7 +18,6 @@ public class moveWord extends Move{
 	
 	@Override
 	public boolean execute(){
-		System.out.println("aaa");
 		word.setLocation(newx,newy);
 		return true;
 	}
