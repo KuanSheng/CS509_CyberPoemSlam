@@ -81,7 +81,9 @@ public class BrokerManager implements IHandleBrokerMessage {
 			System.err.println("unable to connect to broker on " + host);
 			broker.shutdown();
 			return false;
-		}
+		}else{
+            System.out.println("Connected to broker on " + host);
+        }
 		
 		// at this point we are connected, and we will block waiting for 
 		// any messages from the broker. These will be sent to the process
