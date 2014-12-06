@@ -36,6 +36,13 @@ public class BrokerManager implements IHandleBrokerMessage {
 	/** Ruizhu add: need word arraylist to store add words after swap */
 	ArrayList<Word> addWords = new ArrayList<Word>();
 	
+	
+	static boolean comfirmSwap = false; 
+    static boolean denySwap = false;
+	
+    public void setComfirm( boolean b){comfirmSwap = b;    }
+    public void setDeny(boolean b){denySwap = b;}
+    
 	/**
 	 * Will need to be changed once we decide where broker is being run.
 	 * 
@@ -128,6 +135,8 @@ public class BrokerManager implements IHandleBrokerMessage {
 		if (msg.startsWith(IProtocol.denySwapMsg)) {
 			dumpState();
 			System.out.println("Denied swap request");
+			this.setComfirm(false);
+			this.setDeny(false);
 			return;
 		}
 		
@@ -162,11 +171,33 @@ public class BrokerManager implements IHandleBrokerMessage {
 			dumpState();
 			System.out.println("Accepting satisfy swap request");
 			
+			gui.getComfirmButton().setEnabled(true);
+			gui.getDenyButton().setEnabled(true);
+			
+			System.out.println("Do you want to comfirm swap or deny swap?");
+			
 			// what should we do? Agree of course! Here is where your code would
 			// normally "convert" wildcards into actual words in your board state.
 			// for now this is already assumed (note sample/other swap)
-			broker.getBrokerOutput().println(IProtocol.confirmSwapMsg + IProtocol.separator + s.flatten());
-			return;
+			
+            while(true){
+            	System.out.println("in while loop");
+				if(comfirmSwap == true){
+					System.out.println("comfirm is ture");
+					broker.getBrokerOutput().println(IProtocol.confirmSwapMsg + IProtocol.separator + s.flatten());
+					System.out.println("comfirm sent");
+				    return;
+				}
+				
+				if(denySwap == true){
+					broker.getBrokerOutput().println(IProtocol.denySwapMsg + 
+							IProtocol.separator + s.requestor_id);
+					System.out.println("One Client denies swap request");
+					return;
+				}
+			}	
+			
+		//	return;
 		}
 		
 		// Execute the swap
@@ -241,6 +272,8 @@ public class BrokerManager implements IHandleBrokerMessage {
 			// must refresh viewing area
 			gui.getpanel().repaint();
 			gui.getpanel().repaint();
+			this.setComfirm(false);
+			this.setDeny(false);
 				
 			return;
 		}

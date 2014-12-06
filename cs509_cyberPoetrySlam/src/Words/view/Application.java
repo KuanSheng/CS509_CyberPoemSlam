@@ -22,6 +22,10 @@ public class Application extends JFrame {
     final ApplicationCanvas panel; // added by JUN to share panel with StoreStateController
     
     JButton btnSwap;
+    JButton comfirm;
+    JButton deny;
+//    static boolean comfirmSwap; 
+//    static boolean denySwap ;
     
     /** 
 	 * Stores reference to broker so can use as needed. Set once broker connection has been made. 
@@ -50,6 +54,8 @@ public class Application extends JFrame {
         setBackground(Color.orange);
         
         btnSwap = new JButton("Swap/Revoke"); 
+        comfirm = new JButton("Comfirm Swap");
+        deny = new JButton("Deny Swap");
         
         JButton btnRelease = new JButton("Release");
         JButton btnSubmit = new JButton("Submit");
@@ -64,6 +70,8 @@ public class Application extends JFrame {
         //btnSwap.addActionListener(new SwapRequestController(m, Application.this));
 
         menuPanel.add(btnSwap); btnSwap.setEnabled(false);
+        menuPanel.add(comfirm); comfirm.setEnabled(false);
+        menuPanel.add(deny); deny.setEnabled(false);
         menuPanel.add(btnRelease);
         menuPanel.add(btnSubmit);
         menuPanel.add(btnDisconnect);
@@ -112,6 +120,31 @@ public class Application extends JFrame {
 			}
 		});
 		
+        comfirm.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// act immediately. Doesn't require registration. Note the special syntax
+				// to refer to the enclosing class within an anonymous class (Application.this)
+				broker.setComfirm(true);
+				broker.setDeny(false);
+				comfirm.setEnabled(false);
+				deny.setEnabled(false);
+			}
+		});
+        
+        deny.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// act immediately. Doesn't require registration. Note the special syntax
+				// to refer to the enclosing class within an anonymous class (Application.this)
+				broker.setComfirm(false);
+				broker.setDeny(true);
+				deny.setEnabled(false);
+				comfirm.setEnabled(false);
+			}
+		});
     }
 	
     public ApplicationCanvas getpanel(){
@@ -122,6 +155,10 @@ public class Application extends JFrame {
      * Ruizhu add for BrokerManager
      */
     public JButton getSwapButton() { return btnSwap ; }
+    public JButton getComfirmButton() { return comfirm ; }
+    public JButton getDenyButton() { return deny ; }
+  
+
     
     public void setBroker(BrokerManager bm) { 
 		this.broker = bm;

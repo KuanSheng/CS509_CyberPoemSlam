@@ -40,8 +40,8 @@ public class ApplicationCanvas extends Canvas{
 		this.addMouseListener(controller);
 		this.addMouseMotionListener(controller);
 		
-		board.addWords(new Word(40, 400, 120, 14, "Sample",2));
-		board.addWords(new Word(40, 400, 120, 14, "Other",2));
+		this.board.addWords(new Word(40, 400, 120, 14, "Sample",2));
+		this.board.addWords(new Word(250, 400, 120, 14, "Other",2));
 	}
 	
 	public void paint(Graphics g){

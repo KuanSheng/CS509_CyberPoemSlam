@@ -23,7 +23,7 @@ public class main {
 		
 		BrokerManager bm = new BrokerManager(app, model);
 		
-        app.addWindowListener(new StoreStateController(model, panel));
+       
  /**
   * Ruizhu add for broker       
   */
@@ -32,6 +32,8 @@ public class main {
 		} else if (bm.connect("gheineman.cs.wpi.edu")) {
 			app.setBroker(bm);
 		}
+        
+        app.addWindowListener(new StoreStateController(model, panel));
 
  
      app.setVisible(true);

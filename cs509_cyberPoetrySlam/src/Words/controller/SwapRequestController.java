@@ -123,9 +123,5 @@ public class SwapRequestController extends MouseAdapter{
 		broker.sendMessage(swapMsg);
 	}	
 	
-	
-	
-	
-	
 
 }
