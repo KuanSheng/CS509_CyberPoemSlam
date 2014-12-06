@@ -50,7 +50,7 @@ public class Application extends JFrame {
 
         JPanel menuPanel = new JPanel();
         menuPanel.setSize(900, 150);
-        setVisible(true);
+//        setVisible(true);  //commented by JUN , this line is causing restore state to fail. Because window open event is trigered here, but restore state controller is not added yet
         setBackground(Color.orange);
         
         btnSwap = new JButton("Swap/Revoke"); 

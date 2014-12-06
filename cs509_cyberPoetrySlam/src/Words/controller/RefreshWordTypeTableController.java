@@ -2,7 +2,9 @@ package Words.controller;
 
 import Words.view.WordTypeTable;
 
-public class RefreshWordTypeTableController implements Listener {
+import java.io.Serializable;
+
+public class RefreshWordTypeTableController implements Listener, Serializable {
 
 	/** Widget to be refreshed. */
 	WordTypeTable table;
