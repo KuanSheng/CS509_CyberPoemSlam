@@ -1,6 +1,7 @@
 package Words.controller;
 
 import Words.model.Board;
+import Words.view.Application;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -15,10 +16,12 @@ public class SwapAddListener implements ListSelectionListener {
     private JTable jtable;
     private Board board;
     private static boolean active = false;
+    private Application app;
 
-    public SwapAddListener(JTable jtable, Board board) {
+    public SwapAddListener(JTable jtable, Board board, Application app) {
         this.jtable = jtable;
         this.board = board;
+        this.app = app;
     }
 
     public static void setActive(){active = true;}
@@ -35,6 +38,8 @@ public class SwapAddListener implements ListSelectionListener {
             System.out.println(jtable.getValueAt(jtable.getSelectedRow(), 0).toString());
             System.out.println(jtable.getValueAt(jtable.getSelectedRow(), 1).toString());
             board.addOurSwap(jtable.getSelectedRow());
+//            jtable.repaint();
+            app.refreshTables();
 
         }
     }

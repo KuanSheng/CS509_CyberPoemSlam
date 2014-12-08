@@ -1,13 +1,15 @@
 package Words.view;
 
+/**
+ * Created by Jun on 12/8/2014.
+ */
+
+import Words.controller.RefreshRequestTableController;
 import Words.controller.RefreshSwapTableController;
-import Words.controller.RefreshWordTableController;
-import Words.controller.SwapAddListener;
 import Words.controller.SwapRemoveListener;
 import Words.model.Board;
-import Words.model.Model;
+import Words.model.RequestModel;
 import Words.model.SwapModel;
-import Words.model.WordModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableColumnModel;
@@ -19,12 +21,12 @@ import java.awt.*;
 /**
  * Created by Jun on 12/8/2014. Copied WordTable of Sun
  */
-public class SwapTable extends JPanel {
+public class RequestTable extends JPanel {
     /* keep eclipse happy */
     private static final long serialVersionUID = 1L;
 
     /** The model that "backs" the JTable. Different from Board. */
-    SwapModel swapModel = null;
+    RequestModel requestModel = null;
 
     /** Actual GUI entity. */
     JTable jtable = null;
@@ -32,13 +34,13 @@ public class SwapTable extends JPanel {
     /**
      * This constructor creates the display which manages the list of active players.
      */
-    public SwapTable(Board board, Application app) {
+    public RequestTable(Board board) {
 
         // create the model for the data which backs this table
-        swapModel = new SwapModel(board);
+        requestModel = new RequestModel(board);
 
         // add to listener chain
-        board.addListener(new RefreshSwapTableController(this));
+        board.addListener(new RefreshRequestTableController(this));
 
         // the proposed dimension of the UI
         Dimension mySize = new Dimension(250, 210);
@@ -51,14 +53,14 @@ public class SwapTable extends JPanel {
 
         // Just add the JTable to the set. First create the list of Players,
         // then the SwingModel that supports the JTable which you now create.
-        jtable = new JTable(swapModel);
+        jtable = new JTable(requestModel);
         jtable.setPreferredSize(mySize);
 
         // let's tell the JTable about its columns.
         TableColumnModel columnModel = new DefaultTableColumnModel();
 
         // must build one by one...
-        String[] headers = new String[] { swapModel.wordLabel, swapModel.wordTypeLabel};
+        String[] headers = new String[] { requestModel.wordLabel, requestModel.wordTypeLabel};
         int index = 0;
         for (String h : headers) {
             TableColumn col = new TableColumn(index++);
@@ -78,20 +80,7 @@ public class SwapTable extends JPanel {
 //        });
 
         //to add listener to handle add into swap reqeust -- JUN start===================
-        jtable.getSelectionModel().addListSelectionListener(new SwapRemoveListener(jtable, board, app));
-//        jtable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-//            @Override
-//            public void valueChanged(ListSelectionEvent event) {
-//                if(event.getValueIsAdjusting()) return; // this listener would be called twice
-//                                                        //only act the second time -- when releasning
-//                if (jtable.getSelectedRow() > -1) {
-//                    // print first column value from selected row
-//                    System.out.println(jtable.getValueAt(jtable.getSelectedRow(), 0).toString());
-//                    System.out.println(jtable.getSelectedRow());
-////                    System.out.println();
-//                }
-//            }
-//        });
+//        jtable.getSelectionModel().addListSelectionListener(new SwapRemoveListener(jtable, board));
         //to add listener to handle add into swap reqeust -- JUN end======================
 
         // Here's the trick. Make the JScrollPane take its view from the JTable.

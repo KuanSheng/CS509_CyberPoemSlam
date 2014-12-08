@@ -1,7 +1,7 @@
 package Words.controller;
 
+import Words.view.RequestTable;
 import Words.view.SwapTable;
-import Words.view.WordTable;
 
 import java.io.Serializable;
 

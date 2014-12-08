@@ -27,7 +27,7 @@ public class WordTypeTable extends JPanel {
     	board.addListener(new RefreshWordTypeTableController(this));
 
         // the proposed dimension of the UI
-        Dimension mySize = new Dimension(450, 240);
+        Dimension mySize = new Dimension(250, 210);
 
         // Scrollable panel will enclose the JTable and support scrolling vertically
         JScrollPane jsp = new JScrollPane();

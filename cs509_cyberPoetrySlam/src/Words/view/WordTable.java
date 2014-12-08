@@ -24,10 +24,16 @@ public class WordTable extends JPanel{
     /** Actual GUI entity. */
     JTable jtable = null;
 
+    Application app = null;
+
     /**
      * This constructor creates the display which manages the list of active players.
      */
-    public WordTable(Board board) {
+    public WordTable(Board board, Application app){
+//        this(board);
+//        this.app = app;
+//    }
+//    public WordTable(Board board) {
 
         // create the model for the data which backs this table
         wordModel = new WordModel(board);
@@ -36,7 +42,7 @@ public class WordTable extends JPanel{
     	board.addListener(new RefreshWordTableController(this));
         
         // the proposed dimension of the UI
-        Dimension mySize = new Dimension(450, 240);
+        Dimension mySize = new Dimension(250, 210);
 
         // Scrollable panel will enclose the JTable and support scrolling vertically
         JScrollPane jsp = new JScrollPane();
@@ -73,7 +79,7 @@ public class WordTable extends JPanel{
 //        });
 
         //to add listener to handle add into swap reqeust -- JUN start===================
-        jtable.getSelectionModel().addListSelectionListener(new SwapAddListener(jtable, board));
+        jtable.getSelectionModel().addListSelectionListener(new SwapAddListener(jtable, board, app));
 //        jtable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 //            @Override
 //            public void valueChanged(ListSelectionEvent event) {

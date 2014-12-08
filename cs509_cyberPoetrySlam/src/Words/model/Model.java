@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Stack;
 
 import Words.controller.*;
+import Words.view.SwapTable;
 
 public class Model implements Serializable{
 	Board board;
@@ -105,5 +106,6 @@ public class Model implements Serializable{
     public Stack<Move> getMoves(){
     	return moves;
     }
+
 
 }
