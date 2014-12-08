@@ -1,17 +1,12 @@
 package Words.view;
 
-import java.io.*;
 import java.awt.event.*;
 import java.awt.*;
 
 import javax.swing.*;
 
 import Words.BrokerManager;
-import Words.view.Application;
-import Words.controller.DisconnectionPoemController;
-import Words.controller.ReleasePoemController;
-import Words.controller.SubmitPoemController;
-import Words.controller.SwapRequestController;
+import Words.controller.*;
 import Words.model.*;
 ;
 
@@ -23,6 +18,10 @@ public class Application extends JFrame {
     final ApplicationCanvas panel; // added by JUN to share panel with StoreStateController
     
     JButton btnSwap;
+
+    JButton btnAddSwap;
+    JButton btnRemoveSwap;
+
     
     /** 
 	 * Stores reference to broker so can use as needed. Set once broker connection has been made. 
@@ -50,12 +49,16 @@ public class Application extends JFrame {
 //        setVisible(true);  //commented by JUN , this line is causing restore state to fail. Because window open event is trigered here, but restore state controller is not added yet
         setBackground(Color.orange);
         
-        btnSwap = new JButton("Swap/Revoke"); 
-        
+        btnSwap = new JButton("Swap/Revoke");
+        btnAddSwap = new JButton("Add Swap");
+        btnRemoveSwap = new JButton("Remove Swap");
+
+
         JButton btnRelease = new JButton("Release");
         JButton btnSubmit = new JButton("Submit");
         JButton btnDisconnect = new JButton("Disconnect");
-        
+
+
         
         
 
@@ -64,7 +67,17 @@ public class Application extends JFrame {
         btnSubmit.addActionListener(new SubmitPoemController(m, panel, SubmitPoemController.Method.ALL));
         //btnSwap.addActionListener(new SwapRequestController(m, Application.this));
 
+
+        //
+        btnAddSwap.addActionListener(new AddSwapButtonListner(btnAddSwap));
+        btnRemoveSwap.addActionListener(new RemoveSwapButtonListner(btnRemoveSwap));
+
+        //
         menuPanel.add(btnSwap); btnSwap.setEnabled(false);
+        menuPanel.add(btnAddSwap);
+//        btnAddSwap.setEnabled(false);
+        menuPanel.add(btnRemoveSwap);
+//        btnRemoveSwap.setEnabled(false);
         menuPanel.add(btnRelease);
         menuPanel.add(btnSubmit);
         menuPanel.add(btnDisconnect);

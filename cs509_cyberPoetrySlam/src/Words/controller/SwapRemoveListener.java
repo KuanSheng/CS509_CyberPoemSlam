@@ -11,7 +11,7 @@ import javax.swing.event.ListSelectionListener;
  */
 public class SwapRemoveListener implements ListSelectionListener {
     private JTable jtable;
-    private static boolean active = true;
+    private static boolean active = false;
     private Board board;
 
     public SwapRemoveListener(JTable jtable, Board board) {
@@ -36,4 +36,8 @@ public class SwapRemoveListener implements ListSelectionListener {
             board.removeOurSwap(jtable.getSelectedRow());
         }
     }
+
+    public static boolean isActive() {return active;}
+
+    public static boolean flip(){ return active = !active;}
 }
