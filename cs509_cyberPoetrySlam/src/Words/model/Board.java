@@ -462,6 +462,11 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 
     }
 
+    public boolean clearOurSwap(){
+        ourSwap.clear();
+        return true;
+    }
+
     public int getOurSwapCount() {
         return ourSwap.size();
 

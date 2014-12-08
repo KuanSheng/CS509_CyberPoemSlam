@@ -189,8 +189,9 @@ public class BrokerManager implements IHandleBrokerMessage {
 			
 			
 			if (broker.getID().equals(s.requestor_id)) { // if we are the one who send the request JUN
-				wordsToRemove = s.offerWords;
-				wordsTypeRemove = s.offerTypes;
+                model.getBoard().clearOurSwap();
+//				wordsToRemove = s.offerWords;
+//				wordsTypeRemove = s.offerTypes;
 				wordsToAdd = s.requestWords;
 				wordsTypeAdd = s.requestTypes;
 			} else {                                      // if we are the one being requested JUN
@@ -198,21 +199,22 @@ public class BrokerManager implements IHandleBrokerMessage {
 				wordsTypeRemove = s.requestTypes;
 				wordsToAdd = s.offerWords;
 				wordsTypeAdd = s.offerTypes;
+                // remove each word as found
+                for (int i = 0; i < s.n; i++) {
+                    for (Word word : model.getBoard().getunprotectedWords()) {
+                        if (word.getValue().equals(wordsToRemove[i])) {
+
+                            System.out.println(word.getValue() + word.getX() + word.getY());
+
+                            //model.getBoard().getunprotectedWords().remove(word);
+                            model.getBoard().removeWords(word);
+                            break;
+                        }
+                    }
+                }
 			}
 
-			// remove each word as found
-			for (int i = 0; i < s.n; i++) {
-				for (Word word : model.getBoard().getunprotectedWords()) {
-					if (word.getValue().equals(wordsToRemove[i])) {	
-						
-						System.out.println(word.getValue() + word.getX() + word.getY());
-					
-						//model.getBoard().getunprotectedWords().remove(word);
-						model.getBoard().removeWords(word);
-						break;
-					}
-				}
-			}
+
 			
 			//gui.getpanel().repaint();
 			
