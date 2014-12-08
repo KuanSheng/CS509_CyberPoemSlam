@@ -8,7 +8,14 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     ArrayList<Word> protectedWords = new ArrayList<Word>();
     ArrayList<Word> unProtectedWords = new ArrayList<Word>();
     ArrayList<Poem> poems = new ArrayList<Poem>();
-    
+
+    ArrayList<Word> ourSwap = new ArrayList<Word>(); // to store words that we intend to offer for swap
+    ArrayList<Word> theirSwap = new ArrayList<Word>(); // to store words requested by others
+
+//    public boolean addOurSwap(String )
+
+
+
     /** Listeners. */
 	ArrayList<Listener> listeners = new ArrayList<Listener>();
 	
@@ -448,5 +455,21 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 			}
 		}
 	}
+
+    public Word getOurSwap(int rowIndex) {
+        if(ourSwap.size() <= rowIndex) return null;
+        else return ourSwap.get(rowIndex);
+
+    }
+
+    //JUN added for swap
+    public void removeOurSwap(int selectedRow) {
+        unProtectedWords.add(ourSwap.remove(selectedRow)); //remove the word from swap list
+                                                           //add it back to unprotected words.
+    }
+
+    public void addOurSwap(int selectedRow) {
+        ourSwap.add(unProtectedWords.remove(selectedRow)); // add a new word into our swap;
+    }
 }
 //>>>>>>> refs/remotes/origin/Kuan_Jun

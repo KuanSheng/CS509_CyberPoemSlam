@@ -90,7 +90,8 @@ public class BrokerManager implements IHandleBrokerMessage {
 		System.out.println("Connected as : " + broker.getID() + " : " + broker.getStatus());
 		
 		// start thread to process commands from broker.
-		thread = new ReaderThread(broker, this);
+		thread = new ReaderThread(broker, this); //start a thread to listen, when something happens,
+                                                 //calls the process method below
 		thread.start();
 		
 		// nothing more to do here. This thread is now independent and will respond
@@ -187,12 +188,12 @@ public class BrokerManager implements IHandleBrokerMessage {
 		//	Word wordsAdd[] = null;
 			
 			
-			if (broker.getID().equals(s.requestor_id)) {
+			if (broker.getID().equals(s.requestor_id)) { // if we are the one who send the request JUN
 				wordsToRemove = s.offerWords;
 				wordsTypeRemove = s.offerTypes;
 				wordsToAdd = s.requestWords;
 				wordsTypeAdd = s.requestTypes;
-			} else {
+			} else {                                      // if we are the one being requested JUN
 				wordsToRemove = s.requestWords;
 				wordsTypeRemove = s.requestTypes;
 				wordsToAdd = s.offerWords;

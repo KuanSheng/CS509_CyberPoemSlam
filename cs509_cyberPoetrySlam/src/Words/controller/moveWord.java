@@ -1,7 +1,9 @@
 package Words.controller;
 import Words.model.*;
 
-public class moveWord extends Move{
+import java.io.Serializable;
+
+public class moveWord extends Move implements Serializable{
 	final Word word;
 	int oldx;
 	int oldy;

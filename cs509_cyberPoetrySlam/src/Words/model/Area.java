@@ -1,7 +1,10 @@
 package Words.model;
+
+import java.io.Serializable;
+
 /**just for selecting Elements in a area
  * created by KuanSheng**/
-public class Area {
+public class Area implements Serializable{
 	int originalx;
 	int originaly;
 	int width;

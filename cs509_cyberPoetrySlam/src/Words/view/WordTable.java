@@ -1,11 +1,14 @@
 package Words.view;
 import Words.controller.RefreshWordTableController;
+import Words.controller.SwapAddListener;
 import Words.model.*;
 
 import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
 
 /**
@@ -68,6 +71,23 @@ public class WordTable extends JPanel{
 //                new SortController(WordTable.this).process(h, e.getPoint());
 //            }
 //        });
+
+        //to add listener to handle add into swap reqeust -- JUN start===================
+        jtable.getSelectionModel().addListSelectionListener(new SwapAddListener(jtable, board));
+//        jtable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+//            @Override
+//            public void valueChanged(ListSelectionEvent event) {
+//                if(event.getValueIsAdjusting()) return; // this listener would be called twice
+//                                                        //only act the second time -- when releasning
+//                if (jtable.getSelectedRow() > -1) {
+//                    // print first column value from selected row
+//                    System.out.println(jtable.getValueAt(jtable.getSelectedRow(), 0).toString());
+//                    System.out.println(jtable.getSelectedRow());
+////                    System.out.println();
+//                }
+//            }
+//        });
+        //to add listener to handle add into swap reqeust -- JUN end======================
 
         // Here's the trick. Make the JScrollPane take its view from the JTable.
         jsp.setViewportView(jtable);

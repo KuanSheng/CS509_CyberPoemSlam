@@ -92,12 +92,12 @@ public class SwapRequestController extends MouseAdapter{
 		String offer = "Sample";
 		String offerType = "noun";
 		String request = "Other";
-		String requestType = "noun";
-		if (!sampForSamp) {
-			offer = "Other";
-			request = "Sample";
-		}
-		
+        String requestType = "noun";
+        if (!sampForSamp) {
+            offer = "Other";
+            request = "Sample";
+        }
+
 		// see if we have word we claim to be offering
 		boolean found = false;
 		for (Word w : model.getBoard().getunprotectedWords()) {
@@ -121,11 +121,6 @@ public class SwapRequestController extends MouseAdapter{
 		
 		String swapMsg = IProtocol.requestSwapMsg + IProtocol.separator + swapRequest.flatten();
 		broker.sendMessage(swapMsg);
-	}	
-	
-	
-	
-	
-	
+	}
 
 }

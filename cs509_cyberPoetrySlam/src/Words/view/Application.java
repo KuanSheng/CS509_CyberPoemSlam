@@ -19,6 +19,7 @@ public class Application extends JFrame {
     Model model;
     WordTable table;
     WordTypeTable typeTable;
+    SwapTable swapTable;
     final ApplicationCanvas panel; // added by JUN to share panel with StoreStateController
     
     JButton btnSwap;
@@ -84,8 +85,10 @@ public class Application extends JFrame {
 
         table = new WordTable(model.getBoard());
         typeTable = new WordTypeTable(model.getBoard());
+        swapTable = new SwapTable(model.getBoard());
         tablePanel.add(table);
-        tablePanel.add(typeTable);
+        tablePanel.add(typeTable); //todo to be uncommented JUN
+        tablePanel.add(swapTable);
         pane.add(tablePanel);
         
         btnDisconnect.addActionListener(new ActionListener() {

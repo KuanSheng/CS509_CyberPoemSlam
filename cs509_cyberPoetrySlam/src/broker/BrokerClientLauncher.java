@@ -44,7 +44,7 @@ public class BrokerClientLauncher implements IHandleBrokerMessage {
 		
 		// start thread to process commands from broker.
 		ReaderThread thread = new ReaderThread(broker, this);
-		thread.start();
+		thread.start();   //starting new thread here ================================================ JUN
 		
 		// nothing else happens here. Demonstrating one plausible scenario
 		Scanner sc = new Scanner(System.in);
