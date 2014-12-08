@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.util.Scanner;
 
 import Words.BrokerManager;
+import Words.model.Board;
 import Words.model.Model;
 import Words.model.Word;
 import Words.view.Application;
@@ -19,7 +20,8 @@ public class SwapRequestController extends MouseAdapter{
 	String[] offerType, offerWords, requestType, requestWords;
 	
 	String requestMsg;
-	
+    Board board;
+    private static String[] wordTypeDefinition = {"verb", "adj", "noun", "adv"};
     public String generateMsg(){
     	
     	Scanner sc= new Scanner(System.in);
@@ -83,44 +85,65 @@ public class SwapRequestController extends MouseAdapter{
 	public SwapRequestController(Model model,  Application app) {
 		this.model = model;
 		this.app = app;
+        this.board = model.getBoard();
 	}
 
 	/** Act immediately */
 	public void process(boolean sampForSamp) {
 		
-		// quickly determine which kind of swap we are making
-		String offer = "Sample";
-		String offerType = "noun";
-		String request = "Other";
-        String requestType = "noun";
-        if (!sampForSamp) {
-            offer = "Other";
-            request = "Sample";
-        }
-
-		// see if we have word we claim to be offering
-		boolean found = false;
-		for (Word w : model.getBoard().getunprotectedWords()) {
-			if (w.getValue().equals(offer)) {
-				found = true;
-				break;
-			}
-		}
-		if (!found) {
-			Toolkit.getDefaultToolkit().beep();
-			return;
-		}
-		
-		// let's make the request. We are requesting, and we want to have requested word for
-		// the offer word.
+//		// quickly determine which kind of swap we are making
+//		String offer = "Sample";
+//		String offerType = "noun";
+//		String request = "Other";
+//        String requestType = "noun";
+//        if (!sampForSamp) {
+//            offer = "Other";
+//            request = "Sample";
+//        }
+//
+//		// see if we have word we claim to be offering
+//		boolean found = false;
+//		for (Word w : model.getBoard().getunprotectedWords()) {
+//			if (w.getValue().equals(offer)) {
+//				found = true;
+//				break;
+//			}
+//		}
+//		if (!found) {
+//			Toolkit.getDefaultToolkit().beep();
+//			return;
+//		}
+//
+//		// let's make the request. We are requesting, and we want to have requested word for
+//		// the offer word.
 		BrokerManager broker = app.getBroker();
-		
-		Swap swapRequest = new Swap(broker.getID(), "*", 1, 
-				new String[] {offerType}, new String[] { offer },
-				new String[] {requestType}, new String[] { request} );
-		
+
+//		Swap swapRequest = new Swap(broker.getID(), "*", 1,
+//				new String[] {offerType}, new String[] { offer },
+//				new String[] {requestType}, new String[] { request} );
+        int swapCount =  model.getBoard().getOurSwapCount();
+        String[] offerType = new String[swapCount];
+        String[] offer     = new String[swapCount];
+        String[] requestType = new String[swapCount];
+        String[] request     = new String[swapCount];
+
+        fillInSwap(offerType, offer, requestType, request);
+//        for()
+		Swap swapRequest = new Swap(broker.getID(), "*", swapCount,
+                offerType, offer,
+                requestType, request );
+
 		String swapMsg = IProtocol.requestSwapMsg + IProtocol.separator + swapRequest.flatten();
 		broker.sendMessage(swapMsg);
 	}
+
+    private void fillInSwap(String[] offerType, String[] offer, String[] requestType, String[] requesst){
+        for(int i = 0; i < offerType.length; i ++){
+            offer[i] = board.getOurSwap(i).getValue();
+            offerType[i] = wordTypeDefinition[board.getOurSwap(i).getWordType()];
+            requesst[i] = "Sample";
+            requestType[i] = "noun";
+        }
+    }
 
 }

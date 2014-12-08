@@ -462,6 +462,12 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 
     }
 
+    public int getOurSwapCount() {
+        return ourSwap.size();
+
+    }
+
+
     //JUN added for swap
     public void removeOurSwap(int selectedRow) {
         unProtectedWords.add(ourSwap.remove(selectedRow)); //remove the word from swap list
