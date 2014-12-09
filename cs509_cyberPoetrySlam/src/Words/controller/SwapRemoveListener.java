@@ -37,7 +37,8 @@ public class SwapRemoveListener implements ListSelectionListener {
             System.out.println(jtable.getValueAt(jtable.getSelectedRow(), 1).toString());
 
             board.removeOurSwap(jtable.getSelectedRow());
-            jtable.repaint();
+//            jtable.repaint();
+            jtable.clearSelection();
             app.refreshTables();
         }
     }

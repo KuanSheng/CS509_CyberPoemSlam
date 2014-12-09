@@ -40,6 +40,7 @@ public class SwapAddListener implements ListSelectionListener {
             board.addOurSwap(jtable.getSelectedRow());
 //            jtable.repaint();
             app.refreshTables();
+            jtable.clearSelection();
 
         }
     }
