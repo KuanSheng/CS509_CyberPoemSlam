@@ -19,7 +19,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class RequestModel extends AbstractTableModel {
     /** Keep Eclipse Happy. */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 4L;
 
     // set the word type definition to query the word type by index number
     // TODO: will be replaced by a static class or properties file
@@ -48,17 +48,48 @@ public class RequestModel extends AbstractTableModel {
     }
 
 
+    //added by JUN for editing table -- start
+    private String[][] requets = new String[1][2];
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return rowIndex > 0 ? true : false;
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+//        super.setValueAt(aValue, rowIndex, columnIndex);
+        requets[rowIndex][columnIndex] = (String) aValue;
+    }
+    //added by JUN for editing table -- end
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Word s = board.getOurSwap(rowIndex);
-        if(s == null) return "EMPTY";
-        if (columnIndex == 0) {
-            return s.value;
-        } else if (columnIndex == 1) {
-            return wordTypeDefinition[s.getWordType()];
-        }else {
-            return "EMPTY";
+        if(rowIndex >= requets.length ){
+            expandTable();
         }
+        return requets[rowIndex][columnIndex];
+//        Word s = board.getOurSwap(rowIndex);
+//        if(s == null) return "EMPTY";
+//        if (columnIndex == 0) {
+//            return s.value;
+//        } else if (columnIndex == 1) {
+//            return wordTypeDefinition[s.getWordType()];
+//        }else {
+//            return "EMPTY";
+//        }
         // no idea who you are...
+    }
+
+    //expand the table when a new swap pair is added.
+    private void expandTable(){
+        int newRowCount = getRowCount();
+        int newColCount = getColumnCount();
+        String[][] expand = new String[newRowCount][newColCount];
+        for(int i = 0; i < newRowCount-1; i ++){
+            expand[i][0] = requets[i][0];
+            expand[i][1] = requets[i][1];
+        }
+        expand[newRowCount-1][0] = ""; //set default value and type to empty
+        expand[newRowCount-1][1] = "";
+        requets = expand;
     }
 }

@@ -16,7 +16,7 @@ import javax.swing.table.*;
  */
 public class WordTable extends JPanel{
     /* keep eclipse happy */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 4561L;
 
     /** The model that "backs" the JTable. Different from Board. */
     WordModel wordModel = null;

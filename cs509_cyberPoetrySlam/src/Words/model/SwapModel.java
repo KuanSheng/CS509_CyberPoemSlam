@@ -15,7 +15,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class SwapModel extends AbstractTableModel {
     /** Keep Eclipse Happy. */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     // set the word type definition to query the word type by index number
     // TODO: will be replaced by a static class or properties file

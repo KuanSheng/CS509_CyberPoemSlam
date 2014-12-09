@@ -23,13 +23,17 @@ import java.awt.*;
  */
 public class RequestTable extends JPanel {
     /* keep eclipse happy */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 123L;
 
     /** The model that "backs" the JTable. Different from Board. */
     RequestModel requestModel = null;
 
     /** Actual GUI entity. */
     JTable jtable = null;
+
+    /**
+     * override to enable editing
+     */
 
     /**
      * This constructor creates the display which manages the list of active players.
@@ -54,6 +58,7 @@ public class RequestTable extends JPanel {
         // Just add the JTable to the set. First create the list of Players,
         // then the SwingModel that supports the JTable which you now create.
         jtable = new JTable(requestModel);
+//        jtable.setCellSelectionEnabled(true); // TODO if still not editable, delete this line
         jtable.setPreferredSize(mySize);
 
         // let's tell the JTable about its columns.

@@ -21,7 +21,7 @@ import java.awt.*;
  */
 public class SwapTable extends JPanel {
     /* keep eclipse happy */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2341L;
 
     /** The model that "backs" the JTable. Different from Board. */
     SwapModel swapModel = null;
