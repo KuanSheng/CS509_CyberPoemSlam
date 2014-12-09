@@ -1,6 +1,7 @@
 package Words.controller;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,15 +10,20 @@ import java.awt.event.ActionListener;
  */
 public class AddSwapButtonListner implements ActionListener {
     JButton button;
-
-    public AddSwapButtonListner(JButton button){this.button = button;}
+    Color originColor;
+    public AddSwapButtonListner(JButton button){
+        this.button = button;
+        originColor = button.getBackground();
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(SwapAddListener.flip()){
             button.setText("Stopping Adding");
+            button.setBackground(Color.red);
         }else {
             button.setText("Add Swap");
+            button.setBackground(originColor);
         }
     }
 }
