@@ -155,4 +155,47 @@ public class Application extends JFrame {
         if(swapTable != null)    swapTable.refreshTable();
         if(requestTable != null) requestTable.refreshTable();
     }
+
+    private class AddSwapButtonListner implements ActionListener {
+        JButton button;
+        Color originColor;
+        public AddSwapButtonListner(JButton button){
+            this.button = button;
+            originColor = button.getBackground();
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(SwapAddListener.flip()){
+                button.setText("Stopping Adding");
+                button.setBackground(Color.red);
+            }else {
+                button.setText("Add Swap");
+                button.setBackground(originColor);
+            }
+        }
+    }
+
+    private class RemoveSwapButtonListner implements ActionListener {
+        JButton button;
+        Color originColor = null;
+        public RemoveSwapButtonListner(JButton button) {
+            this.button = button;
+            originColor = button.getBackground();
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(SwapRemoveListener.flip()){
+                System.out.println("color" + button.getBackground());
+                button.setText("Stop Removing");
+                button.setBackground(Color.red);
+            }else {
+                button.setText("Remove Swap");
+                button.setBackground(originColor);
+//            button.setBackground(Co);
+            }
+        }
+    }
+
 }
