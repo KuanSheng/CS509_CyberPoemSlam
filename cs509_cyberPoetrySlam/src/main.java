@@ -18,9 +18,9 @@ public class main {
 //        model.getBoard().addWords(new Word( 10 , 10, 100, 100, "test jun", 1));
         //---end todo
 		
-        ApplicationCanvas panel = new ApplicationCanvas(model);
 		final Application app = new Application(model);
-		
+        ApplicationCanvas panel = app.getPanel();
+
 		BrokerManager bm = new BrokerManager(app, model);
 		
         app.addWindowListener(new StoreStateController(model, panel));

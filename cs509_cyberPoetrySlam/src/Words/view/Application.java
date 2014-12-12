@@ -18,6 +18,11 @@ public class Application extends JFrame {
     RequestTable requestTable;
     NewRequestTable newRequestTable;
     OurSwap swap;
+
+    public ApplicationCanvas getPanel() {
+        return panel;
+    }
+
     final ApplicationCanvas panel; // added by JUN to share panel with StoreStateController
     
     JButton btnSwap;
@@ -42,6 +47,7 @@ public class Application extends JFrame {
         this.panel = new ApplicationCanvas(model);
         this.panel.setSize(900, 500);
         //this.panel = panel;
+//        this.panel = model.getBoard().g
 
         setTitle("CyberPoetrySlam");
         setSize(900, 900);
