@@ -45,7 +45,7 @@ public class WordModel extends AbstractTableModel {
         if (columnIndex == 0) {
             return s.value;
         } else if (columnIndex == 1) {
-            return wordTypeDefinition[s.getWordType()];
+            return Word.TYPE_INT_TO_STRING[s.getWordType()];
         }
         // no idea who you are...
         return "";

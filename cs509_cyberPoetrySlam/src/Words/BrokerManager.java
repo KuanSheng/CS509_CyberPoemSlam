@@ -141,11 +141,11 @@ public class BrokerManager implements IHandleBrokerMessage {
 		if (msg.startsWith(IProtocol.matchSwapMsg)) {
 			Swap s = MatchSwapMessage.getSwap(msg);
 			System.out.println("Third party trying a swap:" + s.flatten());
-			
+
 			// swap is requesting words. We have to check to see if we have these
 			// requested words.
 			ArrayList<Word> matched = new ArrayList<Word>();
-			
+
 			boolean failed = true;
 			for (int i = 0; i < s.requestWords.length; i++) {
 				failed = true;
@@ -156,12 +156,14 @@ public class BrokerManager implements IHandleBrokerMessage {
                             )
                        ) {
 						matched.add(word);
+                        model.getBoard().getunprotectedWords().remove(word); // capture this word temporarily
 						failed = false;
 						break;
 					}
 				}
 				
 				if (failed) {
+                    model.getBoard().getunprotectedWords().addAll(matched); // JUN match failed, put all temporary words back into unprotected area
 					System.out.println("Unable to satisfy swap request");
 					broker.getBrokerOutput().println(IProtocol.denySwapMsg + 
 							IProtocol.separator + s.requestor_id);
@@ -235,9 +237,9 @@ public class BrokerManager implements IHandleBrokerMessage {
 				int rx = (int) (r.nextFloat() * width); 
 				int ry = (int) (r.nextFloat() * 200 + 300); 
 
-				if(wordsTypeAdd[i].equals("noun")) type = 2; System.out.println("type :" + type);
+//				if(wordsTypeAdd[i].equals("noun")) type = 2; System.out.println("type :" + type);
 				
-				Word word = new Word(rx, ry , 120 ,14, wordsToAdd[i], type );
+				Word word = new Word(rx, ry , 120 ,14, wordsToAdd[i], Word.getTypeInt(wordsTypeAdd[i]) );
 				
 			//	gui.getpanel().paintSwapAddWord(rx, ry, g, word);
 				

@@ -1,9 +1,11 @@
 package Words.controller;
 
 import Words.model.Board;
+import Words.model.OurSwap;
 import Words.model.Word;
 import Words.model.WordModel;
 import Words.view.Application;
+import broker.util.Swap;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,15 +16,17 @@ import java.awt.event.ActionListener;
 public class AddRandomWordForSwap implements ActionListener{
     private Board board;
     private Application app;
+    OurSwap swap;
     private static String[] wordTypeDefinition = {"verb", "adj", "noun", "adv"};
     public static final String ADD_VERB = "ADD_VERB";
     public static final String ADD_ADJ = "ADD_ADJ";
     public static final String ADD_NOUN = "ADD_NOUN";
     public static final String ADD_ADV = "ADD_ADV";
 
-    public AddRandomWordForSwap(Board board, Application app){
+    public AddRandomWordForSwap(Board board,OurSwap swap, Application app){
         this.board = board;
         this.app = app;
+        this.swap = swap;
     }
 
     @Override
@@ -38,12 +42,14 @@ public class AddRandomWordForSwap implements ActionListener{
     //    public enum
     public boolean addRandom(int type){
         switch (type){
-            case 1 :
-                return addRandomNoun();
-            case 2 :
+            case Word.ADJ_INT :
                 return addRandomAdj();
-            case 3 :
+            case Word.ADV_INT :
                 return addRandomAdv();
+            case Word.NOUN_INT :
+                return addRandomNoun();
+            case Word.VERB_INT :
+                return addRandomVerb();
             default:
                 return false;
         }
@@ -51,23 +57,24 @@ public class AddRandomWordForSwap implements ActionListener{
 
     private boolean addRandomVerb(){
         for(Word w : board.getunprotectedWords()){
-            if(w.getWordType() == WordModel.VERB_INT){
-                if(board.addOurSwap(w)){
+            if(w.getWordType() == Word.VERB_INT){
+                    swap.addOffer(w);
+                    swap.addRequest();
                     app.refreshTables();
                     return true;
-                }
             }
         }
+
         return false;
     }
 
     private boolean addRandomAdj(){
         for(Word w : board.getunprotectedWords()){
-            if(w.getWordType() == WordModel.ADJ_INT){
-                if(board.addOurSwap(w)){
-                    app.refreshTables();
-                    return true;
-                }
+            if(w.getWordType() == Word.ADJ_INT){
+                swap.addOffer(w);
+                swap.addRequest();
+                app.refreshTables();
+                return true;
             }
         }
         return false;
@@ -75,23 +82,23 @@ public class AddRandomWordForSwap implements ActionListener{
 
     private boolean addRandomNoun(){
         for(Word w : board.getunprotectedWords()){
-            if(w.getWordType() == WordModel.NOUN_INT){
-                if(board.addOurSwap(w)){
-                    app.refreshTables();
-                    return true;
-                }
+            if(w.getWordType() == Word.NOUN_INT){
+                swap.addOffer(w);
+                swap.addRequest();
+                app.refreshTables();
+                return true;
             }
         }
         return false;
     }
 
-    private boolean addRandomAdv(){
-        for(Word w : board.getunprotectedWords()){
-            if(w.getWordType() == WordModel.ADJ_INT){
-                if(board.addOurSwap(w)){
-                    app.refreshTables();
-                    return true;
-                }
+    private boolean addRandomAdv() {
+        for (Word w : board.getunprotectedWords()) {
+            if (w.getWordType() == Word.ADV_INT) {
+                swap.addOffer(w);
+                swap.addRequest();
+                app.refreshTables();
+                return true;
             }
         }
         return false;

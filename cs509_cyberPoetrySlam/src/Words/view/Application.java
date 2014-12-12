@@ -77,48 +77,7 @@ public class Application extends JFrame {
         //btnSwap.addActionListener(new SwapRequestController(m, Application.this));
 
 
-        /**
-         * Jun add random word for swap -- start
-         */
-        //create buttons
-        JButton randomAdj = new JButton("Add Random Adj");
-        JButton randomAdv = new JButton("Add Random Adv");
-        JButton randomNoun = new JButton("Add Random Noun");
-        JButton randomVerb = new JButton("Add Random Verb");
 
-        //set invisible by default
-        randomAdj.setVisible(false);
-        randomAdv.setVisible(false);
-        randomNoun.setVisible(false);
-        randomVerb.setVisible(false);
-
-        //set commands so that controller would know which is calling it
-        randomAdj.setActionCommand(AddRandomWordForSwap.ADD_ADJ);
-        randomAdv.setActionCommand(AddRandomWordForSwap.ADD_ADV);
-        randomNoun.setActionCommand(AddRandomWordForSwap.ADD_NOUN);
-        randomVerb.setActionCommand(AddRandomWordForSwap.ADD_VERB);
-
-        //add listener
-        randomAdj.addActionListener(new AddRandomWordForSwap(model.getBoard(), this));
-        randomAdv.addActionListener(new AddRandomWordForSwap(model.getBoard(), this));
-        randomNoun.addActionListener(new AddRandomWordForSwap(model.getBoard(), this));
-        randomVerb.addActionListener(new AddRandomWordForSwap(model.getBoard(), this));
-
-        //add into panel
-        menuPanel.add(randomAdj);
-        menuPanel.add(randomAdv);
-        menuPanel.add(randomNoun);
-        menuPanel.add(randomVerb);
-        /**
-         * JUN add random word for swap -- end
-         */
-
-
-        /**
-         * add new request table
-         */
-        btnAddSwap.addActionListener(new AddSwapButtonListner(btnAddSwap, randomAdj, randomAdv, randomNoun, randomVerb));
-        btnRemoveSwap.addActionListener(new RemoveSwapButtonListner(btnRemoveSwap));
 
         //
         menuPanel.add(btnSwap); btnSwap.setEnabled(false);
@@ -146,6 +105,48 @@ public class Application extends JFrame {
 
         swap = new OurSwap(model.getBoard());
 
+        /**
+         * Jun add random word for swap -- start
+         */
+        //create buttons
+        JButton randomAdj = new JButton("Add Random Adj");
+        JButton randomAdv = new JButton("Add Random Adv");
+        JButton randomNoun = new JButton("Add Random Noun");
+        JButton randomVerb = new JButton("Add Random Verb");
+
+        //set invisible by default
+        randomAdj.setVisible(false);
+        randomAdv.setVisible(false);
+        randomNoun.setVisible(false);
+        randomVerb.setVisible(false);
+
+        //set commands so that controller would know which is calling it
+        randomAdj.setActionCommand(AddRandomWordForSwap.ADD_ADJ);
+        randomAdv.setActionCommand(AddRandomWordForSwap.ADD_ADV);
+        randomNoun.setActionCommand(AddRandomWordForSwap.ADD_NOUN);
+        randomVerb.setActionCommand(AddRandomWordForSwap.ADD_VERB);
+
+        //add listener
+        randomAdj.addActionListener(new AddRandomWordForSwap(model.getBoard(),swap, this));
+        randomAdv.addActionListener(new AddRandomWordForSwap(model.getBoard(),swap, this));
+        randomNoun.addActionListener(new AddRandomWordForSwap(model.getBoard(),swap, this));
+        randomVerb.addActionListener(new AddRandomWordForSwap(model.getBoard(),swap, this));
+
+        //add into panel
+        menuPanel.add(randomAdj);
+        menuPanel.add(randomAdv);
+        menuPanel.add(randomNoun);
+        menuPanel.add(randomVerb);
+        /**
+         * JUN add random word for swap -- end
+         */
+
+
+        /**
+         * add new request table
+         */
+        btnAddSwap.addActionListener(new AddSwapButtonListner(btnAddSwap, randomAdj, randomAdv, randomNoun, randomVerb));
+        btnRemoveSwap.addActionListener(new RemoveSwapButtonListner(btnRemoveSwap));
 
         table = new WordTable(model.getBoard(), this, swap); // give table reference to app so as to refresh after operations JUN
         typeTable = new WordTypeTable(model.getBoard());

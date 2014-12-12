@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.io.Serializable;
 
 public class Word extends Element implements Serializable{
-	 int x;
+    public static final int TYPE_COUNT = 4;
+    int x;
 	 int y;
 
     String value;
@@ -24,6 +25,7 @@ public class Word extends Element implements Serializable{
     public static final String ADV_STRING = "adv";
 
     public static final String[] TYPE_INT_TO_STRING = {ADJ_STRING, ADV_STRING, NOUN_STRING, VERB_STRING};
+
      
      public Word(int x,int y,int width,int height,String value,int wordType){
     	 super.type = 1;
@@ -113,4 +115,11 @@ public class Word extends Element implements Serializable{
         return value;
     }
 
+    public static final int getTypeInt(String s) {
+        if(ADJ_STRING.equals(s)) return ADJ_INT;
+        if(ADV_STRING.equals(s)) return ADV_INT;
+        if(NOUN_STRING.equals(s)) return NOUN_INT;
+        if(VERB_STRING.equals(s)) return VERB_INT;
+        return -1;
+    }
 }

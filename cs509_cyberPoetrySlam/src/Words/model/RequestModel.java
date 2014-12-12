@@ -51,7 +51,7 @@ public class RequestModel extends AbstractTableModel {
 
 
     //added by JUN for editing table -- start
-    private String[][] requets = new String[1][2];
+//    private String[][] requets = new String[1][2];
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return rowIndex >= 0 ? true : false;
@@ -60,7 +60,7 @@ public class RequestModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 //        super.setValueAt(aValue, rowIndex, columnIndex);
-        requets[rowIndex][columnIndex] = (String) aValue;
+//        requets[rowIndex][columnIndex] = (String) aValue;
         switch (columnIndex){
             case 0 :
                 swap.getOurRequest().get(rowIndex).value = aValue.toString();

@@ -2,6 +2,7 @@ package Words.model;
 
 
 import javax.swing.table.AbstractTableModel;
+import java.lang.reflect.Array;
 import java.util.HashMap;
 
 /**
@@ -24,7 +25,7 @@ public class WordTypeModel extends AbstractTableModel {
     public int getColumnCount() {return 2;}
 
     @Override
-    public int getRowCount() { return board.countType().size() + 1; }
+    public int getRowCount() { return Word.TYPE_COUNT + 1; }
 
 
     @Override
@@ -38,13 +39,12 @@ public class WordTypeModel extends AbstractTableModel {
             return "";
         }
         else{
-            Word s = board.get(rowIndex - 1);
             HashMap<Integer, Integer> wordTypes = board.countType();
-
             if (columnIndex == 0) {
-                return wordTypeDefinition[s.wordType];
+                return Word.TYPE_INT_TO_STRING[rowIndex-1];
             } else if (columnIndex == 1) {
-                return wordTypes.get(s.wordType);
+                Integer count = wordTypes.get(rowIndex-1);
+                return count == null ? 0 : count;
             }
             // no idea who you are...
             return "";
