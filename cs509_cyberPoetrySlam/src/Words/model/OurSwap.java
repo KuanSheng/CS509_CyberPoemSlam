@@ -12,6 +12,7 @@ public class OurSwap implements Serializable{
     private ArrayList<WordSignature> ourRequest;
 //    private Object[][] ourRequest;
     private ArrayList<Word> theirRequest;
+    boolean success;
 
     public OurSwap(Board b){
         board = b;
@@ -19,8 +20,16 @@ public class OurSwap implements Serializable{
         ourRequest = new ArrayList<WordSignature>();
 //        ourRequest = new Object[][];
         theirRequest = new ArrayList<Word>();
+        success = true;
     }
 
+    /**
+     * this function should be called everytime request changes, so that previous failure would be washed away
+     * @return
+     */
+    private boolean statusSucess(){
+        return success = true;
+    }
     public boolean addRequest(String value, String type){
         if(value == null || type == null) return false;
         ourRequest.add(new WordSignature(value, type));
@@ -36,6 +45,7 @@ public class OurSwap implements Serializable{
         int index = board.getunprotectedWords().indexOf(word);
         if(index >= 0){
             ourOffer.add(board.getunprotectedWords().remove(index));
+            statusSucess();
             return true;
         }
         return false;
@@ -58,6 +68,7 @@ public class OurSwap implements Serializable{
         if(selectedRow < 0 || selectedRow > ourOffer.size()) return false;
         ourRequest.remove(selectedRow);
         board.getunprotectedWords().add(ourOffer.remove(selectedRow));
+        statusSucess();
         return true;
     }
 
@@ -76,6 +87,16 @@ public class OurSwap implements Serializable{
     public boolean clear() {
         ourOffer.clear();
         ourRequest.clear();
+        statusSucess();
+        return true;
+    }
+
+    public boolean getStatus(){
+        return success;
+    }
+
+    public boolean setFailure(){
+        success = false;
         return true;
     }
 }

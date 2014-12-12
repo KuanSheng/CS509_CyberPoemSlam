@@ -26,11 +26,14 @@ public class SwapTable extends JPanel {
     /** Actual GUI entity. */
     JTable jtable = null;
 
+    OurSwap swap;
+
     /**
      * This constructor creates the display which manages the list of active players.
      */
     public SwapTable(Board board, Application app, OurSwap swap) {
 
+        this.swap = swap;
         // create the model for the data which backs this table
         swapModel = new SwapModel(board, swap);
 
@@ -49,6 +52,7 @@ public class SwapTable extends JPanel {
         // Just add the JTable to the set. First create the list of Players,
         // then the SwingModel that supports the JTable which you now create.
         jtable = new JTable(swapModel);
+//        jtable.setBackground(Color.green); // set green as default
         jtable.setPreferredSize(mySize);
 
         // let's tell the JTable about its columns.
@@ -66,6 +70,7 @@ public class SwapTable extends JPanel {
 
         // let's install a sorter and also make sure no one can rearrange columns
         JTableHeader header = jtable.getTableHeader();
+        header.setBackground(Color.green);
         // purpose of this sorter is to sort by columns.
 //        header.addMouseListener(new MouseAdapter()	{
 //            public void mouseClicked (MouseEvent e)	{
@@ -107,6 +112,12 @@ public class SwapTable extends JPanel {
         // THIS is the key method to ensure JTable view is synchronized
         jtable.revalidate();
         jtable.repaint();
+        System.out.println("status in swaptable :" + swap.getStatus());
+        if(swap.getStatus()){
+            jtable.getTableHeader().setBackground(Color.green);
+        }else {
+            jtable.getTableHeader().setBackground(Color.red);
+        }
         this.revalidate();
         this.repaint();
     }

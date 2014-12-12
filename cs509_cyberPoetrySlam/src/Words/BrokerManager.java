@@ -134,6 +134,9 @@ public class BrokerManager implements IHandleBrokerMessage {
 		if (msg.startsWith(IProtocol.denySwapMsg)) {
 			dumpState();
 			System.out.println("Denied swap request");
+            swap.setFailure();
+            System.out.println("test");
+            gui.refreshTables();
 			return;
 		}
 		
@@ -253,8 +256,7 @@ public class BrokerManager implements IHandleBrokerMessage {
 			
 			// must refresh viewing area
 			gui.getpanel().repaint();
-			gui.getpanel().repaint();
-				
+
 			return;
 		}
 	}

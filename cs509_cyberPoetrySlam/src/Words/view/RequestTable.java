@@ -32,6 +32,8 @@ public class RequestTable extends JPanel {
     /** Actual GUI entity. */
     JTable jtable = null;
 
+    OurSwap swap;
+
     /**
      * override to enable editing
      */
@@ -40,7 +42,7 @@ public class RequestTable extends JPanel {
      * This constructor creates the display which manages the list of active players.
      */
     public RequestTable(Board board, OurSwap swap) {
-
+        this.swap = swap;
         // create the model for the data which backs this table
         requestModel = new RequestModel(board, swap);
 
@@ -62,7 +64,7 @@ public class RequestTable extends JPanel {
 //        jtable.editCellAt()
 //        jtable.setCellSelectionEnabled(true); // TODO if still not editable, delete this line
         jtable.setPreferredSize(mySize);
-
+//        jtable.setBackground(Color.green); //set green as default
         // let's tell the JTable about its columns.
         TableColumnModel columnModel = new DefaultTableColumnModel();
 
@@ -78,6 +80,7 @@ public class RequestTable extends JPanel {
 
         // let's install a sorter and also make sure no one can rearrange columns
         JTableHeader header = jtable.getTableHeader();
+        header.setBackground(Color.green);
         // purpose of this sorter is to sort by columns.
 //        header.addMouseListener(new MouseAdapter()	{
 //            public void mouseClicked (MouseEvent e)	{
@@ -106,6 +109,14 @@ public class RequestTable extends JPanel {
         // THIS is the key method to ensure JTable view is synchronized
         jtable.revalidate();
         jtable.repaint();
+        System.out.println("status in request table :" + swap.getStatus());
+        if(swap.getStatus()){
+//            jtable.setBackground(Color.green);
+            jtable.getTableHeader().setBackground(Color.green);
+        }else {
+            jtable.getTableHeader().setBackground(Color.red);
+//            jtable.setBackground(Color.red);
+        }
         this.revalidate();
         this.repaint();
     }
