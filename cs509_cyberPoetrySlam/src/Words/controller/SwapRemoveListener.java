@@ -1,6 +1,7 @@
 package Words.controller;
 
 import Words.model.Board;
+import Words.model.OurSwap;
 import Words.view.Application;
 
 import javax.swing.*;
@@ -15,10 +16,17 @@ public class SwapRemoveListener implements ListSelectionListener {
     private static boolean active = false;
     private Board board;
     private Application app;
+    private OurSwap swap;
 
-    public SwapRemoveListener(JTable jtable, Board board, Application app) {
+//    public SwapRemoveListener(JTable jtable, Board board, Application app) {
+//        this.jtable = jtable;
+//        this.board = board;
+//        this.app = app;
+//    }
+
+    public SwapRemoveListener(JTable jtable, OurSwap swap, Application app) {
         this.jtable = jtable;
-        this.board = board;
+        this.swap = swap;
         this.app = app;
     }
 
@@ -36,7 +44,8 @@ public class SwapRemoveListener implements ListSelectionListener {
             System.out.println(jtable.getValueAt(jtable.getSelectedRow(), 0).toString());
             System.out.println(jtable.getValueAt(jtable.getSelectedRow(), 1).toString());
 
-            board.removeOurSwap(jtable.getSelectedRow());
+            swap.removeOffer(jtable.getSelectedRow());
+//            board.removeOurSwap(jtable.getSelectedRow());
 //            jtable.repaint();
             jtable.clearSelection();
             app.refreshTables();

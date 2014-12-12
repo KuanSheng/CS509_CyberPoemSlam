@@ -4,10 +4,7 @@ import Words.controller.RefreshSwapTableController;
 import Words.controller.RefreshWordTableController;
 import Words.controller.SwapAddListener;
 import Words.controller.SwapRemoveListener;
-import Words.model.Board;
-import Words.model.Model;
-import Words.model.SwapModel;
-import Words.model.WordModel;
+import Words.model.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableColumnModel;
@@ -32,10 +29,10 @@ public class SwapTable extends JPanel {
     /**
      * This constructor creates the display which manages the list of active players.
      */
-    public SwapTable(Board board, Application app) {
+    public SwapTable(Board board, Application app, OurSwap swap) {
 
         // create the model for the data which backs this table
-        swapModel = new SwapModel(board);
+        swapModel = new SwapModel(board, swap);
 
         // add to listener chain
         board.addListener(new RefreshSwapTableController(this));
@@ -78,7 +75,7 @@ public class SwapTable extends JPanel {
 //        });
 
         //to add listener to handle add into swap reqeust -- JUN start===================
-        jtable.getSelectionModel().addListSelectionListener(new SwapRemoveListener(jtable, board, app));
+        jtable.getSelectionModel().addListSelectionListener(new SwapRemoveListener(jtable, swap, app));
 //        jtable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 //            @Override
 //            public void valueChanged(ListSelectionEvent event) {

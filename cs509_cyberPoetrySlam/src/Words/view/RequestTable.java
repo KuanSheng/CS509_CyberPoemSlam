@@ -8,6 +8,7 @@ import Words.controller.RefreshRequestTableController;
 import Words.controller.RefreshSwapTableController;
 import Words.controller.SwapRemoveListener;
 import Words.model.Board;
+import Words.model.OurSwap;
 import Words.model.RequestModel;
 import Words.model.SwapModel;
 
@@ -38,10 +39,10 @@ public class RequestTable extends JPanel {
     /**
      * This constructor creates the display which manages the list of active players.
      */
-    public RequestTable(Board board) {
+    public RequestTable(Board board, OurSwap swap) {
 
         // create the model for the data which backs this table
-        requestModel = new RequestModel(board);
+        requestModel = new RequestModel(board, swap);
 
         // add to listener chain
         board.addListener(new RefreshRequestTableController(this));
@@ -58,6 +59,7 @@ public class RequestTable extends JPanel {
         // Just add the JTable to the set. First create the list of Players,
         // then the SwingModel that supports the JTable which you now create.
         jtable = new JTable(requestModel);
+//        jtable.editCellAt()
 //        jtable.setCellSelectionEnabled(true); // TODO if still not editable, delete this line
         jtable.setPreferredSize(mySize);
 

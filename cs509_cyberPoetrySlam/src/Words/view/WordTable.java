@@ -29,7 +29,7 @@ public class WordTable extends JPanel{
     /**
      * This constructor creates the display which manages the list of active players.
      */
-    public WordTable(Board board, Application app){
+    public WordTable(Board board, Application app, OurSwap swap){
 //        this(board);
 //        this.app = app;
 //    }
@@ -79,7 +79,7 @@ public class WordTable extends JPanel{
 //        });
 
         //to add listener to handle add into swap reqeust -- JUN start===================
-        jtable.getSelectionModel().addListSelectionListener(new SwapAddListener(jtable, board, app));
+        jtable.getSelectionModel().addListSelectionListener(new SwapAddListener(jtable, swap, app));
 //        jtable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 //            @Override
 //            public void valueChanged(ListSelectionEvent event) {

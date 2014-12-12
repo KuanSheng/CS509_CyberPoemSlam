@@ -1,5 +1,7 @@
 package Words.model;
 
+import broker.util.Swap;
+
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -24,13 +26,17 @@ public class SwapModel extends AbstractTableModel {
     /** Board maintains the state. */
     Board board;
 
+    OurSwap swap;
+
     /** Key values. */
     public static final String wordLabel = "Word";
     public static final String wordTypeLabel = "Word Type";
 
     /** The Table model needs to know the board which contains the shapes. */
-    public SwapModel (Board b) {
+    public SwapModel (Board b, OurSwap swap) {
+
         this.board = b;
+        this.swap  = swap;
     }
 
     @Override
@@ -40,21 +46,32 @@ public class SwapModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return board.ourSwap.size();
+        return swap.getOurOffer().size();
     }
 
 
+//    @Override
+//    public Object getValueAt(int rowIndex, int columnIndex) {
+////        Word s = board.getOurSwap(rowIndex);
+//        Word s = swap.getOurOffer().get(rowIndex);
+//        if(s == null) return "EMPTY";
+//        if (columnIndex == 0) {
+//            return s.value;
+//        } else if (columnIndex == 1) {
+//            return wordTypeDefinition[s.getWordType()];
+//        }else {
+//            return "EMPTY";
+//        }
+//        // no idea who you are...
+//    }
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Word s = board.getOurSwap(rowIndex);
-        if(s == null) return "EMPTY";
-        if (columnIndex == 0) {
-            return s.value;
-        } else if (columnIndex == 1) {
-            return wordTypeDefinition[s.getWordType()];
-        }else {
-            return "EMPTY";
+        switch (columnIndex){
+            case 0 :
+                return swap.getOurOffer().get(rowIndex).value;
+            case 1 :
+                return swap.getOurOffer().get(rowIndex).type;
         }
-        // no idea who you are...
+        return null;
     }
 }

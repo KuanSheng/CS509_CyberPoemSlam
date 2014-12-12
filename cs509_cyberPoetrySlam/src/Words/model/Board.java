@@ -10,6 +10,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     ArrayList<Poem> poems = new ArrayList<Poem>();
 
     ArrayList<Word> ourSwap = new ArrayList<Word>(); // to store words that we intend to offer for swap
+
     ArrayList<Word> theirSwap = new ArrayList<Word>(); // to store words requested by others
 
 //    public boolean addOurSwap(String )

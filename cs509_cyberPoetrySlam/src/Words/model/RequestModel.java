@@ -27,14 +27,16 @@ public class RequestModel extends AbstractTableModel {
 
     /** Board maintains the state. */
     Board board;
+    OurSwap swap;
 
     /** Key values. */
     public static final String wordLabel = "Word";
     public static final String wordTypeLabel = "Word Type";
 
     /** The Table model needs to know the board which contains the shapes. */
-    public RequestModel (Board b) {
+    public RequestModel (Board b, OurSwap swap) {
         this.board = b;
+        this.swap  = swap;
     }
 
     @Override
@@ -44,7 +46,7 @@ public class RequestModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return board.ourSwap.size();
+        return swap.getOurRequest().size();
     }
 
 
@@ -52,44 +54,50 @@ public class RequestModel extends AbstractTableModel {
     private String[][] requets = new String[1][2];
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return rowIndex > 0 ? true : false;
+        return rowIndex >= 0 ? true : false;
     }
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 //        super.setValueAt(aValue, rowIndex, columnIndex);
         requets[rowIndex][columnIndex] = (String) aValue;
+        swap.getOurRequest().get(rowIndex).type = aValue.toString();
+        fireTableCellUpdated(rowIndex, columnIndex);
     }
     //added by JUN for editing table -- end
+//    @Override
+//    public Object getValueAt(int rowIndex, int columnIndex) {
+//        if(rowIndex >= requets.length ){
+//            expandTable();
+//        }
+//        return requets[rowIndex][columnIndex];
+//    }
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        if(rowIndex >= requets.length ){
-            expandTable();
+        if(rowIndex >= swap.getOurRequest().size() ){
+            return null;
         }
-        return requets[rowIndex][columnIndex];
-//        Word s = board.getOurSwap(rowIndex);
-//        if(s == null) return "EMPTY";
-//        if (columnIndex == 0) {
-//            return s.value;
-//        } else if (columnIndex == 1) {
-//            return wordTypeDefinition[s.getWordType()];
-//        }else {
-//            return "EMPTY";
+        switch ( columnIndex){
+            case 0 :
+                return swap.getOurRequest().get(rowIndex).value;
+            case 1 :
+                return swap.getOurRequest().get(rowIndex).type;
+        }
+        return null;
+    }
+    /**
+     *    expand the table when a new swap pair is added.
+     */
+//    private void expandTable(){
+//        int newRowCount = getRowCount();
+//        int newColCount = getColumnCount();
+//        String[][] expand = new String[newRowCount][newColCount];
+//        for(int i = 0; i < newRowCount-1; i ++){
+//            expand[i][0] = requets[i][0];
+//            expand[i][1] = requets[i][1];
 //        }
-        // no idea who you are...
-    }
-
-    //expand the table when a new swap pair is added.
-    private void expandTable(){
-        int newRowCount = getRowCount();
-        int newColCount = getColumnCount();
-        String[][] expand = new String[newRowCount][newColCount];
-        for(int i = 0; i < newRowCount-1; i ++){
-            expand[i][0] = requets[i][0];
-            expand[i][1] = requets[i][1];
-        }
-        expand[newRowCount-1][0] = ""; //set default value and type to empty
-        expand[newRowCount-1][1] = "";
-        requets = expand;
-    }
+//        expand[newRowCount-1][0] = ""; //set default value and type to empty
+//        expand[newRowCount-1][1] = "";
+//        requets = expand;
+//    }
 }

@@ -16,6 +16,7 @@ public class Application extends JFrame {
     WordTypeTable typeTable;
     SwapTable swapTable;
     RequestTable requestTable;
+    NewRequestTable newRequestTable;
     final ApplicationCanvas panel; // added by JUN to share panel with StoreStateController
     
     JButton btnSwap;
@@ -105,6 +106,10 @@ public class Application extends JFrame {
          * JUN add random word for swap -- end
          */
 
+
+        /**
+         * add new request table
+         */
         btnAddSwap.addActionListener(new AddSwapButtonListner(btnAddSwap, randomAdj, randomAdv, randomNoun, randomVerb));
         btnRemoveSwap.addActionListener(new RemoveSwapButtonListner(btnRemoveSwap));
 
@@ -132,14 +137,20 @@ public class Application extends JFrame {
         JPanel tablePanel = new JPanel();
         tablePanel.setSize(900, 250);
 
-        table = new WordTable(model.getBoard(), this); // give table reference to app so as to refresh after operations JUN
+        OurSwap swap = new OurSwap(model.getBoard());
+
+
+        table = new WordTable(model.getBoard(), this, swap); // give table reference to app so as to refresh after operations JUN
         typeTable = new WordTypeTable(model.getBoard());
-        swapTable = new SwapTable(model.getBoard(), this);// give table reference to app so as to refresh after operations JUN
-        requestTable = new RequestTable(model.getBoard());
+        swapTable = new SwapTable(model.getBoard(), this, swap);// give table reference to app so as to refresh after operations JUN
+        requestTable = new RequestTable(model.getBoard(), swap);
+//        newRequestTable = new NewRequestTable(model.getBoard(), new OurSwap(model.getBoard()));
+
         tablePanel.add(table);
         tablePanel.add(typeTable); //todo to be uncommented JUN
         tablePanel.add(swapTable);
         tablePanel.add(requestTable);
+//        tablePanel.add(newRequestTable);
         pane.add(tablePanel);
 
         btnDisconnect.addActionListener(new ActionListener() {
