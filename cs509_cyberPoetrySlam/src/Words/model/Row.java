@@ -156,6 +156,7 @@ ArrayList<Word> words = new ArrayList<Word>();
 		}
 		
 	}
+	
 	public void setLocationAfterConnection(int x,int y){
 		this.x = x;
 		this.y = y;

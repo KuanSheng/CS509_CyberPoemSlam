@@ -4,7 +4,11 @@ import Words.model.*;
 public class DisconnectionPoemMove extends Move{
 	Poem disconnectPoem;
 	Row disconnectRow;
+	Poem newPoem;
+	Poem newBotPoem;
+	Poem newUpPoem;
 	Board board;
+	int type = 0;
 	
 	public DisconnectionPoemMove(Poem disconnectPoem,Row disconnectRow,Board board){
 		this.disconnectPoem = disconnectPoem;
@@ -24,12 +28,13 @@ public class DisconnectionPoemMove extends Move{
 			disconnectPoem.setLocationAfterConnection(r.getX(),r.getY());
 			r.setFormerRow(null);
 			
-			Poem newUpPoem = new Poem(disconnectRow.getX(),disconnectRow.getY());
+			this.newUpPoem = new Poem(disconnectRow.getX(),disconnectRow.getY());
 			newUpPoem.addRow(disconnectRow);
 			newUpPoem.setLastRow(disconnectRow);
 			disconnectRow.setNextRow(null);
 			board.addPoems(newUpPoem);
 			
+			this.type = 1;
 			return true;
 		}
 		else if(disconnectRow.equals(disconnectPoem.getLastRow())){
@@ -38,10 +43,11 @@ public class DisconnectionPoemMove extends Move{
 			r.setNextRow(null);
 			disconnectRow.setFormerRow(null);
 			
-			Poem newPoem = new Poem(disconnectRow.getX(),disconnectRow.getY());
+			this.newPoem = new Poem(disconnectRow.getX(),disconnectRow.getY());
 			newPoem.addRow(disconnectRow);
 			newPoem.setLastRow(disconnectRow);
 			board.addPoems(newPoem);
+			this.type = 2;
 			return true;
 		}
 		else{
@@ -49,9 +55,9 @@ public class DisconnectionPoemMove extends Move{
 			Row r2 = disconnectRow.getFormerRow();
 			Row r3 = disconnectRow.getNextRow();
 			
-			Poem newPoem = new Poem(disconnectRow.getX(),disconnectRow.getY());
-			Poem newUpPoem = new Poem(r1.getX(),r1.getY());
-			Poem newBotPoem = new Poem(r3.getX(),r3.getY());
+			newPoem = new Poem(disconnectRow.getX(),disconnectRow.getY());
+			newUpPoem = new Poem(r1.getX(),r1.getY());
+			newBotPoem = new Poem(r3.getX(),r3.getY());
 			
 			newPoem.addRow(disconnectRow);
 			disconnectRow.setFormerRow(null);
@@ -77,6 +83,7 @@ public class DisconnectionPoemMove extends Move{
 			board.addPoems(newUpPoem);
 			board.addPoems(newBotPoem);
 			
+			this.type = 3;
 			return true;
 		}
 		
@@ -84,6 +91,40 @@ public class DisconnectionPoemMove extends Move{
 	
 	@Override
 	public boolean undo(){
-		return false;
+		switch(type){
+		case 1:
+			undoFirstRow();
+			break;
+		case 2:
+			undoLastRow();
+			break;
+		case 3:
+			undoMidRow();
+			break;
+		}
+		return true;
+	}
+	
+	public void undoMidRow(){
+		disconnectRow.setNextRow(newBotPoem.getFirstRow());
+		disconnectRow.setFormerRow(newUpPoem.getLastRow());
+		board.addPoems(disconnectPoem);
+		board.removePoem(newPoem);
+		board.removePoem(newBotPoem);
+		board.removePoem(newUpPoem);
+	}
+	
+	public void undoFirstRow(){
+		disconnectPoem.addRow(disconnectRow);
+		disconnectRow.setNextRow(disconnectPoem.getFirstRow());;
+		disconnectPoem.setLocationAfterConnection(disconnectRow.getX(), disconnectRow.getY());
+		board.removePoem(newUpPoem);
+	}
+	
+	public void undoLastRow(){
+		disconnectPoem.addRow(disconnectRow);
+		disconnectRow.setFormerRow(disconnectPoem.getLastRow());
+		disconnectPoem.setLastRow(disconnectRow);
+		board.removePoem(newPoem);
 	}
 }

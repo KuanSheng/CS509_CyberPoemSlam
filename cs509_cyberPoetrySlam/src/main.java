@@ -20,8 +20,6 @@ public class main {
         ApplicationCanvas panel = new ApplicationCanvas(model);
 		final Application app = new Application(model);
         app.addWindowListener(new StoreStateController(model, panel));
-
- 
-     app.setVisible(true);
+        app.setVisible(true);
   }
 }

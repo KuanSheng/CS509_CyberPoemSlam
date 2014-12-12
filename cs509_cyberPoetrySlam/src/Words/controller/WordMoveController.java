@@ -52,11 +52,6 @@ public class WordMoveController extends MouseAdapter{
 		
         if(e.getClickCount() == 2){
         	//must in the protected area
-        	if(b.findWord(e.getX(), e.getY()) == null&&b.findPoem(e.getX(), e.getY()) == null){
-        		UndoController undo = new UndoController(this.model,this.panel);
-        		undo.process();
-        		return;
-        		}
         	this.disconnectWord(x, y);
         	return;
         }
@@ -208,7 +203,8 @@ public class WordMoveController extends MouseAdapter{
 		if(selectedWord != null){
 			this.moveWord(selectedWord);
 		}
-		else{
+		else if(selectedPoem != null){
+			System.out.println("Why are we here?");
 			this.movePoem(selectedPoem);
 		}
 		

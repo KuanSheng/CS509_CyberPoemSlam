@@ -164,8 +164,6 @@ public class Poem extends Element implements Serializable{
     }
     
     public void setLocation(int x, int y, int ox, int oy){
-     int rx = this.getX();
-     int ry = this.getY();
    	 this.x = x;
    	 this.y = y;
    	 
@@ -184,6 +182,32 @@ public class Poem extends Element implements Serializable{
     
     public Row getLastRow(){
     	return this.LastRow;
+    }
+    
+    public int getMax_x(){
+    	return this.max_x;
+    }
+    
+    public int getMin_x(){
+    	return this.min_x;
+    }
+    
+    public int getMax_y(){
+    	return this.max_y;
+    }
+    
+    public int getMin_y(){
+    	return this.min_y;
+    }
+    
+    public void setMax_Position(int x,int y){
+    	this.max_x = x;
+    	this.max_y = y;
+    }
+    
+    public void setMin_Postion(int x,int y){
+    	this.min_x = x;
+    	this.min_y = y;
     }
 
     /**

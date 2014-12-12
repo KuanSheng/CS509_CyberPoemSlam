@@ -8,8 +8,10 @@ import java.awt.*;
 import javax.swing.*;
 
 import Words.controller.DisconnectionPoemController;
+import Words.controller.RedoController;
 import Words.controller.ReleasePoemController;
 import Words.controller.SubmitPoemController;
+import Words.controller.UndoController;
 import Words.model.*;
 ;
 
@@ -41,10 +43,9 @@ public class Application extends JFrame {
         JButton btnRelease = new JButton("Release");
         JButton btnSubmit = new JButton("Submit");
         JButton btnDisconnect = new JButton("Disconnect");
+        JButton btnUndo = new JButton("Undo");
+        JButton btnRedo = new JButton("Redo");
         
-        
-        
-
         //add listener to "Release" button
         btnRelease.addActionListener(new ReleasePoemController(m, panel));
         btnSubmit.addActionListener(new SubmitPoemController(m, panel, SubmitPoemController.Method.ALL));
@@ -53,6 +54,8 @@ public class Application extends JFrame {
         menuPanel.add(btnRelease);
         menuPanel.add(btnSubmit);
         menuPanel.add(btnDisconnect);
+        menuPanel.add(btnUndo);
+        menuPanel.add(btnRedo);
 
         Container pane = this.getContentPane();
         //pane.setBackground(Color.yellow);
@@ -82,6 +85,28 @@ public class Application extends JFrame {
 				DisconnectionPoemController disconnect = new DisconnectionPoemController(model,panel);
 				disconnect.disconnectRow();
 				model.setSelectedRow(null);
+			}
+		});
+        
+        btnUndo.addActionListener(new ActionListener() {
+
+			@Override
+		public void actionPerformed(ActionEvent arg0) {
+				// register controller
+				UndoController undo = new UndoController(model,panel);
+        		undo.process();
+        		return;
+			}
+		});
+        
+        btnRedo.addActionListener(new ActionListener() {
+
+			@Override
+		public void actionPerformed(ActionEvent arg0) {
+				// register controller
+				RedoController redo = new RedoController(model,panel);
+        		redo.process();
+        		return;
 			}
 		});
     }

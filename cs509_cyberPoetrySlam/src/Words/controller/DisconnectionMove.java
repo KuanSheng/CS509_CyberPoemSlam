@@ -13,6 +13,7 @@ public class DisconnectionMove extends Move{
 	Board b;
 	int type;
 	int disType;
+	boolean nullSign = false;
 	
 	public DisconnectionMove(Poem disconnectPoem, Word disconnectWord,Row disconnectRow,Model model,int direction){
 		this.disconnectPoem = disconnectPoem;
@@ -56,9 +57,9 @@ public class DisconnectionMove extends Move{
 			r.setLocationAfterConnection(r.getX()+disconnectWord.getWidth(),r.getY());
 			if(r.getWordNumber() == 1){
 				this.remainWord = r.getFirstWord();
+				disconnectPoem.removeRow(r);
 				b.removePoem(disconnectPoem);
-				disconnectPoem = null;
-				r = null;
+				nullSign = true;
 				b.addWords(remainWord);
 			}
 		}
@@ -66,9 +67,9 @@ public class DisconnectionMove extends Move{
 			r.removeWord(disconnectWord);
 			if(r.getWordNumber() == 1){
 				this.remainWord = r.getFirstWord();
+				disconnectPoem.removeRow(r);
 				b.removePoem(disconnectPoem);
-				disconnectPoem = null;
-				r = null;
+				nullSign = true;
 				b.addWords(remainWord);
 			}
 		}
@@ -154,6 +155,7 @@ public class DisconnectionMove extends Move{
 				newBotPoem = new Poem(r3.getX(),r3.getY());
 				newUpPoem.setLastRow(r.getFormerRow());
 				newBotPoem.setLastRow(r.getNextRow());
+				//wnewUpPoem.setMax_Position(disconnectPoem.getX(), disconnectPoem.getY());
 				
 				r2.setNextRow(null);
 				
@@ -170,8 +172,11 @@ public class DisconnectionMove extends Move{
 					r3 = r3.getNextRow();
 				}
 				
+				r.removeWord(disconnectWord);
+				disconnectPoem.removeRow(r);
 				b.removePoem(disconnectPoem);
-				disconnectPoem = null;
+				nullSign = true;
+				//disconnectPoem = null;
 				b.addPoems(newUpPoem);
 				b.addPoems(newBotPoem);
 			}
@@ -206,8 +211,10 @@ public class DisconnectionMove extends Move{
 				}
 				newBotPoem.setLastRow(r3);
 				
+				disconnectPoem.removeRow(r);
 				b.removePoem(disconnectPoem);
-				disconnectPoem = null;
+				//disconnectPoem = null;
+				nullSign = false;
 				b.addPoems(newUpPoem);
 				b.addPoems(newBotPoem);
 			}
@@ -238,7 +245,7 @@ public class DisconnectionMove extends Move{
 	}
 	
 	public void undoForOneRow(){
-		if(disconnectPoem != null){
+		if(nullSign == false){
 			if(type == 1){
 				r.addWord(disconnectWord);
 				r.setLocationAfterConnection(disconnectWord.getX(), disconnectWord.getY());
@@ -250,11 +257,24 @@ public class DisconnectionMove extends Move{
 			return;
 		}
 		else{
-			if(type == 1)
-			    disconnectPoem = new Poem(disconnectWord,remainWord,type);
-			else
-				disconnectPoem = new Poem(remainWord,disconnectWord,type);
-		    b.getWords().remove(remainWord);
+			if(type == 1){
+			    /*disconnectPoem = new Poem(disconnectWord,remainWord,type);*/
+				r.addWord(disconnectWord);
+			    r.setLocationAfterConnection(disconnectWord.getX(), disconnectWord.getY());
+			    disconnectPoem.addRow(r);
+			    disconnectPoem.setLastRow(r);
+			    r.setFormerRow(null);
+			    r.setNextRow(null);
+			}
+			else{
+				r.addWord(disconnectWord);
+				disconnectPoem.addRow(r);
+				disconnectPoem.setLastRow(r);
+				r.setFormerRow(null);
+				r.setNextRow(null);
+				/*disconnectPoem = new Poem(remainWord,disconnectWord,type);*/
+		    }
+			b.getWords().remove(remainWord);
 		    b.getWords().remove(disconnectWord);
 			b.addPoems(disconnectPoem);
 			return;
@@ -310,7 +330,7 @@ public class DisconnectionMove extends Move{
 	}
 	
 	public void undoForMidRow(){
-		if(disconnectPoem != null){
+		if(nullSign == false){
 			if(type == 1){
 				r.addWord(disconnectWord);
 				r.setLocationAfterConnection(disconnectWord.getX(), disconnectWord.getY());
@@ -321,26 +341,35 @@ public class DisconnectionMove extends Move{
 			b.getWords().remove(disconnectWord);
 		}
 		else{
-			disconnectPoem = new Poem(newUpPoem.getX(),newUpPoem.getY());
-			r = new Row(disconnectWord.getX(),disconnectWord.getY(),disconnectWord.getHeight(),0);
+			//disconnectPoem = new Poem(newUpPoem.getX(),newUpPoem.getY());
+			//r = new Row(disconnectWord.getX(),disconnectWord.getY(),disconnectWord.getHeight(),0);
 			r.addWord(disconnectWord);
+			r.setLocationAfterConnection(disconnectWord.getX(), disconnectWord.getY());
+			//disconnectPoem.addRow(r);
 			disconnectPoem.setLastRow(newBotPoem.getLastRow());
 			newUpPoem.getLastRow().setNextRow(r);
 			r.setNextRow(newBotPoem.getFirstRow());
+			r.setFormerRow(newUpPoem.getLastRow());
+			disconnectPoem.addRow(r);
 			
-			Row r1 = newUpPoem.getFirstRow();
+			/*Row r1 = newUpPoem.getFirstRow();
 			while(r1 != null){
 				disconnectPoem.addRow(r1);
 				r1 = r1.getNextRow();
+			}*/
+			/*for(Row r:newUpPoem.getRows()){
+				disconnectPoem.addRow(r);
 			}
 			
-			
-			
-			Row r2 = newBotPoem.getFirstRow();
+			for(Row r:newBotPoem.getRows()){
+				disconnectPoem.addRow(r);
+			}
+			/*Row r2 = newBotPoem.getFirstRow();
 			while(r2!=null){
 				disconnectPoem.addRow(r2);
 				r2 = r2.getNextRow();
-			}
+			}*/
+
 			
 			b.addPoems(disconnectPoem);
 			b.removePoem(newBotPoem);
@@ -350,29 +379,6 @@ public class DisconnectionMove extends Move{
 	}
 	
 }
-	/*public boolean undo(){
-		System.out.println("signal!");
-		if(disconnectPoem != null){
-			if(disconnectPoem != null){
-				if(type == 1){
-					r.addWord(disconnectWord);
-					r.setLocationAfterConnection(disconnectWord.getX(), disconnectWord.getY());
-				}
-				else{
-					r.addWord(disconnectWord);
-				}
-				b.getWords().remove(disconnectWord);
-				return true;
-			}
-			
-			
-		}
-		disconnectPoem = new Poem(disconnectWord,remainWord,type);
-	    b.getWords().remove(remainWord);
-	    b.getWords().remove(disconnectWord);
-		b.addPoems(disconnectPoem);
-		return true;
-     }
-}*/
+
 	
 

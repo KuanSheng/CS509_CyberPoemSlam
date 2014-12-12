@@ -8,6 +8,7 @@ import Words.controller.*;
 public class Model implements Serializable{
 	Board board;
 	Stack<Move> moves = new Stack<Move>();
+	Stack<Move> redoMoves = new Stack<Move>();
 
 	/** Currently selected shape (or null if none). */
 	Word selected;
@@ -102,8 +103,19 @@ public class Model implements Serializable{
 		return moves.pop();
     }
     
+    public Move removeLastRedoMove(){
+    	if(redoMoves.isEmpty()){
+    		return null;
+    	    }
+        return redoMoves.pop();
+    }
+    
     public Stack<Move> getMoves(){
     	return moves;
+    }
+    
+    public Stack<Move> getRedoMoves(){
+    	return redoMoves;
     }
 
 }
