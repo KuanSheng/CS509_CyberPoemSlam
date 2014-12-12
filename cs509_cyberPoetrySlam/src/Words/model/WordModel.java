@@ -50,4 +50,17 @@ public class WordModel extends AbstractTableModel {
         // no idea who you are...
         return "";
     }
+
+    public static final int VERB_INT = 0;
+    public static final int ADJ_INT = 1;
+    public static final int NOUN_INT = 2;
+    public static final int ADV_INT = 3;
+
+
+    public static final String VERB_STRING = "verb";
+    public static final String ADJ_STRING = "adj";
+    public static final String NOUN_STRING = "noun";
+    public static final String ADV_STRING = "adv";
+
+
 }

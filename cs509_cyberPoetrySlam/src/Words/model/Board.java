@@ -482,5 +482,21 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     public void addOurSwap(int selectedRow) {
         ourSwap.add(unProtectedWords.remove(selectedRow)); // add a new word into our swap;
     }
+
+    /**
+     * Jun
+     * add a word into ourSwap --  the list of words we'd like to offer for a swap
+     * @param selectedWord
+     */
+    public boolean addOurSwap(Word selectedWord){
+        if(selectedWord == null) return false;
+        if(unProtectedWords.contains(selectedWord)){
+            unProtectedWords.remove(selectedWord);
+            ourSwap.add(selectedWord);
+            return true;
+        }else {
+            return false;
+        }
+    }
 }
 //>>>>>>> refs/remotes/origin/Kuan_Jun

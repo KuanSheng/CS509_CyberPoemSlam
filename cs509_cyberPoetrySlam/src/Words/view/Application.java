@@ -69,8 +69,43 @@ public class Application extends JFrame {
         //btnSwap.addActionListener(new SwapRequestController(m, Application.this));
 
 
-        //
-        btnAddSwap.addActionListener(new AddSwapButtonListner(btnAddSwap));
+        /**
+         * Jun add random word for swap -- start
+         */
+        //create buttons
+        JButton randomAdj = new JButton("Add Random Adj");
+        JButton randomAdv = new JButton("Add Random Adv");
+        JButton randomNoun = new JButton("Add Random Noun");
+        JButton randomVerb = new JButton("Add Random Verb");
+
+        //set invisible by default
+        randomAdj.setVisible(false);
+        randomAdv.setVisible(false);
+        randomNoun.setVisible(false);
+        randomVerb.setVisible(false);
+
+        //set commands so that controller would know which is calling it
+        randomAdj.setActionCommand(AddRandomWordForSwap.ADD_ADJ);
+        randomAdv.setActionCommand(AddRandomWordForSwap.ADD_ADV);
+        randomNoun.setActionCommand(AddRandomWordForSwap.ADD_NOUN);
+        randomVerb.setActionCommand(AddRandomWordForSwap.ADD_VERB);
+
+        //add listener
+        randomAdj.addActionListener(new AddRandomWordForSwap(model.getBoard(), this));
+        randomAdv.addActionListener(new AddRandomWordForSwap(model.getBoard(), this));
+        randomNoun.addActionListener(new AddRandomWordForSwap(model.getBoard(), this));
+        randomVerb.addActionListener(new AddRandomWordForSwap(model.getBoard(), this));
+
+        //add into panel
+        menuPanel.add(randomAdj);
+        menuPanel.add(randomAdv);
+        menuPanel.add(randomNoun);
+        menuPanel.add(randomVerb);
+        /**
+         * JUN add random word for swap -- end
+         */
+
+        btnAddSwap.addActionListener(new AddSwapButtonListner(btnAddSwap, randomAdj, randomAdv, randomNoun, randomVerb));
         btnRemoveSwap.addActionListener(new RemoveSwapButtonListner(btnRemoveSwap));
 
         //
@@ -130,7 +165,9 @@ public class Application extends JFrame {
 				new SwapRequestController(model, Application.this).process(true);
 			}
 		});
-		
+
+
+
     }
 	
     public ApplicationCanvas getpanel(){
@@ -158,9 +195,17 @@ public class Application extends JFrame {
 
     private class AddSwapButtonListner implements ActionListener {
         JButton button;
+        JButton adj;
+        JButton adv;
+        JButton noun;
+        JButton verb;
         Color originColor;
-        public AddSwapButtonListner(JButton button){
+        public AddSwapButtonListner(JButton button, JButton adj, JButton adv, JButton noun, JButton verb){
             this.button = button;
+            this.adj = adj;
+            this.adv = adv;
+            this.noun = noun;
+            this.verb = verb;
             originColor = button.getBackground();
         }
 
@@ -169,9 +214,18 @@ public class Application extends JFrame {
             if(SwapAddListener.flip()){
                 button.setText("Stopping Adding");
                 button.setBackground(Color.red);
+                adj.setVisible(true);
+                adv.setVisible(true);
+                noun.setVisible(true);
+                verb.setVisible(true);
+
             }else {
                 button.setText("Add Swap");
                 button.setBackground(originColor);
+                adj.setVisible(false);
+                adv.setVisible(false);
+                noun.setVisible(false);
+                verb.setVisible(false);
             }
         }
     }
