@@ -11,6 +11,19 @@ public class Word extends Element implements Serializable{
     int width;
     int height;
     int wordType;
+
+    public static final int ADJ_INT = 0;
+    public static final int ADV_INT = 1;
+    public static final int NOUN_INT = 2;
+    public static final int VERB_INT = 3;
+
+
+    public static final String VERB_STRING = "verb";
+    public static final String ADJ_STRING = "adj";
+    public static final String NOUN_STRING = "noun";
+    public static final String ADV_STRING = "adv";
+
+    public static final String[] TYPE_INT_TO_STRING = {ADJ_STRING, ADV_STRING, NOUN_STRING, VERB_STRING};
      
      public Word(int x,int y,int width,int height,String value,int wordType){
     	 super.type = 1;

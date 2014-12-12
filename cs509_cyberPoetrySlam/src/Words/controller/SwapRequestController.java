@@ -1,15 +1,12 @@
 package Words.controller;
 
-import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import Words.BrokerManager;
-import Words.model.Board;
-import Words.model.Model;
-import Words.model.Word;
+import Words.model.*;
 import Words.view.Application;
-import Words.view.ApplicationCanvas;
 import broker.util.IProtocol;
 import broker.util.Swap;
 
@@ -22,6 +19,8 @@ public class SwapRequestController extends MouseAdapter{
 	String requestMsg;
     Board board;
     private static String[] wordTypeDefinition = {"verb", "adj", "noun", "adv"};
+    private String value;
+
     public String generateMsg(){
     	
     	Scanner sc= new Scanner(System.in);
@@ -80,6 +79,9 @@ public class SwapRequestController extends MouseAdapter{
 	/** Needed for controller behavior. */
 	Model model;
 	Application app;
+
+    /**Jun added for new swap*/
+    OurSwap swap;
 	
 	/** Constructor holds onto key manager objects. */
 	public SwapRequestController(Model model,  Application app) {
@@ -121,17 +123,20 @@ public class SwapRequestController extends MouseAdapter{
 //		Swap swapRequest = new Swap(broker.getID(), "*", 1,
 //				new String[] {offerType}, new String[] { offer },
 //				new String[] {requestType}, new String[] { request} );
-        int swapCount =  model.getBoard().getOurSwapCount();
+        swap = app.getSwap();
+        int swapCount =  swap.getOurOffer().size();
         String[] offerType = new String[swapCount];
-        String[] offer     = new String[swapCount];
+        String[] offerValue     = new String[swapCount];
         String[] requestType = new String[swapCount];
-        String[] request     = new String[swapCount];
+        String[] requestValue     = new String[swapCount];
 
-        fillInSwap(offerType, offer, requestType, request);
+//        fillInSwap(offerType, offer, requestType, request); //used to work, commented by JUn
+        fillinOffer(offerValue, offerType);
+        fillinRequest(requestValue,requestType);
 //        for()
 		Swap swapRequest = new Swap(broker.getID(), "*", swapCount,
-                offerType, offer,
-                requestType, request );
+                offerType, offerValue,
+                requestType, requestValue );
 
 		String swapMsg = IProtocol.requestSwapMsg + IProtocol.separator + swapRequest.flatten();
 		broker.sendMessage(swapMsg);
@@ -145,5 +150,27 @@ public class SwapRequestController extends MouseAdapter{
             requestType[i] = "noun";
         }
     }
+
+    private boolean fillinOffer(String[] offerValue, String[] offerType){
+        ArrayList<Word> offers = swap.getOurOffer();
+        int count = offers.size();
+        for(int i = 0; i < count; i++ ){
+            value = offers.get(i).getValue();
+            offerValue[i] = value;
+            offerType[i]  = Word.TYPE_INT_TO_STRING[offers.get(i).getWordType()];
+        }
+        return true;
+    }
+
+    private boolean fillinRequest(String[] requestValue, String[] requestType){
+        ArrayList<WordSignature> request = swap.getOurRequest();
+        int count = request.size();
+        for(int i = 0; i < count; i ++){
+            requestValue[i] = request.get(i).getValue();
+            requestType[i]  = request.get(i).getType();
+        }
+        return true;
+    }
+
 
 }

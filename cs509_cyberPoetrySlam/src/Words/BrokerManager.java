@@ -35,10 +35,12 @@ public class BrokerManager implements IHandleBrokerMessage {
 	
 	/** Ruizhu add: need word arraylist to store add words after swap */
 	ArrayList<Word> addWords = new ArrayList<Word>();
-	
+
+    /**Jun added for swap */
+    OurSwap swap;
 	/**
 	 * Will need to be changed once we decide where broker is being run.
-	 * 
+	 *
 	 * In general, information such as this shouldn't be in the compiled Java file 
 	 */
 	public final static String brokerHost = "gheineman.cs.wpi.edu";
@@ -47,6 +49,7 @@ public class BrokerManager implements IHandleBrokerMessage {
 	public BrokerManager(Application gui, Model model) {
 		this.gui = gui;
 		this.model = model;
+        this.swap = gui.getSwap();
 	}
 	
 	/** Are we connected to the broker? */
@@ -147,7 +150,11 @@ public class BrokerManager implements IHandleBrokerMessage {
 			for (int i = 0; i < s.requestWords.length; i++) {
 				failed = true;
 				for (Word word : model.getBoard().getunprotectedWords()) {
-					if (word.getValue().equals(s.requestWords[i])) {
+					if (word.getValue().equals(s.requestWords[i]) ||
+                            (s.requestWords[i].equals("*") &&
+                                    (s.requestTypes[i].equals("*") || s.requestTypes[i].equals(Word.TYPE_INT_TO_STRING[word.getWordType()]))
+                            )
+                       ) {
 						matched.add(word);
 						failed = false;
 						break;
@@ -168,7 +175,7 @@ public class BrokerManager implements IHandleBrokerMessage {
 			// what should we do? Agree of course! Here is where your code would
 			// normally "convert" wildcards into actual words in your board state.
 			// for now this is already assumed (note sample/other swap)
-			broker.getBrokerOutput().println(IProtocol.confirmSwapMsg + IProtocol.separator + s.flatten());
+			broker.getBrokerOutput().println(IProtocol.confirmSwapMsg + IProtocol.separator + s.flatten(matched));
 			return;
 		}
 		
@@ -189,9 +196,8 @@ public class BrokerManager implements IHandleBrokerMessage {
 			
 			
 			if (broker.getID().equals(s.requestor_id)) { // if we are the one who send the request JUN
-                model.getBoard().clearOurSwap();
-//				wordsToRemove = s.offerWords;
-//				wordsTypeRemove = s.offerTypes;
+//                model.getBoard().clearOurSwap();
+                swap.clear();
 				wordsToAdd = s.requestWords;
 				wordsTypeAdd = s.requestTypes;
 			} else {                                      // if we are the one being requested JUN

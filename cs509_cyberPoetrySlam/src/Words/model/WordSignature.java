@@ -6,6 +6,18 @@ import java.io.Serializable;
  * Created by Jun on 12/11/2014.
  */
 public class WordSignature implements Serializable {
+    public String getType() {
+        return type;
+    }
+
+    public int getTypeInt() {
+        return typeInt;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
     String value;
     String type;
     int typeInt;

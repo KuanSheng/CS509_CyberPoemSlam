@@ -1,5 +1,8 @@
 package broker.util;
 
+import Words.model.Word;
+
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 /**
@@ -17,7 +20,7 @@ public class Swap {
 
 	/**
 	 * Assumes all arguments are valid (could be cleaned up).
-	 * @param id
+	 * @param requestor_id
 	 * @param n
 	 * @param offerTypes
 	 * @param offerWords
@@ -82,5 +85,27 @@ public class Swap {
 		
 		return sb.toString();
 	}
+
+    /**JUN return encoding of swap in case of "*" in request -- the requrestED client determined what to offer*/
+    public String flatten(ArrayList<Word> wildToConcreteWords){
+        StringBuffer sb = new StringBuffer();
+        sb.append(requestor_id); sb.append(IProtocol.separator);
+        sb.append(acceptor_id); sb.append(IProtocol.separator);
+        sb.append(n); sb.append (IProtocol.separator);
+        for (int i = 0; i < n; i++) {
+            sb.append(offerTypes[i]); sb.append(IProtocol.separator);
+        }
+        for (int i = 0; i < n; i++) {
+            sb.append(offerWords[i]); sb.append(IProtocol.separator);
+        }
+        for (int i = 0; i < n; i++) {
+            sb.append(Word.TYPE_INT_TO_STRING[wildToConcreteWords.get(i).getWordType()]); sb.append(IProtocol.separator);
+        }
+        for (int i = 0; i < n; i++) {
+            sb.append(wildToConcreteWords.get(i).getValue());
+            sb.append(IProtocol.separator);
+        }
+        return sb.toString();
+    }
 }
 

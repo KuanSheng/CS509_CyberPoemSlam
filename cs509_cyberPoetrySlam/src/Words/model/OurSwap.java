@@ -72,4 +72,9 @@ public class OurSwap implements Serializable{
     public ArrayList<Word> getTheirRequest() {
         return theirRequest;
     }
+
+    public boolean clear() {
+        ourOffer.clear();
+        return true;
+    }
 }

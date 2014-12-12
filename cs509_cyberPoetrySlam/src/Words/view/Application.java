@@ -17,6 +17,7 @@ public class Application extends JFrame {
     SwapTable swapTable;
     RequestTable requestTable;
     NewRequestTable newRequestTable;
+    OurSwap swap;
     final ApplicationCanvas panel; // added by JUN to share panel with StoreStateController
     
     JButton btnSwap;
@@ -137,7 +138,7 @@ public class Application extends JFrame {
         JPanel tablePanel = new JPanel();
         tablePanel.setSize(900, 250);
 
-        OurSwap swap = new OurSwap(model.getBoard());
+        swap = new OurSwap(model.getBoard());
 
 
         table = new WordTable(model.getBoard(), this, swap); // give table reference to app so as to refresh after operations JUN
@@ -202,6 +203,10 @@ public class Application extends JFrame {
         if(typeTable != null)    typeTable.refreshTable();
         if(swapTable != null)    swapTable.refreshTable();
         if(requestTable != null) requestTable.refreshTable();
+    }
+
+    public OurSwap getSwap() {
+        return swap;
     }
 
     private class AddSwapButtonListner implements ActionListener {
