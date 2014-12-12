@@ -61,7 +61,17 @@ public class RequestModel extends AbstractTableModel {
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 //        super.setValueAt(aValue, rowIndex, columnIndex);
         requets[rowIndex][columnIndex] = (String) aValue;
-        swap.getOurRequest().get(rowIndex).type = aValue.toString();
+        switch (columnIndex){
+            case 0 :
+                swap.getOurRequest().get(rowIndex).value = aValue.toString();
+                break;
+            case 1 :
+                swap.getOurRequest().get(rowIndex).type = aValue.toString();
+                break;
+            default:
+                break;
+
+        }
         fireTableCellUpdated(rowIndex, columnIndex);
     }
     //added by JUN for editing table -- end

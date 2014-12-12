@@ -70,7 +70,7 @@ public class SwapModel extends AbstractTableModel {
             case 0 :
                 return swap.getOurOffer().get(rowIndex).value;
             case 1 :
-                return swap.getOurOffer().get(rowIndex).type;
+                return Word.TYPE_INT_TO_STRING[swap.getOurOffer().get(rowIndex).getWordType()];
         }
         return null;
     }

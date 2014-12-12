@@ -114,4 +114,8 @@ public class WordTable extends JPanel{
         this.revalidate();
         this.repaint();
     }
+
+    public void clearSelection(){
+        jtable.clearSelection();
+    }
 }

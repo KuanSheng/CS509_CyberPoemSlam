@@ -227,6 +227,8 @@ public class Application extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            table.clearSelection(); // solved the problem: click a row before clicking "Add swap",
+                                        //then would not be able to add that row
             if(SwapAddListener.flip()){
                 button.setText("Stopping Adding");
                 button.setBackground(Color.red);

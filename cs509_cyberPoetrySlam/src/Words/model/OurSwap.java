@@ -75,6 +75,7 @@ public class OurSwap implements Serializable{
 
     public boolean clear() {
         ourOffer.clear();
+        ourRequest.clear();
         return true;
     }
 }
