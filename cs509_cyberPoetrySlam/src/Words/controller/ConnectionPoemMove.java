@@ -16,7 +16,6 @@ public class ConnectionPoemMove extends Move{
 		this.oldx = oldx;
 		this.oldy = oldy;
 		this.connectionType = connectionType;
-		System.out.println(oldx);
 	}
 	
 	@Override
