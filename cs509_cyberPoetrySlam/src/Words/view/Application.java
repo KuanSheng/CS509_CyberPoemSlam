@@ -1,12 +1,20 @@
+
 package Words.view;
 
-import java.awt.event.*;
+
 import java.io.*;
+
+
 import java.awt.event.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import javax.swing.*;
+
+import javax.swing.*;
+
+import Words.BrokerManager;
+import Words.controller.*;
+import Words.model.*;
 
 import Words.controller.DisconnectionPoemController;
 import Words.controller.RedoController;
@@ -14,11 +22,6 @@ import Words.controller.ReleasePoemController;
 import Words.controller.SubmitPoemController;
 import Words.controller.UndoController;
 import Words.model.*;
-;
-import Words.BrokerManager;
-import Words.controller.*;
-import Words.model.*;
-;
 
 public class Application extends JFrame {
     Model model;
@@ -28,35 +31,36 @@ public class Application extends JFrame {
     RequestTable requestTable;
     NewRequestTable newRequestTable;
     OurSwap swap;
+    final ApplicationCanvas panel; // added by JUN to share panel with StoreStateController
 
     public ApplicationCanvas getPanel() {
         return panel;
     }
 
-    final ApplicationCanvas panel; // added by JUN to share panel with StoreStateController
-    
+
     JButton btnSwap;
 
     JButton btnAddSwap;
     JButton btnRemoveSwap;
 
-    
-    /** 
-	 * Stores reference to broker so can use as needed. Set once broker connection has been made. 
-	 * If no broker available, then this becomes null. 
-	 */
-	BrokerManager broker;
-    
-	/**
-	 * This is the default constructor
-	 */
+
+    /**
+     * Stores reference to broker so can use as needed. Set once broker connection has been made.
+     * If no broker available, then this becomes null.
+     */
+    BrokerManager broker;
+
+    /**
+     * This is the default constructor
+     */
 //	public Application(Model m) { //Changed by JUN
     public Application(Model m){
-		super();
+        super();
         this.model = m;
         this.panel = new ApplicationCanvas(model);
         this.panel.setSize(900, 500);
         //this.panel = panel;
+//        this.panel = model.getBoard().g
 
         setTitle("CyberPoetrySlam");
         setSize(900, 900);
@@ -64,34 +68,32 @@ public class Application extends JFrame {
 
         JPanel menuPanel = new JPanel();
         menuPanel.setSize(900, 150);
+//        setVisible(true);  //commented by JUN , this line is causing restore state to fail. Because window open event is trigered here, but restore state controller is not added yet
         setBackground(Color.orange);
-        JButton btnSwap = new JButton("Swap/Revoke");
+
+        btnSwap = new JButton("Swap/Revoke");
+        btnAddSwap = new JButton("Add Swap");
+        btnRemoveSwap = new JButton("Remove Swap");
+
+
         JButton btnRelease = new JButton("Release");
         JButton btnSubmit = new JButton("Submit");
         JButton btnDisconnect = new JButton("Disconnect");
         JButton btnUndo = new JButton("Undo");
         JButton btnRedo = new JButton("Redo");
-        
-        //add listener to "Release" button
-        btnRelease.addActionListener(new ReleasePoemController(m, panel));
-        btnSubmit.addActionListener(new SubmitPoemController(m, panel, SubmitPoemController.Method.ALL));
 
-        btnAddSwap = new JButton("Add Swap");
-        btnRemoveSwap = new JButton("Remove Swap");
-        menuPanel.add(btnSwap);
-        menuPanel.add(btnRelease);
-        menuPanel.add(btnSubmit);
-        menuPanel.add(btnDisconnect);
-        menuPanel.add(btnUndo);
-        menuPanel.add(btnRedo);
 
-        this.model = m;
+
+
         //add listener to "Release" button
         btnRelease.addActionListener(new ReleasePoemController(m, panel));
         btnSubmit.addActionListener(new SubmitPoemController(m, panel, SubmitPoemController.Method.ALL));
         //btnSwap.addActionListener(new SwapRequestController(m, Application.this));
-        if(model == null) return;
 
+
+
+
+        //
         menuPanel.add(btnSwap); btnSwap.setEnabled(false);
         menuPanel.add(btnAddSwap);
 //        btnAddSwap.setEnabled(false);
@@ -100,6 +102,8 @@ public class Application extends JFrame {
         menuPanel.add(btnRelease);
         menuPanel.add(btnSubmit);
         menuPanel.add(btnDisconnect);
+        menuPanel.add(btnUndo);
+        menuPanel.add(btnRedo);
 
         Container pane = this.getContentPane();
         //pane.setBackground(Color.yellow);
@@ -108,7 +112,7 @@ public class Application extends JFrame {
         if(model == null) return;
 
         // Where words appear
-        
+
         pane.add(panel);
 
         // JTable on the side
@@ -175,81 +179,69 @@ public class Application extends JFrame {
 
         btnDisconnect.addActionListener(new ActionListener() {
 
-			@Override
-		public void actionPerformed(ActionEvent arg0) {
-				// register controller
-				DisconnectionPoemController disconnect = new DisconnectionPoemController(model,panel);
-				disconnect.disconnectRow();
-				model.setSelectedRow(null);
-			}
-		});
-        
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                // register controller
+                DisconnectionPoemController disconnect = new DisconnectionPoemController(model,panel);
+                disconnect.disconnectRow();
+                model.setSelectedRow(null);
+            }
+        });
+
         /**
          * Ruizhu add for BrokerManager
          */
         btnSwap.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// act immediately. Doesn't require registration. Note the special syntax
-				// to refer to the enclosing class within an anonymous class (Application.this)
-				new SwapRequestController(model, Application.this).process(true);
-			}
-		});
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                // act immediately. Doesn't require registration. Note the special syntax
+                // to refer to the enclosing class within an anonymous class (Application.this)
+                new SwapRequestController(model, Application.this).process(true);
+            }
+        });
 
-
-
-    }
-        
-        btnDisconnect.addActionListener(new ActionListener() {
-
-			@Override
-		public void actionPerformed(ActionEvent arg0) {
-				// register controller
-				DisconnectionPoemController disconnect = new DisconnectionPoemController(model,panel);
-				disconnect.disconnectRow();
-				model.setSelectedRow(null);
-			}
-		});
-        
         btnUndo.addActionListener(new ActionListener() {
 
-			@Override
-		public void actionPerformed(ActionEvent arg0) {
-				// register controller
-				UndoController undo = new UndoController(model,panel);
-        		undo.process();
-        		return;
-			}
-		});
-        
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                // register controller
+                UndoController undo = new UndoController(model,panel);
+                undo.process();
+                return;
+            }
+        });
+
         btnRedo.addActionListener(new ActionListener() {
 
-			@Override
-		public void actionPerformed(ActionEvent arg0) {
-				// register controller
-				RedoController redo = new RedoController(model,panel);
-        		redo.process();
-        		return;
-			}
-		});
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                // register controller
+                RedoController redo = new RedoController(model,panel);
+                redo.process();
+                return;
+            }
+        });
+
+
+
     }
-	
+
     public ApplicationCanvas getpanel(){
-    	return this.panel;
+        return this.panel;
     }
-    
+
     /**
      * Ruizhu add for BrokerManager
      */
     public JButton getSwapButton() { return btnSwap ; }
-    
-    public void setBroker(BrokerManager bm) { 
-		this.broker = bm;
-		this.setTitle("ID:" + bm.getID());
-		btnSwap.setEnabled(true);
-	}
-	public BrokerManager getBroker() { return broker; }
+
+    public void setBroker(BrokerManager bm) {
+        this.broker = bm;
+        this.setTitle("ID:" + bm.getID());
+        btnSwap.setEnabled(true);
+    }
+    public BrokerManager getBroker() { return broker; }
 
     public void refreshTables(){
         if(table != null)        table.refreshTable();
@@ -281,7 +273,7 @@ public class Application extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             table.clearSelection(); // solved the problem: click a row before clicking "Add swap",
-                                        //then would not be able to add that row
+            //then would not be able to add that row
             if(SwapAddListener.flip()){
                 button.setText("Stopping Adding");
                 button.setBackground(Color.red);

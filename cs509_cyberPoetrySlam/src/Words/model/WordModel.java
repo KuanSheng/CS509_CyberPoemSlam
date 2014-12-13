@@ -13,22 +13,30 @@ import javax.swing.table.AbstractTableModel;
  * delegate to wordModel to manage the state instead of using board
  */
 public class WordModel extends AbstractTableModel {
-    /** Keep Eclipse Happy. */
+    /**
+     * Keep Eclipse Happy.
+     */
     private static final long serialVersionUID = 1L;
 
     // set the word type definition to query the word type by index number
     // TODO: will be replaced by a static class or properties file
     private static String[] wordTypeDefinition = {"verb", "adj", "noun", "adv"};
 
-    /** Board maintains the state. */
+    /**
+     * Board maintains the state.
+     */
     Board board;
 
-    /** Key values. */
+    /**
+     * Key values.
+     */
     public static final String wordLabel = "Word";
     public static final String wordTypeLabel = "Word Type";
 
-    /** The Table model needs to know the board which contains the shapes. */
-    public WordModel (Board b) {
+    /**
+     * The Table model needs to know the board which contains the shapes.
+     */
+    public WordModel(Board b) {
         this.board = b;
     }
 
@@ -55,16 +63,16 @@ public class WordModel extends AbstractTableModel {
         // no idea who you are...
         return "";
     }
-
-    public static final int VERB_INT = 0;
-    public static final int ADJ_INT = 1;
-    public static final int NOUN_INT = 2;
-    public static final int ADV_INT = 3;
-
-
-    public static final String VERB_STRING = "verb";
-    public static final String ADJ_STRING = "adj";
-    public static final String NOUN_STRING = "noun";
-    public static final String ADV_STRING = "adv";
+}
+//    public static final int VERB_INT = 0;
+//    public static final int ADJ_INT = 1;
+//    public static final int NOUN_INT = 2;
+//    public static final int ADV_INT = 3;
+//
+//
+//    public static final String VERB_STRING = "verb";
+//    public static final String ADJ_STRING = "adj";
+//    public static final String NOUN_STRING = "noun";
+//    public static final String ADV_STRING = "adv";
 
 

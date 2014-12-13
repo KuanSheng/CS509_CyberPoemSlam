@@ -1,5 +1,6 @@
 package Words.view;
 import Words.controller.RefreshWordTableController;
+import Words.controller.SortWordsController;
 import Words.controller.SwapAddListener;
 import Words.model.*;
 
@@ -29,7 +30,7 @@ public class WordTable extends JPanel{
     /**
      * This constructor creates the display which manages the list of active players.
      */
-    public WordTable(Board board, Application app, OurSwap swap){
+    public WordTable(final Board board, Application app, OurSwap swap){
 //        this(board);
 //        this.app = app;
 //    }
@@ -71,12 +72,12 @@ public class WordTable extends JPanel{
         // let's install a sorter and also make sure no one can rearrange columns
         JTableHeader header = jtable.getTableHeader();
         // purpose of this sorter is to sort by columns.
-//        header.addMouseListener(new MouseAdapter()	{
-//            public void mouseClicked (MouseEvent e)	{
-//                JTableHeader h = (JTableHeader) e.getSource() ;
-//                new SortController(WordTable.this).process(h, e.getPoint());
-//            }
-//        });
+        header.addMouseListener(new MouseAdapter()	{
+            public void mouseClicked (MouseEvent e)	{
+                JTableHeader h = (JTableHeader) e.getSource() ;
+                new SortWordsController(WordTable.this, board).process(e);
+            }
+        });
 
         //to add listener to handle add into swap reqeust -- JUN start===================
         jtable.getSelectionModel().addListSelectionListener(new SwapAddListener(jtable, swap, app));
@@ -117,5 +118,9 @@ public class WordTable extends JPanel{
 
     public void clearSelection(){
         jtable.clearSelection();
+    }
+
+    public JTable getJtable() {
+        return jtable;
     }
 }
