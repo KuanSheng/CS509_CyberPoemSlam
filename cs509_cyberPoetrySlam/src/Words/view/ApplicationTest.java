@@ -25,6 +25,7 @@ public class ApplicationTest {
 		Board b=new Board();
 		Model m= new Model(b);
 		ApplicationCanvas p = new ApplicationCanvas(m);
+		//a=new Application(m, p);
 		a=new Application(m);
 		assertEquals(p, a.getpanel());
 		a.setVisible (true);

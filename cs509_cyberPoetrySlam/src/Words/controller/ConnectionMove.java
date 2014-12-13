@@ -10,6 +10,7 @@ public class ConnectionMove extends Move implements Serializable{ // todo check 
 	final Board b;
 	int oldx;
 	int oldy;
+	int type;
 	
 	public ConnectionMove(Word connectWord, Word selectedWord,Board b, int oldx, int oldy){
 		this.connectWord = connectWord;
@@ -17,11 +18,12 @@ public class ConnectionMove extends Move implements Serializable{ // todo check 
 		this.b = b;
 		this.oldx = oldx;
 		this.oldy = oldy;
+		this.type = b.getOverlapType(selectedWord, connectWord);
 	}
 	
 	@Override
 	public boolean execute(){
-		int type = b.getOverlapType(selectedWord, this.connectWord);
+		//type = b.getOverlapType(selectedWord, this.connectWord);
 		switch(type){
 		case 3:
 			newPoem = new Poem(this.connectWord,selectedWord,1);

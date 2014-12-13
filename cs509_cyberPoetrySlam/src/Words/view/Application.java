@@ -1,10 +1,20 @@
 package Words.view;
 
 import java.awt.event.*;
+import java.io.*;
+import java.awt.event.*;
 import java.awt.*;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
+import Words.controller.DisconnectionPoemController;
+import Words.controller.RedoController;
+import Words.controller.ReleasePoemController;
+import Words.controller.SubmitPoemController;
+import Words.controller.UndoController;
+import Words.model.*;
+;
 import Words.BrokerManager;
 import Words.controller.*;
 import Words.model.*;
@@ -47,7 +57,6 @@ public class Application extends JFrame {
         this.panel = new ApplicationCanvas(model);
         this.panel.setSize(900, 500);
         //this.panel = panel;
-//        this.panel = model.getBoard().g
 
         setTitle("CyberPoetrySlam");
         setSize(900, 900);
@@ -55,31 +64,34 @@ public class Application extends JFrame {
 
         JPanel menuPanel = new JPanel();
         menuPanel.setSize(900, 150);
-//        setVisible(true);  //commented by JUN , this line is causing restore state to fail. Because window open event is trigered here, but restore state controller is not added yet
         setBackground(Color.orange);
-        
-        btnSwap = new JButton("Swap/Revoke");
-        btnAddSwap = new JButton("Add Swap");
-        btnRemoveSwap = new JButton("Remove Swap");
-
-
+        JButton btnSwap = new JButton("Swap/Revoke");
         JButton btnRelease = new JButton("Release");
         JButton btnSubmit = new JButton("Submit");
         JButton btnDisconnect = new JButton("Disconnect");
-
-
+        JButton btnUndo = new JButton("Undo");
+        JButton btnRedo = new JButton("Redo");
         
-        
+        //add listener to "Release" button
+        btnRelease.addActionListener(new ReleasePoemController(m, panel));
+        btnSubmit.addActionListener(new SubmitPoemController(m, panel, SubmitPoemController.Method.ALL));
 
+        btnAddSwap = new JButton("Add Swap");
+        btnRemoveSwap = new JButton("Remove Swap");
+        menuPanel.add(btnSwap);
+        menuPanel.add(btnRelease);
+        menuPanel.add(btnSubmit);
+        menuPanel.add(btnDisconnect);
+        menuPanel.add(btnUndo);
+        menuPanel.add(btnRedo);
+
+        this.model = m;
         //add listener to "Release" button
         btnRelease.addActionListener(new ReleasePoemController(m, panel));
         btnSubmit.addActionListener(new SubmitPoemController(m, panel, SubmitPoemController.Method.ALL));
         //btnSwap.addActionListener(new SwapRequestController(m, Application.this));
+        if(model == null) return;
 
-
-
-
-        //
         menuPanel.add(btnSwap); btnSwap.setEnabled(false);
         menuPanel.add(btnAddSwap);
 //        btnAddSwap.setEnabled(false);
@@ -187,6 +199,40 @@ public class Application extends JFrame {
 
 
 
+    }
+        
+        btnDisconnect.addActionListener(new ActionListener() {
+
+			@Override
+		public void actionPerformed(ActionEvent arg0) {
+				// register controller
+				DisconnectionPoemController disconnect = new DisconnectionPoemController(model,panel);
+				disconnect.disconnectRow();
+				model.setSelectedRow(null);
+			}
+		});
+        
+        btnUndo.addActionListener(new ActionListener() {
+
+			@Override
+		public void actionPerformed(ActionEvent arg0) {
+				// register controller
+				UndoController undo = new UndoController(model,panel);
+        		undo.process();
+        		return;
+			}
+		});
+        
+        btnRedo.addActionListener(new ActionListener() {
+
+			@Override
+		public void actionPerformed(ActionEvent arg0) {
+				// register controller
+				RedoController redo = new RedoController(model,panel);
+        		redo.process();
+        		return;
+			}
+		});
     }
 	
     public ApplicationCanvas getpanel(){

@@ -16,7 +16,6 @@ public class ConnectionPoemMove extends Move{
 		this.oldx = oldx;
 		this.oldy = oldy;
 		this.connectionType = connectionType;
-		System.out.println(oldx);
 	}
 	
 	@Override
@@ -42,7 +41,6 @@ public class ConnectionPoemMove extends Move{
 	
 	@Override
 	public boolean undo(){
-		System.out.println("signalcop!");
 		Row r = connectPoem.getOverlapRow(selectedWord);
 		
 		if(selectedWord.getX() == r.getX()){

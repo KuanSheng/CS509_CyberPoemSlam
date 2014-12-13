@@ -137,7 +137,31 @@ ArrayList<Word> words = new ArrayList<Word>();
 		return rightLimit;
 	}
 	
+	public Word getFormerWord(Word w){
+		if(w == this.getFirstWord()){
+			return null;
+		}
+		
+		for(Word word:this.getWords()){
+			if(word.getX()+word.getWidth() == w.getX()){
+				return word;
+			}
+		}
+		return null;
+	}
 	
+	public Word getNextWord(Word w){
+		if(w == this.getLastWord()){
+			return null;
+		}
+		
+		for(Word word:this.getWords()){
+			if(w.getX()+w.getWidth() == word.getX()){
+				return word;
+			}
+		}
+		return null;
+	}
 	public boolean intersection(int x, int y){
 	 if(x < this.x){return false;}
    	 if(x > (this.x + width)){return false;}
@@ -156,6 +180,7 @@ ArrayList<Word> words = new ArrayList<Word>();
 		}
 		
 	}
+	
 	public void setLocationAfterConnection(int x,int y){
 		this.x = x;
 		this.y = y;

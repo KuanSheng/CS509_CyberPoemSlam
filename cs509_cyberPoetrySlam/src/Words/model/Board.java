@@ -30,7 +30,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		listeners.remove(list);
 	}
  
-    
+    /**Add words into board**/
 	public void addWords(Word w){
 		words.add(w);
 		unProtectedWords.add(w);
@@ -39,27 +39,33 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 				notifyListeners();
 	}
 	
+	/**Add poems into board**/
 	public void addPoems(Poem p){
 		poems.add(p);
 		
 	}
 	
+	/**To get the word list of board**/
 	public ArrayList<Word> getWords(){
 		return this.words;
 	}
 	
+	/**To get the list of protected words**/
 	public ArrayList<Word> getProtectedWords(){
 		return this.protectedWords;
 	}
 	
+	/**To get the list of unprotected words**/
 	public ArrayList<Word> getunprotectedWords(){
 		return this.unProtectedWords;
 	}
-
+	
+    /**To get the poem list in board**/
     public ArrayList<Poem> getPoems() {
     	return this.poems;
     }
 	
+    /**check if there is overlap between two poems**/
     public Poem getOverlapPoem(Poem p){
     	for(Poem poem:poems){
     		if(!poem.equals(p)){
@@ -76,6 +82,8 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     	}
     	return null;
     }
+    
+    /**select a row by selecting area**/
     public Row getSelectedRow(Area a){
     	for(Poem p:poems){
     		for(Row r:p.rows){
@@ -86,6 +94,8 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     	}
     	return null;
     }
+    
+    /**protect a unprotected word**/
 	public void protectWords(Word w){
 		unProtectedWords.remove(w);
 		protectedWords.add(w);
@@ -94,6 +104,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 				notifyListeners();
 	}
 	
+	/**release a protected word**/
 	public void releaseWords(Word w){
 		protectedWords.remove(w);
 		unProtectedWords.add(w);
@@ -102,6 +113,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 				notifyListeners();
 	}
 	
+	/**find a mouse clicked row**/
 	public boolean findRow(int x,int y,Row r){
 		if(r == null){
 			System.out.println("null");
@@ -113,6 +125,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		return false;
 	}
 	
+	/**find a word by x,y**/
 	public Word findWord(int x,int y){
 		for(Word w:words){
 			if(w.intersection(x,y)){
@@ -122,6 +135,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		return null;
 	}
 	
+	/**find a poem by x,y**/
 	public Poem findPoem(int x,int y){
 		for(Poem p:poems){
 			if(p.intersection(x,y)){
@@ -130,6 +144,8 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		}
 		return null;
 	}
+	
+	/**Get a poem by a given row**/
 	public Poem getPoemByRow(Row r){
 		for(Poem p:poems){
 			for(Row row:p.getRows()){
@@ -140,6 +156,8 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		}
 		return null;
 	}
+	
+	/**check if there is overlap between two words**/
 	public Word checkOverlap(Word w){
 		for(Word s:words){
 			if(s.equals(w)){
@@ -152,6 +170,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		return null;
 	}
 	
+	/**check if any overlap on a poem**/
 	public boolean checkOverlapPoem(Poem p){
 		for(Word s:words){
 			for(Row r:p.getRows()){
@@ -163,6 +182,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		return false;
 	}
 	
+	/**get a overlap poem of a word**/
 	public Poem checkOverlapWord(Word w){
 		for(Poem p:poems){
 			for(Row r:p.getRows()){
@@ -174,6 +194,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		return null;
 	}
 	
+	/**get overlap element number of a word**/
     public int getOverLapNumber(Word w){
     	int number = 0;
     	for(Word s:words){
@@ -191,6 +212,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     	return number;
     }
     
+    /**check potential overlap after connection**/
     public boolean checkPotentialOverlapPoem(Word selectedWord,Poem connectPoem,int type){
     	Row r = connectPoem.getOverlapRow(selectedWord);
     	if(type == 1){
@@ -232,6 +254,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     	return false;
     }
     
+    /**check potential overlap with word after connection**/
     public boolean checkPotentialOverlap(Word selectedWord,Word connectWord,int type){
     	if(type == 1){
     		int testx = connectWord.getX()-selectedWord.getWidth();
@@ -274,6 +297,54 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     	return false;
     }
     
+    public boolean checkDisconnectionAvailability(Poem p,Word w){
+    	Row r = p.getRowByWord(w);
+    	int rightLimit,leftLimit;
+    	//not edge word, can not disconnect
+    	if(r.getFirstWord() != w&&r.getLastWord()!=w){
+    		return false;
+    	}
+    	
+    	if(r.getNextRow()==null&&r.getFormerRow()==null){
+    		return true;
+    	}
+		
+    	if(r.getNextRow() == null){
+    		rightLimit = r.getFormerRow().getX()+r.getFormerRow().getWidth();
+    		leftLimit = r.getFormerRow().getX();
+    	}
+    	else if(r.getFormerRow() == null){
+    		rightLimit = r.getNextRow().getX()+r.getNextRow().getWidth();
+    		leftLimit = r.getNextRow().getX();
+    	}
+    	else{
+    		int temp1 = r.getFormerRow().getX()+r.getFormerRow().getWidth();
+    		int temp2 = r.getNextRow().getX()+r.getNextRow().getWidth();
+    		
+    		rightLimit = Math.max(temp1, temp2);
+    		
+    		int temp3 = r.getFormerRow().getX();
+    		int temp4 = r.getNextRow().getX();
+    		
+    		leftLimit = Math.min(temp3, temp4);
+    	}
+		
+    	if(r.getFirstWord() == w){
+    		if(r.getNextWord(w).getX() > rightLimit){
+    			System.out.println("why?");
+    			return false;
+    		}
+    	}
+    	
+    	if(r.getLastWord() == w){
+    		if(r.getFormerWord(w).getX()+r.getFormerWord(w).getWidth() < leftLimit){
+    			return false;
+    		}
+    	}
+    	return true;
+    }
+    
+    /**check the type of overlap**/
 	public int getOverlapType(Word w1,Word w2){
 	if((w1.x+w1.width)>w2.getX()&&(w1.x+w1.width)<(w2.getX()+w2.width)&&(w2.getY()+w2.getHeight())>w1.y&&(w2.getY()+w2.getHeight())<(w1.y+w1.height)){
    		 return 1;
@@ -353,7 +424,6 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 	
 	public void setProtectedWords(ArrayList<Word> protectedW){
 		this.protectedWords = protectedW;
-		
 	}
 	
 	public void setunProtectedWords(ArrayList<Word> words){
@@ -500,4 +570,4 @@ public class Board implements Iterable<Word>, java.io.Serializable {
         }
     }
 }
-//>>>>>>> refs/remotes/origin/Kuan_Jun
+

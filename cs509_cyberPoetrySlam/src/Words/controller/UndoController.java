@@ -1,3 +1,7 @@
+/**
+ * Always be careful about the object transform!
+ * it may kill your undo function!
+ *                                  By Kuan**/
 package Words.controller;
 import Words.model.*;
 import Words.view.*;
@@ -18,7 +22,7 @@ public class UndoController {
 			return false; 
 		}
 		m.undo();
-
+		model.getRedoMoves().push(m);
 		// force board to redraw
 		canvas.repaint();
 		return true;

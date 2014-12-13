@@ -1,4 +1,9 @@
 package Words.model;
+import Words.model.Board;
+
+import javax.swing.table.AbstractTableModel;
+
+
 
 import java.util.Comparator;
 import javax.swing.table.AbstractTableModel;
@@ -63,4 +68,3 @@ public class WordModel extends AbstractTableModel {
     public static final String ADV_STRING = "adv";
 
 
-}

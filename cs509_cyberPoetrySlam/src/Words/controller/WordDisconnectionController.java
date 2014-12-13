@@ -13,7 +13,7 @@ public class WordDisconnectionController {
 		this.model = model;
 		this.panel = a;
 		this.b = model.getBoard();
-		disConnectPoem = p;
+		this.disConnectPoem = p;
 	}
 	
 	public void disconnectEdgeWord(int type,Row r){

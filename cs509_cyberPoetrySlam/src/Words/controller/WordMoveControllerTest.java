@@ -21,7 +21,7 @@ public class WordMoveControllerTest {
 		b = new Board();
 		m = new Model(b);
 		panel = new ApplicationCanvas(m);
-		app = new Application(m);
+		//app = new Application(m,panel);
 		//panel = app.getpanel();
 		app.setVisible(true);
 	}
