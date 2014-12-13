@@ -398,6 +398,9 @@ public class WordMoveController extends MouseAdapter{
    			}
    			}
    		}
+   		
+   		if(!b.checkDisconnectionAvailability(p, disconnectWord))
+   			return;
    		model.setSelectedWordinPoem(disconnectWord);
    		WordDisconnectionController disconnect = new WordDisconnectionController(model,panel,p);
    		disconnect.disconnectEdgeWord(type,disconnectRow);

@@ -228,4 +228,14 @@ public class Poem extends Element implements Serializable{
 		// TODO Auto-generated method stub
 		this.LastRow = r;
 	}
+
+	public Row getRowByWord(Word w) {
+		for(Row r:rows){
+			for(Word word:r.getWords()){
+				if(word.equals(w))
+					return r;
+			}
+		}
+		return null;
+	}
 }
