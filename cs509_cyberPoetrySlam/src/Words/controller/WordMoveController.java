@@ -37,7 +37,7 @@ public class WordMoveController extends MouseAdapter{
 		RowFlag = false;
 		
 		// no board? no behavior!
-		if (model == null) { return;}
+	    if (model == null) { return;}
 		
 		//model.setSelectedPoem(null);
 		//model.setSelectedRow(null);

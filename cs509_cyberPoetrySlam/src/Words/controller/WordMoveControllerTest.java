@@ -127,5 +127,18 @@ public class WordMoveControllerTest {
         assertEquals(m.selectedArea.getY(),150);
         assertEquals(m.selectedArea.getWidth(),50);
         assertEquals(m.selectedArea.getHeight(),50);
+        
+        control.buildSelectionArea(ox, oy);
+        control.drag(50,250);
+        
+        assertEquals(m.selectedArea.getX(),50);
+        assertEquals(m.selectedArea.getY(),200);
+        assertEquals(m.selectedArea.getWidth(),50);
+        assertEquals(m.selectedArea.getHeight(),50);
+	}
+	
+	@Test
+	public void testDragToShiftRow(){
+		
 	}
 }
