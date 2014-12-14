@@ -67,7 +67,6 @@ public class WordMoveController extends MouseAdapter{
 		
 		//shift row
 		if(board.findRow(anchor.x, anchor.y, model.getSelectedRow())){
-			System.out.println("hahaha");
 			setRowFlag(model.getSelectedRow());
 			return;
 		}
@@ -80,7 +79,7 @@ public class WordMoveController extends MouseAdapter{
 			panel.repaint();
 			return;
 		}
-		
+	 
 		if(buildSelectionArea(anchor.x,anchor.y)){
 			return;
 		}
@@ -190,11 +189,14 @@ public class WordMoveController extends MouseAdapter{
 		
 		Word selectedWord = model.getSelected();
 		Poem selectedPoem = model.getSelectedPoem();
+		Row selectedRow = model.getSelectedRow();
 		
+	
 		//nothing selected
-		if(selectedWord == null&&selectedPoem == null){
-			if(b.getSelectedRow(model.getSelectedArea())!=null);
+		if(selectedWord == null&&selectedPoem == null&&selectedRow == null){
+			if(b.getSelectedRow(model.getSelectedArea())!=null){
 			model.setSelectedRow(b.getSelectedRow(model.getSelectedArea()));
+			}
 			model.setSelectedArea(0, 0, 0, 0);
 			return true;
 		}
@@ -204,8 +206,10 @@ public class WordMoveController extends MouseAdapter{
 			this.moveWord(selectedWord);
 		}
 		else if(selectedPoem != null){
-			System.out.println("Why are we here?");
 			this.movePoem(selectedPoem);
+		}
+		else if(selectedRow != null){
+			this.makeRowMove();
 		}
 		
 		//release the mouse and repaint
@@ -214,6 +218,7 @@ public class WordMoveController extends MouseAdapter{
 		model.setSelectedRow(null);
 		selectedWord = null;
 		selectedPoem = null;
+		selectedRow = null;
 		buildFlag = false;
 		RowFlag = false;
 		return true;
@@ -263,6 +268,14 @@ public class WordMoveController extends MouseAdapter{
 			p.setLocation(originalx,originaly,originalx,originaly);
 			return;
 		}
+	}
+	
+	public void makeRowMove(){
+		Row r = model.getSelectedRow();
+		Poem p = b.getPoemByRow(r);
+		System.out.println(originalx);
+		ShiftRowController control = new ShiftRowController(model,panel,p,r,r.getX(),r.getY(),originalx,originaly);
+		control.shift();
 	}
 	
 	/**move a word within unprotected area**/
@@ -517,7 +530,7 @@ public class WordMoveController extends MouseAdapter{
    public void setRowFlag(Row r){
 	   RowFlag = true;
 	   Point relative = new Point (anchor);
-	   
+	   System.out.println(r.getX());
 	   originalx = r.getX();
 	   originaly = r.getY();
 			
