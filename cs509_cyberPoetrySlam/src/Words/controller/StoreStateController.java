@@ -62,6 +62,8 @@ public class StoreStateController extends WindowAdapter {
             //restore state
             Model stored = (Model) in.readObject();
             model.getBoard().getWords().addAll( stored.getBoard().getWords() );
+            model.getBoard().getunprotectedWords().addAll( stored.getBoard().getunprotectedWords());
+            model.getBoard().getProtectedWords().addAll( stored.getBoard().getProtectedWords() );
             model.getBoard().getPoems().addAll( stored.getBoard().getPoems() );
             System.out.println("deserialized model : StoreStateController");
 
