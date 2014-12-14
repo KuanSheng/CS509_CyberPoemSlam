@@ -7,10 +7,10 @@ import java.util.ArrayList;
  * Created by Jun on 12/11/2014.
  */
 public class OurSwap implements Serializable{
+    public static final int SWAP_LIMIT = 5; //limit the # of words to swap one time to 5;
     private Board board;
     private ArrayList<Word> ourOffer;
     private ArrayList<WordSignature> ourRequest;
-//    private Object[][] ourRequest;
     private ArrayList<Word> theirRequest;
     boolean success;
 
@@ -30,21 +30,41 @@ public class OurSwap implements Serializable{
     private boolean statusSucess(){
         return success = true;
     }
+
+    /**
+     * add a request word for this swap
+     * @param value the word you want, * means any
+     * @param type the type of word you want, * means any
+     * @return always true.
+     */
     public boolean addRequest(String value, String type){
         if(value == null || type == null) return false;
         ourRequest.add(new WordSignature(value, type));
         return true;
     }
 
+    /**
+     * default addRequest, called when just want a new word and don't care about its value or type
+     * @return
+     */
     public boolean addRequest(){
         return this.addRequest("*", "*");
     }
 
+    /**
+     * add a word to swap out
+     * @param word the word to add
+     * @return true if success, false if word not in unprotected area.
+     */
     public boolean addOffer(Word word){
         if(word == null) return false;
         int index = board.getunprotectedWords().indexOf(word);
         if(index >= 0){
+            if(ourOffer.size() == SWAP_LIMIT){ //remove the first one to make room for a new word if already reached limit
+                removeOffer(0);
+            }
             ourOffer.add(board.getunprotectedWords().remove(index));
+            ourRequest.add(new WordSignature("*","*"));
             statusSucess();
             return true;
         }
@@ -58,7 +78,7 @@ public class OurSwap implements Serializable{
      */
     public boolean addOffer(int index){
         if(index < 0 || index > board.getunprotectedWords().size()) return false;
-        ourRequest.add(new WordSignature("*","*"));
+
         return this.addOffer(board.getunprotectedWords().get(index));
 
 //        if(w == null)

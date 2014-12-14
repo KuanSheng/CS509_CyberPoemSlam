@@ -58,8 +58,9 @@ public class AddRandomWordForSwap implements ActionListener{
     private boolean addRandomVerb(){
         for(Word w : board.getunprotectedWords()){
             if(w.getWordType() == Word.VERB_INT){
+                    if(swap.getOurOffer().size() == swap.SWAP_LIMIT) swap.removeOffer(0);
                     swap.addOffer(w);
-                    swap.addRequest();
+//                    swap.addRequest();
                     app.refreshTables();
                     return true;
             }
@@ -71,8 +72,9 @@ public class AddRandomWordForSwap implements ActionListener{
     private boolean addRandomAdj(){
         for(Word w : board.getunprotectedWords()){
             if(w.getWordType() == Word.ADJ_INT){
+                if(swap.getOurOffer().size() == swap.SWAP_LIMIT) swap.removeOffer(0);
                 swap.addOffer(w);
-                swap.addRequest();
+//                swap.addRequest();
                 app.refreshTables();
                 return true;
             }
@@ -83,8 +85,9 @@ public class AddRandomWordForSwap implements ActionListener{
     private boolean addRandomNoun(){
         for(Word w : board.getunprotectedWords()){
             if(w.getWordType() == Word.NOUN_INT){
+                if(swap.getOurOffer().size() == swap.SWAP_LIMIT) swap.removeOffer(0);
                 swap.addOffer(w);
-                swap.addRequest();
+//                swap.addRequest();
                 app.refreshTables();
                 return true;
             }
@@ -95,8 +98,9 @@ public class AddRandomWordForSwap implements ActionListener{
     private boolean addRandomAdv() {
         for (Word w : board.getunprotectedWords()) {
             if (w.getWordType() == Word.ADV_INT) {
+                if(swap.getOurOffer().size() == swap.SWAP_LIMIT) swap.removeOffer(0);
                 swap.addOffer(w);
-                swap.addRequest();
+//                swap.addRequest();
                 app.refreshTables();
                 return true;
             }

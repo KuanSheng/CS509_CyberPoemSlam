@@ -1,4 +1,5 @@
 package Words.view;
+import Words.controller.PopupWordController;
 import Words.controller.RefreshWordTableController;
 import Words.controller.SortWordsController;
 import Words.controller.SwapAddListener;
@@ -81,7 +82,7 @@ public class WordTable extends JPanel{
 
         //to add listener to handle add into swap reqeust -- JUN start===================
         jtable.getSelectionModel().addListSelectionListener(new SwapAddListener(jtable, swap, app));
-//        jtable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        jtable.getSelectionModel().addListSelectionListener(new PopupWordController(jtable, board));
 //            @Override
 //            public void valueChanged(ListSelectionEvent event) {
 //                if(event.getValueIsAdjusting()) return; // this listener would be called twice

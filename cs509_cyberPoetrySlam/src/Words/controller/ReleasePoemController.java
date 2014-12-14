@@ -24,8 +24,6 @@ public class ReleasePoemController implements ActionListener {
     }
 
     public boolean releasePoem(){
-        m.setSelectedPoem(m.getBoard().getPoems().get(0));//todo to be deleted, add selected poem manually for test
-
         Poem poemToRelease = m.getSelectedPoem();
         if(poemToRelease == null){
             return false;
