@@ -1,3 +1,7 @@
+/**
+ * connect two words, direction decides who is in front.
+ * it should be stateless!
+ * created and modified by Kuan**/
 package Words.controller;
 import Words.model.*;
 

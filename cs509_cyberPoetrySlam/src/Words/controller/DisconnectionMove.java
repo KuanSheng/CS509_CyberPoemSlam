@@ -1,3 +1,11 @@
+/**
+ * Too many cases in disconnection.We can implement if from four perspectives.
+ * 1.Disconnect a word in one-row poem;
+ * 2.Disconnect a word in first-row in a poem;
+ * 3.Disconnect a word in mid-row in a poem
+ * 4.Disconnect a word in last-row in a poem
+ * created and modified by Kuan**/
+
 package Words.controller;
 import Words.model.*;
 
@@ -13,6 +21,7 @@ public class DisconnectionMove extends Move{
 	Board b;
 	int type;
 	int disType;
+	//indicate whether disconnect poem is removed or not
 	boolean nullSign = false;
 	
 	public DisconnectionMove(Poem disconnectPoem, Word disconnectWord,Row disconnectRow,Model model,int direction){

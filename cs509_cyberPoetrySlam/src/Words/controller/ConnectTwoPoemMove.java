@@ -10,9 +10,11 @@ public class ConnectTwoPoemMove extends Move{
 	int oldy;
 	int direction;
 	
+	/**constructor**/
 	public ConnectTwoPoemMove(Poem selectedPoem, Poem connectPoem,Board b,int oldx,int oldy,int direction){
 		this.selectedPoem = selectedPoem;
 		this.connectPoem = connectPoem;
+		//decide which poem on top
 		this.direction = direction;
 		this.b = b;
 		this.oldx = oldx;
@@ -20,6 +22,7 @@ public class ConnectTwoPoemMove extends Move{
 	}
 	
 	@Override
+	/**connect two poem**/
 	public boolean execute(){
 		newPoem = new Poem(selectedPoem,connectPoem,direction);
 		b.addPoems(newPoem);
@@ -29,6 +32,7 @@ public class ConnectTwoPoemMove extends Move{
 	}
 	
 	@Override
+	/**undo disconnect operation**/
 	public boolean undo(){
 		b.removePoem(newPoem);
 		b.addPoems(selectedPoem);

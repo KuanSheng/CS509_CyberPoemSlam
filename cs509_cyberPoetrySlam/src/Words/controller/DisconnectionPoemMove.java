@@ -1,3 +1,14 @@
+/**
+ * Disconnect a row from a poem.
+ * 1.Disconnect the first row;
+ * 2.Disconnect the last row;
+ * 3.Disconnect a mid row
+ * created and modified by Kuan**/
+/**
+ * Do not change these attributes during operation!
+ * or undo will kill you!!!
+ * it should be stateless.**/
+
 package Words.controller;
 import Words.model.*;
 
