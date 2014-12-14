@@ -66,5 +66,6 @@ public class WordModel extends AbstractTableModel {
     public static final String ADJ_STRING = "adj";
     public static final String NOUN_STRING = "noun";
     public static final String ADV_STRING = "adv";
+    }
 
 

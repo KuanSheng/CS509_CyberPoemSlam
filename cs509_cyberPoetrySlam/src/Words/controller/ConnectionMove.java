@@ -4,14 +4,18 @@ import Words.model.*;
 import java.io.Serializable;
 
 public class ConnectionMove extends Move implements Serializable{ // todo check why without Serializable Java complines about store/restore
+	//generated poem after connecttion
 	Poem newPoem;
 	final Word connectWord;
 	final Word selectedWord;
 	final Board b;
+	//original location of selected word
 	int oldx;
 	int oldy;
+	//connection type: 1 or 2
 	int type;
 	
+	/**constructor**/
 	public ConnectionMove(Word connectWord, Word selectedWord,Board b, int oldx, int oldy){
 		this.connectWord = connectWord;
 		this.selectedWord = selectedWord;
@@ -22,6 +26,7 @@ public class ConnectionMove extends Move implements Serializable{ // todo check 
 	}
 	
 	@Override
+	/**connect two words**/
 	public boolean execute(){
 		//type = b.getOverlapType(selectedWord, this.connectWord);
 		switch(type){
@@ -49,13 +54,13 @@ public class ConnectionMove extends Move implements Serializable{ // todo check 
 		}
 		
 		b.addPoems(newPoem);
-		System.out.println(newPoem.getRowNumber());
 		b.getWords().remove(selectedWord);
 		b.getWords().remove(this.connectWord);
 		return true;
 	}
 	
 	@Override
+	/*undo connection operation**/
 	public boolean undo(){
 		b.getWords().add(selectedWord);
 		b.getProtectedWords().add(selectedWord);

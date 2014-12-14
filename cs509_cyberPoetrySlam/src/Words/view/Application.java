@@ -14,7 +14,6 @@ import Words.controller.ReleasePoemController;
 import Words.controller.SubmitPoemController;
 import Words.controller.UndoController;
 import Words.model.*;
-;
 import Words.BrokerManager;
 import Words.controller.*;
 import Words.model.*;
@@ -199,7 +198,7 @@ public class Application extends JFrame {
 
 
 
-    }
+    
         
         btnDisconnect.addActionListener(new ActionListener() {
 

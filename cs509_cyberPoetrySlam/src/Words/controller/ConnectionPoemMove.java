@@ -1,6 +1,7 @@
 package Words.controller;
 import Words.model.*;
-
+/**
+ * it is connection operation for one poem and one word**/
 public class ConnectionPoemMove extends Move{
 	Poem connectPoem;
 	Word selectedWord;
@@ -9,6 +10,7 @@ public class ConnectionPoemMove extends Move{
 	int oldy;
 	int connectionType;
 	
+	/**constructor**/
 	public ConnectionPoemMove(Poem connectionPoem,Word selectedWord,Board b,int oldx, int oldy,int connectionType){
 		this.connectPoem = connectionPoem;
 		this.selectedWord = selectedWord;
@@ -19,7 +21,9 @@ public class ConnectionPoemMove extends Move{
 	}
 	
 	@Override
+	/**connect poem and word**/
 	public boolean execute(){
+		//word in front of poem
 		if(connectionType == 1||connectionType == 4||connectionType == 5){
 		Row r = connectPoem.getOverlapRow(selectedWord);
 		r.addWord(selectedWord);
@@ -28,7 +32,7 @@ public class ConnectionPoemMove extends Move{
 		connectPoem.setLocationAfterConnection(r.getX(),r.getY());
 		b.getWords().remove(selectedWord);
 		}
-		
+		//poem in front of word
 		else if(connectionType == 2||connectionType == 3||connectionType == 6){
 			Row r = connectPoem.getOverlapRow(selectedWord);
 			
@@ -40,6 +44,7 @@ public class ConnectionPoemMove extends Move{
 	}
 	
 	@Override
+	/**undo connection operation**/
 	public boolean undo(){
 		Row r = connectPoem.getOverlapRow(selectedWord);
 		
