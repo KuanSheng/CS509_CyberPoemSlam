@@ -11,21 +11,23 @@ public class Model implements Serializable{
 	Stack<Move> moves = new Stack<Move>();
 	Stack<Move> redoMoves = new Stack<Move>();
 
-	/** Currently selected shape (or null if none). */
+
+    /** Currently selected shape (or null if none). */
+    Word highlightWord;
 	Word selected;
 	Word selectedWordinPoem;
 	Poem selectedPoem;
 	Row  selectedRow;
 	Area selectedArea;
 
-	public Model(Board b) {
+    public Model(Board b) {
 		board = b;
 	}
-	
+
 	public Model() {
 		this(new Board());
 	}
-	
+
 	public void setBoard(Board b) {
 		board = b;
 	}
@@ -39,6 +41,9 @@ public class Model implements Serializable{
 	}
 	*/
 
+    public void setHighlightWord(Word highlightWord) {
+        this.highlightWord = highlightWord;
+    }
 	public void setSelected(Word s) {
 		selected = s;
 	}
@@ -119,4 +124,7 @@ public class Model implements Serializable{
     	return redoMoves;
     }
 
+    public Word getHighlightWord() {
+        return highlightWord;
+    }
 }

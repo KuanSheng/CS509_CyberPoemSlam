@@ -43,7 +43,8 @@ public class WordMoveController extends MouseAdapter{
 		//model.setSelectedRow(null);
 		
 		Board board = model.getBoard();
-		
+
+        model.setHighlightWord(null); // added by JUN to test removing highlight effect
 		
 		if (e.getButton()==MouseEvent.BUTTON3) {
 			this.generateNewWord(e.getX(), e.getY());
@@ -88,6 +89,8 @@ public class WordMoveController extends MouseAdapter{
 		model.setSelected(null);
 		model.setSelectedPoem(null);
 		model.setSelectedRow(null);
+
+
 	}
 	
     /**mouse released**/

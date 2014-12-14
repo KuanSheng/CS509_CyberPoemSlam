@@ -22,6 +22,8 @@ public class ApplicationCanvas extends Canvas{
 	Image offscreenImage;
 	Graphics offscreengraphics;
 	Graphics canvasGraphics;
+
+    private static final Color HIGHLIGH_COLOR = Color.red;
 	
 	//Constructor
 	public ApplicationCanvas(Model m){
@@ -68,6 +70,11 @@ public class ApplicationCanvas extends Canvas{
 		paintSelectedPoem(g);
 		}
 		paintSelectedArea(g);
+
+        //added by JUN to paint highlighted word (selected by clicking in word table)
+        if(model.getHighlightWord() != null){
+            paintHighlightWord(g);
+        }
 	}
 	
 	public void paintBackground(Graphics g){
@@ -197,5 +204,18 @@ public class ApplicationCanvas extends Canvas{
 			g.drawLine(word.getX()+word.getWidth(),word.getY(),word.getX()+word.getWidth(),word.getY()+word.getHeight());
 			}
 	}
+
+    /**
+     * JUN added to paint highlighted word, selected by clicking in word table
+     * @param g
+     */
+    public void paintHighlightWord(Graphics g){
+        Word w = model.getHighlightWord();
+        g.clearRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
+        g.setColor(HIGHLIGH_COLOR);
+        g.fillRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
+        g.setColor(Color.black);
+        g.drawString(w.getValue(),w.getX()+w.getWidth()/2,w.getY()+w.getHeight());
+    }
 
 }
