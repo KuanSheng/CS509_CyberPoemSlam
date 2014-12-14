@@ -16,7 +16,7 @@ public class Model implements Serializable{
 	Word selectedWordinPoem;
 	Poem selectedPoem;
 	Row  selectedRow;
-	Area selectedArea;
+	public Area selectedArea;
 
 	public Model(Board b) {
 		board = b;

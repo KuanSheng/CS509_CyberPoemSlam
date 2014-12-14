@@ -49,7 +49,7 @@ public class WordMoveController extends MouseAdapter{
 			this.generateNewWord(e.getX(), e.getY());
 			return;
 		}
-		
+	
         if(e.getClickCount() == 2){
         	//must in the protected area
         	this.disconnectWord(x, y);
@@ -67,7 +67,6 @@ public class WordMoveController extends MouseAdapter{
 		
 		//shift row
 		if(board.findRow(anchor.x, anchor.y, model.getSelectedRow())){
-			System.out.println("hahaha");
 			setRowFlag(model.getSelectedRow());
 			return;
 		}
@@ -153,9 +152,10 @@ public class WordMoveController extends MouseAdapter{
 	/**drag mouse**/
 	public boolean drag(int x, int y){
 		if(model == null){return false;}
+		
 		Word selectedWord = model.getSelected();
 		Poem selectedPoem = model.getSelectedPoem();
-		
+	
 		//nothing selected
 		if(selectedWord == null&&selectedPoem == null&&buildFlag&&!RowFlag){
 			return drawSelectionArea(x, y);
@@ -204,7 +204,6 @@ public class WordMoveController extends MouseAdapter{
 			this.moveWord(selectedWord);
 		}
 		else if(selectedPoem != null){
-			System.out.println("Why are we here?");
 			this.movePoem(selectedPoem);
 		}
 		
@@ -332,6 +331,7 @@ public class WordMoveController extends MouseAdapter{
 		return false;
 	}
 	
+	/**connect two words**/
     public void connectTwoWords(Word w){
 		//check potential overlap
 		boolean potentialOverlap = this.checkWordPotentialOverlap(w);
