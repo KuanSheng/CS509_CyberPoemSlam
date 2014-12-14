@@ -24,11 +24,10 @@ public class ShiftRowController {
 	}
 	
 	public void shift(){
-		ShiftRowMove move = new ShiftRowMove(shiftPoem,shiftRow,newx,newy,oldy,oldy);
+		ShiftRowMove move = new ShiftRowMove(shiftPoem,shiftRow,newx,newy,oldx,oldy);
 		if(move.execute()){
 			panel.repaint();
 		}
-		
 		model.getMoves().push(move);
 	}
 }

@@ -54,7 +54,29 @@ public class ReleasePoemMove extends Move {
         panel.repaint();
         return true;
     }
-
+    
+    @Override
+    public boolean redo(){
+    	 System.out.println("removing poem from board : execute.ReleasePoemMove");
+         board.removePoem(poemReleased);
+         System.out.println("adding words to unprotected area: execute.ReleasePoemMove");
+         Iterator<Row> itRow = poemReleased.getRows().iterator();
+         while (itRow.hasNext()){
+             Row r = itRow.next();
+             setReleaseLocation(r);
+             Iterator<Word> itWord = r.iterator();
+             while (itWord.hasNext()){
+                 Word w = itWord.next();
+//                 setReleaseLocation(w);
+                 board.getunprotectedWords().add(w);
+                 board.getWords().add(w);
+             }
+//             board.getunprotectedWords().addAll(itRow.next().getWords());
+         }
+         m.setSelectedPoem(null);
+         panel.repaint();
+         return true;
+    }
     //set the new location for released words
     public Word setReleaseLocation(Word w){
 //        w.setLocation(w.getX(), panel.getWidth()-w.getHeight());
