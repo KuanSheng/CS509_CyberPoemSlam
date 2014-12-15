@@ -70,11 +70,35 @@ public class WordMoveControllerTest {
         
         control.anchor = new Point(210,250);
         control.setSelectedWord(s);
-        
+       
         control.drag(250, 250);
         control.release();
         
         assertEquals(s.getX(),240);
+        assertEquals(s.getY(),240);
+        
+        control.anchor = new Point(250,245);
+        control.setSelectedWord(s);       
+        control.drag(250, 345);
+        control.release();
+        
+        assertEquals(s.getX(),240);
+        assertEquals(s.getY(),340);
+        
+        control.anchor = new Point(250,345);
+        control.setSelectedWord(s);       
+        control.drag(200, 345);
+        control.release();
+        
+        assertEquals(s.getX(),190);
+        assertEquals(s.getY(),340);
+        
+        control.anchor = new Point(200,345);
+        control.setSelectedWord(s);       
+        control.drag(200, 245);
+        control.release();
+        
+        assertEquals(s.getX(),190);
         assertEquals(s.getY(),240);
 	}
 	
@@ -181,10 +205,15 @@ public class WordMoveControllerTest {
 		control.release();
 		
 		control.anchor = new Point(210,250);
+		control.setRowFlag(m.getSelectedRow());
 		control.drag(220,250);
 		
 		Row r = p.getLastRow();
-		System.out.println(r.getX());
-		assertEquals(r.getX(),210);
+		assertEquals(r.getX(),200);
+	}
+	
+	@Test
+	public void testWordOverlap(){
+		
 	}
 }
