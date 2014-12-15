@@ -10,6 +10,8 @@ public class ConnectionMove extends Move implements Serializable{ // todo check 
 	final Board b;
 	int oldx;
 	int oldy;
+	int newx;
+	int newy;
 	int type;
 	
 	public ConnectionMove(Word connectWord, Word selectedWord,Board b, int oldx, int oldy){
@@ -23,7 +25,7 @@ public class ConnectionMove extends Move implements Serializable{ // todo check 
 
 	@Override
 	public boolean execute(){
-		//type = b.getOverlapType(selectedWord, this.connectWord);
+	    //type = b.getOverlapType(selectedWord, this.connectWord);
 		switch(type){
 		case 3:
 			newPoem = new Poem(this.connectWord,selectedWord,1);
@@ -47,9 +49,9 @@ public class ConnectionMove extends Move implements Serializable{ // todo check 
 			newPoem = new Poem(this.connectWord,selectedWord,1);
 			break;
 		}
-		
+		this.newx = connectWord.getX();
+		this.newy = connectWord.getY();
 		b.addPoems(newPoem);
-		System.out.println(newPoem.getRowNumber());
 		b.getWords().remove(selectedWord);
 		b.getWords().remove(this.connectWord);
 		return true;
@@ -71,7 +73,7 @@ public class ConnectionMove extends Move implements Serializable{ // todo check 
 	
 	@Override
 	public boolean redo(){
-		switch(type){
+		/*switch(type){
 		case 3:
 			newPoem = new Poem(this.connectWord,selectedWord,1);
 		    break;
@@ -93,8 +95,8 @@ public class ConnectionMove extends Move implements Serializable{ // todo check 
 		default:
 			newPoem = new Poem(this.connectWord,selectedWord,1);
 			break;
-		}
-		
+		}*/
+		connectWord.setLocation(newx,newy);
 		b.addPoems(newPoem);
 		//System.out.println(newPoem.getRowNumber());
 		b.getWords().remove(selectedWord);

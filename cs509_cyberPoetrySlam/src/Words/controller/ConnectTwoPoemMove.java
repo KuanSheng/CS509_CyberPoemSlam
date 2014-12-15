@@ -36,6 +36,7 @@ public class ConnectTwoPoemMove extends Move{
 		b.removePoem(connectPoem);
 		return true;
 	}
+	
 	@Override
 	public boolean undo(){
 		b.removePoem(newPoem);
