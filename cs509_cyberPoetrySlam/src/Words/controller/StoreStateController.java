@@ -10,12 +10,16 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 /**
  * Created by Jun on 10/28/2014.
  */
 public class StoreStateController extends WindowAdapter {
+     public static final String WORDS_FILE = System.getProperty("user.dir")+"/words.txt";
+     public static final int INITIAL_WORD_NUMBER = 50;
      Model model;
      ApplicationCanvas panel;
 
@@ -68,7 +72,12 @@ public class StoreStateController extends WindowAdapter {
             System.out.println("deserialized model : StoreStateController");
 
         }catch (IOException i){
-            i.printStackTrace();
+            System.out.println("restoring from file failed, assigning random words from words.txt...");
+            ArrayList<Word> pool = readinWords();
+            ArrayList<Word> samples = assignWords(pool, INITIAL_WORD_NUMBER);
+            for(Word w : samples){
+                model.getBoard().addWords(w);
+            }
             return;
         }catch (ClassNotFoundException c){
             System.out.println(" Model class not found : StoreStateController");
@@ -90,5 +99,45 @@ public class StoreStateController extends WindowAdapter {
     public void windowOpened(WindowEvent e){
         System.out.println("");
         restoreState();
+    }
+
+    ArrayList<Word> readinWords(){
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(WORDS_FILE));
+            ArrayList<Word> newWords = new ArrayList<Word>();
+            while (reader.readLine() != null) {
+                for(int i = 0; i < INITIAL_WORD_NUMBER; i ++){
+                    String[] wordSignature = reader.readLine().split("\\s+");
+                    Word w = createWord(wordSignature[0], wordSignature[1]);
+                    newWords.add(w);
+                }
+            }
+            reader.close();
+            return newWords;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    Word createWord(String value, String type){
+        int screenWidth = panel.getWidth() - 40; //copied code from brokerManager JUN
+        Random r = new Random();
+        int rx = (int) (r.nextFloat() * screenWidth);
+        int ry = (int) (r.nextFloat() * 200 + 300);
+        Word w = new Word(rx, ry, 120, 14, value, Word.getTypeInt(type));
+        return w;
+
+    }
+
+    ArrayList<Word> assignWords(ArrayList<Word> pool, int count){
+        if(pool == null || pool.size() == 0 || count <1) return null;
+        int poolSize = pool.size();
+        ArrayList<Word> samples = new ArrayList<Word>();
+        Random rn = new Random();
+        for(int i = 0; i < count; i ++){
+            samples.add( pool.get(rn.nextInt(poolSize-1)) );
+        }
+        return samples;
     }
 }

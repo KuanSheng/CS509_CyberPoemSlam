@@ -13,18 +13,35 @@ public class Word extends Element implements Serializable{
     int height;
     int wordType;
 
-    public static final int ADJ_INT = 0;
-    public static final int ADV_INT = 1;
-    public static final int NOUN_INT = 2;
-    public static final int VERB_INT = 3;
+    public static final int ADJ_INT         = 0;
+    public static final int ADV_INT         = 1;
+    public static final int CONJUNCTION_INT = 2;
+    public static final int DETERMINER_INT  = 3;
+    public static final int NOUN_INT        = 4;
+    public static final int NUMBER_INT      = 5;
+    public static final int PRONOUN_INT     = 6;
+    public static final int PREPOSITION_INT = 7;
+    public static final int SUFFIX_INT      = 8;
+    public static final int VERB_INT        = 9;
 
 
-    public static final String VERB_STRING = "verb";
-    public static final String ADJ_STRING = "adj";
-    public static final String NOUN_STRING = "noun";
-    public static final String ADV_STRING = "adv";
 
-    public static final String[] TYPE_INT_TO_STRING = {ADJ_STRING, ADV_STRING, NOUN_STRING, VERB_STRING};
+    public static final String ADJ_STRING           = "adjective";
+    public static final String ADV_STRING           = "adverb";
+    public static final String CONJUNCTION_STRING   = "conjunction";
+    public static final String DETERMINER_STRING    = "determiner";
+    public static final String NOUN_STRING          = "noun";
+    public static final String NUBER_STRING         = "number";
+    public static final String PRONOUN_STRING       = "pronoun";
+    public static final String PREPOSITION_STRING   = "preposition";
+    public static final String SUFFIX_STRING        = "suffix";
+    public static final String VERB_STRING          = "verb";
+
+    public static final String[] TYPE_INT_TO_STRING = {ADJ_STRING, ADV_STRING,
+            CONJUNCTION_STRING,
+            DETERMINER_STRING,NOUN_STRING,
+            NUBER_STRING,PRONOUN_STRING,
+            PREPOSITION_STRING,SUFFIX_STRING,VERB_STRING};
 
      
      public Word(int x,int y,int width,int height,String value,int wordType){
@@ -118,6 +135,15 @@ public class Word extends Element implements Serializable{
     public static final int getTypeInt(String s) {
         if(ADJ_STRING.equals(s)) return ADJ_INT;
         if(ADV_STRING.equals(s)) return ADV_INT;
+
+        if(CONJUNCTION_STRING.equals(s)) return CONJUNCTION_INT;
+        if(DETERMINER_STRING.equals(s)) return DETERMINER_INT;
+        if(NUBER_STRING.equals(s)) return NUMBER_INT;
+        if(NOUN_STRING.equals(s)) return NOUN_INT;
+        if(PRONOUN_STRING.equals(s)) return PRONOUN_INT;
+        if(PREPOSITION_STRING.equals(s)) return PREPOSITION_INT;
+        if(SUFFIX_STRING.equals(s)) return SUFFIX_INT;
+
         if(NOUN_STRING.equals(s)) return NOUN_INT;
         if(VERB_STRING.equals(s)) return VERB_INT;
         return -1;
