@@ -190,11 +190,17 @@ public class WordMoveController extends MouseAdapter{
 		Word selectedWord = model.getSelected();
 		Poem selectedPoem = model.getSelectedPoem();
 		Row selectedRow = model.getSelectedRow();
+		Poem submittedPoem = model.getSubmittedPoem();
 		
 	
 		//nothing selected
-		if(selectedWord == null&&selectedPoem == null&&selectedRow == null){
-			if(b.getSelectedRow(model.getSelectedArea())!=null){
+		if(selectedWord == null&&selectedPoem == null&&selectedRow == null&&submittedPoem == null){
+			if(b.getSubmittedPoemByArea(model.getSelectedArea())!=null){
+				System.out.println("here");
+				model.setSubmittedPoem(b.getSubmittedPoemByArea(model.getSelectedArea()));
+			}
+			
+			else if(b.getSelectedRow(model.getSelectedArea())!=null){
 			model.setSelectedRow(b.getSelectedRow(model.getSelectedArea()));
 			}
 			model.setSelectedArea(0, 0, 0, 0);
@@ -216,9 +222,11 @@ public class WordMoveController extends MouseAdapter{
 		model.setSelected(null);
 		model.setSelectedPoem(null);
 		model.setSelectedRow(null);
+		model.setSubmittedPoem(null);
 		selectedWord = null;
 		selectedPoem = null;
 		selectedRow = null;
+		submittedPoem = null;
 		buildFlag = false;
 		RowFlag = false;
 		return true;
@@ -471,6 +479,7 @@ public class WordMoveController extends MouseAdapter{
    
    public boolean buildSelectionArea(int ox,int oy){
 	   model.setSelectedRow(null);
+	   model.setSubmittedPoem(null);
 	   this.originalx = ox;
 	   this.originaly = oy;
 	   this.buildFlag = true;
@@ -530,7 +539,6 @@ public class WordMoveController extends MouseAdapter{
    public void setRowFlag(Row r){
 	   RowFlag = true;
 	   Point relative = new Point (anchor);
-	   System.out.println(r.getX());
 	   originalx = r.getX();
 	   originaly = r.getY();
 			

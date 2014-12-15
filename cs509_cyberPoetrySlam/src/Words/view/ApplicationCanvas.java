@@ -57,6 +57,10 @@ public class ApplicationCanvas extends Canvas{
 		if(model.getSelectedPoem() != null){
 		paintSelectedPoem(g);
 		}
+		
+		if(model.getSubmittedPoem() != null){
+		paintSubmitPoem(g);
+		}
 		paintSelectedArea(g);
 	}
 	
@@ -174,5 +178,25 @@ public class ApplicationCanvas extends Canvas{
 			g.drawLine(word.getX()+word.getWidth(),word.getY(),word.getX()+word.getWidth(),word.getY()+word.getHeight());
 			}
 	}
+	
+	public void paintSubmitPoem(Graphics g){
+		Poem p = model.getSubmittedPoem();
+		for(Row r:p.getRows()){
+		g.clearRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+		g.setColor(Color.black);
+		g.fillRect(r.getX(),r.getY(),r.getWidth(),r.getHeight());
+		g.setColor(Color.white);
+		g.drawLine(r.getX(), r.getY(), r.getX(), r.getY()+r.getHeight());
+		g.drawLine(r.getX(), r.getY(), r.getX()+r.getWidth(), r.getY());
+		g.drawLine(r.getX(), r.getY()+r.getHeight(),r.getX()+r.getWidth(),r.getY()+r.getHeight());
+		for(Iterator<Word> wordItr = r.iterator();wordItr.hasNext();){
+			Word word = wordItr.next();
+			g.setColor(Color.white);
+			g.drawString(word.getValue(), word.getX()+word.getWidth()/2, word.getY()+r.getHeight());
+			g.setColor(Color.white);
+			g.drawLine(word.getX()+word.getWidth(),word.getY(),word.getX()+word.getWidth(),word.getY()+word.getHeight());
+			}
+	    }
+    }
 
 }
