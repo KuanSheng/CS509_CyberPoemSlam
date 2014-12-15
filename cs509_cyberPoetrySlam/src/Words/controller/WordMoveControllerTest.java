@@ -72,6 +72,7 @@ public class WordMoveControllerTest {
         control.setSelectedWord(s);
         
         control.drag(250, 250);
+        control.release();
         
         assertEquals(s.getX(),240);
         assertEquals(s.getY(),240);
@@ -91,6 +92,7 @@ public class WordMoveControllerTest {
 		control.setSelectedPoem(p);
 		
 		control.drag(250,250);
+		control.release();
 		
 		assertEquals(p.getX(),240);
         assertEquals(p.getY(),240);
@@ -138,7 +140,51 @@ public class WordMoveControllerTest {
 	}
 	
 	@Test
-	public void testDragToShiftRow(){
+	public void testDragToSelectRow(){
+		WordMoveController control = new WordMoveController(m,panel);
+        panel.addMouseListener(control);
+        
+		Word s = new Word(200,240,120,14,"Hello",2);
+		Word w = new Word(320,240,120,14,"World",2);
 		
+		Poem p = new Poem(s,w,2);
+		b.addPoems(p);
+		
+		control.buildSelectionArea(180,230);
+		control.drag(450,260);
+		control.release();
+		
+		Row r1 = p.getFirstRow();
+		Row r2 = m.getSelectedRow();
+		
+		assertEquals(r1,r2);
+	}
+	
+	@Test
+	public void testDragToShiftRow(){
+		WordMoveController control = new WordMoveController(m,panel);
+        panel.addMouseListener(control);
+        
+		Word s = new Word(200,240,120,14,"Hello",2);
+		Word w = new Word(320,240,120,14,"World",2);
+		Word s1 = new Word(200,254,120,14,"Hello",2);
+		Word w2 = new Word(320,254,120,14,"World",2);
+		
+		Poem p1 = new Poem(s,w,2);
+		Poem p2 = new Poem(s1,w2,2);
+		
+		Poem p = new Poem(p1,p2,1);
+		b.addPoems(p); 
+		
+		control.buildSelectionArea(180,230);
+		control.drag(450,260);
+		control.release();
+		
+		control.anchor = new Point(210,250);
+		control.drag(220,250);
+		
+		Row r = p.getLastRow();
+		System.out.println(r.getX());
+		assertEquals(r.getX(),210);
 	}
 }
