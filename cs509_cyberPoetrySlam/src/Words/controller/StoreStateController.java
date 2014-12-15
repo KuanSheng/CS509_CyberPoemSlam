@@ -105,12 +105,14 @@ public class StoreStateController extends WindowAdapter {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(WORDS_FILE));
             ArrayList<Word> newWords = new ArrayList<Word>();
-            while (reader.readLine() != null) {
-                for(int i = 0; i < INITIAL_WORD_NUMBER; i ++){
-                    String[] wordSignature = reader.readLine().split("\\s+");
+            String wordInFile = reader.readLine();
+            while (wordInFile != null) {
+//                for(int i = 0; i < INITIAL_WORD_NUMBER; i ++){
+                    String[] wordSignature = wordInFile.split("\\s+");
                     Word w = createWord(wordSignature[0], wordSignature[1]);
                     newWords.add(w);
-                }
+                    wordInFile = reader.readLine();
+//                }
             }
             reader.close();
             return newWords;

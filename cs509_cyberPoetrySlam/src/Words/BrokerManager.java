@@ -211,18 +211,19 @@ public class BrokerManager implements IHandleBrokerMessage {
 				wordsToAdd = s.offerWords;
 				wordsTypeAdd = s.offerTypes;
                 // remove each word as found
-                for (int i = 0; i < s.n; i++) {
-                    for (Word word : model.getBoard().getunprotectedWords()) {
-                        if (word.getValue().equals(wordsToRemove[i])) {
-
-                            System.out.println(word.getValue() + word.getX() + word.getY());
-
-                            //model.getBoard().getunprotectedWords().remove(word);
-                            model.getBoard().removeWords(word);
-                            break;
-                        }
-                    }
-                }
+//                for (int i = 0; i < s.n; i++) {
+//                    for (Word word : model.getBoard().getunprotectedWords()) {
+//                        if (word.getValue().equals(wordsToRemove[i])) {
+//
+//                            System.out.println(word.getValue() + word.getX() + word.getY());
+//
+//                            //model.getBoard().getunprotectedWords().remove(word);
+//                            System.out.println("remove requested word" + word + " process.BrokerManager");
+//                            model.getBoard().removeWords(word);
+//                            break;
+//                        }
+//                    }
+//                }
 			}
 
 
@@ -248,7 +249,7 @@ public class BrokerManager implements IHandleBrokerMessage {
 				
 				model.getBoard().addWords(word);
 				
-				System.out.println(word.getValue()+ word.getX()+word.getY());
+				System.out.println("add offered word" + word + " process.BrokerManager");
 				
 			}
 			

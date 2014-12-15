@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 public class Word extends Element implements Serializable{
-    public static final int TYPE_COUNT = 4;
+    public static final int TYPE_COUNT = 10;
     int x;
 	 int y;
 
