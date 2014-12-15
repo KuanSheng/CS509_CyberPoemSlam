@@ -1,3 +1,6 @@
+/**
+ * modify redo and exectue because I found that move is different between first executed and 
+ * redo.**/
 package Words.controller;
 import Words.model.*;
 
@@ -16,7 +19,7 @@ public class ConnectionMove extends Move implements Serializable{ // todo check 
 	
 	public ConnectionMove(Word connectWord, Word selectedWord,Board b, int oldx, int oldy){
 		this.connectWord = connectWord;
-		this.selectedWord = selectedWord;
+	    this.selectedWord = selectedWord;
 		this.b = b;
 		this.oldx = oldx;
 		this.oldy = oldy;
