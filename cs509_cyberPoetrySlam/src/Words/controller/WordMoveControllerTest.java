@@ -100,7 +100,20 @@ public class WordMoveControllerTest {
         
         assertEquals(s.getX(),190);
         assertEquals(s.getY(),240);
-	}
+        
+        Word w1 = new Word(190,120,120,14,"overlap",2);
+        Word w2 = new Word(320,120,120,14,"overlap",2);
+        b.addWords(w1);
+        b.addWords(w2);
+        
+        control.anchor = new Point(200,245);
+        control.setSelectedWord(s);       
+        control.drag(220,120);
+        control.release();
+        
+        assertEquals(s.getX(),190);
+        assertEquals(s.getY(),240);
+    }
 	
 	@Test
 	public void testDragToMovePoem(){
@@ -282,6 +295,8 @@ public class WordMoveControllerTest {
 		
 		assertEquals(w4.getX(),240);
 		assertEquals(w4.getY(),360);
+		
+		
 	}
 	
 	@Test
@@ -313,6 +328,31 @@ public class WordMoveControllerTest {
 			control.disconnectWord(330, 245);
 			assertTrue(b.findWord(210, 245)!=null);
 	}
+	@Test
+	public void TestOverlapPoem(){
+		WordMoveController control = new WordMoveController(m,panel);
+        panel.addMouseListener(control);
+      
+		  Word s = new Word(200,240,120,14,"Hello",2);
+		  Word w = new Word(320,240,120,14,"World",2);
+		
+		  Poem p = new Poem(s,w,2);
+		  b.addPoems(p);
+		  
+		  Word s1 = new Word(200,260,120,14,"Hello",2);
+		  Word w1 = new Word(320,260,120,14,"World",2);
+		  
+		  Poem p1 = new Poem(s1,w1,2);
+		  b.addPoems(p1);
+		  
+		  control.anchor = new Point(245,265);
+		  control.setSelectedPoem(p1);
+		  control.drag(245, 245);
+		  control.release();
+		  
+		  assertTrue(!b.findPoem(p1));
+		  assertTrue(b.findPoem(210, 245)!=null);
+	}
 	
 	@Test
 	public void TestConnectionTwoPoem(){
@@ -325,10 +365,15 @@ public class WordMoveControllerTest {
 		  Poem p = new Poem(s,w,2);
 		  b.addPoems(p);
 		  
-		  Word s1 = new Word(200,260,120,14,"Hello",2);
-		  Word w1 = new Word(200,260,120,14,"World",2);
+		  Word s1 = new Word(200,250,120,14,"Hello",2);
+		  Word w1 = new Word(320,250,120,14,"World",2);
 		  
 		  Poem p1 = new Poem(s1,w1,2);
 		  b.addPoems(p1);
+		  
+		  control.connectTwoPoem(p, p1);
+		  
+		  assertTrue(!b.findPoem(p1));
+		  assertTrue(b.findPoem(210, 245)!=null);
 	}
 }
