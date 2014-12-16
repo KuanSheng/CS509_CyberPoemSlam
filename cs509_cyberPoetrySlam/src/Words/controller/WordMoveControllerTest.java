@@ -120,6 +120,27 @@ public class WordMoveControllerTest {
 		
 		assertEquals(p.getX(),240);
         assertEquals(p.getY(),240);
+        
+        Word w1 = new Word(500,240,120,14,"overlap",2);
+        b.addWords(w1);
+        
+        control.anchor = new Point(245,250);
+		control.setSelectedPoem(p);
+		
+		control.drag(300,250);
+		control.release();
+		
+		assertEquals(p.getX(),240);
+        assertEquals(p.getY(),240);
+        
+        control.anchor = new Point(245,250);
+		control.setSelectedPoem(p);
+		
+		control.drag(300,350);
+		control.release();
+		
+		assertEquals(p.getX(),240);
+        assertEquals(p.getY(),240);
 	}
 	
 	@Test
@@ -228,5 +249,86 @@ public class WordMoveControllerTest {
 		control.release();
 		
 		assertEquals(w.getX(),320);
-		}
+		
+		Word w1 = new Word(500,240,120,14,"test",2);
+		b.addWords(w1);
+		
+		control.anchor = new Point(510,245);
+		control.setSelectedWord(w1);
+		control.drag(430, 245);
+		control.release();
+		
+		assertEquals(w1.getX(),440);
+		
+		Word w2 = new Word(500,240,120,14,"test",2);
+		b.addWords(w2);
+		
+		control.anchor = new Point(510,245);
+		control.setSelectedWord(w2);
+		control.drag(180, 245);
+		control.release();
+		
+		assertEquals(w2.getX(),80);
+		
+		Word w3 = new Word(570,240,120,14,"test",2);
+		Word w4 = new Word(240,360,120,14,"test",2);
+		b.addWords(w4);
+		b.addWords(w3);
+		
+		control.anchor = new Point(245,365);
+		control.setSelectedWord(w4);
+		control.drag(560, 240);
+		control.release();
+		
+		assertEquals(w4.getX(),240);
+		assertEquals(w4.getY(),360);
+	}
+	
+	@Test
+	public void TestDisconnection(){
+		WordMoveController control = new WordMoveController(m,panel);
+        panel.addMouseListener(control);
+        
+		Word s = new Word(200,240,120,14,"Hello",2);
+		Word w = new Word(320,240,120,14,"World",2);
+		
+		Poem p = new Poem(s,w,2);
+		b.addPoems(p);
+		
+		control.disconnectWord(210, 245);
+		assertTrue(b.findWord(210, 245)!=null);
+	}
+	
+	@Test
+	public void TestDisconnection2(){
+			WordMoveController control = new WordMoveController(m,panel);
+	        panel.addMouseListener(control);
+	        
+			Word s = new Word(200,240,120,14,"Hello",2);
+			Word w = new Word(320,240,120,14,"World",2);
+			
+			Poem p = new Poem(s,w,2);
+			b.addPoems(p);
+			
+			control.disconnectWord(330, 245);
+			assertTrue(b.findWord(210, 245)!=null);
+	}
+	
+	@Test
+	public void TestConnectionTwoPoem(){
+		  WordMoveController control = new WordMoveController(m,panel);
+          panel.addMouseListener(control);
+        
+		  Word s = new Word(200,240,120,14,"Hello",2);
+		  Word w = new Word(320,240,120,14,"World",2);
+		
+		  Poem p = new Poem(s,w,2);
+		  b.addPoems(p);
+		  
+		  Word s1 = new Word(200,260,120,14,"Hello",2);
+		  Word w1 = new Word(200,260,120,14,"World",2);
+		  
+		  Poem p1 = new Poem(s1,w1,2);
+		  b.addPoems(p1);
+	}
 }
