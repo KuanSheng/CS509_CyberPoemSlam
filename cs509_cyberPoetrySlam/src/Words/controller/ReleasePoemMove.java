@@ -26,7 +26,7 @@ public class ReleasePoemMove extends Move {
         this.m = m;
         this.panel = panel;
         this.board = m.getBoard();
-        poemReleased = m.getSelectedPoem();
+        poemReleased = m.getSubmittedPoem();
         xInitial = poemReleased.getX();
         yInitial = poemReleased.getY();
         Iterator<Row> rowsToRelease = poemReleased.getRows().iterator();

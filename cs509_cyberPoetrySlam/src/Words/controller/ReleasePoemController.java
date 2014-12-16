@@ -24,7 +24,7 @@ public class ReleasePoemController implements ActionListener {
     }
 
     public boolean releasePoem(){
-        Poem poemToRelease = m.getSelectedPoem();
+        Poem poemToRelease = m.getSubmittedPoem();
         if(poemToRelease == null){
             return false;
         }else {
