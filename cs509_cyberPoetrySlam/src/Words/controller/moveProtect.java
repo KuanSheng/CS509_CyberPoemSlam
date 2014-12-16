@@ -47,4 +47,18 @@ public class moveProtect extends Move implements Serializable{
 		word.setLocation(oldx,oldy);
 		return true;
 	}
+	
+	@Override
+	public boolean redo(){
+		if(oldy > 300&&newy < 300){
+			b.protectWords(word);
+		}
+		
+		if(oldy < 300&&newy > 300){
+			b.releaseWords(word);
+		}
+		
+		word.setLocation(newx,newy);
+		return true;
+	}
 }

@@ -15,7 +15,7 @@ public class movePoem extends Move{
 		this.newx = newx;
 		this.newy = newy;
 	}
-	
+
 	@Override
 	public boolean execute(){
 		poem.setLocation(newx, newy, newx, newy);
@@ -25,6 +25,10 @@ public class movePoem extends Move{
 	@Override
 	public boolean undo(){
 		poem.setLocation(oldx,oldy,newx,newy);
+		return true;
+	}
+	public boolean redo(){
+		poem.setLocation(newx,newy,oldx,oldy);
 		return true;
 	}
 }

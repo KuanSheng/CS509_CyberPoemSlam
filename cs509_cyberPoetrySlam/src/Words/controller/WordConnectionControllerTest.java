@@ -17,8 +17,10 @@ public class WordConnectionControllerTest {
     Model model;
 	ApplicationCanvas panel;
 	Board b0;
-	Word connectWord;
-	Poem connectPoem;
+	int oldXW;
+	int oldYW;
+	int oldXP;
+	int oldYP;
 	WordConnectionController CC1;
 	WordConnectionController CC2;
 	
@@ -29,85 +31,85 @@ public class WordConnectionControllerTest {
 		b0 = new Board();
 		model= new Model(b0);
 		panel = new ApplicationCanvas(model);
-		//CC1=new WordConnectionController(model, panel, connectWord);
-		//CC2=new WordConnectionController(model, panel, connectPoem );
+		Word connectWord_1 = new Word(40, 490, 10, 20, "my", 1);
+		oldXW = 50;
+		oldYW = 200;
+		oldXP = 100;
+		oldYP = 100;
+		
+		Word word1 = new Word(60, 600, 40, 14, "lovely", 0 );
+		Word word2 = new Word(80, 530, 30 ,14, "cat", 2);
+		Row row2 = new Row(word1,word2, 2);
+		
+		Word word3 = new Word(100, 550, 30,14,"dog", 2);
+		Word word4 = new Word(100, 490, 50,14,  "white", 0);
+		Row row3 = new Row(word3, word4, 1);
+		
+		Poem poem1 = new Poem (100,200);
+		Poem poem2 = new Poem(word1, word2, 2);
+		Poem poem3 = new Poem(word3, word4, 1);
+		Poem poem4 = new Poem(poem2, poem3, 1);
+
+		
+		CC1=new WordConnectionController(model, panel, connectWord_1, oldXW, oldYW);
+		CC2=new WordConnectionController(model, panel, poem4, oldXP, oldYP);
 		
 		assertEquals(model, CC1.model);
 		assertEquals(panel, CC1.panel);
-		assertEquals(connectWord, CC1.connectWord);
-		assertEquals(connectPoem, CC1.connectPoem);
+		assertEquals(connectWord_1, CC1.connectWord);
+		assertEquals(poem4, CC2.connectPoem);
 	}
 
 	@Test
-	public void testWordConnectionControllerModelApplicationCanvasWord() {
-		Word w1 = new Word(10, 20, 20,20, "Test",1);
-		model.setSelected(w1);
-		assertEquals(w1,model.getSelected());
-	    assertEquals(10, model.getSelected().getX());
-		connectWord=new Word (25,30,10,20,"connectW",1);
-		//CC1=new WordConnectionController(model, panel, connectWord);
-		//CC1.connect();
-	
-		Word w2 = new Word(40, 50, 40,20,"Test",1 );
-		model.setSelected(w2);
-		assertEquals(w2,model.getSelected());
-	    assertEquals(40, model.getSelected().getX());
-	    connectWord=new Word(40,40,50,20,"New",1);
-	    //CC1=new WordConnectionController(model, panel, connectWord);
-	    //CC1.connect();
-	    
-	    Word w3 =new Word(55, 60, 13, 20,"test",1);
-	    model.setSelected(w3);
-	    connectWord=new Word(50, 50 ,9,20,"Test",1) ;
-	    //CC1=new WordConnectionController(model, panel, connectWord);
-	    //CC1.connect();
-	    
-	    Word w4 = new Word(150, 200, 30, 20,"Test",1);
-	    model.setSelected(w4);
-	    connectWord=new Word(140, 210, 30,20, "Test",1 );
-	    //CC1=new WordConnectionController(model, panel, connectWord);
-	    //CC1.connect();
+	public void testConnect() {
 
-	    Word w5= new Word(200,200, 40,20,"new",1);
-	    model.setSelected(w5);
-	    connectWord=new Word(170,200 ,40,20,"new",1);
-	    //CC1=new WordConnectionController(model, panel, connectWord);
-	    //CC1.connect();
-	    
-	    Word w6 = new Word(250,100, 50,20,"Test",1);
-	    model.setSelected(w6);
-	    connectWord=new Word(280,100,50,20,"test",1);
-	    //CC1=new WordConnectionController(model, panel, connectWord);
-	    //CC1.connect();
-	    
-	    Word w7 = new Word(1,2,10,20,"new",1);
-	    model.setSelected(w7);
-	    connectWord=new Word(200,200,10,20,"new",1);
-	    //CC1=new WordConnectionController(model, panel, connectWord);
-	    //CC1.connect();
-	    	
+		Word word1 = new Word(45,480, 10,20, "Happy", 1);
+		model.setSelected(word1);
+		CC1.connect();
+		
+		
+		Word word2 = new Word(35,500, 10,20,"Happy",1);
+		model.setSelected(word2);
+		CC1.connect();
+		
+		Word word3 = new Word(35, 480, 10, 20, "Happy", 1);
+		model.setSelected(word3);
+		CC1.connect();
+		
+		Word word4 = new Word(45, 500, 10,20, "Happy", 1);
+		model.setSelected(word4);
+		CC1.connect();
+		
+		Word word5 = new Word(35,490, 10, 20, "Happy", 1);
+		model.setSelected(word5);
+		CC1.connect();
+		
+		Word word6 = new Word(35,490, 30, 20, "Happy", 1);
+		model.setSelected(word6);
+		CC1.connect();
+		
+		Word word7 = new Word(70,490, 10, 20, "Happy",1);
+		model.setSelected(word7);
+		CC1.connect();
+		
 	}
 
 	@Test
-	public void testWordConnectionControllerModelApplicationCanvasPoem() {
-		Word w3 =new Word(55, 60, 13, 20,"test",1);
-	    model.setSelected(w3);
+	public void testConnectPoem() {
+		Word word5 = new Word(60,476,40,14,"new",1);
+		model.setSelected(word5);
+		CC2.connectPoem(1);
 		
-		b0.addPoems(connectPoem);
-		Word w1= new Word(50, 55, 13,20,"new",1);
-		Word w2=new Word(60,55,13,20,"ha",1);
+			
+	}
+
+	@Test
+	public void testConnectPoemS2() {
+		Word word5 = new Word(60,476,40,14,"new",1);
+		model.setSelected(word5);
+		CC2.connectPoem(2);
 		
-		connectPoem = new Poem(w1,w2,1);
-//		assertEquals(1, connectPoem.getRowNumber());
-		
-	    //CC2=new WordConnectionController(model, panel, connectPoem );    
-	    CC2.connectPoem(1);
-	    
-	    CC2.connectPoem(4);
-	    CC2.connectPoem(5);
-	    CC2.connectPoem(2);
-	    CC2.connectPoem(7);
-	  
+			
 	}
 
 	

@@ -2,6 +2,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import Words.controller.ShiftRowControllerTest;
+import Words.controller.UndoControllerTest;
 import Words.controller.WordConnectionControllerTest;
 import Words.controller.WordDisconnectionControllerTest;
 import Words.controller.WordMoveControllerTest;
@@ -17,7 +19,8 @@ import Words.view.ApplicationTest;
 @RunWith(Suite.class)
 @SuiteClasses({WordTest.class, RowTest.class, PoemTest.class, ModelTest.class,  BoardTest.class, 
 	ApplicationTest.class, ApplicationCanvasTest.class,
-	 WordConnectionControllerTest.class, WordMoveControllerTest.class,WordDisconnectionControllerTest.class})
+	 WordConnectionControllerTest.class, WordMoveControllerTest.class,WordDisconnectionControllerTest.class,
+	 ShiftRowControllerTest.class, UndoControllerTest.class})
 public class AllTests {
 
 }

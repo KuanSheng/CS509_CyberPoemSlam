@@ -12,6 +12,7 @@ public class ShiftRowController {
 	int oldx;
 	int oldy;
 	
+	
 	public ShiftRowController(Model model,ApplicationCanvas panel,Poem shiftpoem,Row shiftrow,int newx,int newy,int oldx,int oldy){
 		this.model = model;
 		this.panel = panel;
@@ -24,11 +25,10 @@ public class ShiftRowController {
 	}
 	
 	public void shift(){
-		ShiftRowMove move = new ShiftRowMove(shiftPoem,shiftRow,newx,newy,oldy,oldy);
+		ShiftRowMove move = new ShiftRowMove(shiftPoem,shiftRow,newx,newy,oldx,oldy);
 		if(move.execute()){
 			panel.repaint();
 		}
-		
 		model.getMoves().push(move);
 	}
 }

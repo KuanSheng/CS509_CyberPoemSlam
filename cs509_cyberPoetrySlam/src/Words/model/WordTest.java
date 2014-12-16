@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class WordTest {
 
-	 Word word= new Word(40, 490, 10, 20, "Happy",1);
+	 Word word= new Word(40, 490, 10, 20, "Happy", 1);
 	
 	@Before
 	public void setUp() throws Exception {
@@ -38,6 +38,11 @@ public class WordTest {
 	@Test
 	public void testGetValue() {
 		assertEquals("Happy", word.getValue());
+	}
+
+	@Test
+	public void testGetWordType(){
+		assertEquals(1, word.getWordType());
 	}
 
 
@@ -123,5 +128,22 @@ public class WordTest {
 	public void testToString(){
 		assertEquals("Happy", word.toString());
 	}
-
+	
+	@Test
+	public void testGetTypeInt( ){
+		String s;
+		s = "verb";
+		assertEquals(3, Word.getTypeInt(s));
+		s = "noun";
+		assertEquals(2, Word.getTypeInt(s));
+		s = "adv";
+		assertEquals(1, Word.getTypeInt(s));
+		s = "adj";
+		assertEquals(0, Word.getTypeInt(s));
+		s = "nontype";
+		assertEquals(-1, Word.getTypeInt(s));
+		
+	}
+	
+	
 }

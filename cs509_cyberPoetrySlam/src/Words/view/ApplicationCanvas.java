@@ -6,7 +6,6 @@ import java.awt.Image;
 import java.awt.Graphics;
 import java.util.*;
 
-//import Words.controller.SwapRequestController;
 //import Words.controller.WordConnectionController;
 import Words.controller.WordMoveController;
 import Words.model.Area;
@@ -39,15 +38,6 @@ public class ApplicationCanvas extends Canvas{
 		this.board = model.getBoard();
 		this.addMouseListener(controller);
 		this.addMouseMotionListener(controller);
-		
-		board.addWords(new Word(40, 400, 120, 14, "Adj1",0));
-		board.addWords(new Word(40, 400, 120, 14, "Adj2",0));
-		board.addWords(new Word(40, 400, 120, 14, "Adv1",1));
-		board.addWords(new Word(40, 400, 120, 14, "Adv2",1));
-		board.addWords(new Word(40, 400, 120, 14, "Noun1",2));
-		board.addWords(new Word(40, 400, 120, 14, "Noun2",2));
-		board.addWords(new Word(40, 400, 120, 14, "Verb1",3));
-		board.addWords(new Word(40, 400, 120, 14, "Verb2",3));
 	}
 	
 	public void paint(Graphics g){
@@ -66,6 +56,10 @@ public class ApplicationCanvas extends Canvas{
 		
 		if(model.getSelectedPoem() != null){
 		paintSelectedPoem(g);
+		}
+		
+		if(model.getSubmittedPoem() != null){
+		paintSubmitPoem(g);
 		}
 		paintSelectedArea(g);
 	}
@@ -91,18 +85,6 @@ public class ApplicationCanvas extends Canvas{
 			
 		}
 	}
-	
-	
-	/**
-	 * Ruizhu add for BrokerManager
-	 */
-//	public void paintSwapAddWord(int x, int y, Graphics g, Word w){
-//		    g.clearRect(x, y, w.getWidth(), w.getHeight());
-//			g.setColor(Color.gray);
-//			g.fillRect(x, y, w.getWidth(), w.getHeight());
-//			g.setColor(Color.black);
-//			g.drawString(w.getValue(), x+w.getWidth()/2, y+w.getHeight());
-//	}
 	
 	public void paintWord(Word word){}
 	//need poem model design first
@@ -174,7 +156,6 @@ public class ApplicationCanvas extends Canvas{
 	
 	public void paintSelectedArea(Graphics g){
 		Area a = model.getSelectedArea();
-        if(a == null) return; //added by JUN to solve null pointer exception
 		g.drawRect(a.getX(),a.getY(),a.getWidth(),a.getHeight());
 		g.setColor(Color.GREEN);
 		g.fillRect(a.getX(), a.getY(), a.getWidth(), a.getHeight());
@@ -197,5 +178,25 @@ public class ApplicationCanvas extends Canvas{
 			g.drawLine(word.getX()+word.getWidth(),word.getY(),word.getX()+word.getWidth(),word.getY()+word.getHeight());
 			}
 	}
+	
+	public void paintSubmitPoem(Graphics g){
+		Poem p = model.getSubmittedPoem();
+		for(Row r:p.getRows()){
+		g.clearRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+		g.setColor(Color.black);
+		g.fillRect(r.getX(),r.getY(),r.getWidth(),r.getHeight());
+		g.setColor(Color.white);
+		g.drawLine(r.getX(), r.getY(), r.getX(), r.getY()+r.getHeight());
+		g.drawLine(r.getX(), r.getY(), r.getX()+r.getWidth(), r.getY());
+		g.drawLine(r.getX(), r.getY()+r.getHeight(),r.getX()+r.getWidth(),r.getY()+r.getHeight());
+		for(Iterator<Word> wordItr = r.iterator();wordItr.hasNext();){
+			Word word = wordItr.next();
+			g.setColor(Color.white);
+			g.drawString(word.getValue(), word.getX()+word.getWidth()/2, word.getY()+r.getHeight());
+			g.setColor(Color.white);
+			g.drawLine(word.getX()+word.getWidth(),word.getY(),word.getX()+word.getWidth(),word.getY()+word.getHeight());
+			}
+	    }
+    }
 
 }

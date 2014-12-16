@@ -16,8 +16,8 @@ public class RedoController {
 		if (m == null) {
 			return false; 
 		}
-		m.execute();
-		model.getRedoMoves().push(m);
+		m.redo();
+		model.getMoves().push(m);
 		// force board to redraw
 		canvas.repaint();
 		return true;

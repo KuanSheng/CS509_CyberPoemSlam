@@ -1,4 +1,3 @@
-
 package Words.view;
 
 
@@ -24,6 +23,8 @@ import Words.controller.UndoController;
 import Words.model.*;
 
 public class Application extends JFrame {
+
+
     Model model;
     WordTable table;
     WordTypeTable typeTable;
@@ -144,9 +145,9 @@ public class Application extends JFrame {
 
         //add listener
         randomAdj.addActionListener(new AddRandomWordForSwap(model.getBoard(),swap, this));
-        randomAdv.addActionListener(new AddRandomWordForSwap(model.getBoard(),swap, this));
-        randomNoun.addActionListener(new AddRandomWordForSwap(model.getBoard(),swap, this));
-        randomVerb.addActionListener(new AddRandomWordForSwap(model.getBoard(),swap, this));
+        randomAdv.addActionListener(new AddRandomWordForSwap(model.getBoard(), swap, this));
+        randomNoun.addActionListener(new AddRandomWordForSwap(model.getBoard(), swap, this));
+        randomVerb.addActionListener(new AddRandomWordForSwap(model.getBoard(), swap, this));
 
         //add into panel
         menuPanel.add(randomAdj);
@@ -182,7 +183,7 @@ public class Application extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 // register controller
-                DisconnectionPoemController disconnect = new DisconnectionPoemController(model,panel);
+                DisconnectionPoemController disconnect = new DisconnectionPoemController(model, panel);
                 disconnect.disconnectRow();
                 model.setSelectedRow(null);
             }
@@ -206,7 +207,7 @@ public class Application extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 // register controller
-                UndoController undo = new UndoController(model,panel);
+                UndoController undo = new UndoController(model, panel);
                 undo.process();
                 return;
             }
@@ -313,6 +314,10 @@ public class Application extends JFrame {
 //            button.setBackground(Co);
             }
         }
+    }
+
+    public Model getModel() {
+        return model;
     }
 
 }

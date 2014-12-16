@@ -1,9 +1,7 @@
 package Words.controller;
 import Words.model.*;
 
-import java.io.Serializable;
-
-public class moveWord extends Move implements Serializable{
+public class moveWord extends Move{
 	final Word word;
 	int oldx;
 	int oldy;
@@ -27,6 +25,12 @@ public class moveWord extends Move implements Serializable{
 	@Override
 	public boolean undo(){
 		word.setLocation(oldx, oldy);
+		return true;
+	}
+	
+	@Override
+	public boolean redo(){
+		word.setLocation(newx,newy);
 		return true;
 	}
 }

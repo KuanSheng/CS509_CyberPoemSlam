@@ -21,61 +21,6 @@ public class SwapRequestController extends MouseAdapter{
     private static String[] wordTypeDefinition = {"verb", "adj", "noun", "adv"};
     private String value;
 
-    public String generateMsg(){
-    	
-    	Scanner sc= new Scanner(System.in);
-    	System.out.println("Please enter the number of words you will swap");
-    	N=sc.nextInt();
-    	
-    	offerType=new String[N];
-    	offerWords= new String[N];
-    	requestType=new String[N];
-    	requestWords=new String[N];
-    	
-    	System.out.println("Please enter the types of the words you offer");
-    	for(int i=0; i < N; i++){
-    		offerType[i]= sc.next();
-    	}
-    	
-    	System.out.println("Please enter the words you offer");
-    	for (int i =0 ; i < N; i++){
-    		offerWords[i] = sc.next();
-    	}
-    	
-    	System.out.println("Please enter the types of words you request");
-    	for(int i= 0; i < N; i++){
-    		requestType[i]=sc.next();
-    	}
-    	
-    	System.out.println("Please enter the words you request");
-    	for(int i= 0; i < N; i++){
-    		requestWords[i]=sc.next();
-    	}	
-    	
-    	
-    	StringBuffer sb = new StringBuffer();
-    	sb.append(N); 
-		for (int i = 0; i < N; i++) {
-			sb.append(IProtocol.separator); sb.append(offerType[i]); 
-		}
-		for (int i = 0; i < N; i++) {
-			sb.append(IProtocol.separator); sb.append(offerWords[i]); 
-		}
-		for (int i = 0; i < N; i++) {
-			 sb.append(IProtocol.separator); sb.append(requestType[i]);
-		}
-		for (int i = 0; i < N; i++) {
-			 sb.append(IProtocol.separator); sb.append(requestWords[i]);
-		}
-		
-		System.out.println("swap msg :" + sb.toString());
-		
-		return sb.toString();
-    	
-    }
-	
-	
-//--------from example
 	/** Needed for controller behavior. */
 	Model model;
 	Application app;

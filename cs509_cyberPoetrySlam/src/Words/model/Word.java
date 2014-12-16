@@ -6,7 +6,7 @@ import java.io.Serializable;
 public class Word extends Element implements Serializable{
     public static final int TYPE_COUNT = 4;
     int x;
-	 int y;
+	int y;
 
     String value;
     int width;
@@ -27,7 +27,7 @@ public class Word extends Element implements Serializable{
     public static final String[] TYPE_INT_TO_STRING = {ADJ_STRING, ADV_STRING, NOUN_STRING, VERB_STRING};
 
      
-     public Word(int x,int y,int width,int height,String value,int wordType){
+     public Word(int x,int y,int width,int height, String value, int wordType){
     	 super.type = 1;
     	 this.x = x;
     	 this.y = y;

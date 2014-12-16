@@ -51,6 +51,33 @@ public class DisconnectionMove extends Move{
 		}
 	}
 	
+	@Override
+	public boolean redo(){
+		if(disconnectPoem.getRowNumber() == 1){
+			this.disconnectWordinOneRowPoem();
+			this.disType = 1;
+			return true;
+		}
+		
+		else if(r.equals(disconnectPoem.getFirstRow())){
+			this.disconnectWordinFirstRow();
+			this.disType = 2;
+			return true;
+		}
+		
+		else if(r.equals(disconnectPoem.getLastRow())){
+			this.disconnectWordinLastRow();
+			this.disType = 3;
+			return true;
+		}
+		
+		else{
+			this.disconnectWordinMidRow();
+			this.disType = 4;
+			return true;
+		}
+	}
+	
 	public void disconnectWordinOneRowPoem(){
 		if(type == 1){
 			r.removeWord(disconnectWord);
@@ -379,6 +406,3 @@ public class DisconnectionMove extends Move{
 	}
 	
 }
-
-	
-

@@ -1,3 +1,5 @@
+/**
+ * finally I know why controller should be stateless!!**/
 package Words.controller;
 import Words.model.*;
 
@@ -5,6 +7,7 @@ public class ConnectionPoemMove extends Move{
 	Poem connectPoem;
 	Word selectedWord;
 	Board b;
+	Row r;
 	int oldx;
 	int oldy;
 	int connectionType;
@@ -16,12 +19,13 @@ public class ConnectionPoemMove extends Move{
 		this.oldx = oldx;
 		this.oldy = oldy;
 		this.connectionType = connectionType;
+		this.r = connectPoem.getOverlapRow(selectedWord);
 	}
 	
 	@Override
 	public boolean execute(){
 		if(connectionType == 1||connectionType == 4||connectionType == 5){
-		Row r = connectPoem.getOverlapRow(selectedWord);
+		//Row r = connectPoem.getOverlapRow(selectedWord);
 		r.addWord(selectedWord);
 		selectedWord.setLocation(r.getX()-selectedWord.getWidth(), r.getY());
 		r.setLocationAfterConnection(selectedWord.getX(),selectedWord.getY());
@@ -30,7 +34,7 @@ public class ConnectionPoemMove extends Move{
 		}
 		
 		else if(connectionType == 2||connectionType == 3||connectionType == 6){
-			Row r = connectPoem.getOverlapRow(selectedWord);
+			//Row r = connectPoem.getOverlapRow(selectedWord);
 			
 			r.addWord(selectedWord);
 			selectedWord.setLocation(r.getX()+r.getWidth()-selectedWord.getWidth(),r.getY());
@@ -40,8 +44,29 @@ public class ConnectionPoemMove extends Move{
 	}
 	
 	@Override
+	public boolean redo(){
+		if(connectionType == 1||connectionType == 4||connectionType == 5){
+			//Row r = connectPoem.getOverlapRow(selectedWord);
+			r.addWord(selectedWord);
+			selectedWord.setLocation(r.getX()-selectedWord.getWidth(), r.getY());
+			r.setLocationAfterConnection(selectedWord.getX(),selectedWord.getY());
+			connectPoem.setLocationAfterConnection(r.getX(),r.getY());
+			b.getWords().remove(selectedWord);
+			}
+			
+			else if(connectionType == 2||connectionType == 3||connectionType == 6){
+				//Row r = connectPoem.getOverlapRow(selectedWord);
+				
+				r.addWord(selectedWord);
+				selectedWord.setLocation(r.getX()+r.getWidth()-selectedWord.getWidth(),r.getY());
+				b.getWords().remove(selectedWord);
+			}
+			return true;
+	}
+	
+	@Override
 	public boolean undo(){
-		Row r = connectPoem.getOverlapRow(selectedWord);
+		//Row r = connectPoem.getOverlapRow(selectedWord);
 		
 		if(selectedWord.getX() == r.getX()){
 			r.removeWord(selectedWord);

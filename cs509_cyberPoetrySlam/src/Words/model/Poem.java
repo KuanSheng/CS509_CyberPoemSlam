@@ -185,19 +185,33 @@ public class Poem extends Element implements Serializable{
     }
     
     public int getMax_x(){
-    	return this.max_x;
+    	int max = 0;
+    	for(Row r:rows){
+    		if(r.getX()+r.getWidth()>max){
+    			max = r.getX()+r.getWidth();
+    		}
+    	}
+    	return max;
     }
     
+    
     public int getMin_x(){
-    	return this.min_x;
+    	int min = this.x;;
+    	for(Row r:rows){
+    		if(r.getX() < min){
+    			min = r.getX();
+    		}
+    	}
+    	return min;
     }
     
     public int getMax_y(){
-    	return this.max_y;
+    	Row r = this.getLastRow();
+    	return r.getY()+r.getHeight();
     }
     
     public int getMin_y(){
-    	return this.min_y;
+    	return this.y;
     }
     
     public void setMax_Position(int x,int y){

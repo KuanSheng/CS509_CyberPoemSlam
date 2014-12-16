@@ -6,4 +6,7 @@ public abstract class Move {
 	
 	/** Request undo. */
 	public abstract boolean undo();
+	
+	/** Request redo**/
+	public abstract boolean redo();
 }

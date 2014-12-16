@@ -20,7 +20,7 @@ public class ConnectionMove extends Move implements Serializable{ // todo check 
 		this.oldy = oldy;
 		this.type = b.getOverlapType(selectedWord, connectWord);
 	}
-	
+
 	@Override
 	public boolean execute(){
 		//type = b.getOverlapType(selectedWord, this.connectWord);
@@ -66,6 +66,39 @@ public class ConnectionMove extends Move implements Serializable{ // todo check 
 		b.removePoem(newPoem);
 		
 		connectWord.setLocation(oldx,oldy);
+		return true;
+	}
+	
+	@Override
+	public boolean redo(){
+		switch(type){
+		case 3:
+			newPoem = new Poem(this.connectWord,selectedWord,1);
+		    break;
+		case 4:
+			newPoem = new Poem(this.connectWord,selectedWord,1);
+			break;
+		case 2:
+			newPoem = new Poem(selectedWord,this.connectWord,2);
+			break;
+		case 1:
+			newPoem = new Poem(selectedWord,this.connectWord,2);
+			break;
+		case 5:
+			newPoem = new Poem(this.connectWord,selectedWord,1);
+			break;
+		case 6:
+			newPoem = new Poem(selectedWord,this.connectWord,2);
+			break;
+		default:
+			newPoem = new Poem(this.connectWord,selectedWord,1);
+			break;
+		}
+		
+		b.addPoems(newPoem);
+		//System.out.println(newPoem.getRowNumber());
+		b.getWords().remove(selectedWord);
+		b.getWords().remove(this.connectWord);
 		return true;
 	}
 }

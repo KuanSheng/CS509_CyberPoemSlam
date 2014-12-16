@@ -254,6 +254,16 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     	return false;
     }
     
+    
+    public Poem getSubmittedPoemByArea(Area a){
+    	for(Poem p:poems){
+    		if(a.getX()<p.getMin_x()&&a.getY()<p.getMin_y()&&a.getX()+a.getWidth()>p.getMax_x()&&a.getY()+a.getHeight()>p.getMax_y()){
+    			return p;
+    		}
+    	}
+    	return null;
+    }
+    
     /**check potential overlap with word after connection**/
     public boolean checkPotentialOverlap(Word selectedWord,Word connectWord,int type){
     	if(type == 1){
@@ -570,4 +580,3 @@ public class Board implements Iterable<Word>, java.io.Serializable {
         }
     }
 }
-
