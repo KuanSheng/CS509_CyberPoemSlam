@@ -180,7 +180,7 @@ public class WordMoveController extends MouseAdapter{
 			return true;
 		}
 		
-		return false;
+		return false; 
 	}
 	
 	/**release mouse**/

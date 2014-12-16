@@ -18,7 +18,7 @@ public class DisconnectionPoemController {
 	}
 	
 	public void disconnectRow(){
-		if(disconnectRow == null){
+		if(disconnectRow == null){ 
 			return;
 		}
 		DisconnectionPoemMove move = new DisconnectionPoemMove(disconnectPoem,disconnectRow,board);

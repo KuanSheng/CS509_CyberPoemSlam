@@ -280,7 +280,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     	if(r.getFirstWord() != w&&r.getLastWord()!=w){
     		return false;
     	}
-    	
+    
     	if(r.getNextRow()==null&&r.getFormerRow()==null){
     		return true;
     	}

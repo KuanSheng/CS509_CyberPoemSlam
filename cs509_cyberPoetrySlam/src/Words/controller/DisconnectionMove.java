@@ -13,7 +13,7 @@ public class DisconnectionMove extends Move{
 	Board b;
 	int type;
 	int disType;
-	boolean nullSign = false;
+	boolean nullSign = false; 
 	
 	public DisconnectionMove(Poem disconnectPoem, Word disconnectWord,Row disconnectRow,Model model,int direction){
 		this.disconnectPoem = disconnectPoem;

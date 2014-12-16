@@ -27,7 +27,7 @@ public class DisconnectionPoemMove extends Move{
 			Row r = disconnectRow.getNextRow();
 			disconnectPoem.setLocationAfterConnection(r.getX(),r.getY());
 			r.setFormerRow(null);
-			
+		
 			this.newUpPoem = new Poem(disconnectRow.getX(),disconnectRow.getY());
 			newUpPoem.addRow(disconnectRow);
 			newUpPoem.setLastRow(disconnectRow);
@@ -41,6 +41,7 @@ public class DisconnectionPoemMove extends Move{
 			disconnectPoem.removeRow(disconnectRow);
 			Row r = disconnectRow.getFormerRow();
 			r.setNextRow(null);
+			disconnectPoem.setLastRow(r);
 			disconnectRow.setFormerRow(null);
 			
 			this.newPoem = new Poem(disconnectRow.getX(),disconnectRow.getY());
@@ -57,6 +58,7 @@ public class DisconnectionPoemMove extends Move{
 			
 			newPoem = new Poem(disconnectRow.getX(),disconnectRow.getY());
 			newUpPoem = new Poem(r1.getX(),r1.getY());
+			newUpPoem.setLastRow(r2);
 			newBotPoem = new Poem(r3.getX(),r3.getY());
 			
 			newPoem.addRow(disconnectRow);
@@ -180,6 +182,9 @@ public class DisconnectionPoemMove extends Move{
 	public void undoMidRow(){
 		disconnectRow.setNextRow(newBotPoem.getFirstRow());
 		disconnectRow.setFormerRow(newUpPoem.getLastRow());
+		if(disconnectRow.getFormerRow() == null){
+			System.out.println("why here!!");
+		}
 		board.addPoems(disconnectPoem);
 		board.removePoem(newPoem);
 		board.removePoem(newBotPoem);

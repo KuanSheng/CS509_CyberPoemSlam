@@ -50,7 +50,7 @@ public class ConnectionMove extends Move implements Serializable{ // todo check 
 			break;
 		default:
 			newPoem = new Poem(this.connectWord,selectedWord,1);
-			break;
+			break; 
 		}
 		this.newx = connectWord.getX();
 		this.newy = connectWord.getY();

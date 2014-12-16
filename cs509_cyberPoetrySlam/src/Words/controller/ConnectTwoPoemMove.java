@@ -18,7 +18,7 @@ public class ConnectTwoPoemMove extends Move{
 		this.oldx = oldx;
 		this.oldy = oldy;
 	}
-	
+	 
 	@Override
 	public boolean execute(){
 		newPoem = new Poem(selectedPoem,connectPoem,direction);

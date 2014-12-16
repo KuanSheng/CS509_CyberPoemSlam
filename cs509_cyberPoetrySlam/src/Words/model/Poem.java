@@ -60,7 +60,7 @@ public class Poem extends Element implements Serializable{
     		p1.setLocation(this.x, this.y, p1.getX(), p1.getY());
     		p1.getLastRow().setNextRow(p2.getFirstRow());
     		p2.getFirstRow().setFormerRow(p1.getLastRow());
-    		
+    	
     		for(Row r: p1.getRows()){
     			this.addRow(r);
     			if(this.x + r.getWidth()  > this.max_x){

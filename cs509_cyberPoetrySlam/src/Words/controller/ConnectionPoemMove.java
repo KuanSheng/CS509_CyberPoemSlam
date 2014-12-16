@@ -26,7 +26,7 @@ public class ConnectionPoemMove extends Move{
 	public boolean execute(){
 		if(connectionType == 1||connectionType == 4||connectionType == 5){
 		//Row r = connectPoem.getOverlapRow(selectedWord);
-		r.addWord(selectedWord);
+		r.addWord(selectedWord); 
 		selectedWord.setLocation(r.getX()-selectedWord.getWidth(), r.getY());
 		r.setLocationAfterConnection(selectedWord.getX(),selectedWord.getY());
 		connectPoem.setLocationAfterConnection(r.getX(),r.getY());
