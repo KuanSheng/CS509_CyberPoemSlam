@@ -214,6 +214,19 @@ public class WordMoveControllerTest {
 	
 	@Test
 	public void testWordOverlap(){
+		WordMoveController control = new WordMoveController(m,panel);
+        panel.addMouseListener(control);
+        
+		Word s = new Word(200,240,120,14,"Hello",2);
+		Word w = new Word(320,240,120,14,"World",2);
+		b.addWords(s);
+		b.addWords(w);
 		
-	}
+		control.anchor = new Point(330,245);
+		control.setSelectedWord(w);
+		control.drag(315,245);
+		control.release();
+		
+		assertEquals(w.getX(),320);
+		}
 }
