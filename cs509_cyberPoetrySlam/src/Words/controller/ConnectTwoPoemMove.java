@@ -8,6 +8,8 @@ public class ConnectTwoPoemMove extends Move{
 	Board b;
 	int oldx;
 	int oldy;
+	int newx;
+	int newy;
 	int direction;
 	
 	public ConnectTwoPoemMove(Poem selectedPoem, Poem connectPoem,Board b,int oldx,int oldy,int direction){
@@ -30,7 +32,8 @@ public class ConnectTwoPoemMove extends Move{
 	
 	@Override
 	public boolean redo(){
-		newPoem = new Poem(selectedPoem,connectPoem,direction);
+		//newPoem = new Poem(selectedPoem,connectPoem,direction);
+		selectedPoem.setLocation(newx,newy,oldx,oldy);
 		b.addPoems(newPoem);
 		b.removePoem(selectedPoem);
 		b.removePoem(connectPoem);
@@ -42,6 +45,8 @@ public class ConnectTwoPoemMove extends Move{
 		b.removePoem(newPoem);
 		b.addPoems(selectedPoem);
 		b.addPoems(connectPoem);
+		newx = selectedPoem.getX();
+		newy = selectedPoem.getY();
 		selectedPoem.setLocation(oldx,oldy,selectedPoem.getX(),selectedPoem.getY());
 		return true;
 	}

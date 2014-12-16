@@ -41,6 +41,7 @@ public class DisconnectionPoemMove extends Move{
 			disconnectPoem.removeRow(disconnectRow);
 			Row r = disconnectRow.getFormerRow();
 			r.setNextRow(null);
+			disconnectPoem.setLastRow(r);
 			disconnectRow.setFormerRow(null);
 			
 			this.newPoem = new Poem(disconnectRow.getX(),disconnectRow.getY());
@@ -62,6 +63,7 @@ public class DisconnectionPoemMove extends Move{
 			newPoem.addRow(disconnectRow);
 			disconnectRow.setFormerRow(null);
 			disconnectRow.setNextRow(null);
+			newUpPoem.setLastRow(r2);
 			
 			r2.setNextRow(null);
 			

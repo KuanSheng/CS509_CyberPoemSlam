@@ -59,6 +59,9 @@ public class Poem extends Element implements Serializable{
     		
     		p1.setLocation(this.x, this.y, p1.getX(), p1.getY());
     		p1.getLastRow().setNextRow(p2.getFirstRow());
+    		if(p2.getRowNumber() == 0){
+    			System.out.println("WHY!");
+    		}
     		p2.getFirstRow().setFormerRow(p1.getLastRow());
     		
     		for(Row r: p1.getRows()){
