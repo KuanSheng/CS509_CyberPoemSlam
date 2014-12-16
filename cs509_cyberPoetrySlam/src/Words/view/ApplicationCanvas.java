@@ -32,7 +32,7 @@ public class ApplicationCanvas extends Canvas{
 	//initialize frame attributes
 	public void initialize(){
 		if(model == null)
-	        System.out.println("fuck too!!(canvas)");
+	        System.out.println("error");
 		setSize(650,490);
         WordMoveController controller = new WordMoveController(model, this);
 		this.board = model.getBoard();

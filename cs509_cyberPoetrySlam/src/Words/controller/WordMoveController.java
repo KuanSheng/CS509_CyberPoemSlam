@@ -203,6 +203,7 @@ public class WordMoveController extends MouseAdapter{
 			else if(b.getSelectedRow(model.getSelectedArea())!=null){
 			model.setSelectedRow(b.getSelectedRow(model.getSelectedArea()));
 			}
+			
 			model.setSelectedArea(0, 0, 0, 0);
 			return true;
 		}
