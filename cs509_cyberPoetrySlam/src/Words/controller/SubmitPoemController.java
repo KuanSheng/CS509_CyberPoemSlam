@@ -62,16 +62,16 @@ public class SubmitPoemController implements ActionListener{
      * @return true if successful
      */
     public boolean submitPoem(){
-        m.setSelectedPoem(board.getPoems().get(0)); //todo to be deleted after successfully set selected poems
+        //m.setSelectedPoem(board.getPoems().get(0)); //todo to be deleted after successfully set selected poems
         switch (method){
             case ALL:
-                return sendPoemEmail(m.getSelectedPoem()) && writePoemTXT(m.getSelectedPoem()) && writePoemSer(m.getSelectedPoem());
+                return sendPoemEmail(m.getSubmittedPoem()) && writePoemTXT(m.getSubmittedPoem()) && writePoemSer(m.getSubmittedPoem());
             case EMAIL:
-                return sendPoemEmail(m.getSelectedPoem());
+                return sendPoemEmail(m.getSubmittedPoem());
             case SER:
-                return writePoemSer(m.getSelectedPoem());
+                return writePoemSer(m.getSubmittedPoem());
             case TXT:
-                return writePoemTXT(m.getSelectedPoem());
+                return writePoemTXT(m.getSubmittedPoem());
             default:
                 System.out.println("ERROR: unknown submittion method: submitPoem. SubmitPoemContrller");
                 return false;

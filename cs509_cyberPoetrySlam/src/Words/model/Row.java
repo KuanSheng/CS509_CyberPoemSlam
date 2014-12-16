@@ -94,17 +94,17 @@ ArrayList<Word> words = new ArrayList<Word>();
 		
 		if(former != null&&next == null){
 			w1 = former.getFirstWord();
-			return w1.getX()+w1.getWidth() - this.width;
+			return w1.getX() - this.width;
 		}
 		
 		if(next != null&&former == null){
 		    w2 = next.getFirstWord();
-		    return w2.getX()+w2.getWidth() - this.width;
+		    return w2.getX() - this.width;
 		}
 		
 		 w1 = former.getFirstWord();
 		 w2 = next.getFirstWord();
-		int leftLimit = Math.max(w1.getX()+w1.getWidth(), w2.getX()+w2.getWidth());
+		int leftLimit = Math.max(w1.getX(), w2.getX());
 		
 		return leftLimit - this.width;
 	}
@@ -122,17 +122,17 @@ ArrayList<Word> words = new ArrayList<Word>();
 		
 		if(former != null&&next == null){
 			w1 = former.getLastWord();
-			return w1.getX();
+			return w1.getX()+w1.getWidth();
 		}
 		
 		if(next != null&&former == null){
 		    w2 = next.getLastWord();
-		    return w2.getX();
+		    return w2.getX()+w2.getWidth();
 		}
 		
 		w1 = former.getLastWord();
 	    w2 = next.getLastWord();
-		int rightLimit = Math.min(w1.getX(), w2.getX());
+		int rightLimit = Math.min(w1.getX()+w1.getWidth(), w2.getX()+w2.getWidth());
 		
 		return rightLimit;
 	}

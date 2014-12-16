@@ -29,4 +29,10 @@ public class moveWord extends Move implements Serializable{
 		word.setLocation(oldx, oldy);
 		return true;
 	}
+	
+	@Override
+	public boolean redo(){
+		word.setLocation(newx,newy);
+		return true;
+	}
 }

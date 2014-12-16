@@ -1,3 +1,6 @@
+/**
+ * modify redo and exectue because I found that move is different between first executed and 
+ * redo.**/
 package Words.controller;
 import Words.model.*;
 
@@ -10,20 +13,22 @@ public class ConnectionMove extends Move implements Serializable{ // todo check 
 	final Board b;
 	int oldx;
 	int oldy;
+	int newx;
+	int newy;
 	int type;
 	
 	public ConnectionMove(Word connectWord, Word selectedWord,Board b, int oldx, int oldy){
 		this.connectWord = connectWord;
-		this.selectedWord = selectedWord;
+	    this.selectedWord = selectedWord;
 		this.b = b;
 		this.oldx = oldx;
 		this.oldy = oldy;
 		this.type = b.getOverlapType(selectedWord, connectWord);
 	}
-	
+
 	@Override
 	public boolean execute(){
-		//type = b.getOverlapType(selectedWord, this.connectWord);
+	    //type = b.getOverlapType(selectedWord, this.connectWord);
 		switch(type){
 		case 3:
 			newPoem = new Poem(this.connectWord,selectedWord,1);
@@ -47,9 +52,9 @@ public class ConnectionMove extends Move implements Serializable{ // todo check 
 			newPoem = new Poem(this.connectWord,selectedWord,1);
 			break;
 		}
-		
+		this.newx = connectWord.getX();
+		this.newy = connectWord.getY();
 		b.addPoems(newPoem);
-		System.out.println(newPoem.getRowNumber());
 		b.getWords().remove(selectedWord);
 		b.getWords().remove(this.connectWord);
 		return true;
@@ -66,6 +71,39 @@ public class ConnectionMove extends Move implements Serializable{ // todo check 
 		b.removePoem(newPoem);
 		
 		connectWord.setLocation(oldx,oldy);
+		return true;
+	}
+	
+	@Override
+	public boolean redo(){
+		/*switch(type){
+		case 3:
+			newPoem = new Poem(this.connectWord,selectedWord,1);
+		    break;
+		case 4:
+			newPoem = new Poem(this.connectWord,selectedWord,1);
+			break;
+		case 2:
+			newPoem = new Poem(selectedWord,this.connectWord,2);
+			break;
+		case 1:
+			newPoem = new Poem(selectedWord,this.connectWord,2);
+			break;
+		case 5:
+			newPoem = new Poem(this.connectWord,selectedWord,1);
+			break;
+		case 6:
+			newPoem = new Poem(selectedWord,this.connectWord,2);
+			break;
+		default:
+			newPoem = new Poem(this.connectWord,selectedWord,1);
+			break;
+		}*/
+		connectWord.setLocation(newx,newy);
+		b.addPoems(newPoem);
+		//System.out.println(newPoem.getRowNumber());
+		b.getWords().remove(selectedWord);
+		b.getWords().remove(this.connectWord);
 		return true;
 	}
 }

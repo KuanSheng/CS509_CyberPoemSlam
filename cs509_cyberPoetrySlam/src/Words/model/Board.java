@@ -212,6 +212,14 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     	return number;
     }
     
+    public Poem getSubmittedPoemByArea(Area a){
+    	for(Poem p:poems){
+    		if(a.getX()<p.getMin_x()&&a.getY()<p.getMin_y()&&a.getX()+a.getWidth()>p.getMax_x()&&a.getY()+a.getHeight()>p.getMax_y()){
+    			return p;
+    		}
+    	}
+    	return null;
+    }
     /**check potential overlap after connection**/
     public boolean checkPotentialOverlapPoem(Word selectedWord,Poem connectPoem,int type){
     	Row r = connectPoem.getOverlapRow(selectedWord);

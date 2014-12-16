@@ -17,6 +17,7 @@ public class Model implements Serializable{
 	Word selected;
 	Word selectedWordinPoem;
 	Poem selectedPoem;
+	Poem submittedPoem;
 	Row  selectedRow;
 	Area selectedArea;
 
@@ -64,6 +65,10 @@ public class Model implements Serializable{
 		Area area = new Area(x,y,width,height);
 		this.selectedArea = area;
 	}
+	
+	public void setSubmittedPoem(Poem p){
+		this.submittedPoem = p;
+	}
 
 	public Word getSelected() {
 		return this.selected;
@@ -84,6 +89,10 @@ public class Model implements Serializable{
 	public Area getSelectedArea(){
 		return this.selectedArea;
 	}
+	
+	public Poem getSubmittedPoem(){
+		return this.submittedPoem;
+	}
 
     public String toString(){
         String model;
@@ -97,6 +106,7 @@ public class Model implements Serializable{
     public void recordMove(moveWord m){
     	moves.add(m);
     }
+    
     
     public void recordConnectionMove(ConnectionMove m){
        moves.add(m);

@@ -29,6 +29,15 @@ public class ConnectTwoPoemMove extends Move{
 	}
 	
 	@Override
+	public boolean redo(){
+		newPoem = new Poem(selectedPoem,connectPoem,direction);
+		b.addPoems(newPoem);
+		b.removePoem(selectedPoem);
+		b.removePoem(connectPoem);
+		return true;
+	}
+	
+	@Override
 	public boolean undo(){
 		b.removePoem(newPoem);
 		b.addPoems(selectedPoem);
