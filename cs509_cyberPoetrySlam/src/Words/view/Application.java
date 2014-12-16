@@ -167,7 +167,7 @@ public class Application extends JFrame {
         btnRemoveSwap.addActionListener(new RemoveSwapButtonListner(btnRemoveSwap));
 
         table = new WordTable(model.getBoard(), this, swap); // give table reference to app so as to refresh after operations JUN
-        typeTable = new WordTypeTable(model.getBoard());
+        typeTable = new WordTypeTable(model.getBoard(), this, swap);
         swapTable = new SwapTable(model.getBoard(), this, swap);// give table reference to app so as to refresh after operations JUN
         requestTable = new RequestTable(model.getBoard(), swap);
 //        newRequestTable = new NewRequestTable(model.getBoard(), new OurSwap(model.getBoard()));

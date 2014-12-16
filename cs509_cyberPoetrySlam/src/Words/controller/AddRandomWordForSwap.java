@@ -18,10 +18,17 @@ public class AddRandomWordForSwap implements ActionListener{
     private Application app;
     OurSwap swap;
     private static String[] wordTypeDefinition = {"verb", "adj", "noun", "adv"};
-    public static final String ADD_VERB = "ADD_VERB";
-    public static final String ADD_ADJ = "ADD_ADJ";
-    public static final String ADD_NOUN = "ADD_NOUN";
-    public static final String ADD_ADV = "ADD_ADV";
+    public static final String ADD_VERB = "verb";
+    public static final String ADD_ADJ = "adjective";
+    public static final String ADD_NOUN = "noun";
+    public static final String ADD_ADV = "adverb";
+//    public static final String ADD_ADV = "adverb";
+//    public static final String ADD_ADV = "adverb";
+//    public static final String ADD_ADV = "adverb";
+//    public static final String ADD_ADV = "adverb";
+//    public static final String ADD_ADV = "adverb";
+//    public static final String ADD_ADV = "adverb";
+//    public static final String ADD_ADV = "adverb";
 
     public AddRandomWordForSwap(Board board,OurSwap swap, Application app){
         this.board = board;
@@ -33,12 +40,26 @@ public class AddRandomWordForSwap implements ActionListener{
     public void actionPerformed(ActionEvent e) {
 //        if()
         String command = e.getActionCommand();
-        if(command.equals(ADD_VERB)) addRandomVerb();
-        else if(command.equals(ADD_ADJ)) addRandomAdj();
-        else if(command.equals(ADD_NOUN)) addRandomNoun();
-        else if(command.equals(ADD_ADV)) addRandomAdv();
+        addRandomWord(command);
+
+//        if(command.equals(ADD_VERB)) addRandomVerb();
+//        else if(command.equals(ADD_ADJ)) addRandomAdj();
+//        else if(command.equals(ADD_NOUN)) addRandomNoun();
+//        else if(command.equals(ADD_ADV)) addRandomAdv();
     }
 
+    boolean addRandomWord(String type){
+        for(Word w : board.getunprotectedWords()){
+            if(w.getWordType() == Word.getTypeInt(type)){
+                if(swap.getOurOffer().size() == swap.SWAP_LIMIT) swap.removeOffer(0);
+                swap.addOffer(w);
+//                    swap.addRequest();
+                app.refreshTables();
+                return true;
+            }
+        }
+        return false;
+    }
     //    public enum
     public boolean addRandom(int type){
         switch (type){

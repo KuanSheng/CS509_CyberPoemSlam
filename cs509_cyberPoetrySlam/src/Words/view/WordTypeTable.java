@@ -2,6 +2,7 @@ package Words.view;
 
 import Words.controller.RefreshWordTableController;
 import Words.controller.RefreshWordTypeTableController;
+import Words.controller.SwapAddListener;
 import Words.model.*;
 
 import java.awt.*;
@@ -19,7 +20,7 @@ public class WordTypeTable extends JPanel {
 
     /** Actual GUI entity. */
     JTable jtable = null;
-    public WordTypeTable(Board board) {
+    public WordTypeTable(Board board, Application app, OurSwap swap) {
         // create the model for the data which backs this table
         wtm = new WordTypeModel(board);
         
@@ -53,6 +54,7 @@ public class WordTypeTable extends JPanel {
         }
         jtable.setColumnModel(columnModel);
 
+        jtable.getSelectionModel().addListSelectionListener(new SwapAddListener(jtable, swap, app, SwapAddListener.TYPE.WordTypeTable));
         // let's install a sorter and also make sure no one can rearrange columns
         JTableHeader header = jtable.getTableHeader();
 
@@ -65,6 +67,7 @@ public class WordTypeTable extends JPanel {
 //        });
 
         // Here's the trick. Make the JScrollPane take its view from the JTable.
+
         jsp.setViewportView(jtable);
 
         // add the scrolling Pane which encapsulates the JTable

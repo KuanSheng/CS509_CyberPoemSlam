@@ -81,7 +81,7 @@ public class WordTable extends JPanel{
         });
 
         //to add listener to handle add into swap reqeust -- JUN start===================
-        jtable.getSelectionModel().addListSelectionListener(new SwapAddListener(jtable, swap, app));
+        jtable.getSelectionModel().addListSelectionListener(new SwapAddListener(jtable, swap, app, SwapAddListener.TYPE.WordTable));
         jtable.getSelectionModel().addListSelectionListener(new PopupWordController(this, board, app));
 //            @Override
 //            public void valueChanged(ListSelectionEvent event) {
