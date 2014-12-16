@@ -85,7 +85,7 @@ public class ReleasePoemMove extends Move {
     }
     public Row setReleaseLocation(Row r){
         System.out.println("panel height: " + panel.getWidth() +"r.getY: " + r.getY()+ " sum: " + (r.getY()+panel.getHeight()) + " :setReleaseLocation.ReleasePoemMove");
-        r.setLocation(r.getX(),r.getY()+panel.getWidth(),r.getX(),r.getY());
+        r.setLocation(r.getX(),400,r.getX(),r.getY());
         return r;
     }
 
