@@ -8,7 +8,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-/**
+/** this controller removes a swap pair
  * Created by Jun on 12/8/2014.
  */
 public class SwapRemoveListener implements ListSelectionListener {
@@ -30,10 +30,20 @@ public class SwapRemoveListener implements ListSelectionListener {
         this.app = app;
     }
 
+    /**
+     * set controller active --  clicking in offer table (third one from left) would delete a swap pair
+     */
     public static void setActive(){active = true;}
+
+    /**
+     * set controller inactive --  clicking in offer table (third one from left) would NOT delete a swap pair
+     */
     public static void setInactive(){active = false;}
 
-    //        jtable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+    /**
+     * table clicked, check if a swap pair should be removed, and do it if yes
+     * @param event
+     */
     @Override
     public void valueChanged(ListSelectionEvent event) {
         if(!active || event.getValueIsAdjusting() ) return; // this listener would be called twice
@@ -52,12 +62,16 @@ public class SwapRemoveListener implements ListSelectionListener {
         }
     }
 
-    public boolean respond(){
-        jtable.repaint();
-        return true;
-    }
 
+    /**
+     * returns status of the controller
+     * @return
+     */
     public static boolean isActive() {return active;}
 
+    /**
+     * reverse the status of the controller
+     * @return
+     */
     public static boolean flip(){ return active = !active;}
 }

@@ -10,6 +10,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 /**
+ * This controller pops up an unprotected word, when it's clicked in the word table (the left most one in our gui)
  * Created by Jun on 12/14/2014.
  */
 public class PopupWordController implements ListSelectionListener {
@@ -24,6 +25,10 @@ public class PopupWordController implements ListSelectionListener {
         this.app = app;
     }
 
+    /**
+     * pop up the a word by the index of row selected in the jtable
+     * @param e selection event
+     */
     @Override
     public void valueChanged(ListSelectionEvent e) {
         //pop up only when SwapAddListner is not adding word for swap

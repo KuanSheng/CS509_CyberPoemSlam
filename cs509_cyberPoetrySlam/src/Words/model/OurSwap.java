@@ -78,12 +78,14 @@ public class OurSwap implements Serializable{
      */
     public boolean addOffer(int index){
         if(index < 0 || index > board.getunprotectedWords().size()) return false;
-
         return this.addOffer(board.getunprotectedWords().get(index));
-
-//        if(w == null)
     }
 
+    /**
+     * remove one pair from the swap request
+     * @param selectedRow the index of the swap pair to be removed
+     * @return true if selectedRow exists
+     */
     public boolean removeOffer(int selectedRow) {
         if(selectedRow < 0 || selectedRow > ourOffer.size()) return false;
         ourRequest.remove(selectedRow);
@@ -92,18 +94,24 @@ public class OurSwap implements Serializable{
         return true;
     }
 
+    /**
+     * @return the arraylist of words we offer
+     */
     public ArrayList<Word> getOurOffer() {
         return ourOffer;
     }
 
+    /**
+     * @return the arraylist of WordSignature we request
+     */
     public ArrayList<WordSignature> getOurRequest() {
         return ourRequest;
     }
 
-    public ArrayList<Word> getTheirRequest() {
-        return theirRequest;
-    }
-
+    /**
+     * clear all data in the swap
+     * @return
+     */
     public boolean clear() {
         ourOffer.clear();
         ourRequest.clear();
@@ -111,10 +119,18 @@ public class OurSwap implements Serializable{
         return true;
     }
 
+    /**
+     * return status of last swap trial
+     * @return
+     */
     public boolean getStatus(){
         return success;
     }
 
+    /**
+     * set status to failure
+     * @return always true;
+     */
     public boolean setFailure(){
         success = false;
         return true;

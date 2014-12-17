@@ -10,6 +10,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 /**
+ * Add swap pairs
  * Created by Jun on 12/8/2014.
  */
 
@@ -23,11 +24,6 @@ public class SwapAddListener implements ListSelectionListener {
     private OurSwap swap;
     private TYPE tableType;
 
-//    public SwapAddListener(JTable jtable, Board board, Application app) {
-//        this.jtable = jtable;
-//        this.board = board;
-//        this.app = app;
-//    }
 
     public SwapAddListener(JTable jtable, OurSwap swap, Application app, TYPE tableType){
         this.jtable = jtable;
@@ -37,10 +33,21 @@ public class SwapAddListener implements ListSelectionListener {
         this.board = app.getModel().getBoard();
     }
 
+    /**
+     * set controller active, so that clicking in tables would add a new pair
+     */
     public static void setActive(){active = true;}
+
+    /**
+     * set controller inactive, so clicking tables would NOT add new pairs
+     */
     public static void setInactive(){active = false;}
 
 
+    /**
+     * add offered word by the table that is clicked
+     * @param event the selection event
+     */
     @Override
     public void valueChanged(ListSelectionEvent event) {
         if(!active || !event.getValueIsAdjusting() ) return; // this listener would be called twice
@@ -56,6 +63,9 @@ public class SwapAddListener implements ListSelectionListener {
 
     }
 
+    /**
+     * add new swap pair by selecting in word table
+     */
     void addByWordTable(){
         //only act the second time -- when releasning
         if (jtable.getSelectedRow() > -1) {
@@ -71,6 +81,9 @@ public class SwapAddListener implements ListSelectionListener {
         }
     }
 
+    /**
+     * add new swap pair by selecting in word type table
+     */
     void addByWordTypeTable(){
         int indexSelected = jtable.getSelectedRow();
         if(indexSelected < 0) return;
@@ -82,8 +95,16 @@ public class SwapAddListener implements ListSelectionListener {
     }
 
 
+    /**
+     * return the status of the controller
+     * @return true if active (clicing tables would add new pairs)
+     */
     public static boolean isActive() {return active;}
 
+    /**
+     * change ths status of the controller
+     * @return the status of the controller after this execution
+     */
     public static boolean flip(){ return active = !active;}
 }
 

@@ -9,8 +9,6 @@ import javax.swing.table.AbstractTableModel;
  */
 
 
-//=============
-
 /**
  * Created by evasun on 11/25/14.
  * delegate to wordModel to manage the state instead of using board
@@ -18,10 +16,6 @@ import javax.swing.table.AbstractTableModel;
 public class SwapModel extends AbstractTableModel {
     /** Keep Eclipse Happy. */
     private static final long serialVersionUID = 2L;
-
-    // set the word type definition to query the word type by index number
-    // TODO: will be replaced by a static class or properties file
-    private static String[] wordTypeDefinition = {"verb", "adj", "noun", "adv"};
 
     /** Board maintains the state. */
     Board board;
@@ -50,20 +44,12 @@ public class SwapModel extends AbstractTableModel {
     }
 
 
-//    @Override
-//    public Object getValueAt(int rowIndex, int columnIndex) {
-////        Word s = board.getOurSwap(rowIndex);
-//        Word s = swap.getOurOffer().get(rowIndex);
-//        if(s == null) return "EMPTY";
-//        if (columnIndex == 0) {
-//            return s.value;
-//        } else if (columnIndex == 1) {
-//            return wordTypeDefinition[s.getWordType()];
-//        }else {
-//            return "EMPTY";
-//        }
-//        // no idea who you are...
-//    }
+    /**
+     * create value that's going to be shown in the table at column columnIndex and row rowIndex
+     * @param rowIndex
+     * @param columnIndex
+     * @return
+     */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex){

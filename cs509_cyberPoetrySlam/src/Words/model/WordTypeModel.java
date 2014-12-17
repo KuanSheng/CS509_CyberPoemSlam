@@ -13,9 +13,6 @@ public class WordTypeModel extends AbstractTableModel {
     public static final String typeLabel = "Words Type";
     public static final String numberLabel = "Number";
 
-    // set the word type definition to query the word type by index number
-    // TODO: will be replaced by a static class or properties file
-    private static String[] wordTypeDefinition = {"verb", "adj", "noun", "adv"};
 
     public WordTypeModel (Board b){
         this.board = b;
@@ -30,7 +27,7 @@ public class WordTypeModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        if(rowIndex < 0) return null; // added to solve problem of index of of bound
+        if(rowIndex < 0) return null; // added to solve problem of index of of bound (no idea why it )
         if(rowIndex == 0){
             if (columnIndex == 0) {
                 return "Unprotected Word";
