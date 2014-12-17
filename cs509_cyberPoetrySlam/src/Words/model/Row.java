@@ -1,277 +1,75 @@
 package Words.model;
-
+import java.io.Serializable;
 import java.util.*;
-
-public class Row extends Element implements Iterable<Word> {
-	
-	ArrayList<Word> words = new ArrayList<Word>();
-	
-	int x;
+public class Row extends Element implements Iterable<Word>, Serializable{
+ArrayList<Word> words = new ArrayList<Word>();
+    int x;
 	int y;
 	int x_last;
 	int y_last;
 	int height;
 	int width;
+	int WordNumber;
+	
+	Row formerRow;
+	Row nextRow;
 
-	public Row(int x, int y, int hight, int width){
-        super(2, x, y); // 2 is type value for row
-		this.x = x;
-		this.y = y;
-		this.x_last = x;
-		this.y_last = y;
-		this.height = hight;
-		this.width = width;
-		words=null;
+	public Row(int x, int y, int height, int width){
+	  super.type = 2;
+      this.x = x;
+      this.y = y;
+      this.height=height;
+      this.width=width;
+      this.WordNumber = 0;
+	}
+	
+	public Row(Word w1,Word w2,int direction){
+		if(direction==2){
+			this.x = w1.getX();
+			this.y = w1.getY();
+			w2.setLocation(this.x+w1.getWidth(),this.y);
+		}
+		else{
+			this.x = w2.getX()-w1.getWidth();
+			this.y = w2.getY();
+			w1.setLocation(this.x, this.y);
+		}
+		
+		this.height = w1.getHeight();
+		this.width = w1.getWidth()+w2.getWidth();
+		this.words.add(w1);
+		this.words.add(w2);
+		this.WordNumber =2;
 	}
 	
 	public void addWord(Word word){
     	words.add(word);
+    	this.WordNumber++;
+    	this.width = this.width+word.getWidth();
     }
 	
-	public void move(int x, int y){
-		this.x_last = this.x;
-		this.y_last = this.y;
-		this.x = x;
-		this.y = y;
+	public void removeWord(Word word){
+		words.remove(word);
+		this.WordNumber--;
+		this.width = this.width-word.getWidth();
 	}
 	
-	public Intersection getIntersectionWord(Word word){
-		
-		Intersection intersection = new Intersection();
-
-		for(int i = 0;i < (this.words).size(); i ++){
-			Word wordInRow = (this.words).get(i);
-			intersection = wordInRow.getIntersectionInRow(word);
-
-			//the leftmost word in the row
-			if(i == 0){
-				if(intersection.type ==1 || intersection.type == 3 || intersection.type ==4) break;
-				if (intersection.type == 2) {
-					if(this.y == word.y) {
-						if(word.x + word.width > this.x + this.width){
-							break;
-						}
-						else {
-							intersection.type = 5;
-							break;
-						}
-					}
-					
-					if(word.y > this.y){
-						intersection.type = 3;
-						intersection.e.type = 3;
-						intersection.e.x = this.x;
-						intersection.e.y = this.y + word.height;
-						break;
-					}
-					
-					if(word.y < this.y){
-						intersection.type = 4;	
-						intersection.e.type = 3;
-						intersection.e.x = this.x;
-						intersection.e.y = this.y;
-						break;
-					}
-			}
-				
-				
-				if(intersection.type == 6){
-					if(word.x + word.width > this.x + this.width){
-						intersection.type = 5;
-						break;
-					}
-					else {
-						intersection.type = 1;
-						intersection.e.type = 2;
-						intersection.e.x = this.x - word.width;
-						intersection.e.y = this.y;
-						break;
-					}
-				}
-		}
-			
-			if( i>0 && i< (this.words).size()){
-				if(intersection.type ==3 || intersection.type == 4) break;
-				if(intersection.type == 2) {
-					if(this.y == word.y) {
-						if(word.x + word.width > this.x + this.width){
-							break;
-						}
-						else {
-							intersection.type = 5;
-							break;
-						}
-					}
-					
-					if(word.y > this.y){
-						intersection.type = 3;
-						intersection.e.type = 3;
-						intersection.e.x = this.x;
-						intersection.e.y = this.y + word.height;
-						break;
-					}
-					
-					if(word.y < this.y){
-						intersection.type = 4;	
-						intersection.e.type = 3;
-						intersection.e.x = this.x;
-						intersection.e.y = this.y;
-						break;
-					}
-				}
-					
-			}
-				
-
-	     if(intersection.type == -1) continue;
-         if(intersection.type == 5) break;
-		}
-		return intersection;	
+	public int getWordNumber(){
+		return this.WordNumber;
 	}
 	
-    //same as the getIntersection of Word. how to simplify?
-	public Intersection getIntersection(Row row){
-   	 
-   	 Intersection intersection = new Intersection();
-   	 
-   	// no intersection
-		if((this.x + this.width < row.x) ||(this.x > row.x + row.width)|| 
-		   (this.y < (row.y - row.height))||(this.y - this.height) > row.y){
-			
-			intersection.type = -1;
-		}
-		
-		// x left intersection and y no determined
-		if((row.x + row.width > this.x ) && (row.x + row.width < this.x + this.width) && 
-				(row.x < this.x)){
-			
-		
-			// y are equal then left intersection
-			if(this.y == row.y){     
-				intersection.type = 1;
-				intersection.e.type = 2;
-				intersection.e.x = this.x - row.width;
-				intersection.e.y = this.y;
-			}
-			
-			// y overlaps with bottom part
-			if((row.y < this.y) && (row.y > this.y - this.height)){
-				// y overlap more than x overlap then left intersection
-				if(row.y - (this.y - this.height) >= (row.x + row.width - this.x)){
-				intersection.type = 1;	
-				intersection.e.type = 2;
-				intersection.e.x = this.x - row.width;
-				intersection.e.y = this.y;		
-			}
-				// y overlap less than x overlap then bottom intersection
-				else {
-					intersection.type = 4;	
-					intersection.e.type = 3;
-					intersection.e.x = this.x;
-					intersection.e.y = this.y;	
-				}
-			}		
-					
-			// row y overlaps with top part of row y
-			if((row.y > this.y) && (row.y - row.height < this.y)){
-				//y overlap more than x overlap then left intersection
-				if( (this.y-(row.y - row.height)) >= (row.x + row.width - this.x)){
-					intersection.type = 1;	
-					intersection.e.type = 2;
-					intersection.e.x = this.x - row.width;
-					intersection.e.y = this.y;
-				}
-				// y overlap less than x overlap then top intersection
-				else {
-					intersection.type = 3;
-					intersection.e.type = 3;
-					intersection.e.x = this.x;
-					intersection.e.y = this.y + row.height;	
-				}	
+	public Word getFirstWord(){
+		for(Word w:words){
+			if(w.getX() == this.getX()){
+				return w;
 			}
 		}
-		
-		//x right intersection and y no determined
-		if((row.x < this.x + this.width ) && (row.x + row.width > this.x + this.width) && 
-				(row.x > this.x)){
-			
-		
-			// y are equal then right intersection
-			if(this.y == row.y){     
-				intersection.type = 2;
-				intersection.e.type = 2;
-				intersection.e.x = this.x;
-				intersection.e.y = this.y;
-			}
-			
-			//row y overlaps with bottom part of row y
-			if((row.y < this.y) && (row.y > this.y - this.height)){
-				// y overlap more than x overlap then right intersection
-				if(row.y - (this.y - this.height) >= (this.x + this.width - row.x)){
-				intersection.type = 2;	
-				intersection.e.type = 2;
-				intersection.e.x = this.x;
-				intersection.e.y = this.y;		
-			}
-				// y overlap less than x overlap then bottom intersection
-				else {
-					intersection.type = 4;	
-					intersection.e.type = 3;
-					intersection.e.x = this.x;
-					intersection.e.y = this.y;	
-				}
-			}		
-					
-			// row y overlaps with top part of row y
-			if((row.y > this.y) && (row.y - row.width < this.y)){
-				//y overlap more than x overlap then right intersection
-				if( (this.y-(row.y - row.height)) >= (this.x + this.width - row.x)){
-					intersection.type = 2;	
-					intersection.e.type = 2;
-					intersection.e.x = this.x;
-					intersection.e.y = this.y;
-				}
-				// y overlap less than x overlap then top intersection
-				else {
-					intersection.type = 3;
-					intersection.e.type = 3;
-					intersection.e.x = this.x;
-					intersection.e.y = this.y + row.height;	
-				}	
-			}
-		}
-		
-		//x overlap totally and y not determined
-				if((this.x >= row.x && this.x + this.width <= row.x + row.width) ||
-						(this.x <= row.x && this.x + this.width >= row.x + row.width)){
-					// y overlap with top part of row then top intersection
-					if((this.y > row.y) && (this.y - this.width < row.y)){
-						intersection.type = 3;
-						intersection.e.type = 3;
-						intersection.e.x = row.x;
-						intersection.e.y = row.y + this.height;
-					}
-					//y overlap with bottom part of row then bottom intersection
-					if((this.y < row.y) && (this.y > row.y - row.height)){
-						intersection.type = 4;	
-						intersection.e.type = 3;
-						intersection.e.x = row.x;
-						intersection.e.y = row.y;	
-					}
-					if(this.y == row.y){
-						intersection.type = 5;
-					}
-				}
-		
-		 return intersection;
-    }
+		return null;
+	}
 	
-
-	
-	public Word selectWord(int x, int y){                                  //select single word
-	    	
-		for(Word w: words){
-			if(w.intersection(x, y)){
+	public Word getLastWord(){
+		for(Word w:words){
+			if(w.getX()+w.getWidth() == this.getX()+this.getWidth()){
 				return w;
 			}
 		}
@@ -279,36 +77,146 @@ public class Row extends Element implements Iterable<Word> {
 		return null;
 	}
 	
-	
-	public boolean intersection(int top, int bottom, int left, int right){     
-		
-		if(this.x >= left && this.y <= top && 
-				this.x + this.width <= right && this.y - this.height >= bottom){
-			return true;}
-	
-		 return false;
-	} 
-	
-	public Row selectRow(int top, int bottom, int left, int right){        //select row
-	
-	       if(this.intersection(top, bottom, left, right)){
-	    	   return this;
-	       }
-	       
-	       return null;	
+	public ArrayList<Word> getWords(){
+		return this.words;
 	}
 	
+	public int getLeftShiftLimit(){
+		Row former = this.getFormerRow();
+		Row next = this.getNextRow();
+		
+		Word w1 = null;
+		Word w2 = null;
+		
+		if(former == null&&next == null){
+			return 0;
+		}
+		
+		if(former != null&&next == null){
+			w1 = former.getFirstWord();
+			return w1.getX() - this.width;
+		}
+		
+		if(next != null&&former == null){
+		    w2 = next.getFirstWord();
+		    return w2.getX() - this.width;
+		}
+		
+		 w1 = former.getFirstWord();
+		 w2 = next.getFirstWord();
+		int leftLimit = Math.max(w1.getX(), w2.getX());
+		
+		return leftLimit - this.width;
+	}
 	
+	public int getRightShiftLimit(){
+		Row former = this.getFormerRow();
+		Row next = this.getNextRow();
+		
+		Word w1 = null;
+		Word w2 = null;
+		
+		if(former == null&&next == null){
+			return 0;
+		}
+		
+		if(former != null&&next == null){
+			w1 = former.getLastWord();
+			return w1.getX()+w1.getWidth();
+		}
+		
+		if(next != null&&former == null){
+		    w2 = next.getLastWord();
+		    return w2.getX()+w2.getWidth();
+		}
+		
+		w1 = former.getLastWord();
+	    w2 = next.getLastWord();
+		int rightLimit = Math.min(w1.getX()+w1.getWidth(), w2.getX()+w2.getWidth());
+		
+		return rightLimit;
+	}
+	
+	public Word getFormerWord(Word w){
+		if(w == this.getFirstWord()){
+			return null;
+		}
+		
+		for(Word word:this.getWords()){
+			if(word.getX()+word.getWidth() == w.getX()){
+				return word;
+			}
+		}
+		return null;
+	}
+	
+	public Word getNextWord(Word w){
+		if(w == this.getLastWord()){
+			return null;
+		}
+		
+		for(Word word:this.getWords()){
+			if(w.getX()+w.getWidth() == word.getX()){
+				return word;
+			}
+		}
+		return null;
+	}
+	public boolean intersection(int x, int y){
+	 if(x < this.x){return false;}
+   	 if(x > (this.x + width)){return false;}
+   	 if(y < this.y){return false;}
+   	 if(y > (this.y+height)){return false;}
+	 return true;
+	}
+	
+	public void setLocation(int x, int y,int rx,int ry){
+		this.x = x;
+		this.y = y;
+		int deltax = x - rx;
+		int deltay = y - ry;
+		for(Word w: words){
+            w.setLocation(w.getX()+deltax,w.getY()+deltay);
+		}
+		
+	}
+	
+	public void setLocationAfterConnection(int x,int y){
+		this.x = x;
+		this.y = y;
+	}
+
 	 public int getX(){return this.x;}
      public int getY(){return this.y;}
      public int getWidth(){return this.width;}
      public int getHeight(){return this.height;}
      
+     public Row getNextRow(){
+    	 return this.nextRow;
+     }
+     public Row getFormerRow(){
+    	 return this.formerRow;
+     }
+     public void setNextRow(Row r){
+    	 this.nextRow = r;
+     }
+     public void setFormerRow(Row r){
+    	 this.formerRow = r;
+     }
+     
      //return all words in the row
      public Iterator<Word> iterator(){
     	 return words.iterator();
      }
-	
-	
-}
 
+    /**
+     * Jun
+     */
+    public String toString(){
+        StringBuffer sb = new StringBuffer();
+        for(Word w : words){
+            sb.append(w+" ");
+        }
+        return sb.toString();
+    }
+}

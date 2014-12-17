@@ -1,22 +1,34 @@
 package Words.model;
 
+import java.io.Serializable;
 import java.util.Stack;
 
-public class Model {
+import Words.controller.*;
+import Words.view.SwapTable;
+
+public class Model implements Serializable{
 	Board board;
-	//Stack<Move> moves = new Stack<Move>();
+	Stack<Move> moves = new Stack<Move>();
+	Stack<Move> redoMoves = new Stack<Move>();
 
-	/** Currently selected shape (or null if none). */
+
+    /** Currently selected shape (or null if none). */
+    Word highlightWord;
 	Word selected;
+	Word selectedWordinPoem;
+	Poem selectedPoem;
+	Poem submittedPoem;
+	Row  selectedRow;
+	Area selectedArea;
 
-	public Model(Board b) {
+    public Model(Board b) {
 		board = b;
 	}
-	
+
 	public Model() {
 		this(new Board());
 	}
-	
+
 	public void setBoard(Board b) {
 		board = b;
 	}
@@ -28,14 +40,101 @@ public class Model {
 	/**public void recordMove(MoveWord move) {
 		moves.add(move);
 	}
-
 	*/
 
+    public void setHighlightWord(Word highlightWord) {
+        this.highlightWord = highlightWord;
+    }
 	public void setSelected(Word s) {
 		selected = s;
 	}
+	
+	public void setSelectedPoem(Poem p){
+		selectedPoem = p;
+	}
+	
+	public void setSelectedRow(Row r){
+		selectedRow = r;
+	}
+	
+	public void setSelectedWordinPoem(Word w){
+		selectedWordinPoem = w;
+	}
+	
+	public void setSelectedArea(int x,int y, int width,int height){
+		Area area = new Area(x,y,width,height);
+		this.selectedArea = area;
+	}
+	
+	public void setSubmittedPoem(Poem p){
+		this.submittedPoem = p;
+	}
 
 	public Word getSelected() {
-		return selected;
+		return this.selected;
 	}
+	
+	public Poem getSelectedPoem(){
+		return this.selectedPoem;
+	}
+	
+	public Row getSelectedRow(){
+		return this.selectedRow;
+	}
+	
+	public Word getSelectedWordinPoem(){
+		return selectedWordinPoem;
+	}
+	
+	public Area getSelectedArea(){
+		return this.selectedArea;
+	}
+	
+	public Poem getSubmittedPoem(){
+		return this.submittedPoem;
+	}
+
+    public String toString(){
+        String model;
+        return board.toString();
+    }
+
+    public void restore(Model m){
+        board = m.board;
+    }
+    
+    public void recordMove(moveWord m){
+    	moves.add(m);
+    }
+    
+    
+    public void recordConnectionMove(ConnectionMove m){
+       moves.add(m);
+    }
+    
+    public Move removeLastMove(){
+    	if (moves.isEmpty()) {
+    		return null; 
+    		}
+		return moves.pop();
+    }
+    
+    public Move removeLastRedoMove(){
+    	if(redoMoves.isEmpty()){
+    		return null;
+    	    }
+        return redoMoves.pop();
+    }
+    
+    public Stack<Move> getMoves(){
+    	return moves;
+    }
+    
+    public Stack<Move> getRedoMoves(){
+    	return redoMoves;
+    }
+
+    public Word getHighlightWord() {
+        return highlightWord;
+    }
 }

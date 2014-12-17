@@ -1,22 +1,53 @@
 package Words.model;
 
-public class Word extends Element{
-	 int x;
+import java.io.IOException;
+import java.io.Serializable;
+
+public class Word extends Element implements Serializable{
+    public static final int TYPE_COUNT = 10;
+    int x;
 	 int y;
-	 int x_last;
-	 int y_last;
-	 
-     final String value;
-     final int width;
-     final int height;
-     final int wordType;
+
+    String value;
+    int width;
+    int height;
+    int wordType;
+
+    public static final int ADJ_INT         = 0;
+    public static final int ADV_INT         = 1;
+    public static final int CONJUNCTION_INT = 2;
+    public static final int DETERMINER_INT  = 3;
+    public static final int NOUN_INT        = 4;
+    public static final int NUMBER_INT      = 5;
+    public static final int PRONOUN_INT     = 6;
+    public static final int PREPOSITION_INT = 7;
+    public static final int SUFFIX_INT      = 8;
+    public static final int VERB_INT        = 9;
+
+
+
+    public static final String ADJ_STRING           = "adjective";
+    public static final String ADV_STRING           = "adverb";
+    public static final String CONJUNCTION_STRING   = "conjunction";
+    public static final String DETERMINER_STRING    = "determiner";
+    public static final String NOUN_STRING          = "noun";
+    public static final String NUBER_STRING         = "number";
+    public static final String PRONOUN_STRING       = "pronoun";
+    public static final String PREPOSITION_STRING   = "preposition";
+    public static final String SUFFIX_STRING        = "suffix";
+    public static final String VERB_STRING          = "verb";
+
+    public static final String[] TYPE_INT_TO_STRING = {ADJ_STRING, ADV_STRING,
+            CONJUNCTION_STRING,
+            DETERMINER_STRING,NOUN_STRING,
+            NUBER_STRING,PRONOUN_STRING,
+            PREPOSITION_STRING,SUFFIX_STRING,VERB_STRING};
+
      
      public Word(int x,int y,int width,int height,String value,int wordType){
-         super(1,x,y);
+    	 super.type = 1;
     	 this.x = x;
     	 this.y = y;
-    	 this.x_last = x;
-    	 this.y_last = y;
     	 this.width = width;
     	 this.height = height;
     	 this.value = value;
@@ -29,17 +60,7 @@ public class Word extends Element{
     	 }
     	 return false;
      }
-    //added by JUN start --------------
-    public void setLocation(int x, int y){
-         this.x = x;
-         this.y = y;
-     }
-
-    public void setLastLocation(int x, int y){
-        x_last = x;
-        y_last = y;
-    }
-    //added by JUN end ------------------------
+     
      public boolean intersection(int x,int y){
     	 if(x < this.x){return false;}
     	 if(x > (this.x + width)){return false;}
@@ -49,17 +70,45 @@ public class Word extends Element{
      }
      
      public boolean overlap(Word w){
-    	 if((this.x+this.width)>w.getX()&&(w.getY()+w.getHeight())>this.y){
+    	 if((this.x+this.width)>w.getX()&&(this.x+this.width)<(w.getX()+w.width)&&(w.getY()+w.getHeight())>this.y&&(w.getY()+w.getHeight())<(this.y+this.height)){
     		 return true;
     	 }
-    	 if((this.x+this.width)>w.getX()&&(this.y+this.height)>w.getY()){
+    	 if((this.x+this.width)>w.getX()&&(this.x+this.width)<(w.getX()+w.width)&&(this.y+this.height)>w.getY()&&(this.y+this.height)<(w.getY()+w.height)){
     		 return true; 
     	 }
-    	 if((w.getX()+w.getWidth())>this.x&&(this.y+this.height)>w.getY()){
+    	 if((w.getX()+w.getWidth())>this.x&&(w.getX()+w.getWidth())<(this.x+this.width)&&(this.y+this.height)>w.getY()&&(this.y+this.height)<(w.getY()+w.height)){
     		 return true;
     	 }
-    	 if((w.getX()+w.getWidth()>this.x)&&(w.getY()+w.getHeight()>this.y)){
+    	 if((w.getX()+w.getWidth()>this.x)&&(w.getX()+w.getWidth())<(this.x+this.width)&&(w.getY()+w.getHeight()>this.y)&&(w.getY()+w.getHeight())<(this.y+this.height)){
     		 return true; 
+    	 }
+    	 if((w.getX()+w.getWidth()>this.x)&&(w.getX()+w.getWidth()<this.x+this.width)&&w.getY()==this.y){
+    		 return true;
+    	 }
+    	 if((this.x+this.width>w.getX())&&(this.x+this.width<w.getX()+w.getWidth())&&this.y==w.getY()){
+    		 return true;
+    	 }
+    	 return false;
+     }
+     
+     public boolean overlapRow(Row w){
+    	 if((this.x+this.width)>w.getX()&&(this.x+this.width)<(w.getX()+w.width)&&(w.getY()+w.getHeight())>this.y&&(w.getY()+w.getHeight())<(this.y+this.height)){
+    		 return true;
+    	 }
+    	 if((this.x+this.width)>w.getX()&&(this.x+this.width)<(w.getX()+w.width)&&(this.y+this.height)>w.getY()&&(this.y+this.height)<(w.getY()+w.height)){
+    		 return true; 
+    	 }
+    	 if((w.getX()+w.getWidth())>this.x&&(w.getX()+w.getWidth())<(this.x+this.width)&&(this.y+this.height)>w.getY()&&(this.y+this.height)<(w.getY()+w.height)){
+    		 return true;
+    	 }
+    	 if((w.getX()+w.getWidth()>this.x)&&(w.getX()+w.getWidth())<(this.x+this.width)&&(w.getY()+w.getHeight()>this.y)&&(w.getY()+w.getHeight())<(this.y+this.height)){
+    		 return true; 
+    	 }
+    	if((w.getX()+w.getWidth()>this.x)&&(w.getX()+w.getWidth()<this.x+this.width)&&w.getY()==this.y){
+    		 return true;
+    	 }
+    	 if((this.x+this.width>w.getX())&&(this.x+this.width<w.getX()+w.getWidth())&&this.y==w.getY()){
+    		 return true;
     	 }
     	 return false;
      }
@@ -70,180 +119,33 @@ public class Word extends Element{
      public int getHeight(){return this.height;}
      public String getValue(){return this.value;}
      
-     public Intersection getIntersection(Word word){
-    	 
-    	 Intersection intersection = new Intersection();
-    	 
-    	// no intersection
- 		if((this.x + this.width < word.x) ||(this.x > word.x + word.width)|| 
- 		   (this.y < (word.y - word.height))||(this.y - this.height) > word.y){
- 			
- 			intersection.type = -1;
- 		}
- 		
- 		// x left intersection and y no determined
-		if((word.x + word.width > this.x ) && (word.x + word.width < this.x + this.width) && 
-				(word.x < this.x)){
-			
-		
-			// y are equal then left intersection
-			if(this.y == word.y){     
-				intersection.type = 1;
-				intersection.e.type = 2;
-				intersection.e.x = this.x - word.width;
-				intersection.e.y = this.y;
-			}
-			
-			// y overlaps with bottom part
-			if((word.y < this.y) && (word.y > this.y - this.height)){
-				// y overlap more than x overlap then left intersection
-				if(word.y - (this.y - this.height) >= (word.x + word.width - this.x)){
-				intersection.type = 1;	
-				intersection.e.type = 2;
-				intersection.e.x = this.x - word.width;
-				intersection.e.y = this.y;		
-			}
-				// y overlap less than x overlap then bottom intersection
-				else {
-					intersection.type = 4;	
-					intersection.e.type = 3;
-					intersection.e.x = this.x;
-					intersection.e.y = this.y;	
-				}
-			}		
-					
-			// row y overlaps with top part of word y
-			if((word.y > this.y) && (word.y - word.height < this.y)){
-				//y overlap more than x overlap then left intersection
-				if( (this.y-(word.y - word.height)) >= (word.x + word.width - this.x)){
-					intersection.type = 1;	
-					intersection.e.type = 2;
-					intersection.e.x = this.x - word.width;
-					intersection.e.y = this.y;
-				}
-				// y overlap less than x overlap then top intersection
-				else {
-					intersection.type = 3;
-					intersection.e.type = 3;
-					intersection.e.x = this.x;
-					intersection.e.y = this.y + word.height;	
-				}	
-			}
-		}
-		
-		//x right intersection and y no determined
-		if((word.x < this.x + this.width ) && (word.x + word.width > this.x + this.width) && 
-				(word.x > this.x)){
-			
-		
-			// y are equal then right intersection
-			if(this.y == word.y){     
-				intersection.type = 2;
-				intersection.e.type = 2;
-				intersection.e.x = this.x;
-				intersection.e.y = this.y;
-			}
-			
-			//row y overlaps with bottom part of word y
-			if((word.y < this.y) && (word.y > this.y - this.height)){
-				// y overlap more than x overlap then right intersection
-				if(word.y - (this.y - this.height) >= (this.x + this.width - word.x)){
-				intersection.type = 2;	
-				intersection.e.type = 2;
-				intersection.e.x = this.x;
-				intersection.e.y = this.y;		
-			}
-				// y overlap less than x overlap then bottom intersection
-				else {
-					intersection.type = 4;	
-					intersection.e.type = 3;
-					intersection.e.x = this.x;
-					intersection.e.y = this.y;	
-				}
-			}		
-					
-			// row y overlaps with top part of word y
-			if((word.y > this.y) && (word.y - word.width < this.y)){
-				//y overlap more than x overlap then right intersection
-				if( (this.y-(word.y - word.height)) >= (this.x + this.width - word.x)){
-					intersection.type = 2;	
-					intersection.e.type = 2;
-					intersection.e.x = this.x;
-					intersection.e.y = this.y;
-				}
-				// y overlap less than x overlap then top intersection
-				else {
-					intersection.type = 3;
-					intersection.e.type = 3;
-					intersection.e.x = this.x;
-					intersection.e.y = this.y + word.height;	
-				}	
-			}
-		}
-		
-		//x overlap totally and y not determined
-				if((this.x >= word.x && this.x + this.width <= word.x + word.width) ||
-						(this.x <= word.x && this.x + this.width >= word.x + word.width)){
-					// y overlap with top part of word then top intersection
-					if((this.y > word.y) && (this.y - this.width < word.y)){
-						intersection.type = 3;
-						intersection.e.type = 3;
-						intersection.e.x = word.x;
-						intersection.e.y = word.y + this.height;
-					}
-					//y overlap with bottom part of word then bottom intersection
-					if((this.y < word.y) && (this.y > word.y - word.height)){
-						intersection.type = 4;	
-						intersection.e.type = 3;
-						intersection.e.x = word.x;
-						intersection.e.y = word.y;	
-					}
-				}
-		
-		 return intersection;
-     }
-     
-     
-     public Intersection getIntersectionInWord(Word word){
-    	 
-    	 Intersection intersection = new Intersection();
-    	 
-    	 intersection = this.getIntersection(word);
-    	 
-			// two words overlap totally
-			if(this.y == word.y){
-				
-				if((this.x >= word.x && this.x + this.width <= word.x + word.width) ||
-						(this.x < word.x && this.x + this.width > word.x + word.width)){
-				intersection.type = 5;		
-			}
-		}
-
-    	 return intersection;
+     public void setLocation(int x, int y ){
+    	 this.x = x;
+    	 this.y = y;
      }
 
-     public Intersection getIntersectionInRow(Word word){
-    	 Intersection intersection = new Intersection();
-    	 
-    	 intersection = this.getIntersection(word);
-    	 
-    	 if(this.y == word.y){
-    		 if(this.x > word.x && this.x + this.width < word.x + word.width){
-    			 intersection.type = 6;
-    		 }
-    		 
-    		 if(this.x <= word.x && this.x + this.width >= word.x + word.width){
-    			 intersection.type = 5;
-    		 }
-    	 }
-    	 return intersection;    	 
-     }
+     public int getWordType() {
+    	 return this.wordType;
+    }
      
-     public void move(int x_new, int y_new ){
-    	 this.x_last = this.x;
-    	 this.y_last = this.y;
-    	 this.x = x_new;
-    	 this.y = y_new;
-     }
+    public String toString(){
+        return value;
+    }
+
+    public static final int getTypeInt(String s) {
+        if(ADJ_STRING.equals(s)) return ADJ_INT;
+        if(ADV_STRING.equals(s)) return ADV_INT;
+
+        if(CONJUNCTION_STRING.equals(s)) return CONJUNCTION_INT;
+        if(DETERMINER_STRING.equals(s)) return DETERMINER_INT;
+        if(NUBER_STRING.equals(s)) return NUMBER_INT;
+        if(NOUN_STRING.equals(s)) return NOUN_INT;
+        if(PRONOUN_STRING.equals(s)) return PRONOUN_INT;
+        if(PREPOSITION_STRING.equals(s)) return PREPOSITION_INT;
+        if(SUFFIX_STRING.equals(s)) return SUFFIX_INT;
+
+        if(NOUN_STRING.equals(s)) return NOUN_INT;
+        if(VERB_STRING.equals(s)) return VERB_INT;
+        return -1;
+    }
 }
-
