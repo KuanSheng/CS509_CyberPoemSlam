@@ -30,6 +30,7 @@ public class WordTypeModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
+        if(rowIndex < 0) return null; // added to solve problem of index of of bound
         if(rowIndex == 0){
             if (columnIndex == 0) {
                 return "Unprotected Word";

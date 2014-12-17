@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 public class Word extends Element implements Serializable{
     public static final int TYPE_COUNT = 10;
+    public static final int HIGHT = 14;
     int x;
 	 int y;
 

@@ -38,9 +38,10 @@ public class ReleasePoemMove extends Move {
         board.removePoem(poemReleased);
         System.out.println("adding words to unprotected area: execute.ReleasePoemMove");
         Iterator<Row> itRow = poemReleased.getRows().iterator();
+        int offsetIndex = 0;
         while (itRow.hasNext()){
             Row r = itRow.next();
-            setReleaseLocation(r);
+            setReleaseLocation(r, offsetIndex++);
             Iterator<Word> itWord = r.iterator();
             while (itWord.hasNext()){
                 Word w = itWord.next();
@@ -61,9 +62,10 @@ public class ReleasePoemMove extends Move {
          board.removePoem(poemReleased);
          System.out.println("adding words to unprotected area: execute.ReleasePoemMove");
          Iterator<Row> itRow = poemReleased.getRows().iterator();
+        int offsetIndex = 0;
          while (itRow.hasNext()){
              Row r = itRow.next();
-             setReleaseLocation(r);
+             setReleaseLocation(r, offsetIndex++);
              Iterator<Word> itWord = r.iterator();
              while (itWord.hasNext()){
                  Word w = itWord.next();
@@ -83,9 +85,9 @@ public class ReleasePoemMove extends Move {
         w.setLocation(w.getX(), w.getY()+panel.getY()); // todo change to dynamic (whole panel is 490 wide)
         return w;
     }
-    public Row setReleaseLocation(Row r){
+    public Row setReleaseLocation(Row r, int offset){
         System.out.println("panel height: " + panel.getWidth() +"r.getY: " + r.getY()+ " sum: " + (r.getY()+panel.getHeight()) + " :setReleaseLocation.ReleasePoemMove");
-        r.setLocation(r.getX(),400,r.getX(),r.getY());
+        r.setLocation(r.getX(),400+offset*Word.HIGHT,r.getX(),r.getY());
         return r;
     }
 

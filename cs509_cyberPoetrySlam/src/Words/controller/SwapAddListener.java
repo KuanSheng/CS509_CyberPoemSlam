@@ -72,6 +72,8 @@ public class SwapAddListener implements ListSelectionListener {
     }
 
     void addByWordTypeTable(){
+        int indexSelected = jtable.getSelectedRow();
+        if(indexSelected < 0) return;
         if(jtable.getValueAt(jtable.getSelectedRow(),0).equals(0)) return;//if there's no words of that type, just return
         new AddRandomWordForSwap(board, swap, app).addRandomWord(
                 (String)jtable.getValueAt(jtable.getSelectedRow(),0)
