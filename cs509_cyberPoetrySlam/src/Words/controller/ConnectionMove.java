@@ -55,7 +55,7 @@ public class ConnectionMove extends Move implements Serializable{ // todo check 
 		this.newx = connectWord.getX();
 		this.newy = connectWord.getY();
 		b.addPoems(newPoem);
-		b.getWords().remove(selectedWord);
+		b.getWords().remove(this.selectedWord);
 		b.getWords().remove(this.connectWord);
 		return true;
 	}
@@ -102,7 +102,7 @@ public class ConnectionMove extends Move implements Serializable{ // todo check 
 		connectWord.setLocation(newx,newy);
 		b.addPoems(newPoem);
 		//System.out.println(newPoem.getRowNumber());
-		b.getWords().remove(selectedWord);
+		b.getWords().remove(this.selectedWord);
 		b.getWords().remove(this.connectWord);
 		return true;
 	}

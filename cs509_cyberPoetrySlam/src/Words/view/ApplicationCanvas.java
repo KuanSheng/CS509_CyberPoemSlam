@@ -41,15 +41,6 @@ public class ApplicationCanvas extends Canvas{
 		this.board = model.getBoard();
 		this.addMouseListener(controller);
 		this.addMouseMotionListener(controller);
-		
-//		board.addWords(new Word(40, 400, 120, 14, "Adj1",0));
-//		board.addWords(new Word(40, 400, 120, 14, "Adj2",0));
-//		board.addWords(new Word(40, 400, 120, 14, "Adv1",1));
-//		board.addWords(new Word(40, 400, 120, 14, "Adv2",1));
-//		board.addWords(new Word(40, 400, 120, 14, "Noun1",2));
-//		board.addWords(new Word(40, 400, 120, 14, "Noun2",2));
-//		board.addWords(new Word(40, 400, 120, 14, "Verb1",3));
-//		board.addWords(new Word(40, 400, 120, 14, "Verb2",3));
 	}
 	
 	public void paint(Graphics g){
@@ -80,7 +71,7 @@ public class ApplicationCanvas extends Canvas{
             paintHighlightWord(g);
         }
 	}
-	
+	/**paint backgroud**/
 	public void paintBackground(Graphics g){
 //        System.out.println("paintBackground.ApplicationCanvas.java");
 		g.clearRect(0,0,getWidth(),300);
@@ -90,7 +81,7 @@ public class ApplicationCanvas extends Canvas{
 //        g.fillRect(0,0,getWidth(), getHeight()*2/3);
 		g.drawLine(0,300, 650, 300);
 	}
-	
+	/**paint all words**/
 	public void paintWord(Graphics g){
 		for(Word w : board.getWords()){
 //            System.out.println("painting word: " + w + "at x-" + w.getX() + " y-" + w.getY() + " :paintWord.ApplicationCanvas");

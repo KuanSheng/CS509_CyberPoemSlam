@@ -25,6 +25,7 @@ public class ShiftRowMove extends Move{
 			shiftPoem.setLocationAfterConnection(newx,newy);
 		}
 		else{
+			System.out.println("hhhhh");
 			shiftRow.setLocation(newx,newy,newx,newy);
 		}
 		return true;
@@ -37,7 +38,6 @@ public class ShiftRowMove extends Move{
 			shiftPoem.setLocationAfterConnection(oldx,oldy);
 		}
 		else{
-			System.out.println(oldx);
 			shiftRow.setLocation(oldx,oldy,newx,newy);
 		}
 		return true;

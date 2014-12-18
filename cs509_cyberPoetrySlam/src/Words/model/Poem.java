@@ -52,6 +52,7 @@ public class Poem extends Element implements Serializable{
     public Poem(Poem p1, Poem p2, int direction){
     	//p1 on top
     	if(direction == 1){
+    		System.out.println("I am One!");
     		this.x = p2.getX();
     		this.y = p2.getY() - 14*p1.getRowNumber();
     		this.FirstRow = p1.getFirstRow();

@@ -57,6 +57,9 @@ public class DisconnectionPoemMove extends Move{
 			Row r3 = disconnectRow.getNextRow();
 			
 			newPoem = new Poem(disconnectRow.getX(),disconnectRow.getY());
+			if(r1 == null){
+				System.out.println("woca");
+			}
 			newUpPoem = new Poem(r1.getX(),r1.getY());
 			newBotPoem = new Poem(r3.getX(),r3.getY());
 			
