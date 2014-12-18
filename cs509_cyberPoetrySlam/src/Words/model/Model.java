@@ -1,3 +1,7 @@
+/**
+ * Model must store the state of moving words, if the decision is made to go in the flicker free direction.
+ * Note change impacts number of areas.**/
+
 package Words.model;
 
 import java.io.Serializable;
@@ -20,7 +24,8 @@ public class Model implements Serializable{
 	Poem submittedPoem;
 	Row  selectedRow;
 	Area selectedArea;
-
+	
+	/**constructor**/
     public Model(Board b) {
 		board = b;
 	}
@@ -36,11 +41,6 @@ public class Model implements Serializable{
 	public Board getBoard() {
 		return board;
 	}
-
-	/**public void recordMove(MoveWord move) {
-		moves.add(move);
-	}
-	*/
 
     public void setHighlightWord(Word highlightWord) {
         this.highlightWord = highlightWord;
@@ -103,7 +103,7 @@ public class Model implements Serializable{
         board = m.board;
     }
     
-    public void recordMove(moveWord m){
+    public void recordMove(MoveWord m){
     	moves.add(m);
     }
     

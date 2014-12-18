@@ -1,3 +1,4 @@
+/**created and modified by KuanSheng**/
 package Words.model;
 import java.io.Serializable;
 import java.util.*;
@@ -13,7 +14,7 @@ ArrayList<Word> words = new ArrayList<Word>();
 	
 	Row formerRow;
 	Row nextRow;
-
+	/**Constructor**/
 	public Row(int x, int y, int height, int width){
 	  super.type = 2;
       this.x = x;
@@ -23,6 +24,7 @@ ArrayList<Word> words = new ArrayList<Word>();
       this.WordNumber = 0;
 	}
 	
+	/**Constructor with two words**/
 	public Row(Word w1,Word w2,int direction){
 		if(direction==2){
 			this.x = w1.getX();
@@ -42,22 +44,26 @@ ArrayList<Word> words = new ArrayList<Word>();
 		this.WordNumber =2;
 	}
 	
+	/**add word into the row**/
 	public void addWord(Word word){
     	words.add(word);
     	this.WordNumber++;
     	this.width = this.width+word.getWidth();
     }
 	
+	/**remove word from rows**/
 	public void removeWord(Word word){
 		words.remove(word);
 		this.WordNumber--;
 		this.width = this.width-word.getWidth();
 	}
 	
+	/**return the number of word**/
 	public int getWordNumber(){
 		return this.WordNumber;
 	}
 	
+	/**return the first word of row**/
 	public Word getFirstWord(){
 		for(Word w:words){
 			if(w.getX() == this.getX()){
@@ -67,6 +73,7 @@ ArrayList<Word> words = new ArrayList<Word>();
 		return null;
 	}
 	
+	/**return the last word**/
 	public Word getLastWord(){
 		for(Word w:words){
 			if(w.getX()+w.getWidth() == this.getX()+this.getWidth()){
@@ -81,6 +88,8 @@ ArrayList<Word> words = new ArrayList<Word>();
 		return this.words;
 	}
 	
+	/**get right limit of shift 
+	 * return 0 when it is one row poem**/
 	public int getLeftShiftLimit(){
 		Row former = this.getFormerRow();
 		Row next = this.getNextRow();
@@ -109,6 +118,8 @@ ArrayList<Word> words = new ArrayList<Word>();
 		return leftLimit - this.width;
 	}
 	
+	/**get right limit of shift 
+	 * return 0 when it is one row poem**/
 	public int getRightShiftLimit(){
 		Row former = this.getFormerRow();
 		Row next = this.getNextRow();
@@ -137,6 +148,7 @@ ArrayList<Word> words = new ArrayList<Word>();
 		return rightLimit;
 	}
 	
+	/**input a word,return the former word of the word**/
 	public Word getFormerWord(Word w){
 		if(w == this.getFirstWord()){
 			return null;
@@ -149,7 +161,7 @@ ArrayList<Word> words = new ArrayList<Word>();
 		}
 		return null;
 	}
-	
+	/**input a word,return the next word of the word**/
 	public Word getNextWord(Word w){
 		if(w == this.getLastWord()){
 			return null;

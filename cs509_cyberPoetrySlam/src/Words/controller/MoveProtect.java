@@ -3,7 +3,7 @@ import Words.model.*;
 
 import java.io.Serializable;
 
-public class moveProtect extends Move implements Serializable{
+public class MoveProtect extends Move implements Serializable{
 	int oldx;
 	int oldy;
 	int newx;
@@ -11,7 +11,7 @@ public class moveProtect extends Move implements Serializable{
 	Board b;
 	Word word;
 	
-	public moveProtect(Word word, Board b,int oldx, int oldy, int newx,int newy){
+	public MoveProtect(Word word, Board b,int oldx, int oldy, int newx,int newy){
 		this.oldx = oldx;
 		this.oldy = oldy;
 		this.newx = newx;

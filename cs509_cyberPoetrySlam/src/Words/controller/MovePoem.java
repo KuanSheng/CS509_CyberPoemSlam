@@ -1,14 +1,14 @@
 package Words.controller;
 import Words.model.*;
 
-public class movePoem extends Move{
+public class MovePoem extends Move{
 	final Poem poem;
 	int oldx;
 	int oldy;
 	int newx;
 	int newy;
 	
-	public movePoem(Poem poem,int oldx,int oldy,int newx,int newy){
+	public MovePoem(Poem poem,int oldx,int oldy,int newx,int newy){
 		this.poem = poem;
 		this.oldx = oldx;
 		this.oldy = oldy;

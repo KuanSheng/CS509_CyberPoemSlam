@@ -1,3 +1,11 @@
+/**created and modified by KuanSheng
+ * disconnect one edge word from a poem
+ * we have four cases here
+ * 1.disconnect word in one row poem
+ * 2.disconnect word in first row
+ * 3.disconnect word in mid row
+ * 4.disconnect word in last row**/
+
 package Words.controller;
 import Words.model.*;
 
@@ -26,24 +34,26 @@ public class DisconnectionMove extends Move{
 	
 	@Override
 	public boolean execute(){
+		//disconnect word from one row poem
 		if(disconnectPoem.getRowNumber() == 1){
 			this.disconnectWordinOneRowPoem();
 			this.disType = 1;
 			return true;
 		}
-		
+		//disconnect word from first row
 		else if(r.equals(disconnectPoem.getFirstRow())){
 			this.disconnectWordinFirstRow();
 			this.disType = 2;
 			return true;
 		}
 		
+		//disconnect word from last row
 		else if(r.equals(disconnectPoem.getLastRow())){
 			this.disconnectWordinLastRow();
 			this.disType = 3;
 			return true;
 		}
-		
+		//disconnect word from mid row
 		else{
 			this.disconnectWordinMidRow();
 			this.disType = 4;

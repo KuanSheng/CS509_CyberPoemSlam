@@ -12,6 +12,7 @@ public class WordPoemConnectionController {
 	Poem selectedPoem = null;
 	Poem connectPoem = null;
 	
+	/**construcotr**/
 	public WordPoemConnectionController(Model model,ApplicationCanvas panel,int oldx,int oldy,Poem selectedPoem,Poem connectPoem){
 		this.model = model;
 		this.panel = panel;
@@ -22,18 +23,21 @@ public class WordPoemConnectionController {
 		this.connectPoem = connectPoem;
 	}
 	
+	/**execute the connection operation**/
 	public void connectPoem(){
+		//get connection direction
 		if(selectedPoem.getY() < connectPoem.getY()){
 			direction = 1;
 		}
 		else{
 			direction = 2;
 		}
+		//new a move
 		ConnectTwoPoemMove move = new ConnectTwoPoemMove(selectedPoem,connectPoem,b,oldx,oldy,direction);
 		if(move.execute()){
 			panel.repaint();
 		}
-		
+		//record move
 		model.getMoves().push(move);
 	}
 }

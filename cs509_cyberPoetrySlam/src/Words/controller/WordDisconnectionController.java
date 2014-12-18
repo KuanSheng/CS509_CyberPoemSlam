@@ -1,3 +1,4 @@
+/**created by Kuansheng**/
 package Words.controller;
 
 import Words.model.*;
@@ -8,7 +9,7 @@ public class WordDisconnectionController {
 	final ApplicationCanvas panel;
 	final Board b;
 	Poem disConnectPoem;
-	
+	/**constructor**/
 	public WordDisconnectionController(Model model,ApplicationCanvas a,Poem p){
 		this.model = model;
 		this.panel = a;
@@ -16,6 +17,7 @@ public class WordDisconnectionController {
 		this.disConnectPoem = p;
 	}
 	
+	/**execute the operation**/
 	public void disconnectEdgeWord(int type,Row r){
 		Word w = model.getSelectedWordinPoem();
 		DisconnectionMove move = new DisconnectionMove(this.disConnectPoem,w,r,this.model,type);
@@ -23,6 +25,7 @@ public class WordDisconnectionController {
 		panel.repaint();
 		}
 		
+		//record move
 		model.getMoves().push(move);
 	}
 }

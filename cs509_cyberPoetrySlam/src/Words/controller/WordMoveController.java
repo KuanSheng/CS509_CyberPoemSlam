@@ -39,24 +39,35 @@ public class WordMoveController extends MouseAdapter{
 		// no board? no behavior!
 		if (model == null) { return;}
 		
-		//model.setSelectedPoem(null);
-		//model.setSelectedRow(null);
-		
 		Board board = model.getBoard();
 
         model.setHighlightWord(null); // added by JUN to test removing highlight effect
 		
-		if (e.getButton()==MouseEvent.BUTTON3) {
+        
+		/*if (e.getButton()==MouseEvent.BUTTON3) {
 			this.generateNewWord(e.getX(), e.getY());
 			return;
-		}
+		}*/
 		
+        //double click to disconnect word
         if(e.getClickCount() == 2){
         	//must in the protected area
         	this.disconnectWord(x, y);
         	return;
         }
+      //shift row
+      	if(board.findRow(anchor.x, anchor.y, model.getSelectedRow())){
+      			setRowFlag(model.getSelectedRow());
+      			return;
+      	}
         
+      //select a poem
+        Poem p = board.findPoem(anchor.x,anchor.y);
+		if(p != null){
+			setSelectedPoem(p);
+			panel.repaint();
+			return;
+		}
         // select a word
 		Word s = board.findWord(anchor.x, anchor.y);
 		
@@ -66,21 +77,9 @@ public class WordMoveController extends MouseAdapter{
 			return;
 		}
 		
-		//shift row
-		if(board.findRow(anchor.x, anchor.y, model.getSelectedRow())){
-			setRowFlag(model.getSelectedRow());
-			return;
-		}
 		
-	    //select a poem
-		Poem p = board.findPoem(anchor.x,anchor.y);
 		
-		if(p != null){
-			setSelectedPoem(p);
-			panel.repaint();
-			return;
-		}
-	 
+	    //build a selection area
 		if(buildSelectionArea(anchor.x,anchor.y)){
 			return;
 		}
@@ -88,8 +87,6 @@ public class WordMoveController extends MouseAdapter{
 		model.setSelected(null);
 		model.setSelectedPoem(null);
 		model.setSelectedRow(null);
-
-
 	}
 	
     /**mouse released**/
@@ -140,6 +137,7 @@ public class WordMoveController extends MouseAdapter{
 	public boolean setSelectedPoem(Poem p){
 		Point relative = new Point(anchor);
 		
+		//initialize move original value
 		model.setSelectedPoem(p);
 		originalx = p.getX();
 		originaly = p.getY();
@@ -199,7 +197,7 @@ public class WordMoveController extends MouseAdapter{
 		//nothing selected
 		if(selectedWord == null&&selectedPoem == null&&selectedRow == null&&submittedPoem == null){
 			if(b.getSubmittedPoemByArea(model.getSelectedArea())!=null){
-				System.out.println("here");
+				
 				model.setSubmittedPoem(b.getSubmittedPoemByArea(model.getSelectedArea()));
 			}
 			
@@ -212,15 +210,18 @@ public class WordMoveController extends MouseAdapter{
 		}
 		
 		//move word or poem;
-		if(selectedWord != null){
-			this.moveWord(selectedWord);
+		if(selectedRow != null){
+			this.makeRowMove();
 		}
 		else if(selectedPoem != null){
 			this.movePoem(selectedPoem);
 		}
-		else if(selectedRow != null){
-			this.makeRowMove();
+		
+		else if(selectedWord != null){
+			this.moveWord(selectedWord);
 		}
+		 
+		
 		
 		//release the mouse and repaint
 		model.setSelected(null);
@@ -277,15 +278,16 @@ public class WordMoveController extends MouseAdapter{
 		}
 		
 		if(this.originaly < 300&&p.getY() > 300){
-			p.setLocation(originalx,originaly,originalx,originaly);
+			//when move to unprotected area, send it back
+			p.setLocation(originalx,originaly,p.getX(),p.getY());
 			return;
 		}
 	}
 	
+	/**shift row**/
 	public void makeRowMove(){
 		Row r = model.getSelectedRow();
 		Poem p = b.getPoemByRow(r);
-		System.out.println(originalx);
 		ShiftRowController control = new ShiftRowController(model,panel,p,r,r.getX(),r.getY(),originalx,originaly);
 		control.shift();
 	}
@@ -328,7 +330,7 @@ public class WordMoveController extends MouseAdapter{
 			p.setLocation(originalx, originaly,originalx,originaly);
 			return;
 		}
-		
+		//overlap with poem, connect them
 		if(b.getOverlapPoem(p) != null){
 			Poem connectPoem = b.getOverlapPoem(p);
 			connectTwoPoem(p,connectPoem);
@@ -339,17 +341,20 @@ public class WordMoveController extends MouseAdapter{
 	
 	/**check potential overlap with a word**/
 	public boolean checkWordPotentialOverlap(Word w){
+		
 		Word connectWord = b.checkOverlap(w);
 		int type = b.getOverlapType(w,connectWord);
 		
 		//check potential overlap
 		if(type == 1||type == 2||type == 6){
 			if(model.getBoard().checkPotentialOverlap(w,connectWord,1)){
+				System.out.println("haha");
 				return true;
 			}
 		}
 		else if(type == 3||type == 4||type ==5){
 			if(model.getBoard().checkPotentialOverlap(w,connectWord,2)){
+				System.out.println("haha");
 				return true;
 			}
 		}
@@ -357,6 +362,8 @@ public class WordMoveController extends MouseAdapter{
 		return false;
 	}
 	
+	
+	/**connect two overlap words**/
     public void connectTwoWords(Word w){
 		//check potential overlap
 		boolean potentialOverlap = this.checkWordPotentialOverlap(w);
@@ -371,6 +378,7 @@ public class WordMoveController extends MouseAdapter{
 		}
     }
     
+    /**connect poem and word**/
     public void connectPoemandWord(Word w){
     	Poem connectPoem = model.getBoard().checkOverlapWord(w);
 		int type = model.getBoard().getOverlapPoemWord(connectPoem, w);
@@ -385,6 +393,7 @@ public class WordMoveController extends MouseAdapter{
 		}
     }
     
+    /**check potential overlap between one poem and one word**/
    public boolean checkPotentialOverlapPoem(int type, Word w, Poem p){
 	      if(type == 1||type == 4||type == 5){
 	        	if(model.getBoard().checkPotentialOverlapPoem(w,p,1)){
@@ -399,6 +408,7 @@ public class WordMoveController extends MouseAdapter{
 	   return false;
    }
    
+   /**disconnect a word from a poem**/
    public void disconnectWord(int x, int y){
 	   if(y<300){
    		Poem p = b.findPoem(x,y);
@@ -433,19 +443,21 @@ public class WordMoveController extends MouseAdapter{
    	return;
    }
    
+   /**update word location and record move**/
    public void makeWordMove(){
 	   Word selectedWord = model.getSelected();
 	   if(selectedWord == null){
 		   return;
 	   }
 	   
-	   moveWord move = new moveWord(selectedWord,originalx,originaly,selectedWord.getX(),selectedWord.getY());
+	   MoveWord move = new MoveWord(selectedWord,originalx,originaly,selectedWord.getX(),selectedWord.getY());
 	   if(move.execute()){
 		   model.getMoves().push(move);
 		   panel.repaint();
 	   }
    }
    
+   /**move between protected area and unprotected area**/
    public void changeStatusMove(){
 	   Word selectedWord = model.getSelected();
 	   if(selectedWord == null){
@@ -456,40 +468,45 @@ public class WordMoveController extends MouseAdapter{
 		   selectedWord.setLocation(originalx,originaly);
 		   return;
 	   }
-	   moveProtect move = new moveProtect(selectedWord, b, originalx,originaly,selectedWord.getX(),selectedWord.getY());
+	   MoveProtect move = new MoveProtect(selectedWord, b, originalx,originaly,selectedWord.getX(),selectedWord.getY());
 	   if(move.execute()){
 		   model.getMoves().push(move);
 		   panel.repaint();
 	   }
    }
    
+   /**update poem location and record move**/
    public void makePoemMove(){
 	   Poem selectedPoem = model.getSelectedPoem();
 	   
 	   int newx = selectedPoem.getX();
 	   int newy = selectedPoem.getY();
 	   
-	   movePoem move = new movePoem(selectedPoem,originalx,originaly,newx,newy);
+	   MovePoem move = new MovePoem(selectedPoem,originalx,originaly,newx,newy);
 	   if(move.execute()){
 		   model.getMoves().push(move);
 		   panel.repaint();
 	   }
    }
    
+   /**connect two overlap poem**/
    public void connectTwoPoem(Poem selectedPoem, Poem connectPoem){
 	   WordPoemConnectionController controller = new WordPoemConnectionController(model,panel,originalx,originaly,selectedPoem,connectPoem);
 	   controller.connectPoem();
    }
    
+   /**build a selection area to select poem or row**/
    public boolean buildSelectionArea(int ox,int oy){
 	   model.setSelectedRow(null);
 	   model.setSubmittedPoem(null);
+	   
+	   //initializr location
 	   this.originalx = ox;
 	   this.originaly = oy;
 	   this.buildFlag = true;
 	   return true;
    }
-   
+   /**draw selection area, model will update it and panel will draw**/
    public boolean drawSelectionArea(int x, int y){
 	   if(x >= originalx&&y >= originaly){
 		    int width = Math.abs(x-originalx);
@@ -521,20 +538,24 @@ public class WordMoveController extends MouseAdapter{
 	   return true;
    }
    
+   /**shift one row**/
    public boolean shiftSelectedRow(int x,int y){
 	   Row r = model.getSelectedRow();
 	   Poem p = b.getPoemByRow(r);
 	   Row fr = p.getFirstRow();
-		   
+	   
+	   //get shift limit,it can not leave the poem
 	   int rightLimit = r.getRightShiftLimit();
 	   int leftLimit = r.getLeftShiftLimit();
 	   
 	   int ox = r.getX();
 	   int oy = r.getY();
 	   
+	   //one row poem ,just return,nothing to shift
        if(leftLimit == 0||rightLimit == 0){
     	    return false;
        }
+       
 	   if(x >= leftLimit && x <= rightLimit ){
 	        r.setLocation(x, y, ox, oy);
 	        if(fr.equals(r)){
@@ -546,6 +567,7 @@ public class WordMoveController extends MouseAdapter{
 	   return false;
    }
    
+   /**tell other entity shifting the row**/
    public void setRowFlag(Row r){
 	   RowFlag = true;
 	   Point relative = new Point (anchor);

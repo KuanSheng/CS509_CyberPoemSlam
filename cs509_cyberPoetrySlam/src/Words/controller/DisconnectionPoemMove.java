@@ -1,3 +1,10 @@
+/**
+ * created and modified by KuanSheng
+ * Disconnect a row from a poem
+ * we have 3 cases here
+ * 1.disconnect the first row
+ * 2.disconnect the second row
+ * 3.disconnect the mid row**/
 package Words.controller;
 import Words.model.*;
 
@@ -10,30 +17,32 @@ public class DisconnectionPoemMove extends Move{
 	Board board;
 	int type = 0;
 	
+	/**constructor**/
 	public DisconnectionPoemMove(Poem disconnectPoem,Row disconnectRow,Board board){
 		this.disconnectPoem = disconnectPoem;
 		this.disconnectRow = disconnectRow;
 		this.board = board;
 	}
 	
+	/**execute the operation**/
 	@Override
 	public boolean execute(){
 		if(disconnectPoem.getRowNumber() == 1){
 	    	return false;
 		}
-		
+		//disconnect the first row
 		if(disconnectRow.equals(disconnectPoem.getFirstRow())){
 			disconnectPoem.removeRow(disconnectRow);
 			Row r = disconnectRow.getNextRow();
 			disconnectPoem.setLocationAfterConnection(r.getX(),r.getY());
 			r.setFormerRow(null);
-			
+			//generate a new poem
 			this.newUpPoem = new Poem(disconnectRow.getX(),disconnectRow.getY());
 			newUpPoem.addRow(disconnectRow);
 			newUpPoem.setLastRow(disconnectRow);
 			disconnectRow.setNextRow(null);
 			board.addPoems(newUpPoem);
-			
+			//record which type row for undo
 			this.type = 1;
 			return true;
 		}
@@ -175,6 +184,7 @@ public class DisconnectionPoemMove extends Move{
 		}
 	}
 	
+	/**undo operation**/
 	@Override
 	public boolean undo(){
 		switch(type){
@@ -191,6 +201,7 @@ public class DisconnectionPoemMove extends Move{
 		return true;
 	}
 	
+	/**undo mid row disconnection**/
 	public void undoMidRow(){
 		disconnectRow.setNextRow(newBotPoem.getFirstRow());
 		disconnectRow.setFormerRow(newUpPoem.getLastRow());
@@ -200,6 +211,7 @@ public class DisconnectionPoemMove extends Move{
 		board.removePoem(newUpPoem);
 	}
 	
+	/**undo first row disconnection**/
 	public void undoFirstRow(){
 		disconnectPoem.addRow(disconnectRow);
 		disconnectRow.setNextRow(disconnectPoem.getFirstRow());;
@@ -207,6 +219,7 @@ public class DisconnectionPoemMove extends Move{
 		board.removePoem(newUpPoem);
 	}
 	
+	/**undo last row disconnection**/
 	public void undoLastRow(){
 		disconnectPoem.addRow(disconnectRow);
 		disconnectRow.setFormerRow(disconnectPoem.getLastRow());

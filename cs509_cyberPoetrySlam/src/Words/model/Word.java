@@ -44,7 +44,7 @@ public class Word extends Element implements Serializable{
             NUBER_STRING,PRONOUN_STRING,
             PREPOSITION_STRING,SUFFIX_STRING,VERB_STRING};
 
-     
+     /**Constructor**/
      public Word(int x,int y,int width,int height,String value,int wordType){
     	 super.type = 1;
     	 this.x = x;
@@ -62,6 +62,7 @@ public class Word extends Element implements Serializable{
     	 return false;
      }
      
+     /**use x,y to find word**/
      public boolean intersection(int x,int y){
     	 if(x < this.x){return false;}
     	 if(x > (this.x + width)){return false;}
@@ -70,6 +71,7 @@ public class Word extends Element implements Serializable{
     	 return true;
      }
      
+     /**check if overlap with another word**/
      public boolean overlap(Word w){
     	 if((this.x+this.width)>w.getX()&&(this.x+this.width)<(w.getX()+w.width)&&(w.getY()+w.getHeight())>this.y&&(w.getY()+w.getHeight())<(this.y+this.height)){
     		 return true;
@@ -92,6 +94,7 @@ public class Word extends Element implements Serializable{
     	 return false;
      }
      
+     /**check if overlap with a row**/
      public boolean overlapRow(Row w){
     	 if((this.x+this.width)>w.getX()&&(this.x+this.width)<(w.getX()+w.width)&&(w.getY()+w.getHeight())>this.y&&(w.getY()+w.getHeight())<(this.y+this.height)){
     		 return true;
@@ -113,13 +116,14 @@ public class Word extends Element implements Serializable{
     	 }
     	 return false;
      }
-     
+     /**return some attributes of word**/
      public int getX(){return this.x;}
      public int getY(){return this.y;}
      public int getWidth(){return this.width;}
      public int getHeight(){return this.height;}
      public String getValue(){return this.value;}
      
+     /**update location**/
      public void setLocation(int x, int y ){
     	 this.x = x;
     	 this.y = y;

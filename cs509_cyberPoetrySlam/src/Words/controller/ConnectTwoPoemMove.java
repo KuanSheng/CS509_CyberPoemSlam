@@ -1,6 +1,6 @@
+/****/
 package Words.controller;
 import Words.model.*;
-
 public class ConnectTwoPoemMove extends Move{
 	Poem selectedPoem;
 	Poem connectPoem;

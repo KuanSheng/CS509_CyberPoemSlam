@@ -1,3 +1,8 @@
+/**created by kuanSheng
+ * we have two cases here
+ * 1.one poem and one word
+ * 2.one word and one word
+ * **/
 package Words.controller;
 
 import java.awt.event.MouseAdapter;
@@ -15,6 +20,7 @@ public class WordConnectionController extends MouseAdapter {
 	Word connectWord = null;
 	Poem connectPoem = null;
 	
+	/**Constructor for one word and one poem**/
 	public WordConnectionController(Model m,ApplicationCanvas p,Word w,int oldx, int oldy){
 		this.model = m;
 		this.panel = p;
@@ -24,6 +30,7 @@ public class WordConnectionController extends MouseAdapter {
 		b = model.getBoard();
 	}
 	
+	/**Constructor for one poem and one row**/
 	public WordConnectionController(Model m, ApplicationCanvas a, Poem p,int oldx,int oldy){
 		this.model = m;
 		this.panel = a;
@@ -33,6 +40,7 @@ public class WordConnectionController extends MouseAdapter {
 		b = model.getBoard();
 	}
 	
+	/**Execute the connection two words operation**/
 	public void connect(){
 		if(connectWord == null){
 			return;
@@ -42,10 +50,11 @@ public class WordConnectionController extends MouseAdapter {
 		if(move.execute()){
 			panel.repaint();
 		}
-		
+		//record move
 		model.getMoves().push(move);
 	}
 	
+	/**Execute the connection one poem and one word operation**/
 	public void connectPoem(int connectionType){
 		if(connectPoem == null){
 			return;
@@ -55,7 +64,7 @@ public class WordConnectionController extends MouseAdapter {
 		if(move.execute()){
 			panel.repaint();
 		}
-		
+		//record move
 		model.getMoves().push(move);
 	}
 }

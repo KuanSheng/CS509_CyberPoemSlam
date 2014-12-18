@@ -1,3 +1,4 @@
+/**created and modified by KuanSheng**/
 package Words.model;
 
 import java.io.IOException;
@@ -16,14 +17,14 @@ public class Poem extends Element implements Serializable{
     
     Row FirstRow = null;
     Row LastRow = null;
-   
+   /**Constructor**/
     public Poem(int x, int y){
     	this.x = x;
     	this.y = y;
     	this.RowNumber = 0;
     	//rows = null;
     }
-    
+    /**intersect with anchor to find poem**/
     public boolean intersection(int x, int y){
     	for(Row r:rows){
     		if(r.intersection(x, y)){
@@ -32,14 +33,14 @@ public class Poem extends Element implements Serializable{
     	}
     	return false;
     }
-    
+    /**Constructor with two words**/
     public Poem(Word w1, Word w2,int direction){
     	Row row = new Row(w1,w2,direction);
     	row.setNextRow(null);
     	row.setFormerRow(null);
     	
     	this.addRow(row);
-    	this.FirstRow = row;
+    	//this.FirstRow = row;
     	this.LastRow = row;
     	this.x = row.getX();
     	this.y = row.getY();
@@ -49,6 +50,7 @@ public class Poem extends Element implements Serializable{
     	this.max_y = this.y+row.getHeight();
     }
     
+    /**Constructor with two poems**/
     public Poem(Poem p1, Poem p2, int direction){
     	//p1 on top
     	if(direction == 1){
@@ -109,15 +111,18 @@ public class Poem extends Element implements Serializable{
     	this.max_y = this.y + 14*this.RowNumber;
     }
   
+    /**return row list**/
     public ArrayList<Row> getRows(){
     	return this.rows;
     }
     
+    /**add rows into poems**/
     public void addRow(Row row){
     	rows.add(row);
     	this.RowNumber++;
     }
     
+    /**add words into poem**/
     public void addWord(Word w){
     	for(Row r:rows){
     		if(w.overlapRow(r)){
@@ -126,6 +131,7 @@ public class Poem extends Element implements Serializable{
     	}
     }
     
+    /**return one overlap row with a word**/
     public Row getOverlapRow(Word w){
     	for(Row r:rows){
     		if(w.overlapRow(r)){
@@ -135,15 +141,18 @@ public class Poem extends Element implements Serializable{
     	return null;
     }
     
+    /**remove one row from poem**/
     public void removeRow(Row r){
     	rows.remove(r);
     	this.RowNumber--;
     }
     
+    /**return the number of rows**/
     public int getRowNumber(){
     	return this.RowNumber;
     }
     
+    /**return the first row**/
     public Row getFirstRow(){
     	for(Row r:rows){
     		if(r.getX() == this.x&&r.getY() == this.y){
@@ -154,9 +163,12 @@ public class Poem extends Element implements Serializable{
     	return null;
     }
     
+    /**return the x axis**/
     public int getX(){return this.x;}
+    /**return the y axis**/
     public int getY(){return this.y;}
     
+    /**update location in case of connection**/
     public void setLocationAfterConnection(int x,int y){
     	this.x = x;
     	this.y = y;
@@ -164,6 +176,7 @@ public class Poem extends Element implements Serializable{
     	this.min_y = this.y;
     }
     
+    /**update location after move**/
     public void setLocation(int x, int y, int ox, int oy){
    	 this.x = x;
    	 this.y = y;
@@ -181,10 +194,12 @@ public class Poem extends Element implements Serializable{
    	   }
    	 }
     
+    /**return last row of the poem**/
     public Row getLastRow(){
     	return this.LastRow;
     }
     
+    /**return the maximum x axis of poem**/
     public int getMax_x(){
     	int max = 0;
     	for(Row r:rows){
@@ -195,7 +210,7 @@ public class Poem extends Element implements Serializable{
     	return max;
     }
     
-    
+    /**return minimun x axis of poem**/
     public int getMin_x(){
     	int min = this.x;;
     	for(Row r:rows){
@@ -206,11 +221,13 @@ public class Poem extends Element implements Serializable{
     	return min;
     }
     
+    /**return maximum y aixs of poem**/
     public int getMax_y(){
     	Row r = this.getLastRow();
     	return r.getY()+r.getHeight();
     }
     
+    /**return minimum y axis of poem**/
     public int getMin_y(){
     	return this.y;
     }
