@@ -523,6 +523,9 @@ public class WordMoveController extends MouseAdapter{
    
    public boolean shiftSelectedRow(int x,int y){
 	   Row r = model.getSelectedRow();
+	   Poem p = b.getPoemByRow(r);
+	   Row fr = p.getFirstRow();
+		   
 	   int rightLimit = r.getRightShiftLimit();
 	   int leftLimit = r.getLeftShiftLimit();
 	   
@@ -534,6 +537,9 @@ public class WordMoveController extends MouseAdapter{
        }
 	   if(x >= leftLimit && x <= rightLimit ){
 	        r.setLocation(x, y, ox, oy);
+	        if(fr.equals(r)){
+	        	p.setLocationAfterConnection(x, y);
+	        }
 	        return true;
 	    }
 	   
