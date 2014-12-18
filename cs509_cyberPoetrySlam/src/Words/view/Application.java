@@ -60,16 +60,16 @@ public class Application extends JFrame {
         super();
         this.model = m;
         this.panel = new ApplicationCanvas(model);
-        this.panel.setSize(900, 500);
+        this.panel.setSize(1200, 500);
         //this.panel = panel;
 //        this.panel = model.getBoard().g
 
         setTitle("CyberPoetrySlam");
-        setSize(900, 900);
+        setSize(1200, 900);
         setLayout(new FlowLayout());
 
         JPanel menuPanel = new JPanel();
-        menuPanel.setSize(900, 150);
+        menuPanel.setSize(1200, 150);
 //        setVisible(true);  //commented by JUN , this line is causing restore state to fail. Because window open event is trigered here, but restore state controller is not added yet
         setBackground(Color.orange);
 
@@ -119,7 +119,7 @@ public class Application extends JFrame {
 
         // JTable on the side
         JPanel tablePanel = new JPanel();
-        tablePanel.setSize(900, 250);
+        tablePanel.setSize(1200, 250);
 
         swap = new OurSwap(model.getBoard());
 
