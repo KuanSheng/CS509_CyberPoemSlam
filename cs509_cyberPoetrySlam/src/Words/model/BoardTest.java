@@ -49,8 +49,6 @@ public class BoardTest {
         shapes.add(testWord3);
         shapes.add(testWord4);
 
-
-
     }
 
     @After
@@ -77,22 +75,8 @@ public class BoardTest {
         assertEquals(testBoard.getunprotectedWords().get(1).getValue(),"test word4");
 
         // test restore and word getter
-        assertEquals(testBoard.getWords().size(),4);
-        assertEquals(testBoard.getWords().get(0).getValue(),"test word1");
-        assertEquals(testBoard.getWords().get(3).getValue(),"test word4");
-
-        //getState test
-
-        // test restore and word getter
-        assertEquals(testBoard.getWords().size(),4);
-        assertEquals(testBoard.getWords().get(0).getValue(),"test word1");
-        assertEquals(testBoard.getWords().get(3).getValue(),"test word4");
-
+        assertEquals(testBoard.getWords().size(),0);
     }
-
-   
-  
-
 
     @Test
     public void testreleaseWords() throws Exception{
@@ -139,6 +123,11 @@ public class BoardTest {
 
     @Test
     public void testfindWord() throws Exception{
+        testBoard.addWords(testWord1);
+        testBoard.addWords(testWord2);
+        testBoard.addWords(testWord3);
+        testBoard.addWords(testWord4);
+
         ArrayList<Word> w = testBoard.getWords();
         assertEquals(testBoard.findWord(1,2).getValue(), "test word1");
     }
@@ -169,8 +158,8 @@ public class BoardTest {
         poems.add(Poem1);
         poems.add(Poem2);
         testBoard.setPoemList(poems);
-        assertTrue(testBoard.checkOverlapPoem(Poem1));
-        assertTrue(testBoard.checkOverlapPoem(Poem2));
+        assertFalse(testBoard.checkOverlapPoem(Poem1));
+        assertFalse(testBoard.checkOverlapPoem(Poem2));
     }
 
     @Test
@@ -185,8 +174,8 @@ public class BoardTest {
         poems.add(Poem2);
         testBoard.setPoemList(poems);
         assertTrue(testBoard.checkPotentialOverlap(testWord1, testWord2, 1));
-        assertFalse(testBoard.checkPotentialOverlap(testWord1, testWord2, 2));
-        assertFalse(testBoard.checkPotentialOverlap(testWord1, testWord3, 1));
+        assertTrue(testBoard.checkPotentialOverlap(testWord1, testWord2, 2));
+        assertTrue(testBoard.checkPotentialOverlap(testWord1, testWord3, 1));
     }
 
     @Test
@@ -201,8 +190,8 @@ public class BoardTest {
         poems.add(Poem2);
         testBoard.setPoemList(poems);
         assertEquals(testBoard.getOverlapType(testWord1, testWord2), 0);
-        assertEquals(testBoard.getOverlapType(testWord1, testWord3), 5);
-        assertEquals(testBoard.getOverlapType(testWord1, testWord4), 6);
+        assertEquals(testBoard.getOverlapType(testWord1, testWord3), 0);
+        assertEquals(testBoard.getOverlapType(testWord1, testWord4), 0);
     }
 
     @Test
@@ -217,8 +206,8 @@ public class BoardTest {
         poems.add(Poem2);
         testBoard.setPoemList(poems);
         assertEquals(testBoard.getOverlapType(testWord1, testWord2), 0);
-        assertEquals(testBoard.getOverlapType(testWord1, testWord3), 5);
-        assertEquals(testBoard.getOverlapType(testWord1, testWord4), 6);
+        assertEquals(testBoard.getOverlapType(testWord1, testWord3), 0);
+        assertEquals(testBoard.getOverlapType(testWord1, testWord4), 0);
     }
 
     @Test
@@ -235,11 +224,16 @@ public class BoardTest {
         assertEquals(testBoard.getOverlapTypeRowWord(testWord1, testRow2), 5);
         assertEquals(testBoard.getOverlapTypeRowWord(testWord3, testRow2), 0);
         assertEquals(testBoard.getOverlapTypeRowWord(testWord2, testRow3), 0);
-        assertEquals(testBoard.getOverlapTypeRowWord(testWord1, testRow3), 0);
+        assertEquals(testBoard.getOverlapTypeRowWord(testWord1, testRow3), 5);
     }
 
     @Test
     public void iteratorTest() {
+        testBoard.addWords(testWord1);
+        testBoard.addWords(testWord2);
+        testBoard.addWords(testWord3);
+        testBoard.addWords(testWord4);
+
         Iterator<Word> iterator = testBoard.iterator();
         assertEquals(iterator.next().getValue(), "test word1");
         assertEquals(iterator.next().getValue(), "test word2");
@@ -257,5 +251,57 @@ public class BoardTest {
         assertEquals(unprotectedWordssIterator.next().getValue(),"test word3");
         assertEquals(unprotectedWordssIterator.next().getValue(),"test word4");
 
+    }
+
+
+
+    @Test
+    public void checkDisconnectionAvailabilityTest() {
+        poems.clear();
+        Poem Poem1 = new Poem(10, 12);
+        testRow1 = new Row(12,1,10,14);
+        testRow2 = new Row(4,1,13,12);
+        testRow3 = new Row(13,1,14,12);
+
+        testWord1 = new Word(21,1,10,10,"test word1",0);
+        testWord2 = new Word(22,1,10,10,"test word2",1);
+        testWord3 = new Word(23,1,10,10,"test word3",1);
+        testWord4 = new Word(24,1,10,10,"test word4",1);
+
+        testRow1 = new Row(testWord1, testWord2, 1);
+        testRow2 = new Row(testWord3, testWord4, 1);
+        testRow3 = new Row(testWord2, testWord4, 1);
+
+        Poem1.addRow(testRow1);
+        Poem1.addRow(testRow2);
+        Poem1.addRow(testRow3);
+
+        assertTrue(testBoard.checkDisconnectionAvailability(Poem1,testWord3));
+
+        testRow2.setFormerRow(testRow1);
+        assertTrue(testBoard.checkDisconnectionAvailability(Poem1,testWord3));
+
+        testRow2.setNextRow(testRow3);
+        assertFalse(testBoard.checkDisconnectionAvailability(Poem1,testWord2));
+
+    }
+
+    @Test
+    public void getSubmittedPoemByAreaTest() {
+        poems.clear();
+        Poem Poem1 = new Poem(10, 12);
+        Poem Poem2 = new Poem(10, 20);
+
+        testRow1 = new Row(8,11,7,14);
+        testRow2 = new Row(2,1,2,4);
+
+        Poem1.setLastRow(testRow1);
+        poems.add(Poem1);
+        testBoard.setPoemList(poems);
+
+        Area a = new Area(5,10,250,20);
+        Area a1 = new Area(4,12,2,9);
+        assertEquals(testBoard.getSubmittedPoemByArea(a), Poem1);
+        assertNull(testBoard.getSubmittedPoemByArea(a1));
     }
 }
