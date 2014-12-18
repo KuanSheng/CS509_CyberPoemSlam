@@ -44,32 +44,44 @@ public class ApplicationCanvas extends Canvas{
 	}
 	
 	public void paint(Graphics g){
-		paintBackground(g);
-		paintWord(g);
-		paintPoem(g);
-		paintDisconnectWord(g);
+		if( offscreenImage == null){
+			offscreenImage = this.createImage(this.getWidth(), this.getHeight());
+			offscreengraphics = offscreenImage.getGraphics();
+		}
+		offscreengraphics.clearRect(0,0, this.getWidth(), this.getHeight());
+		paintBackground(offscreengraphics);
+		paintWord(offscreengraphics);
+		paintPoem(offscreengraphics);
+		paintDisconnectWord(offscreengraphics);
 		
 		if(model.getSelectedRow() != null){
-		paintSelectedRow(g);
+		paintSelectedRow(offscreengraphics);
 		}
 		
 		if(model.getSelected() != null){
-		paintSelected(g);
+		paintSelected(offscreengraphics);
 		}
 		
 		if(model.getSelectedPoem() != null){
-		paintSelectedPoem(g);
+		paintSelectedPoem(offscreengraphics);
 		}
 		
 		if(model.getSubmittedPoem() != null){
-		paintSubmitPoem(g);
+		paintSubmitPoem(offscreengraphics);
 		}
-		paintSelectedArea(g);
+		paintSelectedArea(offscreengraphics);
 
         //added by JUN to paint highlighted word (selected by clicking in word table)
         if(model.getHighlightWord() != null){
-            paintHighlightWord(g);
+            paintHighlightWord(offscreengraphics);
         }
+        
+        g.drawImage(offscreenImage,0,0,this);
+	}
+	
+	@Override
+	public void update(Graphics g){
+		paint(g);
 	}
 	/**paint backgroud**/
 	public void paintBackground(Graphics g){
