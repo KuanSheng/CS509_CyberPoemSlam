@@ -17,14 +17,25 @@ public class Poem extends Element implements Serializable{
     
     Row FirstRow = null;
     Row LastRow = null;
-   /**Constructor**/
+
+    /**
+     * constructor of (empty) poem
+     * @param x x location of the new poem
+     * @param y y location of the new poem
+     */
     public Poem(int x, int y){
     	this.x = x;
     	this.y = y;
     	this.RowNumber = 0;
     	//rows = null;
     }
-    /**intersect with anchor to find poem**/
+
+    /**
+     * check if this poem intersects (overlaps with) (x,y)
+     * @param x x value of the point/position in concern
+     * @param y y value of the point/position in concern
+     * @return true if overlaps, false otherwise
+     */
     public boolean intersection(int x, int y){
     	for(Row r:rows){
     		if(r.intersection(x, y)){
@@ -33,7 +44,13 @@ public class Poem extends Element implements Serializable{
     	}
     	return false;
     }
-    /**Constructor with two words**/
+
+    /**
+     * constructor for a poem of two words
+     * @param w1 one word in the poem
+     * @param w2 the other word in the poem
+     * @param direction direction of connectio of the two words -- 1 means w1 comes first, 2 means w2 comes first
+     */
     public Poem(Word w1, Word w2,int direction){
     	Row row = new Row(w1,w2,direction);
     	row.setNextRow(null);
@@ -49,8 +66,13 @@ public class Poem extends Element implements Serializable{
     	this.max_x = this.x+row.getWidth();
     	this.max_y = this.y+row.getHeight();
     }
-    
-    /**Constructor with two poems**/
+
+    /**
+     * constructor for a poem with two existing poems
+     * @param p1 one of the poem to form a new poem
+     * @param p2 the other poem to form a new poem
+     * @param direction direction of the connection/combination -- 1 means p1's on top, 2 means p2's on top
+     */
     public Poem(Poem p1, Poem p2, int direction){
     	//p1 on top
     	if(direction == 1){
@@ -110,19 +132,28 @@ public class Poem extends Element implements Serializable{
     	this.min_y = this.y;
     	this.max_y = this.y + 14*this.RowNumber;
     }
-  
-    /**return row list**/
+
+    /**
+     *
+     * @return rows of the poem as an arraylist
+     */
     public ArrayList<Row> getRows(){
     	return this.rows;
     }
-    
-    /**add rows into poems**/
+
+    /**
+     * add a new row to the end of the poem
+     * @param row the new row to be added
+     */
     public void addRow(Row row){
     	rows.add(row);
     	this.RowNumber++;
     }
-    
-    /**add words into poem**/
+
+    /**
+     * add a new word into the poem (in case of overlapping)
+     * @param w the new word to be added
+     */
     public void addWord(Word w){
     	for(Row r:rows){
     		if(w.overlapRow(r)){
@@ -130,8 +161,12 @@ public class Poem extends Element implements Serializable{
     		}
     	}
     }
-    
-    /**return one overlap row with a word**/
+
+    /**
+     * check if some row of the poem overlaps with word w
+     * @param w the word in concern
+     * @return the row that overlaps with w, null if there isn't one
+     */
     public Row getOverlapRow(Word w){
     	for(Row r:rows){
     		if(w.overlapRow(r)){
@@ -140,19 +175,28 @@ public class Poem extends Element implements Serializable{
     	}
     	return null;
     }
-    
-    /**remove one row from poem**/
+
+    /**
+     * remove a row r from the poem
+     * @param r the row to be removed
+     */
     public void removeRow(Row r){
     	rows.remove(r);
     	this.RowNumber--;
     }
-    
-    /**return the number of rows**/
+
+    /**
+     *
+     * @return the number of rows in the poem
+     */
     public int getRowNumber(){
     	return this.RowNumber;
     }
-    
-    /**return the first row**/
+
+    /**
+     *
+     * @return the first row in the poem, null if it's an empty poem
+     */
     public Row getFirstRow(){
     	for(Row r:rows){
     		if(r.getX() == this.x&&r.getY() == this.y){
@@ -162,21 +206,37 @@ public class Poem extends Element implements Serializable{
     	}
     	return null;
     }
-    
-    /**return the x axis**/
+
+    /**
+     *
+     * @return x value of location of the poem
+     */
     public int getX(){return this.x;}
-    /**return the y axis**/
+
+    /**
+     * return y value of the location of the poem
+     */
     public int getY(){return this.y;}
-    
-    /**update location in case of connection**/
+
+    /**
+     * update the location of the poem to (x,y) --  in case of connection to form a bigger poem
+     * @param x new x location
+     * @param y new y location
+     */
     public void setLocationAfterConnection(int x,int y){
     	this.x = x;
     	this.y = y;
     	this.min_x = this.x;
     	this.min_y = this.y;
     }
-    
-    /**update location after move**/
+
+    /**
+     * set location of poem
+     * @param x new x location
+     * @param y new y location
+     * @param ox original x location of the poem before this update
+     * @param oy original y location of this poem before this update
+     */
     public void setLocation(int x, int y, int ox, int oy){
    	 this.x = x;
    	 this.y = y;
@@ -193,13 +253,19 @@ public class Poem extends Element implements Serializable{
    		 r.setLocation(r.getX()+deltax,r.getY()+deltay,r.getX(),r.getY());
    	   }
    	 }
-    
-    /**return last row of the poem**/
+
+    /**
+     *
+     * @return the last row of the poem
+     */
     public Row getLastRow(){
     	return this.LastRow;
     }
-    
-    /**return the maximum x axis of poem**/
+
+    /**
+     *
+     * @return the maximum x location of the poem (of the right most word)
+     */
     public int getMax_x(){
     	int max = 0;
     	for(Row r:rows){
@@ -209,8 +275,11 @@ public class Poem extends Element implements Serializable{
     	}
     	return max;
     }
-    
-    /**return minimun x axis of poem**/
+
+    /**
+     *
+     * @return the minimum x location of the poem (of the left most word)
+     */
     public int getMin_x(){
     	int min = this.x;;
     	for(Row r:rows){
@@ -220,26 +289,22 @@ public class Poem extends Element implements Serializable{
     	}
     	return min;
     }
-    
-    /**return maximum y aixs of poem**/
+
+    /**
+     *
+     * @return the maximum y location of the poem (the bottom row/word)
+     */
     public int getMax_y(){
     	Row r = this.getLastRow();
     	return r.getY()+r.getHeight();
     }
-    
-    /**return minimum y axis of poem**/
+
+    /**
+     *
+     * @return the minimum y location of the poem (the top row/word)
+     */
     public int getMin_y(){
     	return this.y;
-    }
-    
-    public void setMax_Position(int x,int y){
-    	this.max_x = x;
-    	this.max_y = y;
-    }
-    
-    public void setMin_Postion(int x,int y){
-    	this.min_x = x;
-    	this.min_y = y;
     }
 
     /**
@@ -256,11 +321,19 @@ public class Poem extends Element implements Serializable{
         return sb.toString();
     }
 
+    /**
+     * set last row of a poem
+     * @param r the new last row
+     */
 	public void setLastRow(Row r) {
-		// TODO Auto-generated method stub
 		this.LastRow = r;
 	}
 
+    /**
+     * get the row that contains word w
+     * @param w the word to be found
+     * @return the row that contains w, null if there isn't one
+     */
 	public Row getRowByWord(Word w) {
 		for(Row r:rows){
 			for(Word word:r.getWords()){
