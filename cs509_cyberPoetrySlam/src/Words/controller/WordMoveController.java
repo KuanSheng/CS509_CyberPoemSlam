@@ -312,11 +312,13 @@ public class WordMoveController extends MouseAdapter{
 			return;
 		}
 		
+		//overlap with word and connect them
 		if(b.checkOverlap(w) != null){
 	        this.connectTwoWords(w);
 	        return;
 		}
 		
+		//overlap with poem and connect them
 		if(b.checkOverlapWord(w) != null){
 			this.connectPoemandWord(w);
 			return;
@@ -348,7 +350,7 @@ public class WordMoveController extends MouseAdapter{
 		//check potential overlap
 		if(type == 1||type == 2||type == 6){
 			if(model.getBoard().checkPotentialOverlap(w,connectWord,1)){
-				System.out.println("haha");
+				
 				return true;
 			}
 		}

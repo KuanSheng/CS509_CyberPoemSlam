@@ -1,7 +1,9 @@
 /****/
 package Words.controller;
+import java.io.Serializable;
+
 import Words.model.*;
-public class ConnectTwoPoemMove extends Move{
+public class ConnectTwoPoemMove extends Move implements Serializable{
 	Poem selectedPoem;
 	Poem connectPoem;
 	Poem newPoem;

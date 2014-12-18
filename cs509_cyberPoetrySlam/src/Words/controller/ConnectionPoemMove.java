@@ -3,9 +3,11 @@
  * created and modified by Kuansheng
 **/
 package Words.controller;
+import java.io.Serializable;
+
 import Words.model.*;
 
-public class ConnectionPoemMove extends Move{
+public class ConnectionPoemMove extends Move implements Serializable{
 	Poem connectPoem;
 	Word selectedWord;
 	Board b;

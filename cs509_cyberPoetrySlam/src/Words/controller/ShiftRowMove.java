@@ -2,9 +2,11 @@
  * shift one row in a poem
  * created by KuanSheng**/
 package Words.controller;
+import java.io.Serializable;
+
 import Words.model.*;
 
-public class ShiftRowMove extends Move{
+public class ShiftRowMove extends Move implements Serializable{
 	Poem shiftPoem;
 	Row shiftRow;
 	int oldx;

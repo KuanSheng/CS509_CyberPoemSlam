@@ -116,10 +116,10 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 				notifyListeners();
 	}
 	
-	/**find a mouse clicked row**/
+	/**find a mouse clicked row
+	 * @return a row**/
 	public boolean findRow(int x,int y,Row r){
 		if(r == null){
-			System.out.println("null");
 			return false;
 		}
 		if(r.intersection(x, y)){
@@ -148,7 +148,9 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		return null;
 	}
 	
-	/**Get a poem by a given row**/
+	/**Get a poem by a given row
+	 * @param one row
+	 * @return the poem where r exists**/
 	public Poem getPoemByRow(Row r){
 		for(Poem p:poems){
 			for(Row row:p.getRows()){
@@ -160,7 +162,9 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		return null;
 	}
 	
-	/**check if there is overlap between two words**/
+	/**check if there is overlap between two words
+	 * @param w
+	 * @return overlap word**/
 	public Word checkOverlap(Word w){
 		for(Word s:words){
 			if(s.equals(w)){
@@ -173,7 +177,9 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		return null;
 	}
 	
-	/**check if any overlap on a poem**/
+	/**check if any overlap on a poem
+	 * @param poem
+	 * @return true if overlap**/
 	public boolean checkOverlapPoem(Poem p){
 		for(Word s:words){
 			for(Row r:p.getRows()){
@@ -185,7 +191,9 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		return false;
 	}
 	
-	/**get a overlap poem of a word**/
+	/**get a overlap poem of a word
+	 * @param word w
+	 * @return an overlap poem with w**/
 	public Poem checkOverlapWord(Word w){
 		for(Poem p:poems){
 			for(Row r:p.getRows()){
@@ -272,7 +280,10 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     	return false;
     }
     
-    /**check potential overlap with word after connection**/
+    /**check potential overlap with word after connection
+     * @param selected word
+     * @param connected word
+     * @param connection direction**/
     public boolean checkPotentialOverlap(Word selectedWord,Word connectWord,int type){
     	if(type == 1){
     		int testx = connectWord.getX()-selectedWord.getWidth();

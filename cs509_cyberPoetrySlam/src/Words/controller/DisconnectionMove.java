@@ -1,4 +1,5 @@
 /**created and modified by KuanSheng
+
  * disconnect one edge word from a poem
  * we have four cases here
  * 1.disconnect word in one row poem
@@ -7,9 +8,11 @@
  * 4.disconnect word in last row**/
 
 package Words.controller;
+import java.io.Serializable;
+
 import Words.model.*;
 
-public class DisconnectionMove extends Move{
+public class DisconnectionMove extends Move implements Serializable{
 	Poem disconnectPoem;
 	Poem newUpPoem;
 	Poem newBotPoem;
@@ -23,6 +26,12 @@ public class DisconnectionMove extends Move{
 	int disType;
 	boolean nullSign = false;
 	
+	/**
+	 * Constructor
+	 * @param disconnectPoem: where the disconnected word from
+	 * @param disconnected word
+	 * @model
+	 * @param disconnection direction**/
 	public DisconnectionMove(Poem disconnectPoem, Word disconnectWord,Row disconnectRow,Model model,int direction){
 		this.disconnectPoem = disconnectPoem;
 		this.disconnectWord = disconnectWord;

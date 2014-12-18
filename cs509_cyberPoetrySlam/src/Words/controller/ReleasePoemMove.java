@@ -3,13 +3,14 @@ package Words.controller;
 import Words.model.*;
 import Words.view.ApplicationCanvas;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
  * Created by Jun on 11/11/2014.
  */
-public class ReleasePoemMove extends Move {
+public class ReleasePoemMove extends Move implements Serializable{
     Model m;
     ApplicationCanvas panel;
     Board board;

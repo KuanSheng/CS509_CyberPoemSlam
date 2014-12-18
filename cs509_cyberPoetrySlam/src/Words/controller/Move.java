@@ -3,7 +3,9 @@
  * executed first time **/
 package Words.controller;
 
-public abstract class Move {
+import java.io.Serializable;
+
+public abstract class Move implements Serializable{
 	/** Execute given move. */
 	public abstract boolean execute();
 	

@@ -1,5 +1,6 @@
 package Words.controller;
 
+import Words.model.Board;
 import Words.model.Model;
 import Words.model.Word;
 import Words.view.ApplicationCanvas;
@@ -22,6 +23,7 @@ public class StoreStateController extends WindowAdapter {
      public static final String WORDS_FILE = System.getProperty("user.dir")+"/words.txt";
      public static final int INITIAL_WORD_NUMBER = 50;
      Model model;
+     Board b;;
      ApplicationCanvas panel;
 
     /**
@@ -32,6 +34,7 @@ public class StoreStateController extends WindowAdapter {
     public StoreStateController(Model model, ApplicationCanvas panel){
         this.model = model;
         this.panel = panel;
+        this.b = model.getBoard();
     }
 
     /**
