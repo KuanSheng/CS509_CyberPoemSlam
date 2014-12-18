@@ -40,7 +40,9 @@ public class DisconnectionMove extends Move implements Serializable{
 		this.model = model;
 		this.b = model.getBoard();
 	}
-	
+	/**
+	 * execute the operation
+	 * we also have four cases here**/
 	@Override
 	public boolean execute(){
 		//disconnect word from one row poem
@@ -70,6 +72,7 @@ public class DisconnectionMove extends Move implements Serializable{
 		}
 	}
 	
+	/**here redo is just the same as execute**/
 	@Override
 	public boolean redo(){
 		if(disconnectPoem.getRowNumber() == 1){

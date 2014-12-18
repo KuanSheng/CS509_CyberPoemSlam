@@ -5,6 +5,7 @@
  * 1.disconnect the first row
  * 2.disconnect the second row
  * 3.disconnect the mid row**/
+
 package Words.controller;
 import Words.model.*;
 
@@ -24,7 +25,7 @@ public class DisconnectionPoemMove extends Move{
 		this.board = board;
 	}
 	
-	/**execute the operation**/
+	/**execute the operation, we have three cases**/
 	@Override
 	public boolean execute(){
 		if(disconnectPoem.getRowNumber() == 1){
