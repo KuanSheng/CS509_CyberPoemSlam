@@ -1,3 +1,5 @@
+/**
+ * created by KuanSheng**/
 package Words.controller;
 import Words.model.*;
 import Words.view.*;
@@ -12,7 +14,7 @@ public class ShiftRowController {
 	int oldx;
 	int oldy;
 	
-	
+	/**Constructor**/
 	public ShiftRowController(Model model,ApplicationCanvas panel,Poem shiftpoem,Row shiftrow,int newx,int newy,int oldx,int oldy){
 		this.model = model;
 		this.panel = panel;
@@ -24,6 +26,7 @@ public class ShiftRowController {
 		this.oldy = oldy;
 	}
 	
+	/**execute the shift operation**/
 	public void shift(){
 		ShiftRowMove move = new ShiftRowMove(shiftPoem,shiftRow,newx,newy,oldx,oldy);
 		if(move.execute()){

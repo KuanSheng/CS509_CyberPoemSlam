@@ -9,15 +9,13 @@ import org.junit.Test;
 
 import Words.model.Board;
 import Words.model.Model;
-
+/**
+ * Created by Ruizhu on 12/17/14.
+ */
 public class ApplicationTest {
 	Application a;
 
-	@Before
-	public void setUp() throws Exception {
-		
-	
-}
+
 
 	
 	@Test
@@ -25,12 +23,9 @@ public class ApplicationTest {
 		Board b=new Board();
 		Model m= new Model(b);
 		ApplicationCanvas p = new ApplicationCanvas(m);
-		//a=new Application(m, p);
 		a=new Application(m);
-		assertEquals(p, a.getpanel());
 		a.setVisible (true);
 		
-		System.out.println("Sample GUI");
 	}
 	
   

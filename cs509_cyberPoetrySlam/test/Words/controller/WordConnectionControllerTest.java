@@ -11,7 +11,9 @@ import Words.model.Poem;
 import Words.model.Row;
 import Words.model.Word;
 import Words.view.ApplicationCanvas;
-
+/**
+ * Created by Ruizhu on 12/17/14.
+ */
 public class WordConnectionControllerTest {
 	
     Model model;
@@ -91,6 +93,7 @@ public class WordConnectionControllerTest {
 		Word word7 = new Word(70,490, 10, 20, "Happy",1);
 		model.setSelected(word7);
 		CC1.connect();
+		CC1.panel.paintWord(word7);
 		
 	}
 
@@ -99,7 +102,7 @@ public class WordConnectionControllerTest {
 		Word word5 = new Word(60,476,40,14,"new",1);
 		model.setSelected(word5);
 		CC2.connectPoem(1);
-		
+	    CC2.panel.repaint();
 			
 	}
 

@@ -1,5 +1,7 @@
 /**
- * finally I know why controller should be stateless!!**/
+ * finally I know why controller should be stateless!!
+ * created and modified by Kuansheng
+**/
 package Words.controller;
 import Words.model.*;
 
@@ -12,6 +14,7 @@ public class ConnectionPoemMove extends Move{
 	int oldy;
 	int connectionType;
 	
+	/**constructor**/
 	public ConnectionPoemMove(Poem connectionPoem,Word selectedWord,Board b,int oldx, int oldy,int connectionType){
 		this.connectPoem = connectionPoem;
 		this.selectedWord = selectedWord;
@@ -22,20 +25,20 @@ public class ConnectionPoemMove extends Move{
 		this.r = connectPoem.getOverlapRow(selectedWord);
 	}
 	
+	/**execute operation**/
 	@Override
 	public boolean execute(){
+		//word on left
 		if(connectionType == 1||connectionType == 4||connectionType == 5){
-		//Row r = connectPoem.getOverlapRow(selectedWord);
 		r.addWord(selectedWord);
 		selectedWord.setLocation(r.getX()-selectedWord.getWidth(), r.getY());
 		r.setLocationAfterConnection(selectedWord.getX(),selectedWord.getY());
 		connectPoem.setLocationAfterConnection(r.getX(),r.getY());
 		b.getWords().remove(selectedWord);
 		}
-		
+		//word on right
 		else if(connectionType == 2||connectionType == 3||connectionType == 6){
-			//Row r = connectPoem.getOverlapRow(selectedWord);
-			
+			//change the structure of poem
 			r.addWord(selectedWord);
 			selectedWord.setLocation(r.getX()+r.getWidth()-selectedWord.getWidth(),r.getY());
 			b.getWords().remove(selectedWord);
@@ -43,10 +46,10 @@ public class ConnectionPoemMove extends Move{
 		return true;
 	}
 	
+	/**redo the operation**/
 	@Override
 	public boolean redo(){
 		if(connectionType == 1||connectionType == 4||connectionType == 5){
-			//Row r = connectPoem.getOverlapRow(selectedWord);
 			r.addWord(selectedWord);
 			selectedWord.setLocation(r.getX()-selectedWord.getWidth(), r.getY());
 			r.setLocationAfterConnection(selectedWord.getX(),selectedWord.getY());
@@ -54,8 +57,7 @@ public class ConnectionPoemMove extends Move{
 			b.getWords().remove(selectedWord);
 			}
 			
-			else if(connectionType == 2||connectionType == 3||connectionType == 6){
-				//Row r = connectPoem.getOverlapRow(selectedWord);
+			else if(connectionType == 2||connectionType == 3||connectionType == 6){;
 				
 				r.addWord(selectedWord);
 				selectedWord.setLocation(r.getX()+r.getWidth()-selectedWord.getWidth(),r.getY());
@@ -64,6 +66,7 @@ public class ConnectionPoemMove extends Move{
 			return true;
 	}
 	
+	/**undo the operation**/
 	@Override
 	public boolean undo(){
 		//Row r = connectPoem.getOverlapRow(selectedWord);

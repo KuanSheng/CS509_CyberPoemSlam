@@ -43,7 +43,7 @@ public class SortWordsController{
         return false;
     }
 
-    private void sortByType(ArrayList<Word> words) {
+    void sortByType(ArrayList<Word> words) {
         HashMap<Integer, ArrayList<Word>> mapByType = new HashMap<Integer, ArrayList<Word>>();
         ArrayList<Word> adj = new ArrayList<Word>();
         ArrayList<Word> adv = new ArrayList<Word>();

@@ -1,3 +1,6 @@
+/**
+ * shift one row in a poem
+ * created by KuanSheng**/
 package Words.controller;
 import Words.model.*;
 
@@ -9,6 +12,7 @@ public class ShiftRowMove extends Move{
 	int newx;
 	int newy;
 	
+	/**constructor**/
 	public ShiftRowMove(Poem shiftPoem,Row shiftRow,int newx,int newy,int oldx,int oldy){
 		this.shiftPoem = shiftPoem;
 		this.shiftRow = shiftRow;
@@ -18,31 +22,36 @@ public class ShiftRowMove extends Move{
 		this.newy = newy;
 	}
 	
+	/**process the shift operation**/
 	@Override
 	public boolean execute(){
 		if(shiftRow.equals(shiftPoem.getFirstRow())){
+			//when shift the first row, we need to update the
+			//location of poem
 			shiftRow.setLocation(newx,newy,newx,newy);
 			shiftPoem.setLocationAfterConnection(newx,newy);
 		}
 		else{
+			
 			shiftRow.setLocation(newx,newy,newx,newy);
 		}
 		return true;
 	}
 	
 	@Override
+	/**undo move, just return it to the original location**/
 	public boolean undo(){
 		if(shiftRow.equals(shiftPoem.getFirstRow())){
 			shiftRow.setLocation(oldx,oldy,newx,newy);
 			shiftPoem.setLocationAfterConnection(oldx,oldy);
 		}
 		else{
-			System.out.println(oldx);
 			shiftRow.setLocation(oldx,oldy,newx,newy);
 		}
 		return true;
 	}
 	
+	/**redo the operation**/
 	@Override
 	public boolean redo(){
 		if(shiftRow.equals(shiftPoem.getFirstRow())){

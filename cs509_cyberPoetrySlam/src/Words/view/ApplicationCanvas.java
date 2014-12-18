@@ -1,3 +1,5 @@
+/**created by Kuan
+ * add double buffer to remove flicker**/
 package Words.view;
 
 import java.awt.Canvas;
@@ -5,8 +7,6 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.Graphics;
 import java.util.*;
-
-//import Words.controller.WordConnectionController;
 import Words.controller.WordMoveController;
 import Words.model.Area;
 import Words.model.Board;
@@ -21,18 +21,20 @@ public class ApplicationCanvas extends Canvas{
 	Image offscreenImage;
 	Graphics offscreengraphics;
 	Graphics canvasGraphics;
+
+    private static final Color HIGHLIGH_COLOR = Color.red;
 	
-	//Constructor
+	/**constructor**/
 	public ApplicationCanvas(Model m){
 		super();
 		this.model = m;
 		initialize();
 	}
 	
-	//initialize frame attributes
+	/**initialize frame attributes**/
 	public void initialize(){
 		if(model == null)
-	        System.out.println("fuck too!!(canvas)");
+	        System.out.println("error");
 		setSize(650,490);
         WordMoveController controller = new WordMoveController(model, this);
 		this.board = model.getBoard();
@@ -40,30 +42,51 @@ public class ApplicationCanvas extends Canvas{
 		this.addMouseMotionListener(controller);
 	}
 	
+	/**apply double buffer to remove flicker, draw everything in offscreen image and draw them
+	 * at once **/
 	public void paint(Graphics g){
-		paintBackground(g);
-		paintWord(g);
-		paintPoem(g);
-		paintDisconnectWord(g);
+		if( offscreenImage == null){
+			offscreenImage = this.createImage(this.getWidth(), this.getHeight());
+			offscreengraphics = offscreenImage.getGraphics();
+		}
+		offscreengraphics.clearRect(0,0, this.getWidth(), this.getHeight());
+		paintBackground(offscreengraphics);
+		paintWord(offscreengraphics);
+		paintPoem(offscreengraphics);
 		
+		/**To increase usability, they are drawn when they need to be drawn**/
 		if(model.getSelectedRow() != null){
-		paintSelectedRow(g);
+		paintSelectedRow(offscreengraphics);
 		}
 		
 		if(model.getSelected() != null){
-		paintSelected(g);
+		paintSelected(offscreengraphics);
 		}
 		
 		if(model.getSelectedPoem() != null){
-		paintSelectedPoem(g);
+		paintSelectedPoem(offscreengraphics);
 		}
 		
 		if(model.getSubmittedPoem() != null){
-		paintSubmitPoem(g);
+		paintSubmitPoem(offscreengraphics);
 		}
-		paintSelectedArea(g);
+		paintSelectedArea(offscreengraphics);
+
+        //added by JUN to paint highlighted word (selected by clicking in word table)
+        if(model.getHighlightWord() != null){
+            paintHighlightWord(offscreengraphics);
+        }
+        
+        g.drawImage(offscreenImage,0,0,this);
 	}
 	
+	/**override update method to remove flicker**/
+	@Override
+	public void update(Graphics g){
+		paint(g);
+	}
+	
+	/**paint background**/
 	public void paintBackground(Graphics g){
 //        System.out.println("paintBackground.ApplicationCanvas.java");
 		g.clearRect(0,0,getWidth(),300);
@@ -74,6 +97,7 @@ public class ApplicationCanvas extends Canvas{
 		g.drawLine(0,300, 650, 300);
 	}
 	
+	/**paint all words**/
 	public void paintWord(Graphics g){
 		for(Word w : board.getWords()){
 //            System.out.println("painting word: " + w + "at x-" + w.getX() + " y-" + w.getY() + " :paintWord.ApplicationCanvas");
@@ -86,8 +110,21 @@ public class ApplicationCanvas extends Canvas{
 		}
 	}
 	
+	
+	/**
+	 * Ruizhu add for BrokerManager
+	 */
+//	public void paintSwapAddWord(int x, int y, Graphics g, Word w){
+//		    g.clearRect(x, y, w.getWidth(), w.getHeight());
+//			g.setColor(Color.gray);
+//			g.fillRect(x, y, w.getWidth(), w.getHeight());
+//			g.setColor(Color.black);
+//			g.drawString(w.getValue(), x+w.getWidth()/2, y+w.getHeight());
+//	}
+	
+	/**Draw all words**/
 	public void paintWord(Word word){}
-	//need poem model design first
+
 	public void paintRow(Row r,Graphics g){
 		g.clearRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
 		g.setColor(Color.blue);
@@ -105,6 +142,7 @@ public class ApplicationCanvas extends Canvas{
 			}
 	}
 	
+	/**Draw all poems**/
 	public void paintPoem(Graphics g){
 		for(Iterator<Poem> itr = board.poemIterator();itr.hasNext();){
 			Poem paintPoem = itr.next();
@@ -114,7 +152,8 @@ public class ApplicationCanvas extends Canvas{
 		}
 	}
 	
-	public void paintDisconnectWord(Graphics g){
+	
+	/*public void paintDisconnectWord(Graphics g){
 		Word w = model.getSelectedWordinPoem();
 		if(w != null){
 			g.clearRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
@@ -122,8 +161,9 @@ public class ApplicationCanvas extends Canvas{
 			g.fillRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
 			g.drawString(w.getValue(), w.getX()+w.getWidth()/2, w.getY()+w.getHeight());
 		}
-	}
-	
+	}*/
+	/**
+	 * draw selected word in green**/
 	public void paintSelected(Graphics g){
 		Word selected = model.getSelected();
 		if(selected  == null){
@@ -137,6 +177,7 @@ public class ApplicationCanvas extends Canvas{
 		g.drawString(selected.getValue(), selected.getX()+selected.getWidth()/2, selected.getY()+selected.getHeight());
 	}
 	
+	/**draw selected poem in green**/
 	public void paintSelectedPoem(Graphics g){
 		Poem selectedPoem = model.getSelectedPoem();
 		if(selectedPoem  == null){
@@ -154,13 +195,16 @@ public class ApplicationCanvas extends Canvas{
 		}
 	}
 	
+	/**draw a selection area to select a row or a poem**/
 	public void paintSelectedArea(Graphics g){
 		Area a = model.getSelectedArea();
+        if(a == null) return; //added by JUN to solve null pointer exception
 		g.drawRect(a.getX(),a.getY(),a.getWidth(),a.getHeight());
 		g.setColor(Color.GREEN);
 		g.fillRect(a.getX(), a.getY(), a.getWidth(), a.getHeight());
 	}
 	
+	/**draw selected row in red**/
 	public void paintSelectedRow(Graphics g){
 		Row r = model.getSelectedRow();
 		g.clearRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
@@ -179,6 +223,7 @@ public class ApplicationCanvas extends Canvas{
 			}
 	}
 	
+	/**When a poem need to be submitted, draw it in black**/
 	public void paintSubmitPoem(Graphics g){
 		Poem p = model.getSubmittedPoem();
 		for(Row r:p.getRows()){
@@ -197,6 +242,19 @@ public class ApplicationCanvas extends Canvas{
 			g.drawLine(word.getX()+word.getWidth(),word.getY(),word.getX()+word.getWidth(),word.getY()+word.getHeight());
 			}
 	    }
+    }
+
+    /**
+     * JUN added to paint highlighted word, selected by clicking in word table
+     * @param g
+     */
+    public void paintHighlightWord(Graphics g){
+        Word w = model.getHighlightWord();
+        g.clearRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
+        g.setColor(HIGHLIGH_COLOR);
+        g.fillRect(w.getX(), w.getY(), w.getWidth(), w.getHeight());
+        g.setColor(Color.black);
+        g.drawString(w.getValue(),w.getX()+w.getWidth()/2,w.getY()+w.getHeight());
     }
 
 }

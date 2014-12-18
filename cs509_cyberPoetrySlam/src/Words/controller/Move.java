@@ -1,3 +1,6 @@
+/**created and modified by KuanSheng
+ * added redo() because I found that some redo operation are different from
+ * executed first time **/
 package Words.controller;
 
 public abstract class Move {

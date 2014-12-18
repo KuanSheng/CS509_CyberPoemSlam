@@ -1,4 +1,5 @@
 package Words.view;
+import Words.controller.PopupWordController;
 import Words.controller.RefreshWordTableController;
 import Words.controller.SortWordsController;
 import Words.controller.SwapAddListener;
@@ -43,7 +44,7 @@ public class WordTable extends JPanel{
     	board.addListener(new RefreshWordTableController(this));
         
         // the proposed dimension of the UI
-        Dimension mySize = new Dimension(250, 210);
+    	Dimension mySize = new Dimension(290, 210);
 
         // Scrollable panel will enclose the JTable and support scrolling vertically
         JScrollPane jsp = new JScrollPane();
@@ -80,8 +81,8 @@ public class WordTable extends JPanel{
         });
 
         //to add listener to handle add into swap reqeust -- JUN start===================
-        jtable.getSelectionModel().addListSelectionListener(new SwapAddListener(jtable, swap, app));
-//        jtable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        jtable.getSelectionModel().addListSelectionListener(new SwapAddListener(jtable, swap, app, SwapAddListener.TYPE.WordTable));
+        jtable.getSelectionModel().addListSelectionListener(new PopupWordController(this, board, app));
 //            @Override
 //            public void valueChanged(ListSelectionEvent event) {
 //                if(event.getValueIsAdjusting()) return; // this listener would be called twice

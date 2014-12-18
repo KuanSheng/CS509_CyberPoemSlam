@@ -6,7 +6,9 @@ import java.util.Iterator;
 
 import org.junit.Before;
 import org.junit.Test;
-
+/**
+ * Created by Ruizhu on 12/17/14.
+ */
 public class RowTest {
 	Row row1, row2, row3;
 	Word word1,word2, word3, word4;

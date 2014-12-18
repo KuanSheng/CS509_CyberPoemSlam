@@ -10,11 +10,13 @@ public class UndoController {
 	Model model;
 	ApplicationCanvas canvas;
 	
+	/**constructor**/
 	public UndoController(Model m, ApplicationCanvas canvas) {
 		this.model = m;
 		this.canvas = canvas;
 	}
 	
+	/**Execute the undo operation**/
 	public boolean process() {
 		
 		Move m = model.removeLastMove();
@@ -22,6 +24,7 @@ public class UndoController {
 			return false; 
 		}
 		m.undo();
+		//record it for redo
 		model.getRedoMoves().push(m);
 		// force board to redraw
 		canvas.repaint();

@@ -11,7 +11,9 @@ import Words.model.Poem;
 import Words.model.Row;
 import Words.model.Word;
 import Words.view.ApplicationCanvas;
-
+/**
+ * Created by Ruizhu on 12/17/14.
+ */
 public class ShiftRowControllerTest {
 	
 	Board b;
@@ -55,8 +57,11 @@ public class ShiftRowControllerTest {
 	@Test
 	public void testShift() {
 		SC1.shift();
-		
+		assertEquals(row1.getX(),50);
+		assertEquals(row1.getY(),476);
 		SC2.shift();
+		assertEquals(row.getX(),90);
+		assertEquals(row.getY(),490);
 	}
 
 }

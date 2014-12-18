@@ -4,7 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-
+/**
+ * Created by Ruizhu on 12/17/14.
+ */
 public class WordTest {
 
 	 Word word= new Word(40, 490, 10, 20, "Happy", 1);
@@ -132,17 +134,28 @@ public class WordTest {
 	@Test
 	public void testGetTypeInt( ){
 		String s;
-		s = "verb";
+		s = "adjective";
+		assertEquals(0, Word.getTypeInt(s));
+		s = "adverb";
+		assertEquals(1, Word.getTypeInt(s));
+		s = "conjunction";
+		assertEquals(2, Word.getTypeInt(s));
+		s = "determiner";
 		assertEquals(3, Word.getTypeInt(s));
 		s = "noun";
-		assertEquals(2, Word.getTypeInt(s));
-		s = "adv";
-		assertEquals(1, Word.getTypeInt(s));
-		s = "adj";
-		assertEquals(0, Word.getTypeInt(s));
-		s = "nontype";
+		assertEquals(4, Word.getTypeInt(s));
+		s = "number";
+		assertEquals(5, Word.getTypeInt(s));
+		s = "pronoun";
+		assertEquals(6, Word.getTypeInt(s));
+		s = "preposition";
+		assertEquals(7, Word.getTypeInt(s));
+		s = "suffix";
+		assertEquals(8, Word.getTypeInt(s));
+		s = "verb";
+		assertEquals(9, Word.getTypeInt(s));
+		s = "nountype";
 		assertEquals(-1, Word.getTypeInt(s));
-		
 	}
 	
 	

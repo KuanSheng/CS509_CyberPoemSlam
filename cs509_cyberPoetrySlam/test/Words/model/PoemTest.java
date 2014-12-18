@@ -6,7 +6,9 @@ import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
-
+/**
+ * Created by Ruizhu on 12/17/14.
+ */
 public class PoemTest {
 	
 	Poem poem1, poem2, poem3, poem4, poem5;

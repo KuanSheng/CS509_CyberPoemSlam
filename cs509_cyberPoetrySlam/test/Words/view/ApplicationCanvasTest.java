@@ -9,7 +9,9 @@ import org.junit.Test;
 
 import Words.model.Board;
 import Words.model.Model;
-
+/**
+ * Created by Ruizhu on 12/17/14.
+ */
 public class ApplicationCanvasTest {
 
 	ApplicationCanvas AC;
@@ -32,6 +34,10 @@ public class ApplicationCanvasTest {
 		assertEquals(b, AC.board);
 	}
 
+	@Test
+	public void testpaint(){
+		AC.repaint();
+	}
 	
 
 }

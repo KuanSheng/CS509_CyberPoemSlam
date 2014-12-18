@@ -1,31 +1,39 @@
+/**
+ * Model must store the state of moving words, if the decision is made to go in the flicker free direction.
+ * Note change impacts number of areas.**/
+
 package Words.model;
 
 import java.io.Serializable;
 import java.util.Stack;
 
 import Words.controller.*;
+import Words.view.SwapTable;
 
 public class Model implements Serializable{
 	Board board;
 	Stack<Move> moves = new Stack<Move>();
 	Stack<Move> redoMoves = new Stack<Move>();
 
-	/** Currently selected shape (or null if none). */
+
+    /** Currently selected shape (or null if none). */
+    Word highlightWord;
 	Word selected;
 	Word selectedWordinPoem;
 	Poem selectedPoem;
 	Poem submittedPoem;
 	Row  selectedRow;
 	Area selectedArea;
-
-	public Model(Board b) {
+	
+	/**constructor**/
+    public Model(Board b) {
 		board = b;
 	}
-	
+
 	public Model() {
 		this(new Board());
 	}
-	
+
 	public void setBoard(Board b) {
 		board = b;
 	}
@@ -34,11 +42,9 @@ public class Model implements Serializable{
 		return board;
 	}
 
-	/**public void recordMove(MoveWord move) {
-		moves.add(move);
-	}
-	*/
-
+    public void setHighlightWord(Word highlightWord) {
+        this.highlightWord = highlightWord;
+    }
 	public void setSelected(Word s) {
 		selected = s;
 	}
@@ -97,7 +103,7 @@ public class Model implements Serializable{
         board = m.board;
     }
     
-    public void recordMove(moveWord m){
+    public void recordMove(MoveWord m){
     	moves.add(m);
     }
     
@@ -128,4 +134,7 @@ public class Model implements Serializable{
     	return redoMoves;
     }
 
+    public Word getHighlightWord() {
+        return highlightWord;
+    }
 }

@@ -1,3 +1,4 @@
+/**created and modified by KuanSheng**/
 package Words.model;
 
 import java.io.IOException;
@@ -16,14 +17,14 @@ public class Poem extends Element implements Serializable{
     
     Row FirstRow = null;
     Row LastRow = null;
-   
+   /**Constructor**/
     public Poem(int x, int y){
     	this.x = x;
     	this.y = y;
     	this.RowNumber = 0;
     	//rows = null;
     }
-    
+    /**intersect with anchor to find poem**/
     public boolean intersection(int x, int y){
     	for(Row r:rows){
     		if(r.intersection(x, y)){
@@ -32,14 +33,14 @@ public class Poem extends Element implements Serializable{
     	}
     	return false;
     }
-    
+    /**Constructor with two words**/
     public Poem(Word w1, Word w2,int direction){
     	Row row = new Row(w1,w2,direction);
     	row.setNextRow(null);
     	row.setFormerRow(null);
     	
     	this.addRow(row);
-    	this.FirstRow = row;
+    	//this.FirstRow = row;
     	this.LastRow = row;
     	this.x = row.getX();
     	this.y = row.getY();
@@ -49,18 +50,17 @@ public class Poem extends Element implements Serializable{
     	this.max_y = this.y+row.getHeight();
     }
     
+    /**Constructor with two poems**/
     public Poem(Poem p1, Poem p2, int direction){
     	//p1 on top
     	if(direction == 1){
     		this.x = p2.getX();
     		this.y = p2.getY() - 14*p1.getRowNumber();
-    		this.FirstRow = p1.getFirstRow();
+    		//this.FirstRow = p1.getFirstRow();
     		this.LastRow = p2.getLastRow();
-    		
     		p1.setLocation(this.x, this.y, p1.getX(), p1.getY());
     		p1.getLastRow().setNextRow(p2.getFirstRow());
     		p2.getFirstRow().setFormerRow(p1.getLastRow());
-    		
     		for(Row r: p1.getRows()){
     			this.addRow(r);
     			if(this.x + r.getWidth()  > this.max_x){
@@ -75,7 +75,6 @@ public class Poem extends Element implements Serializable{
     			}
     			
     		}
-    		
     	}
     	//p2 on top
     	else{
@@ -87,6 +86,9 @@ public class Poem extends Element implements Serializable{
     		//set row location and its next and former
     		p1.setLocation(this.x, this.y+14*p2.getRowNumber(), p1.getX(), p1.getY());
     		p2.getLastRow().setNextRow(p1.getFirstRow());
+            if(p1.getFirstRow() == null){
+    			System.out.println("wawaha");
+    		 }
     		p1.getFirstRow().setFormerRow(p2.getLastRow());
     		
     		for(Row r: p1.getRows()){
@@ -109,15 +111,18 @@ public class Poem extends Element implements Serializable{
     	this.max_y = this.y + 14*this.RowNumber;
     }
   
+    /**return row list**/
     public ArrayList<Row> getRows(){
     	return this.rows;
     }
     
+    /**add rows into poems**/
     public void addRow(Row row){
     	rows.add(row);
     	this.RowNumber++;
     }
     
+    /**add words into poem**/
     public void addWord(Word w){
     	for(Row r:rows){
     		if(w.overlapRow(r)){
@@ -126,6 +131,7 @@ public class Poem extends Element implements Serializable{
     	}
     }
     
+    /**return one overlap row with a word**/
     public Row getOverlapRow(Word w){
     	for(Row r:rows){
     		if(w.overlapRow(r)){
@@ -135,27 +141,34 @@ public class Poem extends Element implements Serializable{
     	return null;
     }
     
+    /**remove one row from poem**/
     public void removeRow(Row r){
     	rows.remove(r);
     	this.RowNumber--;
     }
     
+    /**return the number of rows**/
     public int getRowNumber(){
     	return this.RowNumber;
     }
     
+    /**return the first row**/
     public Row getFirstRow(){
     	for(Row r:rows){
     		if(r.getX() == this.x&&r.getY() == this.y){
+    			System.out.println(r.getX());
     			return r;
     		}
     	}
     	return null;
     }
     
+    /**return the x axis**/
     public int getX(){return this.x;}
+    /**return the y axis**/
     public int getY(){return this.y;}
     
+    /**update location in case of connection**/
     public void setLocationAfterConnection(int x,int y){
     	this.x = x;
     	this.y = y;
@@ -163,6 +176,7 @@ public class Poem extends Element implements Serializable{
     	this.min_y = this.y;
     }
     
+    /**update location after move**/
     public void setLocation(int x, int y, int ox, int oy){
    	 this.x = x;
    	 this.y = y;
@@ -180,10 +194,12 @@ public class Poem extends Element implements Serializable{
    	   }
    	 }
     
+    /**return last row of the poem**/
     public Row getLastRow(){
     	return this.LastRow;
     }
     
+    /**return the maximum x axis of poem**/
     public int getMax_x(){
     	int max = 0;
     	for(Row r:rows){
@@ -194,7 +210,7 @@ public class Poem extends Element implements Serializable{
     	return max;
     }
     
-    
+    /**return minimun x axis of poem**/
     public int getMin_x(){
     	int min = this.x;;
     	for(Row r:rows){
@@ -205,25 +221,17 @@ public class Poem extends Element implements Serializable{
     	return min;
     }
     
+    /**return maximum y aixs of poem**/
     public int getMax_y(){
     	Row r = this.getLastRow();
     	return r.getY()+r.getHeight();
     }
     
+    /**return minimum y axis of poem**/
     public int getMin_y(){
     	return this.y;
     }
     
-    public void setMax_Position(int x,int y){
-    	this.max_x = x;
-    	this.max_y = y;
-    }
-    
-    public void setMin_Postion(int x,int y){
-    	this.min_x = x;
-    	this.min_y = y;
-    }
-
     /**
      * Jun
      * @return string representation of the Poem

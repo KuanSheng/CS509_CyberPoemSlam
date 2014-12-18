@@ -1,3 +1,6 @@
+/**
+ * created by kuansheng
+ * some entity operation in this class**/
 package Words.model;
 import java.util.*;
 
@@ -212,12 +215,26 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     	return number;
     }
     
-    /**check potential overlap after connection**/
+    /**select a poem to submit by selection area**/
+    public Poem getSubmittedPoemByArea(Area a){
+    	for(Poem p:poems){
+    		if(a.getX()<p.getMin_x()&&a.getY()<p.getMin_y()&&a.getX()+a.getWidth()>p.getMax_x()&&a.getY()+a.getHeight()>p.getMax_y()){
+    			return p;
+    		}
+    	}
+    	return null;
+    }
+    
+    /**check potential overlap after connection
+     * that is when a word is connected to a poem, new poem will overlap some elements**/
     public boolean checkPotentialOverlapPoem(Word selectedWord,Poem connectPoem,int type){
     	Row r = connectPoem.getOverlapRow(selectedWord);
+    	//connect in right
     	if(type == 1){
     		int testx = r.getX()-selectedWord.getWidth();
     		int testy = r.getY();
+    		
+    		//just generate a virtual word to test potential overlap
     		Word test = new Word(testx,testy,selectedWord.getWidth(),selectedWord.getHeight(),"test",2);
     		for(Word w:words){
     			  if(test.overlap(w)){
@@ -234,6 +251,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     			}
     		}
     	}
+    	//connect in left
     	else if(type ==2){
     		int testx = r.getX()+r.getWidth()+selectedWord.getWidth();
     		int testy = r.getY();
@@ -252,16 +270,6 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     		}
     	}
     	return false;
-    }
-    
-    
-    public Poem getSubmittedPoemByArea(Area a){
-    	for(Poem p:poems){
-    		if(a.getX()<p.getMin_x()&&a.getY()<p.getMin_y()&&a.getX()+a.getWidth()>p.getMax_x()&&a.getY()+a.getHeight()>p.getMax_y()){
-    			return p;
-    		}
-    	}
-    	return null;
     }
     
     /**check potential overlap with word after connection**/
@@ -307,6 +315,9 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     	return false;
     }
     
+    /**just for some special case. When a word disconnected from a poem,
+     *  some words will leave the poem too. When it will happen, this disconnection is 
+     *  not allowed**/
     public boolean checkDisconnectionAvailability(Poem p,Word w){
     	Row r = p.getRowByWord(w);
     	int rightLimit,leftLimit;
@@ -356,61 +367,77 @@ public class Board implements Iterable<Word>, java.io.Serializable {
     
     /**check the type of overlap**/
 	public int getOverlapType(Word w1,Word w2){
+	 //left-upper
 	if((w1.x+w1.width)>w2.getX()&&(w1.x+w1.width)<(w2.getX()+w2.width)&&(w2.getY()+w2.getHeight())>w1.y&&(w2.getY()+w2.getHeight())<(w1.y+w1.height)){
    		 return 1;
    	 }
+	 //right-upper
    	 if((w1.x+w1.width)>w2.getX()&&(w1.x+w1.width)<(w2.getX()+w2.width)&&(w1.y+w1.height)>w2.getY()&&(w1.y+w1.height)<(w2.getY()+w2.height)){
    		 return 2; 
    	 }
+   	 //right-bottom
    	 if((w2.getX()+w2.getWidth())>w1.x&&(w2.getX()+w2.getWidth())<(w1.x+w1.width)&&(w1.y+w1.height)>w2.getY()&&(w1.y+w1.height)<(w2.getY()+w2.height)){
    		 return 3;
    	 }
+   	 //left-bottom
    	 if((w2.getX()+w2.getWidth()>w1.x)&&(w2.getX()+w2.getWidth())<(w1.x+w1.width)&&(w2.getY()+w2.getHeight()>w1.y)&&(w2.getY()+w2.getHeight())<(w1.y+w1.height)){
    		 return 4; 
    	 }
+   	 //upper
    	 if((w2.getX()+w2.getWidth()>w1.x)&&(w2.getX()+w2.getWidth()<w1.x+w1.width)&&w2.getY()==w1.y){
    		 return 5;
    	 }
+   	 //bottom
    	 if((w1.x+w1.width>w2.getX())&&(w1.x+w1.width<w2.getX()+w2.getWidth())&&w1.y==w2.getY()){
    		 return 6;
    	 }
 		return 0;
 	}
 	
+	/**check overlap type between row and word**/
 	public int getOverlapTypeRowWord(Word w, Row r){
+		//left-upper
 		if(w.getX()+w.getWidth()>r.getX()&&w.getX()+w.getWidth()<r.getX()+r.getWidth()&&
 				w.getX()<r.getX()&&w.getY()+w.getHeight()>r.getY()&&w.getY()+w.getHeight()<r.getY()+r.getHeight()){
 			return 1;
 		}
+		//right-upper
 		if(w.getX()<r.getX()+r.getWidth()&&w.getX()+w.getWidth()>r.getX()+r.getWidth()&&r.getX()<w.getX()
 				&&w.getY()+w.getHeight()>r.getY()&&w.getY()+w.getHeight()<r.getY()+r.getHeight()){
 			return 2;
 		}
+		//right-bottom
 		if(w.getX()+w.getWidth()>r.getX()+r.getWidth()&&w.getX()<r.getX()+r.getWidth()&&r.getX()<w.getX()
 				&&w.getY()+w.getHeight()>r.getY()+r.getHeight()&&w.getY()<r.getY()+r.getHeight()){
 			return 3;
 		}
+		//left-bottom
 		if(w.getX()+w.getWidth()>r.getX()&&w.getX()+w.getWidth()<r.getX()+r.getWidth()&&w.getX()<r.getX()
 				&&w.getY()+w.getHeight()>r.getY()+r.getHeight()&&w.getY()<r.getY()+r.getHeight()){
 			return 4;
 		}
+	   	 //upper
 		if(w.getX()+w.getWidth()>r.getX()&&w.getX()+w.getWidth()<r.getX()+r.getWidth()&&
 				w.getX()<r.getX()&&w.getY()==r.getY()){
 			return 5;
 		}
+		//bottom
 		if(w.getX()<r.getX()+r.getWidth()&&w.getX()+w.getWidth()>r.getX()+r.getWidth()&&r.getX()<w.getX()
 				&&w.getY()==r.getY()){
 			return 6;
 		}
+		//left
 		if(w.getX()>r.getX()&&w.getX()+w.getWidth()<r.getX()+r.getWidth()&&w.getY()+w.getHeight()>r.getY()&&w.getY()+w.getHeight()<r.getY()+r.getHeight()){
 			return 7;
 		}
+		//right
 		if(w.getX()>r.getX()&&w.getX()+w.getWidth()<r.getX()+r.getWidth()&&w.getY()+w.getHeight()>r.getY()+r.getHeight()&&w.getY()<r.getY()+r.getHeight()){
 			return 8;
 		}
 		return 0;
 	}
 	
+	/**get overlap type of poem and word**/
 	public int getOverlapPoemWord(Poem p, Word w){
 		for(Row r:p.getRows()){
 			if(w.overlapRow(r)){
@@ -420,6 +447,7 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		return 0;
 	}
 	
+	/**get a word by its location**/
 	public boolean getWord(int x,int y){
 		for(Word w:words){
 			if(w.getX()==x&&w.getY()==y)
@@ -428,13 +456,13 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		return false;
 	}
 	
-	public void setPoemList(ArrayList<Poem> poems){
+	/*public void setPoemList(ArrayList<Poem> poems){
 		this.poems = poems;
 	}
 	
 	public void setProtectedWords(ArrayList<Word> protectedW){
 		this.protectedWords = protectedW;
-	}
+	}*/
 	
 	public void setunProtectedWords(ArrayList<Word> words){
 		this.unProtectedWords = words;
@@ -442,10 +470,12 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 				notifyListeners();
 	}
 	
+	/**remove a poem from board**/
 	public void removePoem(Poem p){
 		poems.remove(p);
 	}
 	
+	/**find a poem by instance**/
 	public boolean findPoem(Poem p){
 		for(Poem poem:poems){
 			if(poem.equals(p)){
@@ -454,20 +484,21 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		}
 		return false;
 	}
-	
+	/**poem iterator**/
 	public Iterator<Poem> poemIterator(){
 		return poems.iterator();
 	}
-	
+	/**word iterator**/
 	public Iterator<Word> iterator() {
 		// TODO Auto-generated method stub
 		return words.iterator();
 	}
-	
+	/**protected word iterator**/
 	public Iterator<Word> protectedWordsIterator(){
 		return protectedWords.iterator();
 	}
 	
+	/**unprotected word iterator**/
 	public Iterator<Word> unprotectedWordsIterator(){
 		return unProtectedWords.iterator();
 	}
