@@ -14,6 +14,9 @@ public class Word extends Element implements Serializable{
     int height;
     int wordType;
 
+    /**
+     * static variables used to represent word type in int value
+     */
     public static final int ADJ_INT         = 0;
     public static final int ADV_INT         = 1;
     public static final int CONJUNCTION_INT = 2;
@@ -26,7 +29,9 @@ public class Word extends Element implements Serializable{
     public static final int VERB_INT        = 9;
 
 
-
+    /**
+     * static variables used to represent word type in string
+     */
     public static final String ADJ_STRING           = "adjective";
     public static final String ADV_STRING           = "adverb";
     public static final String CONJUNCTION_STRING   = "conjunction";
@@ -44,7 +49,15 @@ public class Word extends Element implements Serializable{
             NUBER_STRING,PRONOUN_STRING,
             PREPOSITION_STRING,SUFFIX_STRING,VERB_STRING};
 
-     /**Constructor**/
+    /**
+     * constructor of Word
+     * @param x x location of new word
+     * @param y y location of new word
+     * @param width width of new word
+     * @param height height of new word
+     * @param value string value of new word
+     * @param wordType type of new word
+     */
      public Word(int x,int y,int width,int height,String value,int wordType){
     	 super.type = 1;
     	 this.x = x;
@@ -54,15 +67,24 @@ public class Word extends Element implements Serializable{
     	 this.value = value;
     	 this.wordType = wordType;
      }
-     
+
+    /**
+     * check if a word is in protected area by y location
+     * @return true if word.y < 540
+     */
      public boolean isProtected(){
     	 if(this.y < 540){
     		 return true;
     	 }
     	 return false;
      }
-     
-     /**use x,y to find word**/
+
+    /**
+     * check if the word covers (intersects) a location/point
+     * @param x x
+     * @param y y location
+     * @return true if the word covers (x,y)
+     */
      public boolean intersection(int x,int y){
     	 if(x < this.x){return false;}
     	 if(x > (this.x + width)){return false;}
@@ -70,8 +92,12 @@ public class Word extends Element implements Serializable{
     	 if(y > (this.y+height)){return false;}
     	 return true;
      }
-     
-     /**check if overlap with another word**/
+
+    /**
+     * check if the word overlaps with word w
+     * @param w the other word to checking overlapping
+     * @return true if the two words overlaps
+     */
      public boolean overlap(Word w){
     	 if((this.x+this.width)>w.getX()&&(this.x+this.width)<(w.getX()+w.width)&&(w.getY()+w.getHeight())>this.y&&(w.getY()+w.getHeight())<(this.y+this.height)){
     		 return true;
@@ -93,8 +119,12 @@ public class Word extends Element implements Serializable{
     	 }
     	 return false;
      }
-     
-     /**check if overlap with a row**/
+
+    /**
+     * check if the word overlaps with row w (some words in it)
+     * @param w the row to check overlapping
+     * @return true if the word overlaps with the row
+     */
      public boolean overlapRow(Row w){
     	 if((this.x+this.width)>w.getX()&&(this.x+this.width)<(w.getX()+w.width)&&(w.getY()+w.getHeight())>this.y&&(w.getY()+w.getHeight())<(this.y+this.height)){
     		 return true;
@@ -116,27 +146,66 @@ public class Word extends Element implements Serializable{
     	 }
     	 return false;
      }
-     /**return some attributes of word**/
+
+    /**
+     *
+     * @return x location of the word
+     */
      public int getX(){return this.x;}
+
+    /**
+     *
+     * @return y location of the word
+     */
      public int getY(){return this.y;}
+    /**
+     *
+     * @return width of the word
+     */
      public int getWidth(){return this.width;}
+    /**
+     *
+     * @return height of the word
+     */
      public int getHeight(){return this.height;}
+
+    /**
+     *
+     * @return string value of the word
+     */
      public String getValue(){return this.value;}
-     
-     /**update location**/
+
+    /**
+     * set the location to (x,y)
+     * @param x new x location
+     * @param y new y location
+     */
      public void setLocation(int x, int y ){
     	 this.x = x;
     	 this.y = y;
      }
 
+    /**
+     *
+     * @return word type in int
+     */
      public int getWordType() {
     	 return this.wordType;
     }
-     
+
+    /**
+     *
+     * @return value of word
+     */
     public String toString(){
         return value;
     }
 
+    /**
+     *
+     * @param s the type of a word in string
+     * @return the type of a word in int representation
+     */
     public static final int getTypeInt(String s) {
         if(ADJ_STRING.equals(s)) return ADJ_INT;
         if(ADV_STRING.equals(s)) return ADV_INT;
