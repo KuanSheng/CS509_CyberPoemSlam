@@ -307,7 +307,6 @@ public class Board implements Iterable<Word>, java.io.Serializable {
 		
     	if(r.getFirstWord() == w){
     		if(r.getNextWord(w).getX() > rightLimit){
-    			System.out.println("why?");
     			return false;
     		}
     	}

@@ -52,9 +52,11 @@ public class Poem extends Element implements Serializable{
     public Poem(Poem p1, Poem p2, int direction){
     	//p1 on top
     	if(direction == 1){
+    		//this.x = p2.getX();
+    		//this.y = p2.getY();
     		this.x = p2.getX();
     		this.y = p2.getY() - 14*p1.getRowNumber();
-    		this.FirstRow = p1.getFirstRow();
+    		//this.FirstRow = p1.getFirstRow();
     		this.LastRow = p2.getLastRow();
     		
     		p1.setLocation(this.x, this.y, p1.getX(), p1.getY());
@@ -81,7 +83,9 @@ public class Poem extends Element implements Serializable{
     	else{
     		this.x = p2.getX();
     		this.y = p2.getY();
-    		this.FirstRow = p2.getFirstRow();
+    		//this.x = p2.getX();
+    		//this.y = p2.getY() - 14*p1.getRowNumber();
+    		//this.FirstRow = p2.getFirstRow();
     		this.LastRow = p1.getLastRow();
     		
     		//set row location and its next and former
@@ -91,16 +95,10 @@ public class Poem extends Element implements Serializable{
     		
     		for(Row r: p1.getRows()){
     			this.addRow(r);
-    			if(this.x + r.getWidth()  > this.max_x){
-    				this.max_x = this.x + r.getWidth();
-    			}
     		}
     		
     		for(Row r: p2.getRows()){
     			this.addRow(r);
-    			if(this.x + r.getWidth()  > this.max_x){
-    				this.max_x = this.x + r.getWidth();
-    			}
     		}
     	}
     	
@@ -147,6 +145,7 @@ public class Poem extends Element implements Serializable{
     public Row getFirstRow(){
     	for(Row r:rows){
     		if(r.getX() == this.x&&r.getY() == this.y){
+    			System.out.println("why?");
     			return r;
     		}
     	}
