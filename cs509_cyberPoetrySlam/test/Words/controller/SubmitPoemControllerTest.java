@@ -55,10 +55,6 @@ public class SubmitPoemControllerTest {
 		SPC.submitPoem();
 	}
 	
-	@Test
-	public void testset(){
-		SPC.setMethod(Method.EMAIL);
-	}
 
 
 }

@@ -52,7 +52,7 @@ public class WordDisconnectionControllerTest {
 		assertEquals(2,row.getWordNumber());
 		CC1=new WordDisconnectionController(model, panel, disconnectPoem);
 		CC1.disconnectEdgeWord(1,row);
-		
+		assertEquals(row.getWordNumber(),1);
 	
 		Poem disconnectPoem1 = new Poem(w1,w2,1);
 		model.setSelectedWordinPoem(w1);
@@ -62,22 +62,24 @@ public class WordDisconnectionControllerTest {
 		assertEquals(3,row1.getWordNumber());
 		CC1=new WordDisconnectionController(model, panel, disconnectPoem1);
 		CC1.disconnectEdgeWord(1,row1);
-		
-		
-		Poem disconnectPoem2 = new Poem(w1,w2,1);
-		model.setSelectedWordinPoem(w1);
-		Row row2=new Row(w1,w2,1);
-		assertEquals(2,row1.getWordNumber());
-		CC1=new WordDisconnectionController(model, panel, disconnectPoem2);
-		CC1.disconnectEdgeWord(2,row2);
+		assertEquals(disconnectPoem1.getFirstRow().getWordNumber(),2);
+		assertEquals(disconnectPoem1.getFirstRow().toString(),"new ha ");
 		
 		Poem disconnectPoem3 = new Poem(w1,w2,1);
 		model.setSelectedWordinPoem(w1);
 		Row row3=new Row(w1,w2,1);
 		row1.addWord(w3);
-	//	assertEquals(3,row3.getWordNumber());
 		CC1=new WordDisconnectionController(model, panel, disconnectPoem3);
 		CC1.disconnectEdgeWord(2,row3);
+		
+		Poem disconnectPoem2 = new Poem(w1,w2,1);
+		model.setSelectedWordinPoem(w1);
+		Row row2=new Row(w1,w2,1);
+		assertEquals(3,row1.getWordNumber());
+		CC1=new WordDisconnectionController(model, panel, disconnectPoem2);
+		CC1.disconnectEdgeWord(2,row2);
+		assertEquals(disconnectPoem1.getFirstRow().getWordNumber(),2);
+		assertEquals(disconnectPoem1.getFirstRow().toString(),"new ha ");
 		
 	
 	}
@@ -98,12 +100,14 @@ public class WordDisconnectionControllerTest {
 		Row r = poem1.getFirstRow();
 		CC1 = new WordDisconnectionController(model, panel, poem1);
 		CC1.disconnectEdgeWord(1, r);
+		assertEquals(poem1.getFirstRow().getWordNumber(), 1);
 		
 		model.setSelectedWordinPoem(word2);
 		model.setSelectedPoem(poem1);
 		r = poem1.getFirstRow();
 		CC1 = new WordDisconnectionController(model, panel, poem1);
 		CC1.disconnectEdgeWord(1, r);
+		assertEquals(poem1.getFirstRow().getWordNumber(), 2);
 		
 	}
 	
@@ -123,13 +127,14 @@ public class WordDisconnectionControllerTest {
 		Row r = poem1.getFirstRow();
 		CC1 = new WordDisconnectionController(model, panel, poem1);
 		CC1.disconnectEdgeWord(2, r);
+		assertEquals(poem1.getFirstRow().getWordNumber(), 1);
 		
 		model.setSelectedWordinPoem(word1);
 		model.setSelectedPoem(poem1);
 		r = poem1.getFirstRow();
 		CC1 = new WordDisconnectionController(model, panel, poem1);
 		CC1.disconnectEdgeWord(2, r);
-		
+		assertEquals(poem1.getFirstRow().getWordNumber(), 2);
 		
 	}
 	
@@ -149,13 +154,13 @@ public class WordDisconnectionControllerTest {
 		Row r = poem1.getLastRow();
 		CC1 = new WordDisconnectionController(model, panel, poem1);
 		CC1.disconnectEdgeWord(1, r);
-		
+		assertEquals(poem1.getLastRow().getWordNumber(), 1);
 		model.setSelectedWordinPoem(word4);
 		model.setSelectedPoem(poem1);
 		r = poem1.getLastRow();
 		CC1 = new WordDisconnectionController(model, panel, poem1);
 		CC1.disconnectEdgeWord(1, r);
-		
+		assertEquals(poem1.getFirstRow().getWordNumber(), 2);
 	}
 	
 	@Test
@@ -173,13 +178,13 @@ public class WordDisconnectionControllerTest {
 		Row r = poem1.getLastRow();
 		CC1 = new WordDisconnectionController(model, panel, poem1);
 		CC1.disconnectEdgeWord(2, r);
-		
+		assertEquals(poem1.getLastRow().getWordNumber(), 1);
 		model.setSelectedWordinPoem(word3);
 		model.setSelectedPoem(poem1);
 		r = poem1.getLastRow();
 		CC1 = new WordDisconnectionController(model, panel, poem1);
 		CC1.disconnectEdgeWord(2, r);
-	
+		assertEquals(poem1.getFirstRow().getWordNumber(), 2);
 	}
 
 	
@@ -203,12 +208,13 @@ public class WordDisconnectionControllerTest {
 		Row r = poem1.getRowByWord(word1);
 		CC1 = new WordDisconnectionController(model, panel, poem1);
 		CC1.disconnectEdgeWord(1, r);
-	
+		assertEquals(r.getWordNumber(), 1);
 		model.setSelectedWordinPoem(word2);
 		model.setSelectedPoem(poem1);
 		r = poem1.getRowByWord(word2);
 		CC1 = new WordDisconnectionController(model, panel, poem1);
 		CC1.disconnectEdgeWord(1, r);
+		assertEquals(r.getWordNumber(), 0);
 	}
 	
 	@Test 
@@ -231,12 +237,13 @@ public class WordDisconnectionControllerTest {
 		Row r = poem1.getRowByWord(word2);
 		CC1 = new WordDisconnectionController(model, panel, poem1);
 		CC1.disconnectEdgeWord(2, r);
-	
+		assertEquals(r.getWordNumber(), 1);
 		model.setSelectedWordinPoem(word1);
 		model.setSelectedPoem(poem1);
 		r = poem1.getRowByWord(word1);
 		CC1 = new WordDisconnectionController(model, panel, poem1);
 		CC1.disconnectEdgeWord(2, r);
+		assertEquals(r.getWordNumber(), 1);
 	}
 }
 

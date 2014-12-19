@@ -51,8 +51,9 @@ public class StoreStateControllerTest {
 	
 	@Test 
 	public void testWord(){
-		SSC.createWord("merry", "adjective");
-		
+		assertEquals(SSC.createWord("merry", "adjective").getValue(),"merry");
+		assertEquals(SSC.createWord("merry", "adjective").getWordType(),0);
+	
 	}
 	
 	@Test

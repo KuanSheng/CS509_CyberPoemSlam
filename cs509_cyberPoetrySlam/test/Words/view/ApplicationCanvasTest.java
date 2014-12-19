@@ -34,10 +34,6 @@ public class ApplicationCanvasTest {
 		assertEquals(b, AC.board);
 	}
 
-	@Test
-	public void testpaint(){
-		AC.repaint();
-	}
-	
+
 
 }

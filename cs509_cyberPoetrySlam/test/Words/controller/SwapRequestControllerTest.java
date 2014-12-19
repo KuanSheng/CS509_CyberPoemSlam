@@ -29,6 +29,11 @@ public class SwapRequestControllerTest {
 	
 	@Before
 	public void setUp() throws Exception {
+
+	}
+	
+	@Test
+	public void testConstruction(){
 		words = new ArrayList<Word>();
 		word1 = new Word(15,300, 40,20,"my", 0);
 		word2 = new Word(30,400, 50,20,"frequently",1);
@@ -52,16 +57,5 @@ public class SwapRequestControllerTest {
 	}
 
 
-
-	@Test
-	public void testfillinOfferRequest() {
-		
-		String[] offerValue = new String[2];
-		String[] offerType = new String[2];
-		String[] requestType = new String[2];
-		String[] requestValue = new String[2];
-		SRC.fillinOffer(offerValue, offerType);
-		SRC.fillinRequest(requestValue, requestType);
-	}
 
 }

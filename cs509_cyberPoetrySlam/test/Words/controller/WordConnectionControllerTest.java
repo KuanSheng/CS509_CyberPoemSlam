@@ -61,48 +61,14 @@ public class WordConnectionControllerTest {
 		assertEquals(connectWord_1, CC1.connectWord);
 		assertEquals(poem4, CC2.connectPoem);
 	}
-
-	@Test
-	public void testConnect() {
-
-		Word word1 = new Word(45,480, 10,20, "Happy", 1);
-		model.setSelected(word1);
-		CC1.connect();
-		
-		
-		Word word2 = new Word(35,500, 10,20,"Happy",1);
-		model.setSelected(word2);
-		CC1.connect();
-		
-		Word word3 = new Word(35, 480, 10, 20, "Happy", 1);
-		model.setSelected(word3);
-		CC1.connect();
-		
-		Word word4 = new Word(45, 500, 10,20, "Happy", 1);
-		model.setSelected(word4);
-		CC1.connect();
-		
-		Word word5 = new Word(35,490, 10, 20, "Happy", 1);
-		model.setSelected(word5);
-		CC1.connect();
-		
-		Word word6 = new Word(35,490, 30, 20, "Happy", 1);
-		model.setSelected(word6);
-		CC1.connect();
-		
-		Word word7 = new Word(70,490, 10, 20, "Happy",1);
-		model.setSelected(word7);
-		CC1.connect();
-		CC1.panel.paintWord(word7);
-		
-	}
-
+	
 	@Test
 	public void testConnectPoem() {
 		Word word5 = new Word(60,476,40,14,"new",1);
 		model.setSelected(word5);
 		CC2.connectPoem(1);
 	    CC2.panel.repaint();
+	    assertEquals(0,b0.getPoems().size());
 			
 	}
 
@@ -111,9 +77,53 @@ public class WordConnectionControllerTest {
 		Word word5 = new Word(60,476,40,14,"new",1);
 		model.setSelected(word5);
 		CC2.connectPoem(2);
-		
+		 assertEquals(0,b0.getPoems().size());
 			
 	}
+
+	@Test
+	public void testConnect() {
+
+		Word word1 = new Word(45,480, 10,20, "Happy", 1);
+		model.setSelected(word1);
+		CC1.connect();
+		assertEquals(1,b0.getPoems().size());
+		
+		
+		Word word2 = new Word(35,500, 10,20,"Happy",1);
+		model.setSelected(word2);
+		CC1.connect();
+		assertEquals(2,b0.getPoems().size());
+		
+		Word word3 = new Word(35, 480, 10, 20, "Happy", 1);
+		model.setSelected(word3);
+		CC1.connect();
+		assertEquals(3,b0.getPoems().size());
+		
+		Word word4 = new Word(45, 500, 10,20, "Happy", 1);
+		model.setSelected(word4);
+		CC1.connect();
+		assertEquals(4,b0.getPoems().size());
+		
+		Word word5 = new Word(35,490, 10, 20, "Happy", 1);
+		model.setSelected(word5);
+		CC1.connect();
+		assertEquals(5,b0.getPoems().size());
+		
+		Word word6 = new Word(35,490, 30, 20, "Happy", 1);
+		model.setSelected(word6);
+		CC1.connect();
+		assertEquals(6,b0.getPoems().size());
+		
+		Word word7 = new Word(70,490, 10, 20, "Happy",1);
+		model.setSelected(word7);
+		CC1.connect();
+		CC1.panel.paintWord(word7);
+		assertEquals(7,b0.getPoems().size());
+		
+	}
+
+
 
 	
 }

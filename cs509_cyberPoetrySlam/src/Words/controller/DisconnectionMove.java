@@ -7,9 +7,11 @@
  * 4.disconnect word in last row**/
 
 package Words.controller;
+import java.io.Serializable;
+
 import Words.model.*;
 
-public class DisconnectionMove extends Move{
+public class DisconnectionMove extends Move implements Serializable{
 	Poem disconnectPoem;
 	Poem newUpPoem;
 	Poem newBotPoem;
@@ -23,6 +25,12 @@ public class DisconnectionMove extends Move{
 	int disType;
 	boolean nullSign = false;
 	
+	/**
+	 * Constructor
+	 * @param disconnectPoem: where the disconnected word from
+	 * @param disconnected word
+	 * @model
+	 * @param disconnection direction**/
 	public DisconnectionMove(Poem disconnectPoem, Word disconnectWord,Row disconnectRow,Model model,int direction){
 		this.disconnectPoem = disconnectPoem;
 		this.disconnectWord = disconnectWord;
@@ -31,7 +39,9 @@ public class DisconnectionMove extends Move{
 		this.model = model;
 		this.b = model.getBoard();
 	}
-	
+	/**
+	 * execute the operation
+	 * we also have four cases here**/
 	@Override
 	public boolean execute(){
 		//disconnect word from one row poem
@@ -61,6 +71,7 @@ public class DisconnectionMove extends Move{
 		}
 	}
 	
+	/**here redo is just the same as execute**/
 	@Override
 	public boolean redo(){
 		if(disconnectPoem.getRowNumber() == 1){

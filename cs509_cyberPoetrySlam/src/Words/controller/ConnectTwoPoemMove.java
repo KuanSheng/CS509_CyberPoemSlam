@@ -1,7 +1,10 @@
-/****/
+/**connect two poem in vertical direction
+ * we need to identify who is on top**/
 package Words.controller;
+import java.io.Serializable;
+
 import Words.model.*;
-public class ConnectTwoPoemMove extends Move{
+public class ConnectTwoPoemMove extends Move implements Serializable{
 	Poem selectedPoem;
 	Poem connectPoem;
 	Poem newPoem;
@@ -12,6 +15,8 @@ public class ConnectTwoPoemMove extends Move{
 	int newy;
 	int direction;
 	
+	/**Constructor
+	 * oldx and oldy record original location to undo**/
 	public ConnectTwoPoemMove(Poem selectedPoem, Poem connectPoem,Board b,int oldx,int oldy,int direction){
 		this.selectedPoem = selectedPoem;
 		this.connectPoem = connectPoem;
@@ -21,6 +26,7 @@ public class ConnectTwoPoemMove extends Move{
 		this.oldy = oldy;
 	}
 	
+	/**execute the operation**/
 	@Override
 	public boolean execute(){
 		newPoem = new Poem(selectedPoem,connectPoem,direction);
@@ -40,6 +46,7 @@ public class ConnectTwoPoemMove extends Move{
 		return true;
 	}
 	
+	/**undo operation**/
 	@Override
 	public boolean undo(){
 		b.removePoem(newPoem);

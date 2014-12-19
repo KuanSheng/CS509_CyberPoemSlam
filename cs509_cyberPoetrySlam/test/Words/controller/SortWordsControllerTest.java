@@ -62,8 +62,9 @@ public class SortWordsControllerTest {
 		word18 = new Word(100, 550, 30,14,"Mike", 7);words.add(word18);
 		word19 = new Word(100, 490, 50,14,  "seven", 8);words.add(word19);
 		word20 = new Word(60,476,40,14,"zero",9);words.add(word20);
-		SWC1.sortByAlphabet(words);
 		SWC2.sortByType(words);
+		SWC1.sortByAlphabet(words);
+
 		
 	}
 

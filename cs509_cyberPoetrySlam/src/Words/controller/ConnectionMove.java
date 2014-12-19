@@ -29,7 +29,7 @@ public class ConnectionMove extends Move implements Serializable{ // todo check 
 	}
 
 	@Override
-	/**execute the operation**/
+	/**execute the operation types represents connection direction**/
 	public boolean execute(){
 	    //type = b.getOverlapType(selectedWord, this.connectWord);
 		switch(type){

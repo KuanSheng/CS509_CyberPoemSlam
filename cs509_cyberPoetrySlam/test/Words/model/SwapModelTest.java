@@ -42,11 +42,5 @@ public class SwapModelTest {
 	}
 
 
-	@Test
-	public void testGetValueAt() {
-		
-		swap.getValueAt(0,1);
-
-	}
 
 }
